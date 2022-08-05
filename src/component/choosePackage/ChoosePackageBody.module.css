@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+.container{
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.packageBody{
+  position: absolute;
+  top: 120px;
+  width: 100%;
+  left: 80px;
+ 
+}
+
+
+.packageBodyHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 19%;
+}
+
+.head {
+  display: flex;
+  align-self: center;
+}
+
+.head h4 {
+  margin-top: 5px;
+  height: 29px;
+  left: 0%;
+  right: -8.77%;
+  top: calc(50% - 29px / 2 - 15.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #5e5873;
+  margin-bottom: 10px;
+}
+
+
+
+
+.packageBodyHead p {
+  width: 136px;
+  height: 24px;
+  left: 1016px;
+  top: 273px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;  
+  font-feature-settings: "tnum" on, "lnum" on;
+  color: #3f87c2;
+  cursor: pointer;
+}
+
+.subHead {
+  height: 21px;
+  left: 0%;
+  right: 51.88%;
+  top: calc(50% - 21px / 2 + 19.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: #6e6b7b;
+  margin-left: 300px;
+  margin-top: 8px;
+}
+
+.package {
+  height: 24px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: 300px;
+  color: #697386;
+  margin-top: 150px;
+}
+
+.price {
+  height: 44px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum" on, "lnum" on;
+  color: #3f87c2;
+  margin-left: 300px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-left: 22%;
+  margin-right: 18%;
+}
+
+.total .left {
+    font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: "tnum" on, "lnum" on;
+  color: #4b4b4b;
+}
+
+.subTotal {
+  text-align: end;
+ 
+}
+
+.subTotal p {
+    font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  font-feature-settings: "tnum" on, "lnum" on;
+  color: #4b4b4b;
+  margin-top: 10px;
+}
+
+.column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.column2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.column2 p {
+  color: gray;
+}
+
+.MakePayment {
+  height: 37px;
+  left: 1107.5px;
+  top: 714px;
+  background: #3f87c2;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  padding: 0 10px;
+
+}

@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+
+.container {
+  display: flex;
+  position: relative;
+}
+
+.body {
+  position: absolute;
+  top: 120px;
+  left: 16rem;
+}
+
+.packageBodyHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 10%;
+}
+
+.head {
+  display: flex;
+  align-self: center;
+  margin-left: 100px;
+  margin-top: 15px;
+}
+
+.head h4 {
+  margin-top: 5px;
+  height: 29px;
+  left: 0%;
+  right: -8.77%;
+  top: calc(50% - 29px / 2 - 15.5px);
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+
+  /* 1) Theme Color / Heading & Display - Text */
+
+  color: #5e5873;
+}
+
+.subHead {
+  height: 21px;
+  left: 0%;
+  right: 51.88%;
+  top: calc(50% - 21px / 2 + 19.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: #6e6b7b;
+  margin-left: 150px;
+  margin-top: 8px;
+}
+
+.payForm {
+  margin-left: 55%;
+  margin-top: 25px;
+}
+
+.applePay {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 48px;
+  gap: 10px;
+  width: 221px;
+  height: 48px;
+  background: #000000;  
+  box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.12), 0px 2px 5px rgba(0, 0, 0, 0.12),
+    0px 1px 1px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+
+.or {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-left: 450px;
+}
+
+
+.or span {
+  width: 300px;
+  margin-left: 30px;
+  font-family: "Montserrat";
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40%;
+  margin-top: 20px;
+}
+
+.input input {
+  padding: 9px 12px;
+  gap: 8px;
+  width: 421px;
+  background: #ffffff;
+  border: 1px solid rgba(60, 66, 87, 0.12);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08), 0px 1px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+.input label {
+  height: 15px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 15px;
+  color: #6e6b7b;
+}
+
+.cardPay {
+  padding: 12px 48px;
+  gap: 10px;
+  width: 221px;
+  height: 48px;
+  background: #3f87c2;
+  box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.12), 0px 2px 5px rgba(0, 0, 0, 0.12),
+    0px 1px 1px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  margin-top: 20px;
+  margin-left: 55%;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-family: "Montserrat";
+  margin-bottom: 30px;
+}
+
+.validation {
+  display: flex;
+  margin-left: 40%;
+}
+
+.validation1 {
+  padding: 9px 12px;
+  gap: 8px;
+  width: 200px;
+  background: #ffffff;
+  border: 1px solid rgba(60, 66, 87, 0.12);
+  border-radius: 8px 0 0 8px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.validation2 {
+  padding: 9px 12px;
+  gap: 8px;
+  width: 195px;
+  background: #ffffff;
+  border: 1px solid rgba(60, 66, 87, 0.12);
+  border-radius: 0px 8px 8px 0px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}

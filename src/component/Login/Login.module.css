@@ -1,0 +1,157 @@
+.container {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.body {
+  position: absolute;
+  top: 120px;
+  left: 22rem;
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  align-self: center;
+  margin-left: 30px;
+  margin-top: 15px;
+}
+
+.head h4 {
+  margin-top: 5px;
+  height: 29px;
+  left: 0%;
+  right: -8.77%;
+  top: calc(50% - 29px / 2 - 15.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #5e5873;
+}
+
+.subHead {
+  height: 21px;
+  left: 0%;
+  right: 51.88%;
+  top: calc(50% - 21px / 2 + 19.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: #6e6b7b;
+  margin-left: 75px;
+  margin-top: 8px;
+}
+
+.inputBox {
+  margin-left: 6rem;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputBox label {
+  height: 15px;
+  left: 44.03%;
+  right: 46.32%;
+  top: calc(50% - 15px / 2 - 167.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+  color: #6e6b7b;
+}
+
+.inputBox input {
+  width: 300px;
+  border: 1px solid gray;
+  padding: 10px 6px;
+  border-radius: 6px;
+  outline: none;
+  margin: 10px 0;
+  
+}
+
+
+.inputBox1 {
+  margin-left: 6rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputBox1 label {
+  height: 15px;
+  left: 44.03%;
+  right: 46.32%;
+  top: calc(50% - 15px / 2 - 167.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+  color: #6e6b7b;
+}
+
+.inputBox1 input {
+  width: 300px;
+  border: 1px solid gray;
+  padding: 10px 6px;
+  border-radius: 6px;
+  outline: none;
+  margin: 10px 0;
+  
+}
+
+.rememberBox{
+  margin-left: 6rem;
+  margin-top: 1rem;
+  display: flex;
+
+}
+
+.rememberBox input{
+  width: 18px;
+height: 18px;
+left: calc(50% - 18px/2);
+top: calc(50% - 18px/2);
+background: #3F87C2;
+border-radius: 3px;
+}
+
+.rememberBox p {
+  height: 21px;
+left: 19.4%;
+right: 0%;
+top: calc(50% - 21px/2);
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 21px;
+color: #6E6B7B;
+margin-left: 15px;
+}
+
+
+
+.btn2{   
+  height: 37px;
+  left: 1107.5px;
+  top: 714px;   
+  background: #3F87C2;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  text-transform: capitalize;
+  margin-left: 60%;
+  margin-top: 5rem;
+  padding: 0 30px;
+
+}

@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+
+}
+
+.body {
+  position: absolute;
+  top: 120px;
+  left: 22rem;
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  align-self: center;
+  margin-left: 30px;
+  margin-top: 15px;
+}
+
+.head h4 {
+  margin-top: 5px;
+  height: 29px;
+  left: 0%;
+  right: -8.77%;
+  top: calc(50% - 29px / 2 - 15.5px);
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+
+  /* 1) Theme Color / Heading & Display - Text */
+
+  color: #5e5873;
+}
+
+.subHead {
+  height: 21px;
+  left: 0%;
+  right: 51.88%;
+  top: calc(50% - 21px / 2 + 19.5px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: #6e6b7b;
+  margin-left: 75px;
+  margin-top: 8px;
+}
+
+.content {
+  margin-left: 20rem;
+  margin-top: 4rem;
+}
+
+.content h4 {
+  height: 29px;
+  left: 752.25px;
+  right: 441.75px;
+  top: calc(50% - 29px / 2 + 170.78px);
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+ color: #5e5873;
+ margin-top: 10px;
+
+}
+
+.content p{
+ height: 20px;
+left: 724px;
+right: 413px;
+top: calc(50% - 20px/2 + 210.56px);
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 20px;
+color: #6E6B7B;
+margin-top: 10px;
+margin-left: -30px;
+}
+
+
+ footer{
+   
+    margin-top: 5rem;
+}
