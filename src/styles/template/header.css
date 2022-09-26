@@ -1,0 +1,241 @@
+/* .header {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 50px 10px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    width: 90%;
+    padding: 18px;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+.header__search {
+    flex: 1;
+    display: flex;
+}
+.search__button {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.search__input {
+    width: 90%;
+    margin: 0 auto;
+    outline: none;
+    padding: 0 8px;
+    font-size: 22px;
+    line-height: 0;
+}
+.header__options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+.header__change-leng {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 20px;
+    line-height: 2;
+    letter-spacing: 0.01em;
+    color: #585E62;
+}
+.header__notification {
+    position: relative;
+}
+.notification__number {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 18px;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    color: #FFFFFF;
+    background: #499E43;
+    border: 1px solid #FFFFFF;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+.header__notification svg {
+    margin-top: 10px;
+}
+.header__name-avatar, .avatar__info {
+    display: flex;
+    align-items: center;
+}
+.avatar__info {
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 18px;
+}
+.header__name {
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    color: #585E62;
+}
+.header__job-title {
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    color: #B4B4B4;
+}
+.header__exit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1919.8px) {
+    .header {
+        top: 20px;
+        padding: 10px 14px;
+    }
+    .search__button svg {
+        width: 35px;
+        height: 35px;
+    }
+    .search__input {
+        font-size: 18px;
+    }
+    .header__options {
+        gap: 40px;
+    }
+    .header__change-leng {
+        font-size: 18px;
+    }
+    .header__change-leng svg {
+        width: 36px;
+        height: 36px;
+    }
+    .header__notification svg {
+        width: 37px;
+        height: 39px;
+    }
+    .notification__number {
+        width: 22px;
+        height: 22px;
+    }
+    .header__name {
+        font-size: 16px;
+    }
+    .header__job-title {
+        font-size: 12px;
+    }
+    .header__avatar {
+        width: 47px;
+        height: 47px;
+    }
+    .header__exit svg {
+        width: 37px;
+        height: 37px;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1439.8px) {
+    .header {
+        top: 15px;
+        padding: 10px 14px;
+    }
+    .search__button svg {
+        width: 15px;
+        height: 15px;
+    }
+    .search__input {
+        font-size: 14px;
+    }
+    .header__options {
+        gap: 20px;
+    }
+    .header__change-leng {
+        font-size: 14px;
+    }
+    .header__change-leng svg {
+        width: 16px;
+        height: 16px;
+    }
+    .header__notification svg {
+        width: 17px;
+        height: 19px;
+    }
+    .notification__number {
+        width: 12px;
+        height: 12px;
+    }
+    .header__name {
+        font-size: 12px;
+    }
+    .header__job-title {
+        font-size: 10px;
+    }
+    .header__avatar {
+        width: 27px;
+        height: 27px;
+    }
+    .header__exit svg {
+        width: 17px;
+        height: 17px;
+    }
+}
+
+@media screen and (max-width: 1199.8px) {
+    .header {
+        top: 15px;
+        padding: 10px 14px;
+    }
+    .search__button svg {
+        width: 15px;
+        height: 15px;
+    }
+    .search__input {
+        font-size: 14px;
+    }
+    .header__options {
+        gap: 20px;
+    }
+    .header__change-leng {
+        font-size: 14px;
+    }
+    .header__change-leng svg {
+        width: 16px;
+        height: 16px;
+    }
+    .header__notification svg {
+        width: 17px;
+        height: 19px;
+    }
+    .notification__number {
+        width: 12px;
+        height: 12px;
+    }
+    .header__name {
+        font-size: 12px;
+    }
+    .header__job-title {
+        font-size: 10px;
+    }
+    .header__avatar {
+        width: 27px;
+        height: 27px;
+    }
+    .header__exit svg {
+        width: 17px;
+        height: 17px;
+    }
+} */

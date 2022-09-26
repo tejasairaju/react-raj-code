@@ -1,6 +1,61 @@
-*{
-  margin: 0;
-  padding: 0;
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'); */
+
+#pageContainer {
+    position: absolute;
+    top: 47%;
+    left: 42%;
+    margin: -25px 0 0 -25px;
+}
+.color-red {
+    color: red;
+}
+.error-msg {
+    color: red;
+    font-size: 0.7em;
+    display: flex;
+    margin: 6px 0;
 }
 
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-center {
+    justify-content: center;
+}
+.flex-end {
+    justify-content: flex-end;
+}
+.space-between {
+    justify-content: space-between;
+}
 
+.add-btn, .remove-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 9px 20px;
+    border-radius: 5px;
+    margin: 2px;
+    text-align: center;
+    background: lightgray;
+    color: #000000;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background: #499E43;
+    color: #fff;
+}
+.P-1 { padding: 1px;}
+.P-2 { padding: 2px;}
+.P-3 { padding: 3px;}
+.P-4 { padding: 4px;}
+.P-5 { padding: 5px;}
+.P-6 { padding: 6px;}
+.m-1 { margin: 1px;}
+.m-2 { margin: 2px;}
+.m-3 { margin: 3px;}
+.m-4 { margin: 4px;}
+.m-5 { margin: 5px;}
+.m-6 { margin: 6px;}
