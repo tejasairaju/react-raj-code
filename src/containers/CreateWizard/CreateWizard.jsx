@@ -86,10 +86,6 @@ const clientUserMenu = [{
 }]
 
 const CreateWizard = () => {
-    // const {
-    //     isAuthenticated,
-    //     user,
-    // } = useAuth0();
 
     const navigate = useNavigate();
     const [sideMenu, updateSideMenu] = useState(clientUserMenu);

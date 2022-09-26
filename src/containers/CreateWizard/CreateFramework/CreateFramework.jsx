@@ -22,6 +22,7 @@ const CreateFramework = (props) => {
     const [inputValue, setInputValue] = useState({});
     const [validation, setValidation] = useState({});
     const [logo, setLogo] = useState(null);
+    const [imageForm, setImageForm] = useState(null);
     const [statusData, setStatusData] = useState({});
     const [createFrameResponse, setCreateFrameResponse] = useState({});
     const [createDisclosuresData, setCreateDisclosuresData] = useState({});
@@ -47,8 +48,8 @@ const CreateFramework = (props) => {
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
                 ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                    console.log(industries);
-                    setInputValue({ countries, sectors, categories });
+                    console.log('Response', countries, sectors, categories);
+                    setInputValue({ countries:countries.results, sectors: sectors.results, categories:categories.results });
                 });
             } catch (error) {
                 console.log(error);
@@ -97,7 +98,8 @@ const CreateFramework = (props) => {
                 const payload = {
                     name: inputValue.name,
                     description: inputValue.description,
-                    logo: "https://cdn.dribbble.com/userupload/3158902/file/original-7c71bfa677e61dea61bc2acd59158d32.jpg?compress=1&resize=450x338&vertical=top",
+                    // logo: imageForm,
+                    logo: "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20220926%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220926T170732Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5f14b20e01ab610073ee783f675ccea5d932bc09a9b6204e25d21c2e6befe06c",
                     created_at: moment().format(),
                     updated_at: moment().format(),
                     supported_countries: getFilterArrayValue(inputValue.countries),
@@ -165,8 +167,8 @@ const CreateFramework = (props) => {
             setInputValue({
                 ...cloneObject, groupSubsectors: {
                     ...cloneObject['groupSubsectors'],
-                    [sectorName]: response
-                }, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat(), ...response]
+                    [sectorName]: response.results || [],
+                }, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat(), ...response.results]
             });
         }
 
@@ -196,6 +198,8 @@ const CreateFramework = (props) => {
         if (imageObj) {
             // const formData = new FormData();
             // formData.append('dataFile', imageObj, imageObj.name);
+            // setImageForm(formData);
+            
             // axios.post(BASE_URL + 'uploadfile', formData).then(response => {
             //     this.setState({
             //         handleResponse: {
