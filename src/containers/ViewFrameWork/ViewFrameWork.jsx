@@ -50,7 +50,13 @@ const ViewFrameWork = () => {
                                 <td>{val.name}</td>
                                 <td>{val.description}</td>
                                 <td>
-                                    <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' />
+                                    <div>
+                                        <div tabindex="1" className="frametoggler"><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
+                                        <div className="framedropdown">
+                                            your elements here
+                                        </div>
+                                    </div>
+                                    {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
                                 </td>
                             </tr>)
                         })}

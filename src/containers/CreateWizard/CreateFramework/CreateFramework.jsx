@@ -1,8 +1,6 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import { useSelector, useDispatch } from 'react-redux';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import moment from 'moment';
@@ -19,44 +17,38 @@ const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 
 const CreateFramework = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({});
     const [validation, setValidation] = useState({});
     const [logo, setLogo] = useState(null);
     const [imageForm, setImageForm] = useState(null);
     const [statusData, setStatusData] = useState({});
     const [createFrameResponse, setCreateFrameResponse] = useState({});
-    const [createDisclosuresData, setCreateDisclosuresData] = useState({});
-
-    const [currentFrame, setCurrentFrame] = useState('createframe');
-    const { pathname } = window.location;
-    const {
-        isAuthenticated,
-        user,
-        getAccessTokenSilently
-    } = useAuth0();
+    const [currentFrame, setCurrentFrame] = useState('');
     // accordion 
     // const toke = getAccessTokenSilently(const accessToken = await getAccessTokenSilently({
     //     audience: `https://${domain}/api/v2/`,
     //     scope: "read:current_user",
     //   }););
+
     useEffect(() => {
         const getUserAdminInfo = async () => {
             try {
-                Axios.all([
+                await Axios.all([
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`),
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`),
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
                 ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                    console.log('Response', countries, sectors, categories);
-                    setInputValue({ countries:countries.results, sectors: sectors.results, categories:categories.results });
+                    console.log('Response::::::::::::', countries, sectors, categories);
+                    setInputValue({ countries: countries.results, sectors: sectors.results, categories: categories.results });
                 });
             } catch (error) {
                 console.log(error);
             }
         };
         getUserAdminInfo(1);
-    }, [currentFrame]);
+    }, []);
 
     const getFilterArrayValue = (data = null) => {
         let filterData = [];
@@ -71,7 +63,7 @@ const CreateFramework = (props) => {
     const checkValidation = () => {
         let cloneInputValue = { ...inputValue };
         let errors = {};
-        if (!(_get(cloneInputValue, 'name', '')).trim() && currentFrame === 'createframe') {
+        if (!(_get(cloneInputValue, 'name', '')).trim()) {
             errors['name'] = "GRI is required";
         } else if (!(_get(cloneInputValue, 'name', '')).trim()) {
             errors['name'] = "Disclosures is required";
@@ -93,13 +85,12 @@ const CreateFramework = (props) => {
     }
 
     const onNextHandler = async () => {
-        if (currentFrame === 'createframe') {
             if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description)) {
                 const payload = {
                     name: inputValue.name,
                     description: inputValue.description,
-                    // logo: imageForm,
-                    logo: "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20220926%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220926T170732Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5f14b20e01ab610073ee783f675ccea5d932bc09a9b6204e25d21c2e6befe06c",
+
+                    // logo: "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20220926%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220926T170732Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5f14b20e01ab610073ee783f675ccea5d932bc09a9b6204e25d21c2e6befe06c",
                     created_at: moment().format(),
                     updated_at: moment().format(),
                     supported_countries: getFilterArrayValue(inputValue.countries),
@@ -109,52 +100,31 @@ const CreateFramework = (props) => {
                 }
 
                 try {
+                    // let data = new FormData();
+                    // data.append("data", imageForm);
+                    // payload['logo'] = data;
+                    // const response = await axios({
+                    //     method: 'post',
+                    //     mode: 'no-cors',
+                    //     body: data,
+                    //     headers: {
+                    //         "Content-Type": "multipart/form-data",
+                    //         "Accept": "application/json",
+                    //         "type": "formData"
+                    //     },
+                    //     url: `${process.env.API_BASE_URL}/esgadmin/frameworks`,
+                    // }).then(({ data }) => data);
                     const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, payload).then(({ data }) => data);
                     setCreateFrameResponse(response);
                     setStatusData({ type: 'success', message: 'Thanks! Your account has been successfully created' });
                     setInputValue({});
+                    navigate(`/manageframework`);
                 } catch (e) {
                     setStatusData({ type: 'error', message: e.message });
                 }
             } else {
                 checkValidation();
             }
-        } else if (currentFrame === 'createdisclosures') {
-            if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && !_isEmpty(inputValue.guidance)) {
-                const getSelectedCategory = (inputValue.categories || []).find(value => value.isSelect === true);
-                const data = {
-                    name: inputValue.name,
-                    code: inputValue.code,
-                    category: getSelectedCategory.name || '',
-                    section: inputValue.name,
-                    framework: createFrameResponse.id
-                }
-
-                try {
-                    const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks/${createFrameResponse.id}/disclosures`, data).then(({ data }) => data);
-                    setCreateDisclosuresData(response);
-                    setInputValue({});
-                    setStatusData({ type: 'success', message: 'Thanks! Your account has been successfully created' });
-                } catch (e) {
-                    setStatusData({ type: 'error', message: e.message });
-                }
-            } else {
-                checkValidation();
-            }
-        }
-    }
-
-    const onSelectSingleOption = (index, field) => {
-        let cloneObj = { ...inputValue };
-        cloneObj[field] = (cloneObj[field] || []).map((item, i) => {
-            if (index === i) {
-                item['isSelect'] = true;
-            } else {
-                item['isSelect'] = false;
-            }
-            return item;
-        });
-        setInputValue({ ...cloneObj });
     }
 
     const fetchSubSector = async (index, cloneObject) => {
@@ -195,11 +165,12 @@ const CreateFramework = (props) => {
     const onChangeFile = (event) => {
         const imageObj = event.target.files[0];
         setLogo(URL.createObjectURL(imageObj));
+        setImageForm(imageObj);
         if (imageObj) {
             // const formData = new FormData();
             // formData.append('dataFile', imageObj, imageObj.name);
             // setImageForm(formData);
-            
+
             // axios.post(BASE_URL + 'uploadfile', formData).then(response => {
             //     this.setState({
             //         handleResponse: {
@@ -249,8 +220,7 @@ const CreateFramework = (props) => {
                 {`Welcome to Create ${currentFrame === 'createframe' ? "Framework" : `${currentFrame === 'createdisclosures' ? 'Disclosures' : 'Questions'}`} Wizard`}
             </h1>
         </div>
-
-        {(currentFrame === 'createframe') && (<div className="main__content-wrapper">
+        <div className="main__content-wrapper">
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
             <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
@@ -259,25 +229,8 @@ const CreateFramework = (props) => {
             <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} />
             <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} />
 
-        </div>)}
-
-        {(currentFrame === 'createdisclosures') && (<div className="main__content-wrapper">
-            <h1 class="create-framework__title">
-                Ref No
-            </h1>
-            <div class="create-framework__row-wrapper create__disclosure_ref ref__no">
-                <input type="number" name='code' value={inputValue.code || 0} onChange={onChangeHandler} min="0" step=".1" className="create-framework__input" required />
-                <div className='create__disclosure_container'>
-                    <h1 className="create-framework__title">Disclosures<span className="color-red P-4">*</span></h1>
-                    <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-                </div>
-            </div>
-            <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <TextArea inputblockcls={`user_input_block ${_get(validation, 'guidance', false) ? 'user_input_error' : null}`} error={validation['guidance']} label='Guidance' name='guidance' value={inputValue.guidance || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} />
-        </div>)}
-        {(currentFrame === 'createquestions') && <CreateQuestions disclosuresData={createDisclosuresData} />}
-        {(currentFrame !== 'createquestions') && <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' />}
+        </div>
+        <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' />
     </>)
 }
 

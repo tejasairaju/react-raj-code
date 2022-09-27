@@ -42,3 +42,25 @@
     font-size: 16px;
     text-align: left;
 }
+
+
+.framedropdown {
+    position: absolute;
+    /* left: 5em; */
+    font-size: 1em;
+    width: 6em;
+    padding: 10px;
+    display: flex;
+    height: 4em;
+    margin: -3em -6em;
+    background-color: lightblue;
+    display: none;
+    border-radius: 10px;
+  }
+  .frametoggler:focus {
+    outline: none;
+  }
+  
+  .frametoggler:focus + .framedropdown {
+    display: block;
+  }

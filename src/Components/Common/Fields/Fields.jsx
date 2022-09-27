@@ -40,7 +40,7 @@ const Pills = (props) => (
     <>
         {props.label && <h1 className="create-framework__title">{props.label}</h1>}
         <ul className="assign__categories">
-            {(props.data || []).map((subItem, index) => <li key={index} onClick={() => props.onSelectMultipleOption(index)} className={`assign__categories-item ${(subItem.isSelect === true) ? 'active' : ''}`}>
+            {(props.data || []).map((subItem, index) => <li key={index} onClick={() => props.onSelectMultipleOption(index)} className={`assign__categories-item ${(subItem.isSelect === true || props.allSelect) ? 'active' : ''}`}>
                 {subItem.name}
             </li>)
             }

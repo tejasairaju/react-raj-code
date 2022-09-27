@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
+import { useLocation } from 'react-router-dom';
 import Fields from '../../../Components/Common/Fields/Fields.jsx';
 import { questions } from '../../../utils/constants.js';
 import Popup from '../../../components/Common/Popup/Popup.jsx';
 import Modal from '../../../Components/Common/Modal/Modal.jsx';
 import './CreateQuestions.css';
-import { data } from 'autoprefixer';
+import { useEffect } from 'react';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateQuestions = (props) => {
-    const { disclosuresData } = props;
+    const location = useLocation();
+    const { category, section, id, name, code, framework } = _get(location, 'state', {}); 
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
     const [inputList, setInputList] = useState([initialRow]);
     const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
+
+    // useEffect(() => {
+    //     setInputList({})
+    // }, [])
 
     // handle input change
     const handleInputChange = (e, index) => {
@@ -48,21 +55,18 @@ const CreateQuestions = (props) => {
     };
 
     const onCreateQuestions = async () => {
-        let clonedisclosuresData = { ...disclosuresData };
-        delete disclosuresData.updated_at;
-        delete disclosuresData.created_at;
         let list = [...inputList];
         const newInputList = list.map(({ Dropdown, Multiselect, ...rest }) => {
             delete rest["Radio button"];
             return rest;
         });
         const payload = {
-            ...clonedisclosuresData,
+            ...location.state,
             parent: null,
             children: newInputList
         }
         try {
-            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${disclosuresData.framework}/disclosures/${disclosuresData.id}`, payload).then(({ data }) => data);
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework}/disclosures/${id}`, payload).then(({ data }) => data);
             setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
             setInputList([initialRow]);
         } catch (e) {
@@ -117,14 +121,14 @@ const CreateQuestions = (props) => {
                     <h1 className="create-framework__title">
                         Ref No
                     </h1>
-                    <input type="number" min="0" step=".1" className="refno_create_question" value={disclosuresData.code}
+                    <input type="number" min="0" step=".1" className="refno_create_question" value={code}
                         required disabled></input>
                     <h1 className="create-framework__title disclosure">
                         Disclosure
                         <img src='assets/images/questions.svg' alt='?' width='15px' height='15px'/>
                     </h1>
                     <input type="text" className="create-framework__input"
-                        value={disclosuresData.name} required disabled></input>
+                        value={name} required disabled></input>
                 </div>
             </div>
             <div className="create_questions_table__container">
@@ -132,7 +136,7 @@ const CreateQuestions = (props) => {
                 <table className="default-table">
                     <thead><tr>{tableHeaders.map((header) => <th>{header}</th>)}</tr></thead>
                     <tbody>
-                        {inputList.map((x, i) => {
+                        {(inputList || []).map((x, i) => {
                             return (<tr>
                                 <td>
                                     <Input label='' type="text" name='code' value={x.code} className="create-framework__input question-ref-code" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
