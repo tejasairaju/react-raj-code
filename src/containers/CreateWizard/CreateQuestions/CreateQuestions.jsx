@@ -14,7 +14,7 @@ const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateQuestions = (props) => {
     const location = useLocation();
-    const { category, section, id, name, code, framework } = _get(location, 'state', {}); 
+    const { category = '', section = '', id = '', name = '', code = null, framework = null } = _get(location, 'state', {});
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
@@ -96,7 +96,7 @@ const CreateQuestions = (props) => {
             return <>{(inputList[i]['field_choices'] || []).map((choice) => <li>{choice}</li>)}</>;
         }
         return null;
-        
+
     }
 
     const onCloseHandler = () => {
@@ -105,8 +105,13 @@ const CreateQuestions = (props) => {
         setFieldOptions(initialFieldOptions);
     }
 
-    const tableHeaders = ['Code', 'Question Title','Data Type','Input Type','Choices','Unit', null];
+    const tableHeaders = ['Code', 'Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
     return (<>
+        <div className="main__top-wrapper">
+            <h1 className="main__title">
+                {`Welcome to Create Questions`}
+            </h1>
+        </div>
         <div id="createQuestions" className="create_question__wrapper">
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
@@ -125,7 +130,7 @@ const CreateQuestions = (props) => {
                         required disabled></input>
                     <h1 className="create-framework__title disclosure">
                         Disclosure
-                        <img src='assets/images/questions.svg' alt='?' width='15px' height='15px'/>
+                        <img src='assets/images/questions.svg' alt='?' width='15px' height='15px' />
                     </h1>
                     <input type="text" className="create-framework__input"
                         value={name} required disabled></input>

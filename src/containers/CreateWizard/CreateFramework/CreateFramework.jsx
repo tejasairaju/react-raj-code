@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import _isEmpty from 'lodash/isEmpty';
+import queryString from 'query-string';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
@@ -18,13 +19,16 @@ const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 const CreateFramework = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { search } = _get(window, 'location', '?');
+    const params = queryString.parse(search);
     const [inputValue, setInputValue] = useState({});
-    const [validation, setValidation] = useState({});
+    const [errorValidation, setErrorValidation] = useState(false);
     const [logo, setLogo] = useState(null);
-    const [imageForm, setImageForm] = useState(null);
+    const [uploadImage, setUploadImage] = useState(null);
     const [statusData, setStatusData] = useState({});
-    const [createFrameResponse, setCreateFrameResponse] = useState({});
+    const [apiData, setApiData] = useState({});
     const [currentFrame, setCurrentFrame] = useState('');
+    const validation = {};
     // accordion 
     // const toke = getAccessTokenSilently(const accessToken = await getAccessTokenSilently({
     //     audience: `https://${domain}/api/v2/`,
@@ -40,7 +44,6 @@ const CreateFramework = (props) => {
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
                     Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
                 ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                    console.log('Response::::::::::::', countries, sectors, categories);
                     setInputValue({ countries: countries.results, sectors: sectors.results, categories: categories.results });
                 });
             } catch (error) {
@@ -48,7 +51,22 @@ const CreateFramework = (props) => {
             }
         };
         getUserAdminInfo(1);
+
+        if (params.isEdit) {
+            getframeworkDetails(params.id);
+        }
+
     }, []);
+    const getframeworkDetails = async (id = "") => {
+        try {
+            const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`).then(({ data }) => data);
+            setInputValue({ ...frameDetails, countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
+        } catch (e) {
+            setFrameworkdetails({});
+        }
+    }
+
+    const updateArrayObjects = (array = null, key = 'isSelect', value = true) => (array || []).map(item => { item[key] = value; return item });
 
     const getFilterArrayValue = (data = null) => {
         let filterData = [];
@@ -60,71 +78,33 @@ const CreateFramework = (props) => {
         return filterData;
     }
 
-    const checkValidation = () => {
-        let cloneInputValue = { ...inputValue };
-        let errors = {};
-        if (!(_get(cloneInputValue, 'name', '')).trim()) {
-            errors['name'] = "GRI is required";
-        } else if (!(_get(cloneInputValue, 'name', '')).trim()) {
-            errors['name'] = "Disclosures is required";
-        } else {
-            errors['name'] = "";
-        }
-
-        if (!_get(cloneInputValue, 'description', '').trim()) {
-            errors['description'] = "Description is required";
-        } else {
-            errors['description'] = "";
-        }
-        if (!_get(cloneInputValue, 'guidance', '').trim()) {
-            errors['guidance'] = "Guidance is required";
-        } else {
-            errors['guidance'] = "";
-        }
-        setValidation(errors);
-    }
-
     const onNextHandler = async () => {
-            if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description)) {
-                const payload = {
-                    name: inputValue.name,
-                    description: inputValue.description,
-
-                    // logo: "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20220926%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220926T170732Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5f14b20e01ab610073ee783f675ccea5d932bc09a9b6204e25d21c2e6befe06c",
-                    created_at: moment().format(),
-                    updated_at: moment().format(),
-                    supported_countries: getFilterArrayValue(inputValue.countries),
-                    supported_category: getFilterArrayValue(inputValue.categories),
-                    supported_sectors: getFilterArrayValue(inputValue.sectors),
-                    supported_sub_sectors: getFilterArrayValue(inputValue.subsectors)
-                }
-
-                try {
-                    // let data = new FormData();
-                    // data.append("data", imageForm);
-                    // payload['logo'] = data;
-                    // const response = await axios({
-                    //     method: 'post',
-                    //     mode: 'no-cors',
-                    //     body: data,
-                    //     headers: {
-                    //         "Content-Type": "multipart/form-data",
-                    //         "Accept": "application/json",
-                    //         "type": "formData"
-                    //     },
-                    //     url: `${process.env.API_BASE_URL}/esgadmin/frameworks`,
-                    // }).then(({ data }) => data);
-                    const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, payload).then(({ data }) => data);
-                    setCreateFrameResponse(response);
-                    setStatusData({ type: 'success', message: 'Thanks! Your account has been successfully created' });
-                    setInputValue({});
-                    navigate(`/manageframework`);
-                } catch (e) {
-                    setStatusData({ type: 'error', message: e.message });
-                }
-            } else {
-                checkValidation();
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description)&&(inputValue.countries || []).length
+        &&(inputValue.categories || []).length&&(inputValue.sectors || []).length&&(inputValue.subsectors || []).length) {
+            const form = new FormData();
+            form.append('name', inputValue.name);
+            form.append('description', inputValue.description)
+            form.append('logo', uploadImage.imageUrl, uploadImage.fileName);
+            form.append('created_at', moment().format());
+            form.append('updated_at', moment().format());
+            form.append('supported_countries', getFilterArrayValue(inputValue.countries));
+            form.append('supported_category', getFilterArrayValue(inputValue.categories));
+            form.append('supported_sectors', getFilterArrayValue(inputValue.sectors));
+            form.append('supported_sub_sectors', getFilterArrayValue(inputValue.subsectors));
+            try {
+                const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, form, {
+                    headers: { "Content-Type": "multipart/form-data" }
+                }).then(({ data }) => data);
+                setApiData(response);
+                setStatusData({ type: 'success', message: 'Thanks! Your account has been successfully created' });
+                setInputValue({});
+                setLogo(null);
+            } catch (e) {
+                setStatusData({ type: 'error', message: e.message });
             }
+        } else {
+            setErrorValidation(true);
+        }
     }
 
     const fetchSubSector = async (index, cloneObject) => {
@@ -163,25 +143,11 @@ const CreateFramework = (props) => {
     }
 
     const onChangeFile = (event) => {
-        const imageObj = event.target.files[0];
-        setLogo(URL.createObjectURL(imageObj));
-        setImageForm(imageObj);
-        if (imageObj) {
-            // const formData = new FormData();
-            // formData.append('dataFile', imageObj, imageObj.name);
-            // setImageForm(formData);
-
-            // axios.post(BASE_URL + 'uploadfile', formData).then(response => {
-            //     this.setState({
-            //         handleResponse: {
-            //             isSuccess: response.status === 200,
-            //             message: response.data.message
-            //         },
-            //         imageUrl: BASE_URL + response.data.file.path
-            //     });
-            // }).catch(err => {
-            //     alert(err.message);
-            // });
+        const imageUrl = event.target.files[0];
+        const fileName = event.target.files[0].name;
+        setLogo(URL.createObjectURL(imageUrl));
+        if (imageUrl) {
+            setUploadImage({fileName, imageUrl});
         }
     }
 
@@ -190,8 +156,7 @@ const CreateFramework = (props) => {
     }
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
-            (currentFrame === 'createframe') && setCurrentFrame('createdisclosures');
-            (currentFrame === 'createdisclosures') && setCurrentFrame('createquestions');
+            navigate(`/createdisclosures?id=${apiData.id}`);
         }
         setStatusData({ type: '', message: '' });
     }
@@ -217,19 +182,19 @@ const CreateFramework = (props) => {
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
             <h1 className="main__title">
-                {`Welcome to Create ${currentFrame === 'createframe' ? "Framework" : `${currentFrame === 'createdisclosures' ? 'Disclosures' : 'Questions'}`} Wizard`}
+                {`Welcome to Create Framework Wizard`}
             </h1>
         </div>
         <div className="main__content-wrapper">
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
-            <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} />
+            <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true}/>
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} />
-            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} />
-            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} />
-            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} />
-
+            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={true}/>
+            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true}/>
+            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={true}/>
+            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={true} />
         </div>
+        {errorValidation&&<div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
         <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' />
     </>)
 }

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import './ViewFrameWork.css';
+import './ViewDisclosures.css';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useNavigate } from "react-router-dom";
 
 const { Get } = Request;
 
-const ViewFrameWork = () => {
+const ViewDisclosures = () => {
     const navigate = useNavigate();
     const [frameworkData, setFrameworkData] = useState({});
     const [statusData, setStatusData] = useState({});
@@ -28,13 +28,13 @@ const ViewFrameWork = () => {
     const onCloseHandler = () => {
     }
 
-    const headers = ['Logo', 'Name', 'Description', 'Action'];
+    const headers = ['Name', 'Description', 'Action'];
 
     return (
         <>
             <div className="main__top-wrapper">
                 <h1 className="main__title">
-                    Edit Framework {'->'} List Frameworks
+                    Edit Framework {'->'} Frameworks {'->'} List Disclosures
                 </h1>
             </div>
             <div id="viewFramework" className="view-framework-container">
@@ -55,9 +55,7 @@ const ViewFrameWork = () => {
                                     <div>
                                         <div tabindex="1" className="frametoggler"><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
                                         <div className="framedropdown">
-                                        <div><a onClick={() => {navigate(`/createframe?id=${val.id}&isEdit=${true}`)}}>Edit Framework</a></div>
-                                        <div><a onClick={() => {navigate(`/createdisclosures?id=${val.id}`)}}>Create Disclosures</a></div>
-                                        <div><a onClick={() => {}}>View Disclosures</a></div>
+                                        <div><a onClick={() => {}}>Edit</a></div>
                                         </div>
                                     </div>
                                     {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
@@ -70,4 +68,4 @@ const ViewFrameWork = () => {
         </>)
 }
 
-export default ViewFrameWork;
+export default ViewDisclosures;

@@ -47,19 +47,18 @@
 .framedropdown {
     position: absolute;
     border: 2px solid #2088BD;
-    background: #d7eef6;
     font-size: small;
     width: 12em;
     padding: 10px;
     display: flex;
-    /* height: 5em; */
+    height: 5em;
     margin: -3.5em -12em;
-    display: none;
+    background-color: lightblue;
+    display: block;
     border-radius: 10px;
-    color: #2088BD;
   }
   .frametoggler:focus {
-    outline: none;
+    outline: block;
   }
   
   .frametoggler:focus + .framedropdown {

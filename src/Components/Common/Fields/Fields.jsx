@@ -38,7 +38,7 @@ const TextArea = (props) => (
 
 const Pills = (props) => (
     <>
-        {props.label && <h1 className="create-framework__title">{props.label}</h1>}
+        {props.label && <h1 className="create-framework__title">{props.label}{props.required&&<span className="color-red P-4">*</span>}</h1>}
         <ul className="assign__categories">
             {(props.data || []).map((subItem, index) => <li key={index} onClick={() => props.onSelectMultipleOption(index)} className={`assign__categories-item ${(subItem.isSelect === true || props.allSelect) ? 'active' : ''}`}>
                 {subItem.name}
@@ -50,12 +50,12 @@ const Pills = (props) => (
 
 const UploadFile = (props) => (
     <>
-        <h1 className="create-framework__title">{props.label}</h1>
+        <h1 className="create-framework__title">{props.label}{props.required&&<span className="color-red P-4">*</span>}</h1>
         <form className="add__logo-form">
             <div className="add__logo-logo">
                 {props.imageUrl ? <img src={props.imageUrl} alt="GRI" /> : null}
             </div>
-            <label for="add__logo" className="add__logo-label"> <span>Upload
+            <label for="add__logo" className="add__logo-label"><span>Upload
             </span>
             </label>
             <input type="file" onChange={props.onChangeFile} name="logo" className="add__logo-input" id="add__logo" accept=".jpg, .jpeg, .png" />

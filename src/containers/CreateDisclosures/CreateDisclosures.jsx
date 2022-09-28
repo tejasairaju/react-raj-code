@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import _isEmpty from 'lodash/isEmpty';
-import queryString from 'query-string'
+import queryString from 'query-string';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import _get from 'lodash/get';
@@ -158,7 +158,7 @@ const CreateDisclosures = (props) => {
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
             <h1 className="main__title">
-                {`Welcome to Create ${currentFrame === 'createframe' ? "Framework" : `${currentFrame === 'createdisclosures' ? 'Disclosures' : 'Questions'}`} Wizard`}
+                {`Welcome to Create Disclosures Wizard`}
             </h1>
         </div>
         <div className="main__content-wrapper">
