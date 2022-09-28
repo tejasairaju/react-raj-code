@@ -9,6 +9,12 @@
 .color-red {
     color: red;
 }
+
+.overall-error-container {
+display: flex;
+margin: auto;
+padding: 4px 0;
+}
 .error-msg {
     color: red;
     font-size: 0.7em;
