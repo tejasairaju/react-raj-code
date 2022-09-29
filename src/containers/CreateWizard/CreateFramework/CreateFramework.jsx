@@ -36,30 +36,34 @@ const CreateFramework = (props) => {
     //   }););
 
     useEffect(() => {
-        const getUserAdminInfo = async () => {
-            try {
-                await Axios.all([
-                    Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`),
-                    Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`),
-                    Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
-                    Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
-                ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                    setInputValue({ countries: countries.results, sectors: sectors.results, categories: categories.results });
-                });
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getUserAdminInfo(1);
-
         if (params.isEdit) {
             getframeworkDetails(params.id);
+        } else {
+            getUserAdminInfo(1);
         }
 
     }, []);
+
+    const getUserAdminInfo = async () => {
+        try {
+            await Axios.all([
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
+            ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
+                setInputValue({ countries: countries.results, sectors: sectors.results, categories: categories.results });
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const getframeworkDetails = async (id = "") => {
         try {
             const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`).then(({ data }) => data);
+            setLogo(frameDetails.logo);
+            !_isEmpty(frameDetails.logo)&&uploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
             setInputValue({ ...frameDetails, countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
         } catch (e) {
             setFrameworkdetails({});
@@ -84,7 +88,7 @@ const CreateFramework = (props) => {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('description', inputValue.description)
-            form.append('logo', uploadImage.imageUrl, uploadImage.fileName);
+            !_isEmpty(_get(uploadImage, "imageUrl", ""))&&form.append('logo', _get(uploadImage, "imageUrl", ""), _get(uploadImage, 'fileName', 'example.png'));
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());
             form.append('supported_countries', getFilterArrayValue(inputValue.countries));
@@ -121,7 +125,6 @@ const CreateFramework = (props) => {
                 }, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat(), ...response.results]
             });
         }
-
     }
 
     const onSelectMultipleOption = async (index, field) => {
@@ -137,6 +140,7 @@ const CreateFramework = (props) => {
             setInputValue({ ...cloneInputVal });
         }
     }
+
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
         setInputValue({ ...inputValue, [name]: value });
@@ -147,13 +151,14 @@ const CreateFramework = (props) => {
         const fileName = event.target.files[0].name;
         setLogo(URL.createObjectURL(imageUrl));
         if (imageUrl) {
-            setUploadImage({fileName, imageUrl});
+            setUploadImage({ fileName, imageUrl });
         }
     }
 
     const onChangeRemoveFile = () => {
         setLogo(null);
     }
+
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
             navigate(`/createdisclosures?id=${apiData.id}`);
@@ -187,14 +192,14 @@ const CreateFramework = (props) => {
         </div>
         <div className="main__content-wrapper">
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
-            <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true}/>
+            <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={true}/>
-            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true}/>
-            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={true}/>
+            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={true} />
+            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
+            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={true} />
             <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={true} />
         </div>
-        {errorValidation&&<div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
+        {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
         <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' />
     </>)
 }
