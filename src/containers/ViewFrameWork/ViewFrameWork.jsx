@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import './ViewFrameWork.css';
 import Popup from '../../components/Common/Popup/Popup.jsx';
+import MoreAction from "./MoreAction.jsx";
 import { useNavigate } from "react-router-dom";
 
 const { Get } = Request;
@@ -30,6 +31,8 @@ const ViewFrameWork = () => {
 
     const headers = ['Logo', 'Name', 'Description', 'Action'];
 
+    
+
     return (
         <>
             <div className="main__top-wrapper">
@@ -46,20 +49,13 @@ const ViewFrameWork = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {(frameworkData.results || []).map((val) => {
+                        {(frameworkData.results || []).map((val, index) => {
                             return (<tr>
                                 <td><img src="assets/images/logo-row.jpg" alt="logo" width='28px' height='28px' /></td>
                                 <td>{val.name}</td>
                                 <td>{val.description}</td>
                                 <td>
-                                    <div>
-                                        <div tabindex="1" className="frametoggler"><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
-                                        <div className="framedropdown">
-                                        <div><a onClick={() => {navigate(`/createframe?id=${val.id}&isEdit=${true}`)}}>Edit Framework</a></div>
-                                        <div><a onClick={() => {navigate(`/createdisclosures?id=${val.id}`)}}>Create Disclosures</a></div>
-                                        <div><a onClick={() => {}}>View Disclosures</a></div>
-                                        </div>
-                                    </div>
+                                <MoreAction value={val} index={index}/>
                                     {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
                                 </td>
                             </tr>)
@@ -69,5 +65,7 @@ const ViewFrameWork = () => {
             </div>
         </>)
 }
+
+
 
 export default ViewFrameWork;
