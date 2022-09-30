@@ -18,6 +18,7 @@ import RegistrationForm from '../components/RegistrationForm/RegistrationForm.js
 import CreateQuestions from '../containers/CreateWizard/CreateQuestions/CreateQuestions.jsx';
 import Packeges from "../containers/Packeges/Packeges.jsx";
 import ViewFrameWork from "../containers/ViewFrameWork/ViewFrameWork.jsx";
+// import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
 const RootRouter = () => {
   const { isAuthenticated = false, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
@@ -40,17 +41,17 @@ const RootRouter = () => {
   }
 
   let renderRouteComponent = null;
-  // if (isAuthenticated && loginUserDetails.orgi) {
-  //   renderRouteComponent = (<React.Fragment>
-  //     <Routes>
-  //       <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
-  //       <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
-  //       <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
-  //     </Routes></React.Fragment>)
-  // } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  if (isAuthenticated && loginUserDetails.orgi) {
+    renderRouteComponent = (<React.Fragment>
+      <Routes>
+        <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
+        <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
+        <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
+      </Routes></React.Fragment>)
+  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
     renderRouteComponent = (<Routes>
       <Route element={<CreateWizard />}>
-        <Route index element={<ManageFrameWork component='Home Page' />} />
+      <Route index element={<ManageFrameWork component='Home Page' />} />
         <Route path="/createframe" element={<CreateFramework />} />
         <Route path="/createdisclosures" element={<CreateDisclosures/>} />
         <Route path="/createquestions" element={<CreateQuestions/>} />
@@ -61,16 +62,16 @@ const RootRouter = () => {
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
       </Route>
     </Routes>)
-  // }
+  }
 
   return (
     <>
-      {/* {!isAuthenticated && (<React.Fragment>
+      {!isAuthenticated && (<React.Fragment>
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
         </Routes>
       </React.Fragment>
-      )} */}
+      )}
       <Routes>
         <Route path="/signup" element={<RegistrationForm />} />
       </Routes>
