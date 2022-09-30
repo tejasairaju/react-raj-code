@@ -16,7 +16,7 @@ const MoreAction = (props) => {
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
             <div onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
             <div><a onClick={() => { navigate(`/createdisclosures?id=${value.id}`) }}>Create Disclosures</a></div>
-            <div><a onClick={() => { }}>View Disclosures</a></div>
+            <div><a onClick={() => { navigate(`/viewdisclosures?id=${value.id}`)}}>View Disclosures</a></div>
         </div>
     </div>)
 }

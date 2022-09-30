@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import _isEmpty from 'lodash/isEmpty';
+import './Fields.css';
 import { useEffect } from "react";
 
 const Input = (props) => (
@@ -77,11 +78,28 @@ const Dropdown = (props) => {
     </select>);
 }
 
+const RadioButton = (props) => {
+    const { changed = () => {}, id = null, isSelected = false, label = "RadioButton", value = "RadioButton" } = props;
+    return (
+      <div className="RadioButton">
+        <input
+          id={id}
+          onChange={changed}
+          value={value}
+          type="radio"
+          checked={isSelected}
+        />
+        <label htmlFor={id} className="radio-label">{label}</label>
+      </div>
+    );
+  };
+
 export default {
     Input,
     TextArea,
     Pills,
     UploadFile,
     Button,
-    Dropdown
+    Dropdown,
+    RadioButton
 };
