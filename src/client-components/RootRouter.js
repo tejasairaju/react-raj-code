@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import jwt from 'jwt-decode';
 import _isEmpty from 'lodash/isEmpty';
-import { useLocation, Navigate, Outlet, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useLocation, Navigate, Outlet, BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { useAuth0 } from "../react-auth0-spa";
 import { Link } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute.js";
@@ -26,8 +26,10 @@ import MapDisclosures from "../containers/MapDisclosures/MapDisclosures.jsx";
 
 
 const RootRouter = () => {
+  const navigator = useNavigate();
   const { isAuthenticated = false, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
+  const [isVarified, setIsVarified] = useState(false);
   useMemo(() => {
     if (isAuthenticated) {
       const fn = async () => {
@@ -43,20 +45,28 @@ const RootRouter = () => {
   }, [isAuthenticated]);
 
   const loginHandler = (email) => {
-    loginWithRedirect();
+    // loginWithRedirect();
+    setIsVarified(true);
+    navigator('/');
+  }
+
+  const logoutHandler = () => {
+    // loginWithRedirect();
+    setIsVarified(false);
+    navigator('/');
   }
 
   let renderRouteComponent = null;
-  if (isAuthenticated && loginUserDetails.orgi) {
-    renderRouteComponent = (<React.Fragment>
-      <Routes>
-        <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
-        <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
-        <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
-      </Routes></React.Fragment>)
-  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  // if (isAuthenticated && loginUserDetails.orgi) {
+  //   renderRouteComponent = (<React.Fragment>
+  //     <Routes>
+  //       <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
+  //       <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
+  //       <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
+  //     </Routes></React.Fragment>)
+  // } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
     renderRouteComponent = (<Routes>
-      <Route element={<CreateWizard />}>
+      <Route element={<CreateWizard logoutHandler={() => logoutHandler}/>}>
       <Route index element={<ManageFrameWork component='Home Page' />} />
         <Route path="/createframe" element={<CreateFramework />} />
         <Route path="/createdisclosures" element={<CreateDisclosures/>} />
@@ -72,11 +82,11 @@ const RootRouter = () => {
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} /> 
       </Route>
     </Routes>)
-  }
+  // }
 
   return (
     <>
-      {!isAuthenticated && (<React.Fragment>
+      {!isVarified && (<React.Fragment>
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
         </Routes>
@@ -85,7 +95,8 @@ const RootRouter = () => {
       <Routes>
         <Route path="/signup" element={<RegistrationForm />} />
       </Routes>
-      {renderRouteComponent}
+      <>{isVarified&&<>{renderRouteComponent}</>}</>
+      
     </>
   );
 };

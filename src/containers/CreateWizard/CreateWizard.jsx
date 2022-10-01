@@ -15,7 +15,7 @@ import { clientUserMenu } from '../../utils/constants.js'
 import CreateFramework from './CreateFramework/CreateFramework.jsx';
 import axios from 'axios';
 
-const CreateWizard = () => {
+const CreateWizard = ({ logoutHandler = () => {}} ) => {
 
     const navigate = useNavigate();
     const [sideMenu, updateSideMenu] = useState(clientUserMenu);
@@ -88,7 +88,7 @@ const CreateWizard = () => {
             </nav>
         </aside>
         <main className="main">
-            <Header />
+            <Header logoutHandler={() => logoutHandler()} />
             <Outlet />
         </main>
     </>)
