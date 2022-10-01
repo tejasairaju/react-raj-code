@@ -70,7 +70,7 @@ const ViewDisclosures = () => {
                     </tr>
                 </table>
             </div>
-            <div id="viewDisclosures" className="view-framework-container">
+            <div id="viewDisclosures" className="view-diclosuer-container">
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
                 <table className="default-flex-table">
                     <thead>
