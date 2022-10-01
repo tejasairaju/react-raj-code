@@ -22,6 +22,7 @@ import CreateQuestions from '../containers/CreateWizard/CreateQuestions/CreateQu
 import Packeges from "../containers/Packeges/Packeges.jsx";
 import ViewFrameWork from "../containers/ViewFrameWork/ViewFrameWork.jsx";
 import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
+import MapDisclosures from "../containers/MapDisclosures/MapDisclosures.jsx";
 
 
 const RootRouter = () => {
@@ -63,7 +64,7 @@ const RootRouter = () => {
         <Route path="/manageframework" element={<ViewFrameWork />} />
         <Route path="/viewdisclosures" element={<ViewDisclosures />} />
         <Route path="/createdisclosures" element={<CreateFramework />} />
-
+        <Route path="/mapdisclosures" element={<MapDisclosures />} />
         <Route path="/manageclient" element={<ClientInfo />} />
         <Route path="/country" element={<ManageCountry />} />
         <Route path="/category" element={<ManageCategory />} />

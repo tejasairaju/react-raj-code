@@ -11,79 +11,9 @@ import Popup from "../../components/Common/Popup/Popup.jsx";
 import Header from '../../Components/Common/Header/Header.jsx';
 import './CreateWizard.css';
 import { useState } from 'react';
+import { clientUserMenu } from '../../utils/constants.js'
 import CreateFramework from './CreateFramework/CreateFramework.jsx';
 import axios from 'axios';
-
-const clientUserMenu = [{
-    clsName: '',
-    role: 'client',
-    label: "Home",
-    isActive: true,
-    icon1: 'home-icon.svg',
-    icon2: '',
-    route: '/'
-},
-{
-    clsName: '',
-    role: 'client',
-    label: "Manage Framework",
-    isActive: false,
-    icon1: 'frame-icon.svg',
-    icon2: 'plus-icon.svg',
-    subMenu: [{
-        clsName: '',
-        label: "Create Framework",
-        isActive: false,
-        route: '/createframe',
-    },
-    {
-        clsName: '',
-        label: "Manage Framework",
-        isActive: false,
-        route: '/manageframework',
-    },
-    {
-        clsName: '',
-        label: "Map Disclosures",
-        isActive: false,
-        route: '/createdisclosures',
-    }]
-},
-{
-    clsName: '',
-    role: 'client',
-    label: "Manage Client",
-    isActive: false,
-    icon1: 'client-icon.svg',
-    icon2: '',
-    route: '/manageclient'
-},
-{
-    clsName: '',
-    role: 'client',
-    label: "Manage Users",
-    isActive: false,
-    icon1: 'users-icon.svg',
-    icon2: '',
-    route: '/manageusers'
-}, {
-    clsName: '',
-    role: 'client',
-    label: "Manage Masters",
-    isActive: false,
-    icon1: 'masters-icon.svg',
-    icon2: '',
-    route: '/managemasters'
-},
-{
-    clsName: '',
-    role: 'client',
-    label: "System Settings",
-    isActive: false,
-    icon1: 'settings-icon.svg',
-    icon2: 'plus-icon.svg',
-    route: '/'
-}]
 
 const CreateWizard = () => {
 

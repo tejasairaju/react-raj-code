@@ -1,0 +1,98 @@
+.map__questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 15px;
+    padding-right: 10px;
+    overflow-y: auto;
+}
+.map__wrapper .assign__title, .map__wrapper .frameworks__choose,
+.map__wrapper .assign__categories, .map__check-item {
+    margin-bottom: 30px;
+}
+.map__wrapper .frameworks__choose {
+    padding-left: 20px;
+}
+.map__wrapper .frameworks__choose-item {
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.08);
+}
+.map__check-item .disclosures__wrapper {
+    max-height: 190px;
+    overflow-y: auto;
+    padding-right: 20px;
+}
+.map__check-item .disclosures__item {
+    display: flex;
+    gap: 15px;
+}
+.map__check-item .disclosures__item:not(:last-child) {
+    margin-bottom: 5%;
+}
+.map__check-item .disclosures__detalis {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    background: rgba(32, 136, 189, 0.1);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    padding-left: 8px;
+}
+.map__check-item .fake__checkbox {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: rgba(32, 136, 189, 0.1);
+    border: 4px solid #2088BD;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+}
+.map__check-item .disclosures__checkbox {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+}
+.map__check-item .disclosures__checkbox:checked ~ .fake__checkbox {
+    background: url('../../assets/icons/Arrows__checkbox.svg') no-repeat center/100%, #2088BD;
+}
+
+
+@media screen and (min-width: 1440px) and (max-width: 1919.8px) {
+    .map__check-item .disclosures__detalis {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1919.8px) {
+    
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1599.8px) {
+    
+}
+
+@media screen and (max-width: 1439.8px) {
+    .map__check-item .disclosures__detalis {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1439.8px) {
+    
+}
+
+@media screen and (max-width: 1199.8px) {
+    .map__check-item .disclosures__detalis {
+        font-size: 12px;
+    }
+}
