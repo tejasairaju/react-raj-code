@@ -23,7 +23,7 @@ const ClientInfo = (props) => {
         const getFramework = async () => {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await axios.get(`${process.env.API_BASE_URL}/organizations`).then(({ data }) => data);
+                const response = await axios.get(`${process.env.API_BASE_URL}/organizations/`).then(({ data }) => data);
                 setStatusData({ type: '', message: '' });
                 setClientData(response);
             } catch (e) {
