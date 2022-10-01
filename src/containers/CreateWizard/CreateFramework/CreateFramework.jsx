@@ -64,7 +64,7 @@ const CreateFramework = (props) => {
             const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`).then(({ data }) => data);
             setLogo(frameDetails.logo);
             !_isEmpty(frameDetails.logo) && setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
-            setInputValue({ ...frameDetails, countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
+            setInputValue({ ...frameDetails, categories:updateArrayObjects(frameDetails.supported_category), countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
         } catch (e) {
             // setFrameworkdetails({});
         }
