@@ -89,6 +89,7 @@ const RootRouter = () => {
       {!isVarified && (<React.Fragment>
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
+          <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>}/>
         </Routes>
       </React.Fragment>
       )}

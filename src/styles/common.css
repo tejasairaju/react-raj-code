@@ -48,7 +48,7 @@ body {
 body {
     font-family: 'Roboto', serif;
     font-size: 18px;
-    background: linear-gradient(129.29deg, #499E43 -6.15%, #2088BD 51.08%, #603A6D 97.51%);
+    /* background: linear-gradient(129.29deg, #499E43 -6.15%, #2088BD 51.08%, #603A6D 97.51%); */
 }
 
 .wrapper {
@@ -714,4 +714,11 @@ body {
 .default-flex-table td {
     font-size: 16px;
     text-align: left;
+}
+
+.default-login-btn {
+    padding: 14px;
+    background: lightgray;
+    margin: 14px;
+    border-radius: 4px;
 }
