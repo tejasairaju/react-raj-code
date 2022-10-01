@@ -18,7 +18,10 @@ import RegistrationForm from '../components/RegistrationForm/RegistrationForm.js
 import CreateQuestions from '../containers/CreateWizard/CreateQuestions/CreateQuestions.jsx';
 import Packeges from "../containers/Packeges/Packeges.jsx";
 import ViewFrameWork from "../containers/ViewFrameWork/ViewFrameWork.jsx";
-// import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
+import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
+import ClientInfo from "../containers/ClientInfo/ClientInfo.jsx";
+import ManageCountry from "../containers/ManageMaster/Country.jsx";
+import ManageCategory from "../containers/ManageMaster/Category.jsx";
 const RootRouter = () => {
   const { isAuthenticated = false, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
@@ -56,13 +59,19 @@ const RootRouter = () => {
         <Route path="/createdisclosures" element={<CreateDisclosures/>} />
         <Route path="/createquestions" element={<CreateQuestions/>} />
         <Route path="/manageframework" element={<ViewFrameWork />} />
+        <Route path="/viewdisclosures" element={<ViewDisclosures />} />
         <Route path="/createdisclosures" element={<CreateFramework />} />
-        <Route path="/manageclient" element={<ManageFrameWork component='Manage Client Page' />} />
+
+        <Route path="/manageclient" element={<ClientInfo />} />
+        <Route path="/country" element={<ManageCountry />} />
+        <Route path="/category" element={<ManageCategory />} />
+
+        {/* {/* <Route path="/manageclient" element={<ManageFrameWork component='Manage Client Page' />} /> */}
         <Route path="/manageusers" element={<ManageFrameWork component='Manage Users Page' />} />
-        <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
+        <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} /> 
       </Route>
     </Routes>)
-  }
+  // }
 
   return (
     <>
@@ -75,7 +84,6 @@ const RootRouter = () => {
       <Routes>
         <Route path="/signup" element={<RegistrationForm />} />
       </Routes>
-
       {renderRouteComponent}
     </>
   );
