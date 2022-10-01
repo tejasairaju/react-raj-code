@@ -61,7 +61,7 @@ export const questions = {
 }
 
 
-export const clientUserMenu =  [{
+export const clientUserMenu = [{
     clsName: '',
     role: 'client',
     label: "Home",
@@ -119,8 +119,21 @@ export const clientUserMenu =  [{
     label: "Manage Masters",
     isActive: false,
     icon1: 'masters-icon.svg',
-    icon2: '',
-    route: '/managemasters'
+    icon2: 'plus-icon.svg',
+    route: '/managemasters',
+    subMenu: [{
+        clsName: '',
+        label: "Country",
+        isActive: false,
+        route: '/country',
+    },
+    {
+        clsName: '',
+        label: "Category",
+        isActive: false,
+        route: '/category',
+    },
+]
 },
 {
     clsName: '',

@@ -84,6 +84,7 @@ const Category = (props) => {
         </div>
 
         <br />
+        <div id="viewCategory" className="view-diclosuer-container">
         <table className="default-flex-table">
 
             <thead>
@@ -105,6 +106,7 @@ const Category = (props) => {
                 })}
             </tbody>
         </table>
+        </div>
 
         <br />
 

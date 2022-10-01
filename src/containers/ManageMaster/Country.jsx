@@ -84,6 +84,7 @@ const ManageCountry = (props) => {
         </div>
 
         <br />
+        <div id="viewCountry" className="view-diclosuer-container">
         <table className="default-flex-table">
 
             <thead>
@@ -105,7 +106,7 @@ const ManageCountry = (props) => {
                 })}
             </tbody>
         </table>
-
+        </div>
         <br />
 
     </>)
