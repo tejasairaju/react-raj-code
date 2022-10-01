@@ -95,7 +95,7 @@ const ViewDisclosures = () => {
                             return (<tr>
                                 <td>{(index === 0) && <span><b>Disclosures:</b></span>}</td>
                                 <td> {val.code} &nbsp;&nbsp;{val.name}</td>
-                                <td>
+                                <td style={{padding: '2.5em 0 !important'}}>
                                     <div>
                                         <div tabindex="1" className="frametoggler"><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
                                         <div className="framedropdown">
@@ -106,7 +106,8 @@ const ViewDisclosures = () => {
                                 </td>
                             </tr>)
                         })
-                        : <tr><td colSpan={1}><b>Disclosures:</b></td><td>-</td><td>-</td></tr>
+                        : <tr>
+                            <td colSpan={1}><b>Disclosures:</b></td><td>-</td><td>-</td></tr>
                     }
                     </tbody>
                 </table>

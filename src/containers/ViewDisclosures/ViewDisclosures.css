@@ -113,3 +113,7 @@
   -ms-border-radius: 0 20px 20px 0;
   -o-border-radius: 0 20px 20px 0;
 }
+
+.view-disclosure-more-action {
+  padding:2.5em 0 !important;
+}
