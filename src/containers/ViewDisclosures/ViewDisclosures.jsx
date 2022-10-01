@@ -91,7 +91,7 @@ const ViewDisclosures = () => {
                                 />))}
                             </td>
                         </tr>
-                        {(apiData.results.length > 0) ? apiData.results.map((val, index) => {
+                        {((apiData.results || []).length > 0) ? apiData.results.map((val, index) => {
                             return (<tr>
                                 <td>{(index === 0) && <span><b>Disclosures:</b></span>}</td>
                                 <td> {val.code} &nbsp;&nbsp;{val.name}</td>

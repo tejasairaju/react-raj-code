@@ -63,7 +63,7 @@ const CreateFramework = (props) => {
         try {
             const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`).then(({ data }) => data);
             setLogo(frameDetails.logo);
-            !_isEmpty(frameDetails.logo)&&uploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
+            !_isEmpty(frameDetails.logo) && uploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
             setInputValue({ ...frameDetails, countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
         } catch (e) {
             setFrameworkdetails({});
@@ -83,18 +83,31 @@ const CreateFramework = (props) => {
     }
 
     const onNextHandler = async () => {
-        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description)&&(inputValue.countries || []).length
-        &&(inputValue.categories || []).length&&(inputValue.sectors || []).length&&(inputValue.subsectors || []).length) {
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && (inputValue.countries || []).length
+            && (inputValue.categories || []).length && (inputValue.sectors || []).length && (inputValue.subsectors || []).length) {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('description', inputValue.description)
-            !_isEmpty(_get(uploadImage, "imageUrl", ""))&&form.append('logo', _get(uploadImage, "imageUrl", ""), _get(uploadImage, 'fileName', 'example.png'));
+            if (!_isEmpty(uploadImage.fileName)) {
+                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+            }
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());
-            form.append('supported_countries', getFilterArrayValue(inputValue.countries));
-            form.append('supported_category', getFilterArrayValue(inputValue.categories));
-            form.append('supported_sectors', getFilterArrayValue(inputValue.sectors));
-            form.append('supported_sub_sectors', getFilterArrayValue(inputValue.subsectors));
+            // form.append('supported_countries', getFilterArrayValue(inputValue.countries));
+            // form.append('supported_category', getFilterArrayValue(inputValue.categories));
+            // form.append('supported_sectors', getFilterArrayValue(inputValue.sectors));
+            const getMultisector = getFilterArrayValue(inputValue.sectors);
+            for (const a of getMultisector) {
+                form.append("supported_sectors", a);
+            }
+            const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
+            for (const a of getMultisubsector) {
+                form.append("supported_sub_sectors", a);
+            }
+            const getMultisubcountries = getFilterArrayValue(inputValue.countries);
+            for (const a of getMultisubcountries) {
+                form.append("supported_countries", a);
+            }
             try {
                 const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, form, {
                     headers: { "Content-Type": "multipart/form-data" }
