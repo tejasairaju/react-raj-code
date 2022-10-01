@@ -11,6 +11,9 @@ import ExternalApi from "./ExternalApi.js";
 import Login from "../containers/login/Login.jsx";
 import CreateWizard from "../containers/CreateWizard/CreateWizard.jsx";
 import Profile from "./Profile.js";
+import ClientInfo from "../containers/ClientInfo/ClientInfo.jsx";
+import ManageCountry from "../containers/ManageMaster/Country.jsx";
+import ManageCategory from "../containers/ManageMaster/Category.jsx";
 import CreateFramework from "../containers/CreateWizard/CreateFramework/CreateFramework.jsx";
 import CreateDisclosures from "../containers/CreateDisclosures/CreateDisclosures.jsx";
 import ManageFrameWork from "../containers/ManageFrameWork/ManageFrameWork.jsx";
@@ -19,9 +22,8 @@ import CreateQuestions from '../containers/CreateWizard/CreateQuestions/CreateQu
 import Packeges from "../containers/Packeges/Packeges.jsx";
 import ViewFrameWork from "../containers/ViewFrameWork/ViewFrameWork.jsx";
 import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
-import ClientInfo from "../containers/ClientInfo/ClientInfo.jsx";
-import ManageCountry from "../containers/ManageMaster/Country.jsx";
-import ManageCategory from "../containers/ManageMaster/Category.jsx";
+
+
 const RootRouter = () => {
   const { isAuthenticated = false, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
@@ -65,13 +67,11 @@ const RootRouter = () => {
         <Route path="/manageclient" element={<ClientInfo />} />
         <Route path="/country" element={<ManageCountry />} />
         <Route path="/category" element={<ManageCategory />} />
-
-        {/* {/* <Route path="/manageclient" element={<ManageFrameWork component='Manage Client Page' />} /> */}
         <Route path="/manageusers" element={<ManageFrameWork component='Manage Users Page' />} />
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} /> 
       </Route>
     </Routes>)
-  // }
+  }
 
   return (
     <>
@@ -88,9 +88,4 @@ const RootRouter = () => {
     </>
   );
 };
-
-
-
 export default RootRouter;
-
-
