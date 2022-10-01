@@ -20,7 +20,7 @@ export const Login = ({loginHandler}) => {
     }
 
     const onClickloginHandler = () => {
-        if(email === 'admin@esg.com'){
+        if(email){
             loginHandler(email);
         } else {
             setError('Please Provide vaild Email id');

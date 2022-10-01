@@ -84,7 +84,7 @@ const CreateFramework = (props) => {
 
     const onNextHandler = async () => {
         if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && (inputValue.countries || []).length
-            && (inputValue.categories || []).length && (inputValue.sectors || []).length && (inputValue.subsectors || []).length) {
+            && (inputValue.categories || []).length && (inputValue.sectors || []).length) {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('description', inputValue.description)
@@ -93,20 +93,25 @@ const CreateFramework = (props) => {
             }
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());
-            // form.append('supported_countries', getFilterArrayValue(inputValue.countries));
-            // form.append('supported_category', getFilterArrayValue(inputValue.categories));
-            // form.append('supported_sectors', getFilterArrayValue(inputValue.sectors));
             const getMultisector = getFilterArrayValue(inputValue.sectors);
+
             for (const a of getMultisector) {
-                form.append("supported_sectors", a);
+                if(!_isEmpty(a)) {
+                    form.append("supported_sectors", a);
+                }
+                
             }
             const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
             for (const a of getMultisubsector) {
+                if(!_isEmpty(a)) {
                 form.append("supported_sub_sectors", a);
+                }
             }
             const getMultisubcountries = getFilterArrayValue(inputValue.countries);
             for (const a of getMultisubcountries) {
+                if(!_isEmpty(a)) {
                 form.append("supported_countries", a);
+                }
             }
             try {
                 const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, form, {
@@ -209,7 +214,7 @@ const CreateFramework = (props) => {
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
             <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={true} />
             <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
-            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={true} />
+            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={false} />
             <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={true} />
         </div>
         {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}

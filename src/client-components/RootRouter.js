@@ -45,26 +45,26 @@ const RootRouter = () => {
   }, [isAuthenticated]);
 
   const loginHandler = (email) => {
-    // loginWithRedirect();
-    setIsVarified(true);
-    navigator('/');
+    loginWithRedirect();
+    // setIsVarified(true);
+    // navigator('/');
   }
 
   const logoutHandler = () => {
     // loginWithRedirect();
-    setIsVarified(false);
-    navigator('/');
+    // setIsVarified(false);
+    // navigator('/');
   }
 
   let renderRouteComponent = null;
-  // if (isAuthenticated && loginUserDetails.orgi) {
-  //   renderRouteComponent = (<React.Fragment>
-  //     <Routes>
-  //       <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
-  //       <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
-  //       <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
-  //     </Routes></React.Fragment>)
-  // } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  if (isAuthenticated && loginUserDetails.orgi) {
+    renderRouteComponent = (<React.Fragment>
+      <Routes>
+        <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
+        <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
+        <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
+      </Routes></React.Fragment>)
+  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
     renderRouteComponent = (<Routes>
       <Route element={<CreateWizard logoutHandler={() => logoutHandler}/>}>
       <Route index element={<ManageFrameWork component='Home Page' />} />
@@ -82,21 +82,21 @@ const RootRouter = () => {
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} /> 
       </Route>
     </Routes>)
-  // }
+  }
 
   return (
     <>
-      {!isVarified && (<React.Fragment>
+      {!isAuthenticated && (<React.Fragment>
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
-          <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>}/>
+          {/* <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>}/> */}
         </Routes>
       </React.Fragment>
       )}
       <Routes>
         <Route path="/signup" element={<RegistrationForm />} />
       </Routes>
-      <>{isVarified&&<>{renderRouteComponent}</>}</>
+      {renderRouteComponent}
       
     </>
   );
