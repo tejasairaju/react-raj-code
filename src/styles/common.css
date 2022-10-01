@@ -206,51 +206,11 @@ body {
     border-right: 6px solid #2088BD;
 }
 
-/* ----Aside Sublist lines */
-/* .aside-framework .sublist-item {
-            border-left: 2px solid #585E62;
-        }
-        .aside-framework .sublist-item .list-item__wrapper {
-            position: relative;
-            padding-left: 45px;
-        }
-        .aside-framework .sublist-item .list-item__wrapper::before {
-            content:'';
-            position: absolute;
-            top: 0;
-            left: -2px;
-            bottom: 50%;
-            width: 28px;
-            border: 2px solid #585E62;
-            border-top: 0 none transparent;
-            border-right: 0 none transparent;
-        }
-        .aside-framework .sublist-item .list-item__wrapper::after {
-            content: '';
-            background: url('../../../assets/icons/Arrow_sub.svg') no-repeat center/cover;
-            position: absolute;
-            display: block;
-            top: 49%;
-            left: 6%;
-            width: 8px;
-            height: 12px;
-            transform: translateY(-50%);
-            -webkit-transform: translateY(-50%);
-            -moz-transform: translateY(-50%);
-            -ms-transform: translateY(-50%);
-            -o-transform: translateY(-50%);
-        }
-        .aside-framework .sublist > .sublist-item:last-child {
-            border-left: 2px solid transparent;
-        } */
-/* -----Aside Sublist lines End--------- */
 .sublist.active {
     display: flex;
     flex-direction: column;
 }
 
-/* -------Aside end------- */
-/* -------Header---------- */
 .header {
     display: flex;
     align-items: center;
@@ -731,4 +691,27 @@ body {
     .main {
         padding: 8% 4% 3%;
     }
+}
+
+.default-flex-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.default-flex-table tr {}
+
+.default-flex-table th {
+    padding: 0.5em 1em;
+    background: rgba(32, 136, 189, 0.3);
+}
+
+.default-flex-table td {
+    padding: 1.6em 1em;
+    border-bottom: 1px solid lightgray;
+}
+
+.default-flex-table th,
+.default-flex-table td {
+    font-size: 16px;
+    text-align: left;
 }
