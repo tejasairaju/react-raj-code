@@ -1,3 +1,49 @@
+export const mapCatagory_1 = [
+    {
+        name: "Environment",
+        isSelected: false
+    },
+    {
+        name: "Social",
+        isSelected: false
+    },
+    {
+        name: "Governance",
+        isSelected: false
+    },
+    {
+        name: "General",
+        isSelected: false
+    },
+    {
+        name: "Goverment",
+        isSelected: false
+    }
+];
+
+export const mapCatagory_2 = [
+    {
+        name: "Environment",
+        isSelected: false
+    },
+    {
+        name: "Social",
+        isSelected: false
+    },
+    {
+        name: "Governance",
+        isSelected: false
+    },
+    {
+        name: "General",
+        isSelected: false
+    },
+    {
+        name: "Goverment",
+        isSelected: false
+    }
+];
+
 export const questions = {
     dataType: [{
         label: 'Varchar',

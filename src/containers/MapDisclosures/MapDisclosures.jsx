@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import _get from 'lodash/get';
 import queryString from 'query-string';
@@ -6,12 +6,16 @@ import './MapDisclosures.css';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
+import { mapCatagory_1, mapCatagory_2 } from "../../utils/constants.js";
 const { RadioButton, Button, Pills } = Fields;
+
 
 const { Get } = Request;
 
 const MapDisclosures = () => {
     const navigate = useNavigate();
+    const [listCatagory_1, setListCatagory_1] = useState([...mapCatagory_1]);
+    const [listCatagory_2, setListCatagory_2] = useState([...mapCatagory_2]);
     const [apiData, setApiData] = useState({});
     const [radioDPType = "", setDPradioType] = useState({});
     const [radioDCType = "", setDCradioType] = useState({});
@@ -55,7 +59,7 @@ const MapDisclosures = () => {
         }
     };
 
-    const onCanceltHandler = async() =>{
+    const onCanceltHandler = async () => {
         setParentDisclosureData([])
         setChildDisclosureData([])
         setParentKPI([])
@@ -138,8 +142,18 @@ const MapDisclosures = () => {
         }
     }
 
-    const onFrameworkSelect = async (val = "", type = "") => {
+    const onFrameworkSelect = async (val = "", type = "", index) => {
         console.log(val);
+        let cloneFrameworksData = [...frameworksData];
+        cloneFrameworksData = (cloneFrameworksData || []).map((item, i) => {
+            if (i === index) {
+                item['isSelect'] = true;
+            } else {
+                item['isSelect'] = false;
+            }
+            return item;
+        });
+        setFrameworksData([...cloneFrameworksData]);
         getDisclosures('469652cb-dfc8-4d72-97b2-a5bd438f5e6e', type)
     }
 
@@ -149,12 +163,30 @@ const MapDisclosures = () => {
     const headers = ['Name', 'Description', 'Action'];
     const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
 
-    const renderFrameworkLogo= (type) => (<div class="frameworks__choose">
-        {(frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.select ? 'active' : null}`}>
-            <img src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type)} />
+    const renderFrameworkLogo = (type) => (<div class="frameworks__choose">
+        {(frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.isSelect ? 'active' : null}`}>
+            <img src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
         </div>))
         }
-    </div>)
+    </div>);
+    const onSelectSingleOption = (index, mode) => {
+
+        let cloneListCatagory = (mode == "left") ? [...listCatagory_1] : [...listCatagory_2];
+        cloneListCatagory = (cloneListCatagory || []).map((item, i) => {
+            if (index === i) {
+                item['isSelect'] = true;
+            } else {
+                item['isSelect'] = false;
+            }
+            return item;
+        });
+        if (mode == "left") {
+            setListCatagory_1([...cloneListCatagory])
+        } else {
+            setListCatagory_2([...cloneListCatagory])
+        }
+
+    }
 
     return (
         <>
@@ -170,24 +202,8 @@ const MapDisclosures = () => {
                     </h1>
 
                     {renderFrameworkLogo('parent')}
-
-                    <h1 class="assign__title">
-                        Categories:
-                    </h1>
-                    <ul class="assign__categories">
-                        <li class="assign__categories-item active">
-                            Environmental
-                        </li>
-                        <li class="assign__categories-item active">
-                            Social
-                        </li>
-                        <li class="assign__categories-item">
-                            Governance
-                        </li>
-                        <li class="assign__categories-item">
-                            Material Sourcing
-                        </li>
-                    </ul>
+                    <h1 class="map-diclosures-catagory">Categories:</h1>
+                    <Pills label='' data={listCatagory_1} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'left')} />
                     <div class="map__check-item">
                         <h1 class="assign__title">
                             Disclosures:
@@ -242,23 +258,8 @@ const MapDisclosures = () => {
                         Choose a Framework to map to:
                     </h1>
                     {renderFrameworkLogo('child')}
-                    <h1 class="assign__title">
-                        Categories:
-                    </h1>
-                    <ul class="assign__categories">
-                        <li class="assign__categories-item active">
-                            Environmental
-                        </li>
-                        <li class="assign__categories-item active">
-                            Social
-                        </li>
-                        <li class="assign__categories-item">
-                            Governance
-                        </li>
-                        <li class="assign__categories-item">
-                            Material Sourcing
-                        </li>
-                    </ul>
+                    <h1 class="map-diclosures-catagory">Categories:</h1>
+                    <Pills label='' data={listCatagory_2} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'rigth')} />
                     <div class="map__check-item">
                         <h1 class="assign__title">
                             Disclosures:
@@ -288,7 +289,7 @@ const MapDisclosures = () => {
                             Question:
                         </h1>
                         <div class="disclosures__wrapper">
-                           
+
                             {(childKPI || []).map((val, index) => (
                                 <div class="disclosures__item">
                                     <p class="disclosures__detalis">
@@ -311,7 +312,7 @@ const MapDisclosures = () => {
                 </div>
             </div>
             <div class="buttons__panel">
-            
+
                 <Button label='CANCEL' onClickHandler={onCanceltHandler} className='buttons__panel-button' />
                 <Button label='MAP QUESTION' onClickHandler={onNextHandler} className='main__button map-disc-main-btn' />
             </div>
