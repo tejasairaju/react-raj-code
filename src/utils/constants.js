@@ -120,7 +120,6 @@ export const clientUserMenu = [{
     isActive: false,
     icon1: 'masters-icon.svg',
     icon2: 'plus-icon.svg',
-    route: '/managemasters',
     subMenu: [{
         clsName: '',
         label: "Country",

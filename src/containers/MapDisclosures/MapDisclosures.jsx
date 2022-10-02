@@ -157,6 +157,13 @@ const MapDisclosures = () => {
     const headers = ['Name', 'Description', 'Action'];
     const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
 
+    const renderFrameworkLogo = (<div class="frameworks__choose">
+        {(frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.select ? 'active' : null}`}>
+            <img src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, "parent")} />
+        </div>))
+        }
+    </div>)
+
     return (
         <>
             <div class="main__top-wrapper">
@@ -169,29 +176,9 @@ const MapDisclosures = () => {
                     <h1 class="assign__title">
                         Choose a Framework to map from:
                     </h1>
-                    <div class="frameworks__choose">
-                        <table className="default-flex-table">
-                            <tbody>
-                                <tr>
-                                    {(frameworksData || []).map((val, index) => {
 
-                                        return (
-                                            <td><img src={val.logo == null ? "assets/images/logo-row.jpg" : val.logo} alt="logo" width='15px' height='15px' onClick={() => onFrameworkSelect(val, "parent")} /></td>
-                                        )
-                                    })}
-                                </tr>
-                            </tbody>
-                        </table>
-                        {/* <div class="frameworks__choose-item active">
-                            <img src="./assets/images/gri.png" alt="GRI" />
-                        </div>
-                        <div class="frameworks__choose-item">
-                            <img src="./assets/images/sasb.png" alt="GRI" />
-                        </div>
-                        <div class="frameworks__choose-item">
-                            <img src="./assets/images/tcfd.png" alt="GRI" />
-                        </div> */}
-                    </div>
+                    {renderFrameworkLogo}
+
                     <h1 class="assign__title">
                         Categories:
                     </h1>
@@ -214,33 +201,23 @@ const MapDisclosures = () => {
                             Disclosures:
                         </h1>
                         <div class="disclosures__wrapper">
-                            <table>
-                                <tbody>
-                                    {(parentDisclosure || []).map((val, index) => {
-
-                                        return (
-                                            <tr class="disclosures__item">
-                                                <td class="disclosures__detalis">{val.code + " " + val.name}</td>
-                                                <label for="organisational__checkbox" class="disclosures__label">
-                                                    <RadioButton
-                                                        class="fake__checkbox"
-                                                        changed={() => radioChangeHandler("disclousure", val, "parent")}
-                                                        id={val.id}
-                                                        isSelected={radioDPType === val.id}
-                                                        label={""}
-                                                        value={val}
-                                                    />
-
-                                                    {/* <input type="radio"  id={val.id} /> */}
-                                                    {/* <div class="fake__checkbox"></div> */}
-                                                </label>
-                                            </tr>
-
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
-
+                            {(parentDisclosure || []).map((val, index) => (
+                                <div class="disclosures__item">
+                                    <p class="disclosures__detalis">
+                                        {val.code + " " + val.name}
+                                    </p>
+                                    <label for="organisational__checkbox" class="disclosures__label" onClick={() => radioChangeHandler("disclousure", val, "parent")}>
+                                        <input type="checkbox"
+                                            class="disclosures__checkbox"
+                                            id={val.id}
+                                            checked={(radioDPType === val.id)}
+                                            label={""}
+                                            value={val}
+                                        />
+                                        <div class={`${radioDPType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                    </label>
+                                </div>)
+                            )}
                         </div>
                     </div>
                     <div class="map__check-item">
@@ -248,32 +225,23 @@ const MapDisclosures = () => {
                             Question:
                         </h1>
                         <div class="disclosures__wrapper">
-                            <table>
-                                <tbody>
-                                    {(parentKPI || []).map((val, index) => {
-
-                                        return (
-                                            <tr class="disclosures__item">
-                                                <td class="disclosures__detalis">{val.code + " " + val.label}</td>
-                                                <label for="organisational__checkbox" class="disclosures__label">
-                                                    <RadioButton
-                                                        class="fake__checkbox"
-                                                        changed={() => radioChangeHandler("kpi", val, "parent")}
-                                                        id={val.id}
-                                                        isSelected={radioKPType === val.id}
-                                                        label={""}
-                                                        value={val}
-                                                    />
-
-                                                    {/* <input type="radio"  id={val.id} /> */}
-                                                    {/* <div class="fake__checkbox"></div> */}
-                                                </label>
-                                            </tr>
-
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
+                            {(parentKPI || []).map((val, index) => (
+                                <div class="disclosures__item">
+                                    <p class="disclosures__detalis">
+                                        {val.code + " " + val.name}
+                                    </p>
+                                    <label for="organisational__checkbox" class="disclosures__label" onClick={() => radioChangeHandler("kpi", val, "parent")}>
+                                        <input type="checkbox"
+                                            class="disclosures__checkbox"
+                                            id={val.id}
+                                            checked={(radioKPType === val.id)}
+                                            label={""}
+                                            value={val}
+                                        />
+                                        <div class={`${radioKPType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                    </label>
+                                </div>)
+                            )}
                             {/* <div class="disclosures__item">
                                 <p class="disclosures__detalis">
                                     2-1 Organisational details
@@ -326,27 +294,14 @@ const MapDisclosures = () => {
                     <h1 class="assign__title">
                         Choose a Framework to map to:
                     </h1>
-                    <div class="frameworks__choose">
-                        <table className="default-flex-table">
-                            <tbody>
-                                <tr>
-
-                                    {(frameworksData || []).map((val, index) => {
-
-                                        return (
-                                            <td><img src={val.logo == null ? "assets/images/logo-row.jpg" : val.logo} alt="logo" width='15px' height='15px' onClick={() => onFrameworkSelect(val, "child")} /></td>
-                                        )
-                                    })}
-                                </tr>
-                            </tbody>
-                        </table>
-                        {/* <div class="frameworks__choose-item active">
+                    {renderFrameworkLogo}
+                    {/* <div class="frameworks__choose-item active">
                             <img src="./assets/images/sasb.png" alt="GRI" />
                         </div>
                         <div class="frameworks__choose-item">
                             <img src="./assets/images/tcfd.png" alt="GRI" />
                         </div> */}
-                    </div>
+
                     <h1 class="assign__title">
                         Categories:
                     </h1>
@@ -369,31 +324,23 @@ const MapDisclosures = () => {
                             Disclosures:
                         </h1>
                         <div class="disclosures__wrapper">
-                            <table>
-                                <tbody>
-                                    {(childDisclosure || []).map((val, index) => {
-
-                                        return (
-                                            <tr class="disclosures__item">
-                                                <td class="disclosures__detalis">{val.code + " " + val.name}</td>
-                                                <label for="organisational__checkbox" class="disclosures__label">
-                                                    <RadioButton
-                                                        class="fake__checkbox"
-                                                        changed={() => radioChangeHandler("disclousure", val, "child")}
-                                                        id={val.id}
-                                                        isSelected={radioDCType === val.id}
-                                                        label={""}
-                                                        value={val}
-                                                    />
-                                                    {/* <input type="checkbox"  id={val.id} /> */}
-                                                    {/* <div class="fake__checkbox"></div> */}
-                                                </label>
-                                            </tr>
-
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
+                            {(childDisclosure || []).map((val, index) => (
+                                <div class="disclosures__item">
+                                    <p class="disclosures__detalis">
+                                        {val.code + " " + val.name}
+                                    </p>
+                                    <label for="organisational__checkbox" class="disclosures__label" onClick={() => radioChangeHandler("disclousure", val, "child")}>
+                                        <input type="checkbox"
+                                            class="disclosures__checkbox"
+                                            id={val.id}
+                                            checked={(radioDCType === val.id)}
+                                            label={""}
+                                            value={val}
+                                        />
+                                        <div class={`${radioDCType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                    </label>
+                                </div>)
+                            )}
                         </div>
                     </div>
                     <div class="map__check-item">
@@ -446,44 +393,33 @@ const MapDisclosures = () => {
                                     <div class="fake__checkbox"></div>
                                 </label>
                             </div> */}
-                            <table>
-                                <tbody>
-                                    {(childKPI || []).map((val, index) => {
 
-                                        return (
-                                            <tr class="disclosures__item">
-                                                <td class="disclosures__detalis">{val.code + " " + val.label}</td>
-                                                <label for="organisational__checkbox" class="disclosures__label">
-                                                    <RadioButton
-                                                        class="fake__checkbox"
-                                                        changed={() => radioChangeHandler("kpi", val, "child")}
-                                                        id={val.id}
-                                                        isSelected={radioKCType === val.id}
-                                                        label={""}
-                                                        value={val}
-                                                    />
 
-                                                    {/* <input type="radio"  id={val.id} /> */}
-                                                    {/* <div class="fake__checkbox"></div> */}
-                                                </label>
-                                            </tr>
-
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
+                            {(childKPI || []).map((val, index) => (
+                                <div class="disclosures__item">
+                                    <p class="disclosures__detalis">
+                                        {val.code + " " + val.name}
+                                    </p>
+                                    <label for="organisational__checkbox" class="disclosures__label" onClick={() => radioChangeHandler("kpi", val, "child")}>
+                                        <input type="checkbox"
+                                            class="disclosures__checkbox"
+                                            id={val.id}
+                                            checked={(radioKCType === val.id)}
+                                            label={""}
+                                            value={val}
+                                        />
+                                        <div class={`${radioKCType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                    </label>
+                                </div>)
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="buttons__panel">
-                <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' />
-                {/* <button class="buttons__panel-button">
-                    CANCEL
-                </button>
-                <button class="main__button">
-                    MAP QUESTION
-                </button> */}
+            
+                <Button label='CANCEL' onClickHandler={onNextHandler} className='buttons__panel-button' />
+                <Button label='MAP QUESTION' onClickHandler={onNextHandler} className='main__button map-disc-main-btn' />
             </div>
         </>)
 }

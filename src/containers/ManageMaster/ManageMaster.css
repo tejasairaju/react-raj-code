@@ -170,6 +170,7 @@
 .country__text__box {
     padding: 10px 14px;
     font-size: 18px;
+    margin-left:4px;
     width: 75%;
     line-height: 1;
     outline: none;

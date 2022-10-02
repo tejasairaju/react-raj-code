@@ -15,7 +15,7 @@ const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 const CreateDisclosures = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [inputValue, setInputValue] = useState({});
+    const [inputValue, setInputValue] = useState({ code: 4343});
     const [validation, setValidation] = useState({});
     const [statusData, setStatusData] = useState({});
     const [frameworkDetails, setFrameworkdetails] = useState({});
@@ -23,14 +23,29 @@ const CreateDisclosures = (props) => {
     const [currentFrame, setCurrentFrame] = useState(''); // 
     const {search} = _get(window, 'location', '?');
     const params = queryString.parse(search);
+    const {id = "", disclosureId= "", isEditable = false } = params;
 
     useEffect(() => {
-        if (!_isEmpty(params.id) && _isEmpty(frameworkDetails)) {
+        if (!_isEmpty(params.id) && _isEmpty(frameworkDetails) && !isEditable) {
             getframeworkDetails(params.id);
+            getUserAdminInfo(1);
+        } else {
+            getDisclosures();
         }
-        getUserAdminInfo(1);
+
     }, []);
 
+
+    const getDisclosures = async() => {
+        try {
+            const response = await axios.get(`http://13.40.76.135/backend/esgadmin/frameworks/469652cb-dfc8-4d72-97b2-a5bd438f5e6e/disclosures/82f7fce8-e1d7-4294-b177-1f734a9e714b`).then(({ data }) => data);
+            console.log("::::::::::::resuk", response);
+            setInputValue(response);
+        } catch (error) {
+        }
+    }
+
+    const updateArrayObjects = (array = null, key = 'isSelect', value = true) => (array || []).map(item => { item[key] = value; return item });
     const getUserAdminInfo = async () => {
         try {
             const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`).then(({ data }) => data);
@@ -174,12 +189,11 @@ const CreateDisclosures = (props) => {
             </div>
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'guidance', false) ? 'user_input_error' : null}`} error={validation['guidance']} label='Guidance' name='guidance' value={inputValue.guidance || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            {console.log('::::::::::', inputValue.categories)}
             <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} />
             <Pills label='Sectors' data={frameworkDetails['supported_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
             <Pills label='Sub Sectors' data={frameworkDetails['supported_sub_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
         </div>
-        <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' />
+        <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' /> 
     </>)
 }
 

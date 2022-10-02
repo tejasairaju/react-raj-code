@@ -66,7 +66,7 @@ const Category = (props) => {
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             <div class="user_input_text flex flex-column">
                 <h1 class="main__title">
-                    Country
+                    Country : 
                 </h1>
                 <input type="text" name="category" class="country__text__box"
                     placeholder="Enter the Category"
