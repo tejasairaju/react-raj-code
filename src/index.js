@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 // import Auth0ProviderWithHistory from "./auth0-provider-with-history.js";
 import history from "./utils/history";
-// import './styles/template/framework.css'
+import './styles/template/framework.css'
 // import './styles/roots/fonts.css';
 // import './styles/roots/reset.css';
 // import './styles/template/aside-framework.css';
