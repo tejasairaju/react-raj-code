@@ -181,7 +181,7 @@ const CreateDisclosures = (props) => {
                 Ref No
             </h1>
             <div class="create-framework__row-wrapper create__disclosure_ref ref__no">
-                <input type="number" name='code' value={inputValue.code || 0} onChange={onChangeHandler} min="0" step=".1" className="create-framework__input" required />
+                <input type="text" name='code' value={inputValue.code || ''} onChange={onChangeHandler} min="0" step=".1" className="create-framework__input" required />
                 <div className='create__disclosure_container'>
                     <h1 className="create-framework__title">Disclosures<span className="color-red P-4">*</span></h1>
                     <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} />

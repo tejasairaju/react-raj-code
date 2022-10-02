@@ -23,6 +23,7 @@ import Packeges from "../containers/Packeges/Packeges.jsx";
 import ViewFrameWork from "../containers/ViewFrameWork/ViewFrameWork.jsx";
 import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
 import MapDisclosures from "../containers/MapDisclosures/MapDisclosures.jsx";
+import SystemAdminDashboard from "../containers/Dashboards/SystemAdminDashboard.jsx";
 
 
 const RootRouter = () => {
@@ -67,7 +68,7 @@ const RootRouter = () => {
   } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
     renderRouteComponent = (<Routes>
       <Route element={<CreateWizard logoutHandler={() => logoutHandler}/>}>
-      <Route index element={<ManageFrameWork component='Home Page' />} />
+      <Route index element={<SystemAdminDashboard />} />
         <Route path="/createframe" element={<CreateFramework />} />
         <Route path="/createdisclosures" element={<CreateDisclosures/>} />
         <Route path="/createquestions" element={<CreateQuestions/>} />
@@ -79,7 +80,7 @@ const RootRouter = () => {
         <Route path="/country" element={<ManageCountry />} />
         <Route path="/category" element={<ManageCategory />} />
         <Route path="/manageusers" element={<ManageFrameWork component='Manage Users Page' />} />
-        <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} /> 
+        {/* <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />  */}
       </Route>
     </Routes>)
   }

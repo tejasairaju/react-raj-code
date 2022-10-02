@@ -45,7 +45,11 @@ export const mapCatagory_2 = [
 ];
 
 export const questions = {
-    dataType: [{
+    dataType: [
+        {
+            label: 'N/A',
+            value: 'notapplicable'
+        },{
         label: 'Varchar',
         value: 'varchar'
     },
@@ -65,7 +69,11 @@ export const questions = {
         label: 'Datetime',
         value: 'datetime'
     }],
-    inputType: [{
+    inputType: [
+        {
+            label: 'N/A',
+            value: 'notapplicable'
+        },{
         label: 'Input',
         value: 'input'
     }, {

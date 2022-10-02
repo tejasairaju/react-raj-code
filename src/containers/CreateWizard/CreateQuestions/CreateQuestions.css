@@ -17,6 +17,12 @@
         padding: 2em 1em;
     }
 
+.question-disclosure-error {
+    width: fit-content;
+    margin-top: 0.5em;
+}
+    
+
     .create-framework__row-wrapper .create-framework__title {
         white-space: nowrap;
     }
