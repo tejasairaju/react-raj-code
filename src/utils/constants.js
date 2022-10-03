@@ -48,34 +48,37 @@ export const questions = {
     dataType: [
         {
             label: 'N/A',
-            value: 'notapplicable'
+            value: 'N/A',
         },{
         label: 'Varchar',
-        value: 'varchar'
+        value: 'Varchar',
+        selected: ''
     },
     {
         label: 'Number',
-        value: 'number'
+        value: 'Number'
     },
     {
         label: '%',
-        value: 'percentage'
+        value: '%',
+        selected: ''
     },
     {
         label: 'Currency',
-        value: 'currency'
+        value: 'Currency'
     },
     {
         label: 'Datetime',
-        value: 'datetime'
+        value: 'Datetime'
     }],
     inputType: [
         {
             label: 'N/A',
-            value: 'notapplicable'
+            value: 'N/A',
+            selected: 'selected'
         },{
         label: 'Input',
-        value: 'input'
+        value: 'Input'
     }, {
         label: 'Dropdown',
         value: 'Dropdown',
@@ -88,7 +91,7 @@ export const questions = {
     },
     {
         label: 'Currency',
-        value: 'currency'
+        value: 'Currency'
     }, {
         label: 'Multiselect',
         value: 'Multiselect',
@@ -96,21 +99,21 @@ export const questions = {
     }],
     unitType: [{
         label: 'N/A',
-        value: 'notapplicable'
+        value: 'N/A'
     }, {
         label: 'Numbers',
-        value: 'numbers'
+        value: 'Numbers'
     },
     {
         label: 'Sq Mt',
-        value: 'sqmt'
+        value: 'Sq Mt'
     },
     {
         label: 'kWh',
-        value: 'kwh'
+        value: 'kWh'
     }, {
         label: 'Liters',
-        value: 'liters'
+        value: 'Liters'
     }]
 }
 
