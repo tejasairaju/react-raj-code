@@ -15,6 +15,7 @@ const Input = (props) => (
             className={props.className}
             placeholder={props.placeholder}
             required={props.required}
+            disabled={props.isEditable}        
         />
         {!_isEmpty(props.error)?<div className='error-msg'>{props.error}</div>: null}
         </div>
@@ -30,7 +31,8 @@ const TextArea = (props) => (
             onChange={props.onChangeHandler}
             name={props.name}
             className={`${props.className} create-framework__textarea`}
-            required={props.required}>
+            required={props.required}
+            disabled={props.isEditable}>
         </textarea>
         {!_isEmpty(props.error)?<div className='error-msg'>{props.error}</div>: null}
         </div>
@@ -71,9 +73,9 @@ const Button = (props) => (<button onClick={props.onClickHandler} className={pro
 
 const Dropdown = (props) => {
     
-    return (<select className={props.className_1} name={props.name || ''} value={props.value} onChange={props.onChangeHandler}>
+    return (<select className={props.className_1} disabled={props.isEditable ? 'disabled' : ''}  name={props.name || ''} value={props.value} onChange={props.onChangeHandler}>
         {(props.options || []).map((option) => (
-            <option className={props.className_2} value={option.value}>{option.label}</option>
+            <option className={props.className_2} value={option.value} selected={(option.value === props.value) ? 'selected': null}>{option.label}</option>
         ))}
     </select>);
 }

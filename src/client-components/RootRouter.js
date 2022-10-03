@@ -24,6 +24,7 @@ import ViewFrameWork from "../containers/ViewFrameWork/ViewFrameWork.jsx";
 import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
 import MapDisclosures from "../containers/MapDisclosures/MapDisclosures.jsx";
 import SystemAdminDashboard from "../containers/Dashboards/SystemAdminDashboard.jsx";
+import ViewQuestions from "../containers/ViewQuestions/ViewQuestions.jsx";
 
 
 const RootRouter = () => {
@@ -74,6 +75,7 @@ const RootRouter = () => {
         <Route path="/createquestions" element={<CreateQuestions/>} />
         <Route path="/manageframework" element={<ViewFrameWork />} />
         <Route path="/viewdisclosures" element={<ViewDisclosures />} />
+        <Route path="/viewquestions" element={<ViewQuestions />} />
         <Route path="/createdisclosures" element={<CreateFramework />} />
         <Route path="/mapdisclosures" element={<MapDisclosures />} />
         <Route path="/manageclient" element={<ClientInfo />} />
@@ -90,7 +92,7 @@ const RootRouter = () => {
       {!isAuthenticated && (<React.Fragment>
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
-          {/* <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>}/> */}
+           <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>}/> 
         </Routes>
       </React.Fragment>
       )}

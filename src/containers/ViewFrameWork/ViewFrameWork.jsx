@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import './ViewFrameWork.css';
 import Popup from '../../components/Common/Popup/Popup.jsx';
-import MoreAction from "./MoreAction.jsx";
+import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
 import { useNavigate } from "react-router-dom";
 
 const { Get } = Request;
@@ -55,7 +55,7 @@ const ViewFrameWork = () => {
                                 <td>{val.name}</td>
                                 <td>{val.description}</td>
                                 <td>
-                                <MoreAction value={val} index={index}/>
+                                <MoreAction viewListFramework={true} value={val} index={index}/>
                                     {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
                                 </td>
                             </tr>)

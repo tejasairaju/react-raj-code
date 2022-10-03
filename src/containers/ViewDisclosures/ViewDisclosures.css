@@ -36,7 +36,7 @@
 }
 
 .disc-framework-details>table>tr>td {
-  margin-top: 0.5em !important;
+  margin-top: 1em !important;
   border-bottom: 0px !important;
   padding: 0.8em 1em !important;
 }
@@ -67,6 +67,15 @@
   display: none;
   border-radius: 10px;
   color: #2088BD;
+}
+
+.view-disclosure-container {
+  margin-top: 1em !important;
+}
+
+.diclosuer-catagory-container {
+  display: flex !important;
+align-items: center !important;
 }
 
 .row-catagory-display {
@@ -100,6 +109,7 @@
 
 .disc-framework-details {
   display: flex !important;
+  border: 1px solid lightgray;
 }
 
 .view-diclosuer-container {
