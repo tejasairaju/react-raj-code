@@ -25,6 +25,9 @@ import ViewDisclosures from "../containers/ViewDisclosures/ViewDisclosures.jsx";
 import MapDisclosures from "../containers/MapDisclosures/MapDisclosures.jsx";
 import SystemAdminDashboard from "../containers/Dashboards/SystemAdminDashboard.jsx";
 import ViewQuestions from "../containers/ViewQuestions/ViewQuestions.jsx";
+import CustomerOnboardByAdmin from "../containers/ClientInfo/CustomerOnboardByAdmin.jsx";
+import ESGAdmin from "../containers/ESGAdmin/AdminUser.jsx";
+import ESGAdminUserOnboard from "../containers/ESGAdmin/AdminUserCreate.jsx";
 
 
 const RootRouter = () => {
@@ -81,7 +84,10 @@ const RootRouter = () => {
         <Route path="/manageclient" element={<ClientInfo />} />
         <Route path="/country" element={<ManageCountry />} />
         <Route path="/category" element={<ManageCategory />} />
-        <Route path="/manageusers" element={<ManageFrameWork component='Manage Users Page' />} />
+        <Route path="/customeronboardbyadmin" element={<CustomerOnboardByAdmin />} />
+        <Route path="/adminuser" element={<ESGAdmin />} />
+        <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
+        {/* <Route path="/manageusers" element={<ManageFrameWork component='Manage Users Page' />} /> */}
         {/* <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />  */}
       </Route>
     </Routes>)

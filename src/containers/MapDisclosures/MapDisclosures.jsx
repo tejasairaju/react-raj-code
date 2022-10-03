@@ -293,6 +293,7 @@ const MapDisclosures = () => {
 
     return (
         <>
+         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             <div class="main__top-wrapper">
                 <h1 class="main__title">
                     Map Disclosure - Questions
@@ -303,7 +304,6 @@ const MapDisclosures = () => {
                     <h1 class="assign__title">
                         Choose a Framework to map from:
                     </h1>
-
                     {renderFrameworkLogo('parent')}
                     <h1 class="map-diclosures-catagory">Categories:</h1>
                     <Pills label='' data={listCatagory_1} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'left')} />

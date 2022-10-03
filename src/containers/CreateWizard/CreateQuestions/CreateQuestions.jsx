@@ -14,7 +14,8 @@ const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateQuestions = (props) => {
     const location = useLocation();
-    const { category = '', section = '', id = '', name = '', code = null, framework = null } = _get(location, 'state', {});
+     const state = _get(location, 'state', {});
+     const { category = '', section = '', id = '', name = '', code = null, framework = null } = state || {};
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };

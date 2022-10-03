@@ -5,15 +5,12 @@ import queryString from 'query-string';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import MoreAction from "./MoreAction.jsx";
+import AdminAction from "./AdminAction.jsx";
 import moment from 'moment';
 import _get from 'lodash/get';
  
 
-
-import './ClientInfo.css';
-
-const ClientInfo = (props) => {
+const ESGAdmin = (props) => {
     const navigate = useNavigate();
 
 
@@ -23,7 +20,7 @@ const ClientInfo = (props) => {
         const getFramework = async () => {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await axios.get(`${process.env.API_BASE_URL}/organizations/`).then(({ data }) => data);
+                const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/administrators`).then(({ data }) => data);
                 setStatusData({ type: '', message: '' });
                 setClientData(response);
             } catch (e) {
@@ -36,23 +33,19 @@ const ClientInfo = (props) => {
 
 
 
-    const headers = ['Logo',
-    'Organisation',
-    'Location',
-    'Client admin',
-    'Package',
-    'License',
-    'Users',
-    'Status',
+    const headers = ['First Name',
+    'Last Name',
+    'Contact Number',
+    'Emil Id',
     'Action'];
 
     return (<>
 
             <div class="main__top-wrapper">
                 <h1 class="main__title">
-                    Client Info
+                    ESG Admin User Info
                 </h1>
-                <button class="main__button" onClick={() => { navigate(`/customeronboardbyadmin`) }}>
+                <button class="main__button" onClick={() => { navigate(`/adminuser/create`) }}>
                     ADD
                 </button>
             </div>
@@ -67,18 +60,15 @@ const ClientInfo = (props) => {
                 <tbody>
                         {(clientData.results || []).map((val, index) => {
                             return (<tr>
-                                <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td>
-                                <td>{val.name}</td>
+                        
+                                <td>{val.first_name}</td>
  
-                                <td>{val.headquarters}</td>
+                                <td>{val.last_name}</td>
 
-                                <td>{val.name}</td>
-                                <td>Silver</td>
-                                <td> </td>
-                                <td>5</td>
-                                <td>{val.status}</td>
+                                <td>{val.phone_number}</td>
+                                <td>{val.email_id}</td>
                                 <td>
-                                <MoreAction value={val} index={index}/>
+                                <AdminAction value={val} index={index}/>
                                     {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
                                 </td>
                             </tr>)
@@ -90,4 +80,4 @@ const ClientInfo = (props) => {
 
     </>)
 }
-export default ClientInfo;
+export default ESGAdmin;

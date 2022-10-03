@@ -169,7 +169,7 @@ export const clientUserMenu = [{
     isActive: false,
     icon1: 'users-icon.svg',
     icon2: '',
-    route: '/manageusers'
+    route: '/adminuser'
 }, {
     clsName: '',
     role: 'client',

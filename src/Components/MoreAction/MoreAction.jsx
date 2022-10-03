@@ -29,7 +29,7 @@ const MoreAction = (props) => {
             </> }
             {viewDisclosures&&
                   <>
-                  <div onClick={() => onNavigateHandler(`/createquestions`)}><a>Create Questions</a></div>
+                  <div onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
                   <div><a onClick={() => {onRedirectWithState(`/viewQuestions`)}}>View Questions</a></div>
                   
               </>
