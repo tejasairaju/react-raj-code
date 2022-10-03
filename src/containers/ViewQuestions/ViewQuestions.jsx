@@ -180,7 +180,7 @@ const ViewQuestions = () => {
                     </tr>
                 </table>
             {/* </div> */}
-            <div id="viewDisclosures" className="view-diclosuer-container">
+            <div id="viewQuestions" className="view-questions-container">
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
                 {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
                     <div className='create-options-title'>Please enter the options with comma separated value</div>
@@ -189,7 +189,18 @@ const ViewQuestions = () => {
                         <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
                     </div>
                 </Modal>}
-                <table className="default-flex-table">
+
+                {<QuestionHeader code={code} name={name} />}
+                <QuestionsTable
+                                isEditable={false}
+                                    tableData={inputList}
+                                    tableHeader={tableHeaders}
+                                    handleInputChange={handleInputChange}
+                                    handleRemoveClick={handleRemoveClick}
+                                    handleAddClick={handleAddClick}
+                                    isError={isError} />
+                {}
+                {/* <table className="default-flex-table">
                     <thead>
                         <tr>
                             {headers.map(header => <th>{header}</th>)}
@@ -198,7 +209,7 @@ const ViewQuestions = () => {
                     <tbody>
                         <tr>
                             <td className="">
-                                <QuestionHeader code={code} name={name} />
+                                
                                 <QuestionsTable
                                 isEditable={false}
                                     tableData={inputList}
@@ -212,7 +223,7 @@ const ViewQuestions = () => {
                         </tr>
 
                     </tbody>
-                </table>
+                </table> */}
             </div>
         </>)
 }

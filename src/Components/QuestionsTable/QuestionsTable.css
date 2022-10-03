@@ -1,3 +1,5 @@
 .create_questions_table__container table th {
     background: none !important;
+    overflow-y: scroll !important;
+    margin-top: 0.5em;
 }

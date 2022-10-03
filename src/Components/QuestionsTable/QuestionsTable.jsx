@@ -1,6 +1,7 @@
 import React from 'react';
 import Fields from '../Common/Fields/Fields.jsx';
 import {questions} from '../../utils/constants.js';
+import MoreAction from '../MoreAction/MoreAction.jsx';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 
@@ -12,7 +13,6 @@ const QuestionsTable = ({ tableData= null, tableHeader = null, handleInputChange
             return <>{(tableData[i]['field_choices'] || []).map((choice) => <li>{choice}</li>)}</>;
         }
         return null;
-
     }
 
     return (<div className="create_questions_table__container">
@@ -41,6 +41,9 @@ const QuestionsTable = ({ tableData= null, tableHeader = null, handleInputChange
                     <td>
                         <Dropdown isEditable={true} className_1={'questions__select select1'} className_2={'questions__select-item'} options={unitType} name='field_unit_values' value={x.field_unit_values} onChangeHandler={(e) => handleInputChange(e, i)} />
 
+                    </td>
+                    <td>
+                        {/* {<MoreAction viewQuestions={true} index={i} state={x} />} */}
                     </td>
                     {false&&<td>
                         <div className='flex'>

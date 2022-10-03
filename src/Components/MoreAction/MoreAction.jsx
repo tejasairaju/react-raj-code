@@ -22,17 +22,16 @@ const MoreAction = (props) => {
     return (<div onClick={() => setIsopen(false)}>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active" : "inactive"}`}>
-            {viewListFramework&&<>
+            {viewListFramework && <>
                 <div onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
                 <div><a onClick={() => { navigate(`/createdisclosures?id=${value.id}`) }}>Create Disclosures</a></div>
                 <div><a onClick={() => { navigate(`/viewdisclosures?id=${value.id}`) }}>View Disclosures</a></div>
-            </> }
-            {viewDisclosures&&
-                  <>
-                  <div onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
-                  <div><a onClick={() => {onRedirectWithState(`/viewQuestions`)}}>View Questions</a></div>
-                  
-              </>
+            </>}
+            {viewDisclosures &&
+                <>
+                    <div onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
+                    <div><a onClick={() => { onRedirectWithState(`/viewQuestions`) }}>View Questions</a></div>
+                </>
             }
         </div>
     </div>)
