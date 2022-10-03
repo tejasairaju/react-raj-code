@@ -764,3 +764,7 @@ body {
     margin: 14px;
     border-radius: 4px;
 }
+
+.hide{
+    display:none;
+}

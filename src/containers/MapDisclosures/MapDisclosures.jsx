@@ -21,15 +21,17 @@ const MapDisclosures = () => {
     const [radioDCType = "", setDCradioType] = useState({});
     const [radioKPType = "", setKPradioType] = useState({});
     const [radioKCType = "", setKCradioType] = useState({});
-    const [sourceFrameworkId, setSourceFrameworkId] = useState({});
-    const [destinationFrameworkId, setDestinationFrameworkId] = useState({});
+    const [sourceFrameworkId = null, setSourceFrameworkId] = useState({});
+    const [destinationFrameworkId = null, setDestinationFrameworkId] = useState({});
     const [catagoryParentType, setParentCatagoryType] = useState();
     const [catagoryChildType, setChildCatagoryType] = useState();
     const [parentDisclosure, setParentDisclosureData] = useState([]);
     const [childDisclosure, setChildDisclosureData] = useState([]);
     const [parentKPI, setParentKPI] = useState([]);
     const [childKPI, setChildKPI] = useState([]);
-    const [frameworksData, setFrameworksData] = useState([])
+    const [frameworksData, setFrameworksData] = useState([]);
+    const [childFrameworksData, setChildFrameworksData] = useState([])
+    const [existingMapping, setExistingMapping] = useState([])
     const [statusData, setStatusData] = useState({});
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
@@ -38,6 +40,19 @@ const MapDisclosures = () => {
     useEffect(() => {
         getframeworks();
     }, []);
+
+    // const settSourceFrameworkId = setSourceFrameworkId((val) => val);
+    // const settDestinationFrameworkId = setDestinationFrameworkId((val) => !val);
+
+
+    // setSourceFrameworkId = (val) =>{
+    //     val
+    // }
+
+    // setDestinationFrameworkId = (val) =>{
+    //     val
+    // }
+
 
     const radioChangeHandler = (type, value, plane) => {
         if (type === "kpi") {
@@ -59,6 +74,20 @@ const MapDisclosures = () => {
         }
     };
 
+    const addToolTip = (id) => {
+        return existingMapping.map(i => {
+            if (i.source_disclosure_kpi.id === id) {
+                return "Its already mapped with " + i.target_disclosure.name + " : " + i.target_disclosure_kpi.label
+            }
+            if (i.target_disclosure_kpi.id === id) {
+                return "Its already mapped with " + i.source_disclosure.name + " : " + i.source_disclosure_kpi.label
+            }
+            else {
+                return ""
+            }
+        })[0]
+    }
+
     const onCanceltHandler = async () => {
         setParentDisclosureData([])
         setChildDisclosureData([])
@@ -70,10 +99,10 @@ const MapDisclosures = () => {
         try {
             setStatusData({ type: 'loading', message: '' });
             const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/disclosure-mappings`, {
-                "source_framework": sourceFrameworkId,
+                "source_framework": sourceFrameworkId.id,
                 "source_disclosure": radioDPType,
                 "source_disclosure_kpi": radioKPType,
-                "target_framework": destinationFrameworkId,
+                "target_framework": destinationFrameworkId.id,
                 "target_disclosure": radioDCType,
                 "target_disclosure_kpi": radioKCType,
                 "name": radioKPType + "___" + radioKCType
@@ -93,13 +122,33 @@ const MapDisclosures = () => {
             console.log('>>>>>>>>>>>>', response.results);
             if (type === "parent") {
                 setParentDisclosureData(response.results)
-                setSourceFrameworkId(framework_id)
+                // setSourceFrameworkId(framework_id)
             }
             else {
                 setChildDisclosureData(response.results)
-                setDestinationFrameworkId(framework_id)
+                // setDestinationFrameworkId(framework_id)
             }
             setApiData(response);
+        } catch (e) {
+            setStatusData({ type: 'error', message: e.message });
+        }
+    }
+
+    const getMappingDisclosures = async (source = "", target = "") => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/disclosure-mappings?source_framework=${source.name}&target_framework=${target.name}`).then(({ data }) => data);
+            setStatusData({ type: '', message: '' });
+            console.log('>>>>>>>>>>>>', response.results);
+            // if (type === "parent") {
+            //     setParentDisclosureData(response.results)
+            //     // setSourceFrameworkId(framework_id)
+            // }
+            // else {
+            //     setChildDisclosureData(response.results)
+            //     // setDestinationFrameworkId(framework_id)
+            // }
+            setExistingMapping(response.results);
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });
         }
@@ -137,6 +186,7 @@ const MapDisclosures = () => {
         try {
             const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks`).then(({ data }) => data);
             setFrameworksData(frameDetails.results.slice(0, 5));
+            setChildFrameworksData(JSON.parse(JSON.stringify(frameDetails.results.slice(0, 5))));
         } catch (e) {
             setFrameworksData({});
         }
@@ -144,16 +194,69 @@ const MapDisclosures = () => {
 
     const onFrameworkSelect = async (val = "", type = "", index) => {
         console.log(val);
-        let cloneFrameworksData = [...frameworksData];
-        cloneFrameworksData = (cloneFrameworksData || []).map((item, i) => {
-            if (i === index) {
-                item['isSelect'] = true;
-            } else {
-                item['isSelect'] = false;
-            }
-            return item;
-        });
-        setFrameworksData([...cloneFrameworksData]);
+        if (type === "parent") {
+            let cloneFrameworksData = [...frameworksData];
+            cloneFrameworksData = (cloneFrameworksData || []).map((item, i) => {
+                if (i === index) {
+                    item['isSelect'] = true;
+                } else {
+                    item['isSelect'] = false;
+                }
+                return item;
+            });
+            setFrameworksData([...cloneFrameworksData]);
+            let cloneChildFrameworksData = [...childFrameworksData];
+            cloneChildFrameworksData = (cloneChildFrameworksData || []).map((item, i) => {
+                if (i === index) {
+                    item['isSource'] = true;
+                    if (item['isSelect'] === true) {
+                        setChildDisclosureData([])
+                        setChildKPI([])
+                        item['isSelect'] = false
+                    }
+                } else {
+                    item['isSource'] = false;
+                }
+                return item;
+            });
+            setChildFrameworksData([...cloneChildFrameworksData]);
+            // setListCatagory_1(val.supported_category)
+            setSourceFrameworkId(val)
+        }
+        else if (type === "child") {
+            let cloneFrameworksData = [...childFrameworksData];
+            cloneFrameworksData = (cloneFrameworksData || []).map((item, i) => {
+                if (i === index) {
+                    item['isSelect'] = true;
+                } else {
+                    item['isSelect'] = false;
+                }
+                return item;
+            });
+            setChildFrameworksData([...cloneFrameworksData]);
+            let cloneframeworksData = [...frameworksData];
+            cloneframeworksData = (cloneframeworksData || []).map((item, i) => {
+                if (i === index) {
+                    item['isSource'] = true;
+                    if (item['isSelect'] === true) {
+                        setParentDisclosureData([])
+                        setParentKPI([])
+                        item['isSelect'] = false
+                    }
+                } else {
+                    item['isSource'] = false;
+                }
+                return item;
+            });
+            setFrameworksData([...cloneframeworksData]);
+            // setListCatagory_2(val.supported_category)
+            setDestinationFrameworkId(val)
+        }
+        if ((Object.keys(sourceFrameworkId).length > 0 && type === "child") || (Object.keys(destinationFrameworkId).length > 0 && type === "parent")) {
+            // getMappingDisclosures(Object.keys(sourceFrameworkId).length >0?sourceFrameworkId:val, Object.keys(destinationFrameworkId).length >0?destinationFrameworkId:val)
+            getMappingDisclosures({ name: "Xlicon_Custom" }, { name: "Xlicon_Custom" })
+        }
+
         getDisclosures('469652cb-dfc8-4d72-97b2-a5bd438f5e6e', type)
     }
 
@@ -164,8 +267,8 @@ const MapDisclosures = () => {
     const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
 
     const renderFrameworkLogo = (type) => (<div class="frameworks__choose">
-        {(frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.isSelect ? 'active' : null}`}>
-            <img src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
+        {(type === "child" ? childFrameworksData : frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.isSelect ? 'active' : null} ${val.isSource ? ' hide' : null}`}>
+            <img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
         </div>))
         }
     </div>);
@@ -234,8 +337,10 @@ const MapDisclosures = () => {
                         </h1>
                         <div class="disclosures__wrapper">
                             {(parentKPI || []).map((val, index) => (
-                                <div class="disclosures__item">
+                                <div title={`${addToolTip(val.id)
+                                    }`} class="disclosures__item">
                                     <p class="disclosures__detalis">
+                                        {/* {val.code + " " + val.label + "  " + existingMapping.filter(i => {return i.source_disclosure_kpi.id === val.id || i.target_disclosure_kpi.id === val.id})} */}
                                         {val.code + " " + val.label}
                                     </p>
                                     <label for="organisational__checkbox" class="disclosures__label" onClick={() => radioChangeHandler("kpi", val, "parent")}>
@@ -259,7 +364,7 @@ const MapDisclosures = () => {
                     </h1>
                     {renderFrameworkLogo('child')}
                     <h1 class="map-diclosures-catagory">Categories:</h1>
-                    <Pills label='' data={listCatagory_2} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'rigth')} />
+                    <Pills label='' data={listCatagory_2} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'right')} />
                     <div class="map__check-item">
                         <h1 class="assign__title">
                             Disclosures:
@@ -291,7 +396,8 @@ const MapDisclosures = () => {
                         <div class="disclosures__wrapper">
 
                             {(childKPI || []).map((val, index) => (
-                                <div class="disclosures__item">
+                                <div title={`${addToolTip(val.id)
+                                    }`} class="disclosures__item">
                                     <p class="disclosures__detalis">
                                         {val.code + " " + val.label}
                                     </p>
