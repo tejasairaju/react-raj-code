@@ -253,11 +253,11 @@ const MapDisclosures = () => {
             setDestinationFrameworkId(val)
         }
         if ((Object.keys(sourceFrameworkId).length > 0 && type === "child") || (Object.keys(destinationFrameworkId).length > 0 && type === "parent")) {
-            // getMappingDisclosures(Object.keys(sourceFrameworkId).length >0?sourceFrameworkId:val, Object.keys(destinationFrameworkId).length >0?destinationFrameworkId:val)
-            getMappingDisclosures({ name: "Xlicon_Custom" }, { name: "Xlicon_Custom" })
+            getMappingDisclosures(Object.keys(sourceFrameworkId).length >0?sourceFrameworkId:val, Object.keys(destinationFrameworkId).length >0?destinationFrameworkId:val)
+            // getMappingDisclosures({ name: "Xlicon_Custom" }, { name: "Xlicon_Custom" })
         }
 
-        getDisclosures('469652cb-dfc8-4d72-97b2-a5bd438f5e6e', type)
+        getDisclosures(val.id, type)
     }
 
     const onCloseHandler = () => {
