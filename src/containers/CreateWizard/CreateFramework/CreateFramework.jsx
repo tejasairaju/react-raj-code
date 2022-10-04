@@ -124,7 +124,7 @@ const CreateFramework = (props) => {
                     headers: { "Content-Type": "multipart/form-data" }
                 }).then(({ data }) => data);
                 setApiData(response);
-                setStatusData({ type: 'success', message: 'Thanks! Your account has been successfully created' });
+                setStatusData({ type: 'success', message: 'Thanks! Your framework has been successfully created' });
                 setInputValue({});
                 setLogo(null);
             } catch (e) {
@@ -214,7 +214,7 @@ const CreateFramework = (props) => {
                 {`Welcome to Create Framework Wizard`}
             </h1>
         </div>
-        <div className="main__content-wrapper">
+        <div id="createFramework" className="main__content-wrapper">
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
             <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input" placeholder="" required={true} onChangeHandler={onChangeHandler} />

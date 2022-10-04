@@ -26,6 +26,10 @@
     margin-left: 5px;
     cursor: help;
 }
+
+#createFramework {
+    padding: 3em 2em;
+}
 .create-framework__input, .add__file-window {
     padding: 10px 14px;
     font-size: 18px;

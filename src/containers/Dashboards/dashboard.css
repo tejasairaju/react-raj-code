@@ -17,3 +17,19 @@
     display: flex;
     flex-basis: 50%;
 }
+.box-color-green {
+    color: #499e43;
+}
+
+.box-color-red {
+    color: #b71f1f;
+}
+
+.box-color-blue {
+    color: #2088bd;
+}
+
+.view-arrow {
+    background: lightgray;
+    color: darkblue;
+}

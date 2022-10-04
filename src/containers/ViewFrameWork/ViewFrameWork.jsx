@@ -51,7 +51,7 @@ const ViewFrameWork = () => {
                     <tbody>
                         {(frameworkData.results || []).map((val, index) => {
                             return (<tr>
-                                <td><img src="assets/images/logo-row.jpg" alt="logo" width='28px' height='28px' /></td>
+                                <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td>
                                 <td>{val.name}</td>
                                 <td>{val.description}</td>
                                 <td>
