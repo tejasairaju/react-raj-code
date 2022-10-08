@@ -53,6 +53,10 @@ padding: 4px 0;
     background: #499E43;
     color: #fff;
 }
+
+.white-space {
+    white-space: nowrap;
+}
 .m-b-1 {
     margin-bottom: 1em;
 }

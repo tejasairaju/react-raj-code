@@ -189,6 +189,18 @@ export const clientUserMenu = [{
         isActive: false,
         route: '/category',
     },
+    {
+        clsName: '',
+        label: "Sectors",
+        isActive: false,
+        route: '/sector',
+    },
+    {
+        clsName: '',
+        label: "SubSector",
+        isActive: false,
+        route: '/subsector',
+    },
 ]
 },
 {

@@ -2,34 +2,24 @@ import React, { useState, useEffect } from "react";
 import './Country.css'
 import axios from 'axios';
 import _isEmpty from 'lodash/isEmpty';
-import queryString from 'query-string';
-import { useSelector, useDispatch } from 'react-redux';
-import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
-import Axios from 'axios';
-import CountryAction from "./CountryAction.jsx";
 import Popup from "../../components/Common/Popup/Popup.jsx";
-import moment from 'moment';
 import _get from 'lodash/get';
 
 import './ManageMaster.css';
 import AddMoreOption from "../../Components/AddMoreOption/AddMoreOption.jsx";
 import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.jsx";
 
-const Category = (props) => {
-    const navigate = useNavigate();
-
-
+const Sector = (props) => {
     const [categoryData, setCategoryData] = useState({});
     const [statusData, setStatusData] = useState({});
-    const [inputValue, setInputValue] = useState({});
     useEffect(() => {
-        getCategoryList();
+        getSectorList();
     }, []);
 
-    const getCategoryList = async () => {
+    const getSectorList = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`).then(({ data }) => data);
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`).then(({ data }) => data);
             setStatusData({ type: '', message: '' });
             setCategoryData(response);
         } catch (e) {
@@ -39,8 +29,8 @@ const Category = (props) => {
 
     const updateMoreOption = async (option) => {
         try {
-            const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`, { name: option }).then(({ data }) => data);
-            getCategoryList();
+            const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/sectors`, { name: option }).then(({ data }) => data);
+            getSectorList();
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });
@@ -51,12 +41,12 @@ const Category = (props) => {
 
     }
 
-    const headers = ['Category',
+    const headers = ['Sector',
         'Action'];
 
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <AddMoreOption label={'Category'} placeholder={"Enter the Category"} value={''} updateMoreOption={updateMoreOption} />
+        <AddMoreOption label={'Sector'} placeholder={"Enter the sector"} value={''} updateMoreOption={updateMoreOption} />
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             <MoreOptionTable headers={headers} tableData={categoryData.results}/>
@@ -65,4 +55,4 @@ const Category = (props) => {
 
     </>)
 }
-export default Category;
+export default Sector;

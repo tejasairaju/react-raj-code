@@ -10,27 +10,20 @@ import CountryAction from "./CountryAction.jsx";
 import Popup from "../../components/Common/Popup/Popup.jsx";
 import moment from 'moment';
 import _get from 'lodash/get';
+import AddMoreOption from "../../Components/AddMoreOption/AddMoreOption.jsx";
+import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.jsx";
 
 import './ManageMaster.css';
 
 const ManageCountry = (props) => {
     const navigate = useNavigate();
-
-
     const [countryData, setCountryData] = useState({});
     const [statusData, setStatusData] = useState({});
-    const [country, setCountry] = useState({});
-    const [inputValue, setInputValue] = useState({});
     useEffect(() => {
-        getFramework();
+        getCountryList();
     }, []);
 
-    const addMoreoptions = async (e) => {
-        const { name, value } = e.target;
-        inputValue[name] = value;
-    }
-
-    const getFramework = async () => {
+    const getCountryList = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
             const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`).then(({ data }) => data);
@@ -41,10 +34,10 @@ const ManageCountry = (props) => {
         }
     }
 
-    const updateMoreOption = async () => {
+    const updateMoreOption = async (value) => {
         try {
-            const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/countries`, { name: inputValue.country }).then(({ data }) => data);
-            getFramework();
+            const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/countries`, { name: value }).then(({ data }) => data);
+            getCountryList();
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });
@@ -59,53 +52,11 @@ const ManageCountry = (props) => {
         'Action'];
 
     return (<>
-        <div class="main__top-wrapper">
-            {/* <h1 class="main__title">
-                    Country
-                </h1> */}
-            {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            <div class="user_input_text flex flex-column">
-                <h1 class="main__title">
-                    Country :
-                </h1>
-                <input type="text" name="country" class="country__text__box"
-                    placeholder="Enter the Country"
-                    value={inputValue.country}
-                    onChange={addMoreoptions}
-                />
-                {/* <Input /> */}
-                {/* <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} /> */}
-
-            </div>
-
-            <button class="main__button" onClick={() => updateMoreOption()}>
-                ADD
-            </button>
-        </div>
-
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
+        <AddMoreOption label={'Country'} placeholder={"Enter the Country"} value={''} updateMoreOption={updateMoreOption} />
         <br />
         <div id="viewCountry" className="view-diclosuer-container">
-        <table className="default-flex-table">
-
-            <thead>
-                <tr>
-                    {headers.map(header => <th>{header}</th>)}
-                </tr>
-            </thead>
-            <tbody>
-                {(countryData.results || []).map((val, index) => {
-                    return (<tr>
-
-                        <td>{val.name}</td>
-
-                        <td>
-                            <CountryAction value={val} index={index} />
-                            {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                        </td>
-                    </tr>)
-                })}
-            </tbody>
-        </table>
+            <MoreOptionTable headers={headers} tableData={countryData.results} />
         </div>
         <br />
 

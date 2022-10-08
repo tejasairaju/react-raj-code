@@ -28,6 +28,8 @@ import ViewQuestions from "../containers/ViewQuestions/ViewQuestions.jsx";
 import CustomerOnboardByAdmin from "../containers/ClientInfo/CustomerOnboardByAdmin.jsx";
 import ESGAdmin from "../containers/ESGAdmin/AdminUser.jsx";
 import ESGAdminUserOnboard from "../containers/ESGAdmin/AdminUserCreate.jsx";
+import Sector from "../containers/ManageMaster/Sector.jsx";
+import SubSector from "../containers/ManageMaster/SubSector.jsx";
 
 
 const RootRouter = () => {
@@ -84,6 +86,8 @@ const RootRouter = () => {
         <Route path="/manageclient" element={<ClientInfo />} />
         <Route path="/country" element={<ManageCountry />} />
         <Route path="/category" element={<ManageCategory />} />
+        <Route path="/sector" element={<Sector />} />
+        <Route path="/subsector" element={<SubSector />} />
         <Route path="/customeronboardbyadmin" element={<CustomerOnboardByAdmin />} />
         <Route path="/adminuser" element={<ESGAdmin />} />
         <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
