@@ -14,8 +14,8 @@ const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateQuestions = (props) => {
     const location = useLocation();
-     const state = _get(location, 'state', {});
-     const { category = '', section = '', id = '', name = '', code = null, framework = null } = state || {};
+    const state = _get(location, 'state', {});
+    const { category = '', section = '', id = '', name = '', code = null, framework = null } = state || {};
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
@@ -53,7 +53,7 @@ const CreateQuestions = (props) => {
 
     // handle click event of the Add button
     const handleAddClick = (index) => {
-        if(!_isEmpty(inputList[index].code)&&!_isEmpty(inputList[index].label)&&!_isEmpty(inputList[index].type)&&!_isEmpty(inputList[index].field_type)&&!_isEmpty(inputList[index].field_unit_values)) {
+        if (!_isEmpty(inputList[index].code) && !_isEmpty(inputList[index].label) && !_isEmpty(inputList[index].type) && !_isEmpty(inputList[index].field_type) && !_isEmpty(inputList[index].field_unit_values)) {
             setInputList([...inputList, initialRow]);
             setIsError(false);
         } else {
@@ -61,6 +61,10 @@ const CreateQuestions = (props) => {
         }
         // setInputList([...inputList, initialRow]);
     };
+
+    const onCreateCancelQuestions = () => {
+        setInputList([initialRow]);
+    } 
 
     const onCreateQuestions = async () => {
         let list = [...inputList];
@@ -74,19 +78,19 @@ const CreateQuestions = (props) => {
             children: newInputList
         }
 
-        let lastInputList = newInputList[newInputList.length -1];
+        let lastInputList = newInputList[newInputList.length - 1];
         console.log(':::::::lastInputList:::::', lastInputList);
-        if(!_isEmpty(lastInputList.code)&&!_isEmpty(lastInputList.label)&&!_isEmpty(lastInputList.type)&&!_isEmpty(lastInputList.field_type)&&!_isEmpty(lastInputList.field_unit_values)) {
+        if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
 
-        try {
-            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework}/disclosures/${id}`, payload).then(({ data }) => data);
-            setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
-            setInputList([initialRow]);
-        } catch (e) {
-            setStatusData({ type: 'error', message: e.message });
-        }
-        setIsError(false);
-    } else {
+            try {
+                const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework}/disclosures/${id}`, payload).then(({ data }) => data);
+                setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
+                setInputList([initialRow]);
+            } catch (e) {
+                setStatusData({ type: 'error', message: e.message });
+            }
+            setIsError(false);
+        } else {
             setIsError(true)
         }
     }
@@ -184,7 +188,7 @@ const CreateQuestions = (props) => {
                                 <td>
                                     <div className='flex'>
                                         {inputList.length !== 1 && <Button label="Remove" className='remove-btn' onClickHandler={(i) => handleRemoveClick(i)} />}
-                                        {inputList.length - 1 === i && <Button label="Add" className='add-btn' onClickHandler={() =>handleAddClick(i)} />}
+                                        {inputList.length - 1 === i && <Button label="Add" className='add-btn' onClickHandler={() => handleAddClick(i)} />}
                                     </div>
                                 </td>
                             </tr>
@@ -194,14 +198,19 @@ const CreateQuestions = (props) => {
                     </tbody>
 
                 </table>
-        {isError && <div className='overall-error-container color-red question-disclosure-error'>*Please fill all the columns</div>}
-
+                {isError && <div className='overall-error-container color-red question-disclosure-error'>*Please fill all the columns</div>}
             </div>
 
         </div>
-        <button onClick={onCreateQuestions} className="main__button">
+        <div className='create-question-main-btn'>
+        <button onClick={onCreateCancelQuestions} className="main__button m-l-1 cancel-btn">
+            Cancel
+        </button>
+        <button onClick={onCreateQuestions} className="main__button m-l-1">
             FINISH
-        </button></>)
+        </button>
+        </div>
+       </>)
 
 }
 

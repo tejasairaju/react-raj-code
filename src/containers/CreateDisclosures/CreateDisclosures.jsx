@@ -27,20 +27,19 @@ const CreateDisclosures = (props) => {
 
     useEffect(() => {
         if (!_isEmpty(params.id) && _isEmpty(frameworkDetails) && !isEditable) {
-            getframeworkDetails(params.id);
-            getUserAdminInfo(1);
-        } else {
+           
+        } else if(isEditable){
             getDisclosures();
         }
-
+        getframeworkDetails(params.id);
+        getUserAdminInfo(1);
     }, []);
 
 
     const getDisclosures = async() => {
         try {
-            const response = await axios.get(`http://13.40.76.135/backend/esgadmin/frameworks/469652cb-dfc8-4d72-97b2-a5bd438f5e6e/disclosures/82f7fce8-e1d7-4294-b177-1f734a9e714b`).then(({ data }) => data);
-            console.log("::::::::::::resuk", response);
-            setInputValue(response);
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
+            setInputValue({...response, description: response.name, guidance: response.name, categories: [{name: response.category, isSelect: true}]  });
         } catch (error) {
         }
     }
@@ -176,6 +175,13 @@ const CreateDisclosures = (props) => {
                 {`Welcome to Create Disclosures Wizard`}
             </h1>
         </div>
+        <>  <table className="default-flex-table create-disc-framework-details">
+                    <tr>
+                        <td>{frameworkDetails && <img src={frameworkDetails.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
+                        <td>{frameworkDetails.name}</td>
+                        <td>{frameworkDetails.description}</td>
+                    </tr>
+                </table></>
         <div className="main__content-wrapper">
             <h1 class="create-framework__title">
                 Ref No

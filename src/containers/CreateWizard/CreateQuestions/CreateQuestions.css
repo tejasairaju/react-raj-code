@@ -109,3 +109,13 @@
     .question-title {
         /* width: 20em !important; */
     }
+    .create-question-main-btn {
+        display: flex;
+        justify-content: end;
+        padding: 1em 0em;
+    }
+
+    .cancel-btn {
+        background: lightgray !important;
+        color: black !important;
+    }

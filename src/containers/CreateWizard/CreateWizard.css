@@ -372,7 +372,7 @@
         font-size: 16px;
     }
     .main__content-wrapper {
-        padding: 3em 1em;
+        padding: 1.5em 1em 1em;
     }
     .add__logo-logo img {
         width: 75%;
@@ -411,7 +411,7 @@
         font-size: 14px;
     }
     .main__content-wrapper {
-        padding: 3em 1em;
+        padding: 1.5em 1em 1em;
     }
     .add__logo-logo img {
         width: 70%;
@@ -450,7 +450,7 @@
         font-size: 12px;
     }
     .main__content-wrapper {
-        padding: 3em 1px;
+        padding: 1.5em 1em 1em;
     }
     .add__logo-logo img {
         width: 70%;
@@ -508,3 +508,15 @@
  .create__disclosure_container h1 {
     margin-top: 0.4em !important;
  }
+
+.create-disc-framework-details {
+    margin-top: 0.5em;
+    display: flex !important;
+    border: 1px solid lightgray;
+  }
+  
+  .create-disc-framework-details table tr td {
+    margin-top: 0.3em !important;
+    border-bottom: 0px !important;
+    padding: 0.5em 1em !important;
+  }

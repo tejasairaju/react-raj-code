@@ -209,6 +209,6 @@ export const clientUserMenu = [{
     label: "System Settings",
     isActive: false,
     icon1: 'settings-icon.svg',
-    icon2: 'plus-icon.svg',
-    route: '/'
+    // icon2: 'plus-icon.svg',
+    route: '/systemsettings'
 }]

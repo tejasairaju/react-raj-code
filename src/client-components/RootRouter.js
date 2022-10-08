@@ -91,7 +91,7 @@ const RootRouter = () => {
         <Route path="/customeronboardbyadmin" element={<CustomerOnboardByAdmin />} />
         <Route path="/adminuser" element={<ESGAdmin />} />
         <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
-        {/* <Route path="/manageusers" element={<ManageFrameWork component='Manage Users Page' />} /> */}
+        <Route path="/systemsettings" element={<ManageFrameWork component='Welcome to System Settings' />} />
         {/* <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />  */}
       </Route>
     </Routes>)

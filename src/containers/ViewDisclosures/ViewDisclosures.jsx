@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import _get from 'lodash/get';
+import _toLower from 'lodash/toLower';
 import queryString from 'query-string';
 import './ViewDisclosures.css';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
+import { listDisclosures } from '../../../__mocks__/listDisclosures.js'
 const { RadioButton } = Fields;
 
 const { Get } = Request;
 
 const ViewDisclosures = () => {
     const navigate = useNavigate();
-    const [apiData, setApiData] = useState({});
-    const [isOpen, setIsopen] =useState(false);
-    const [catagoryType, setCatagoryType] = useState();
+    const [apiData, setApiData] = useState(null);
+    const [listData, setListData] = useState(null);
+    const [isOpen, setIsopen] = useState(false);
+    const [catagoryType, setCatagoryType] = useState('All');
     const [frameworkData, setFrameworkData] = useState({});
     const [statusData, setStatusData] = useState({});
     const { search } = _get(window, 'location', '?');
@@ -28,7 +31,7 @@ const ViewDisclosures = () => {
                 setStatusData({ type: 'loading', message: '' });
                 const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`).then(({ data }) => data);
                 setStatusData({ type: '', message: '' });
-                console.log('>>>>>>>>>>>>', response.results);
+                setListData(response.results);
                 setApiData(response);
             } catch (e) {
                 setStatusData({ type: 'error', message: e.message });
@@ -50,7 +53,13 @@ const ViewDisclosures = () => {
     const onCloseHandler = () => {
     }
     const radioChangeHandler = (e) => {
+        const { value = '' } = e.target;
         setCatagoryType(e.target.value);
+        let cloneApiData = { ...apiData };
+        if (value !== 'All') {
+            cloneApiData.results = (cloneApiData.results || []).filter(item => _toLower(item.category) == _toLower(value));
+        }
+        setListData(cloneApiData.results);
     };
 
     const getState = (value) => ({
@@ -61,7 +70,7 @@ const ViewDisclosures = () => {
     })
 
     const headers = ['Name', 'Description', 'Action'];
-    const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
+    const radioButton = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
 
     return (
         <>
@@ -70,67 +79,24 @@ const ViewDisclosures = () => {
                     Edit Framework {'->'} Frameworks {'->'} List Disclosures
                 </h1>
             </div>
-            {/* <div className="disc-framework-details"> */}
-                <table className="default-flex-table disc-framework-details">
-                    <tr>
-                        <td>{frameworkData && <img src={frameworkData.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
-                        <td>{frameworkData.name}</td>
-                        <td>{frameworkData.description}</td>
-                    </tr>
-                </table>
-            {/* </div> */}
+            <table className="default-flex-table disc-framework-details">
+                <tr>
+                    <td>{frameworkData && <img src={frameworkData.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
+                    <td>{frameworkData.name}</td>
+                    <td>{frameworkData.description}</td>
+                </tr>
+            </table>
             <div className="diclosuer-catagory-container">
-            <div><b>Catagories:</b></div>
-            <div className="row-catagory-display"> {radioButton.map((radioVal, i) => (<RadioButton
-                                    changed={radioChangeHandler}
-                                    id={i}
-                                    isSelected={catagoryType === radioVal}
-                                    label={radioVal}
-                                    value={radioVal}
-                                />))}</div>
-            {/* <table className="default-flex-table">
-                    <tbody>
-                        <tr>
-                            <td><b>Catagories:</b></td>
-                            <td className="row-catagory-display">
-                               
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> */}
-                </div>
-            {/* <div id="viewDisclosures" className="view-diclosuer-container">
-                {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-                <table className="default-flex-table">
-                    <thead>
-                        <tr>
-                            {headers.map(header => <th>{header}</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {((apiData.results || []).length > 0) ? apiData.results.map((val, index) => {
-                            return (<tr>
-                                <td>{(index === 0) && <span><b>Disclosures:</b></span>}</td>
-                                <td> {val.code} &nbsp;&nbsp;{val.name}</td>
-                                <td>
-                                    <div>
-                                        <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
-                                        <div className={`framedropdown framedropdown-${isOpen ? "active" : "inactive"}`}>
-                                            <div onClick={() => {navigate(`/createdisclosures?isEditable=${true}`);
-                                            e.stopPropagation();
-                                        }}><a>Edit</a></div>
-                                            <div><a onClick={() => { navigate(`/createframe`) }}>Create Questions</a></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>)
-                        })
-                            : <tr>
-                                <td colSpan={1}><b>Disclosures:</b></td><td>-</td><td>-</td></tr>
-                        }
-                    </tbody>
-                </table>
-            </div> */}
+                <div><b>Catagories:</b></div>
+                <div className="row-catagory-display"> {radioButton.map((radioVal, i) => (<RadioButton
+                    changed={radioChangeHandler}
+                    id={i}
+                    isSelected={catagoryType === radioVal}
+                    label={radioVal}
+                    value={radioVal}
+                />))}</div>
+
+            </div>
             <div id="viewFramework" className="view-framework-container view-disclosure-container">
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
                 <table className="default-flex-table">
@@ -140,13 +106,12 @@ const ViewDisclosures = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {(apiData.results || []).map((val, index) => {
+                        {(listData || []).map((val, index) => {
                             return (<tr>
-                                 <td>{(index === 0) && <span><b>Disclosures:</b></span>}</td>
+                                <td>{(index === 0) && <span><b>Disclosures:</b></span>}</td>
                                 <td> {val.code} &nbsp;&nbsp;{val.name}</td>
                                 <td>
-                                <MoreAction viewDisclosures={true} state={getState(val)} index={index}/>
-                                    {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                                    <MoreAction viewDisclosures={true} state={getState(val)} index={index} />
                                 </td>
                             </tr>)
                         })}
