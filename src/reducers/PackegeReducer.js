@@ -6,7 +6,7 @@ const PackegeReducer = (state = {...initialState}, action)  => {
      const { response } = action
      return {
        ...state,
-       data: response
+       data: response.results
      }
    default:
      return state

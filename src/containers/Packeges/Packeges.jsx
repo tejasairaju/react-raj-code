@@ -11,6 +11,8 @@ import PageInprogress from "../../Components/Common/PageInprogress/PageInprogres
 import { useSelector, useDispatch } from "react-redux";
 
 import actions from '../../actions/PackegeAction.js';
+import PackageSummary from "../../Components/PackageSummary/PackageSummary.jsx";
+import { useNavigate } from "react-router-dom";
 
 const { API_BASE_URL } = process.env;
 
@@ -20,11 +22,9 @@ const Packeges = (props) => {
     user,
     // loginWithRedirect,
   } = useAuth0();
-
-  console.log(":::::::::::pack", isAuthenticated, user);
-
   // const { user } = useAuth0();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { data } = useSelector(state => state.packeges);
   const statusData = useSelector(state => state.statusResponse);
 
@@ -37,13 +37,13 @@ const Packeges = (props) => {
   }, []);
 
   useEffect(() => {
-    if(dbStatus === 'Inprogress'){
+    if (dbStatus === 'Inprogress') {
       setTimeout(() => getDBStatus(), 2000)
-      
+
     }
   }, [dbStatus]);
 
-  const getDBStatus = async() => {
+  const getDBStatus = async () => {
     try {
       setDbStatus('');
       const response = await axios.get(`${API_BASE_URL}/auth/isdbcreated?org_name=testtest`);
@@ -69,61 +69,61 @@ const Packeges = (props) => {
   // }
 
   return <>
-   { (dbStatus === 'Done') ? <>
-    <aside className="aside">
-    {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} />}
-      <div className="aside__logo-container">
-        <a href="#">
-          <img src="../../assets/icons/esg_logo.png" alt="logo" className="aside__logo" />
-        </a>
-      </div>
-    </aside>
-    <section className="right-section packages">
-      <h1 className="right-section__title packages__title">
-        Your favourite packages to choose
-      </h1>
-      <ul className="packages__list">
-        {(data || []).map((item, index) => <li key={index} className="package__list-item">
-          <h3 className="package__item-title bronze">
-            <img src={`assets/icons/${_lowerCase(item.name)}.svg`} alt="bronze" width='24px' height='40px' style={{ margin: 'auto' }} />
-            {item.name}
-          </h3>
-          <p className="package__item-subtitle">
-            {item.description}
-          </p>
-          <p className="package__item-price">
-            <span>
-              {item.price}
-            </span>
-            ({item.unit})
-          </p>
-          <ul className="benefits__list">
-            {
-              (item.features || []).map((subItem, i) => <li ket={i} className="benefits__list-item">
-                {subItem}
-              </li>)
-            }
-          </ul>
-          <a href="#" className="package__item-subscribe">
-            Subscribe
+    {(dbStatus === 'Done') ? <>
+      <aside className="aside">
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} />}
+        <div className="aside__logo-container">
+          <a href="#">
+            <img src="../../assets/icons/esg_logo.png" alt="logo" className="aside__logo" />
           </a>
-        </li>)}
-      </ul>
-      <article className="purchase">
-        <h2 className="purchase__title">
-          Need a custom purchase?
-        </h2>
-        <p className="purchase__text">
-          You can contact us and we will get back to you
-        </p>
-        <a href="#" className="purchase__link">
-          Contact us
-        </a>
-      </article>
-    </section>
+        </div>
+      </aside>
+      <section className="right-section packages">
+        <h1 className="right-section__title packages__title">
+          Your favourite packages to choose
+        </h1>
+        <ul className="packages__list">
+          {(data || []).map((item, index) => <li key={index} className="package__list-item">
+            <h3 className="package__item-title bronze">
+              <img src={`assets/icons/${_lowerCase(item.name)}.svg`} alt="bronze" width='24px' height='40px' style={{ margin: 'auto' }} />
+              {item.name} 
+            </h3>
+            <p className="package__item-subtitle">
+              {item.description}
+            </p>
+            <p className="package__item-price">
+              <span>
+                {item.price}
+              </span>
+              ({item.unit})
+            </p>
+            <ul className="benefits__list">
+              {
+                (item.features || []).map((subItem, i) => <li ket={i} className="benefits__list-item">
+                  {subItem}
+                </li>)
+              }
+            </ul>
+            <a onClick={() => { navigate('/package/summary', { state: { packageDetails: { ...item } } }) }} className="package__item-subscribe">
+              Subscribe
+            </a>
+          </li>)}
+        </ul>
+        <article className="purchase">
+          <h2 className="purchase__title">
+            Need a custom purchase?
+          </h2>
+          <p className="purchase__text">
+            You can contact us and we will get back to you
+          </p>
+          <a href="#" className="purchase__link">
+            Contact us
+          </a>
+        </article>
+      </section>
     </>
-    : <PageInprogress />
-}
+      : <PageInprogress />
+    }
   </>
 }
 

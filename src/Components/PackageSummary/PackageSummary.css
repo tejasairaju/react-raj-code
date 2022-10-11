@@ -1,0 +1,21 @@
+.paymnet-summary-container {
+    display: block;
+    margin: 4em;
+    width: 100%;
+}
+
+.paymnet-header-container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid;
+}
+
+.paymnet-summary-block {
+    display: flex;
+    justify-content: space-around;
+    margin: 8em 0em;
+}
+
+.checkout-container {
+width: 100%;
+}

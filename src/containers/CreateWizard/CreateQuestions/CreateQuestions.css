@@ -111,7 +111,7 @@
     }
     .create-question-main-btn {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         padding: 1em 0em;
     }
 

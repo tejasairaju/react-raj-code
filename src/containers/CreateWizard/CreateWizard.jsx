@@ -11,14 +11,15 @@ import Popup from "../../components/Common/Popup/Popup.jsx";
 import Header from '../../Components/Common/Header/Header.jsx';
 import './CreateWizard.css';
 import { useState } from 'react';
-import { clientUserMenu } from '../../utils/constants.js'
+import { clientUserMenu, client_admin } from '../../utils/constants.js'
 import CreateFramework from './CreateFramework/CreateFramework.jsx';
 import axios from 'axios';
+import Pagination from '../../Components/Pagination/Pagination.jsx';
 
 const CreateWizard = ({ logoutHandler = () => {}} ) => {
 
     const navigate = useNavigate();
-    const [sideMenu, updateSideMenu] = useState(clientUserMenu);
+    const [sideMenu, updateSideMenu] = useState(client_admin);
     const [statusData, setStatusData] = useState({});
 
     const onCloseHandler = () => {
@@ -89,6 +90,7 @@ const CreateWizard = ({ logoutHandler = () => {}} ) => {
         </aside>
         <main className="main">
             <Header logoutHandler={() => logoutHandler()} />
+            {/* <Pagination /> */}
             <Outlet />
         </main>
     </>)

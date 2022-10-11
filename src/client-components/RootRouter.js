@@ -30,6 +30,9 @@ import ESGAdmin from "../containers/ESGAdmin/AdminUser.jsx";
 import ESGAdminUserOnboard from "../containers/ESGAdmin/AdminUserCreate.jsx";
 import Sector from "../containers/ManageMaster/Sector.jsx";
 import SubSector from "../containers/ManageMaster/SubSector.jsx";
+import StripePayment from "../containers/StripePayment/StripePayment.jsx";
+import PackageSummary from "../Components/PackageSummary/PackageSummary.jsx";
+import PaymentSuccess from "../Components/PaymentSuccess/PaymentSuccess.jsx";
 
 
 const RootRouter = () => {
@@ -92,9 +95,23 @@ const RootRouter = () => {
         <Route path="/adminuser" element={<ESGAdmin />} />
         <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
         <Route path="/systemsettings" element={<ManageFrameWork component='Welcome to System Settings' />} />
-        {/* <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />  */}
+        <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} /> 
       </Route>
     </Routes>)
+  } else if(isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  renderRouteComponent = (<Routes>
+    <Route element={<CreateWizard logoutHandler={() => logoutHandler}/>}>
+    <Route index element={<ManageFrameWork component='Welcome to ESG KPI' />} />
+      <Route path="/select/framework" element={<StripePayment />} />
+      <Route path="/framework" element={<ManageFrameWork component='Welcome to framework'/>} />
+      <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework'/>} />
+      <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
+      <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
+      <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
+      <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
+      <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
+    </Route>
+  </Routes>);
   }
 
   return (
@@ -106,11 +123,17 @@ const RootRouter = () => {
         </Routes>
       </React.Fragment>
       )}
+      {isAuthenticated && 
       <Routes>
+        <Route path="/packages" element={<Packeges />} />
+        <Route path="/checkout" element={<StripePayment />} />
+        <Route path="/package/summary" element={<PackageSummary />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
         <Route path="/signup" element={<RegistrationForm />} />
       </Routes>
+}
       {renderRouteComponent}
-      
+
     </>
   );
 };

@@ -28,8 +28,10 @@
     "tailwindcss": "^2.2.7"
   },
   "main": "index.js",
+  "proxy": "http://localhost:4242",
   "scripts": {
     "test": "jest",
+    "server": "nodemon ./server.js",
     "start": "webpack serve --config config/webpack.dev.js --open",
     "build": "NODE_ENV=production webpack --config config/webpack.prod.js",
     "build-staging": "NODE_ENV=production webpack --config config/webpack.stag.js",

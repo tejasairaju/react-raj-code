@@ -211,4 +211,84 @@ export const clientUserMenu = [{
     icon1: 'settings-icon.svg',
     // icon2: 'plus-icon.svg',
     route: '/systemsettings'
+}];
+export const client_admin = [{
+    clsName: '',
+    role: 'client-admin',
+    label: "ESG-KPI",
+    isActive: true,
+    icon1: 'home-icon.svg',
+    icon2: '',
+    route: '/'
+},
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Manage Framework",
+    isActive: false,
+    icon1: 'frame-icon.svg',
+    icon2: 'plus-icon.svg',
+    subMenu: [{
+        clsName: '',
+        label: "Select Framework",
+        isActive: false,
+        route: '/select/framework',
+    },
+    {
+        clsName: '',
+        label: "Edit Framework",
+        isActive: false,
+        route: '/framework',
+    },
+    {
+        clsName: '',
+        label: "Create Bespoke Framework",
+        isActive: false,
+        route: '/bespoke/framework',
+    }]
+},
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Intelligent Mapping",
+    isActive: false,
+    icon1: 'client-icon.svg',
+    icon2: '',
+    route: '/intelligent/mapping'
+},
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Answer Questions",
+    isActive: false,
+    icon1: 'users-icon.svg',
+    icon2: '',
+    route: '/answer/questions'
+}, 
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Organisation Info",
+    isActive: false,
+    icon1: 'users-icon.svg',
+    icon2: '',
+    route: '/organisation/details'
+},
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Publish Reports",
+    isActive: false,
+    icon1: 'masters-icon.svg',
+    icon2: '',
+    route: '/publish/reports'
+},
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Manage Users",
+    isActive: false,
+    icon1: 'settings-icon.svg',
+    // icon2: 'plus-icon.svg',
+    route: '/client/mangeuser'
 }]
