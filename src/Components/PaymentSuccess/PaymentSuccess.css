@@ -2,14 +2,14 @@
     text-align: center;
     margin: auto;
   }
-    h1 {
+  .pay-success {
       color: #88B04B;
       font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
       font-weight: 900;
       font-size: 40px;
       margin-bottom: 10px;
     }
-    p {
+    .pay-success-desc {
       color: #404F5E;
       font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
       font-size:20px;

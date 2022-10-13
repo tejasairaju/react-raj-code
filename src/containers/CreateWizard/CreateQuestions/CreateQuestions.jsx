@@ -138,7 +138,7 @@ const CreateQuestions = (props) => {
             {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
                 <div className='create-options-title'>Please enter the options with comma separated value</div>
                 <div className='get-textarea-input-container'>
-                    <TextArea rows="6" cols="50" label='' name='optionString' value={inputList[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] || ''} className="" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
+                    <TextArea rows="6" cols="50" label='' name='optionString' value={inputList[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] || ''} className="create-framework__textarea" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
                     <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
                 </div>
             </Modal>}
@@ -168,7 +168,7 @@ const CreateQuestions = (props) => {
                                     <Input label='' type="text" name='code' value={x.code} className="create-framework__input question-ref-code" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                                 </td>
                                 <td>
-                                    <TextArea label='' name='label' value={x.label} className="create-framework__input question-title" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
+                                    <TextArea label='' name='label' value={x.label} className="create-framework__input question-title create-framework__textarea" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                                 </td>
                                 <td>
                                     <Dropdown className_1={'questions__select select1'} className_2={'questions__select-item'} options={dataType} name='type' value={x.type} onChangeHandler={(e) => handleInputChange(e, i)} />

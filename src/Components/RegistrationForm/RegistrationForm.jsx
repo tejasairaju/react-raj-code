@@ -8,6 +8,8 @@ import Popup from '../Common/Popup/Popup.jsx';
 import actions from '../../actions/SignUpActions.js';
 import Request from '../../requests';
 import './RegistrationForm.css';
+import OrganisationInfo from '../../containers/OrganisationInfo/OrganisationInfo.jsx';
+import EsgImageNavBar from '../EsgImageNavBar/EsgImageNavBar.jsx';
 const { API_BASE_URL } = process.env;
 
 const RegistrationForm = () => {
@@ -124,14 +126,9 @@ const RegistrationForm = () => {
     return (
         <>
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            <aside className="aside">
-                <div className="aside__logo-container">
-                    <a href="#">
-                        <img src="./assets/icons/esg_logo.png" alt="logo" className="aside__logo" />
-                    </a>
-                </div>
-            </aside>
+            <EsgImageNavBar />
             <section className="right-section acc-info">
+                
                 <h1 className="right-section__title acc-info__form-title">
                     Account Information
                 </h1>

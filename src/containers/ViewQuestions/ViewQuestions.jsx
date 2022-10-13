@@ -185,7 +185,7 @@ const ViewQuestions = () => {
                 {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
                     <div className='create-options-title'>Please enter the options with comma separated value</div>
                     <div className='get-textarea-input-container'>
-                        <TextArea rows="6" cols="50" label='' name='optionString' value={inputList[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] || ''} className="" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
+                        <TextArea rows="6" cols="50" label='' name='optionString' value={inputList[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] || ''} className="create-framework__textarea" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
                         <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
                     </div>
                 </Modal>}

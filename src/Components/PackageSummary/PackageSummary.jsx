@@ -13,52 +13,57 @@ const PackageSummary = () => {
         <div className="paymnet-summary-container">
             <div className="paymnet-header-container">
                 <div>Payment Gateway</div>
-                <div>Change Package</div>
+                <div><a className="change-package-link" onClick={() => navigate(-1)}>Change Package</a></div>
             </div>
             <div className="paymnet-summary-block">
                 <div className="pay-amount-block">
                     <h3 className="package__item-title bronze">
 
-                        {item.name} Package
+                        {_get(item, 'name', '')} Package
                     </h3>
                     <p className="package__item-price">
                         <span>
-                            {item.price}
+                            {_get(item, 'price', 0)}
                         </span>
                         ($)
                     </p>
                     <h5 className="package__item-title bronze">
-                        ESG-DISCLOSURES-{_toUpper(item.name)}-PACKAGE
+                        ESG-DISCLOSURES-{_toUpper(_get(item, 'name', ''))}-PACKAGE
                     </h5>
                 </div>
                 <div className="">
-                <p className="package__item-price">
+                    <p className="package__item-price">
                         <span>
-                            {item.price}
+                            {_get(item, 'price', 0)}
                         </span>
                         ($)
                     </p>
                     <div className="flex">
-                        <span>MONTHLY RECURRYING</span>
+                        <span><b>MONTHLY RECURRYING</b></span>
+                        <br /><br />
                     </div>
                     <div className="flex">
                         <span>Subtotal</span>
-                        <span>{item.price}</span>
+                        <span>{_get(item, 'price', 0)}($)</span>
                     </div>
                     <div className="flex">
                         <span>sales tax (10%)</span>
-                        <span>$100</span>
+                        <span>100($)</span>
                     </div>
                     <div className="flex">
-                        <span>Total Due</span>
-                        <span>{item.price + 100}</span>
+                        <span><b>Total Due</b></span>
+                        <span><b>{_get(item, 'price', 0) + 100}($)</b></span>
                     </div>
-                    <button onClick={() => navigate('/checkout', {state: {price: item.price + 100}})} className="main__button m-l-1">
+                    <button onClick={() => navigate('/checkout', { state: { price: _get(item, 'price', 0) + 100 } })} className="m-l-1 main-btn package-make-pymt-btn">
                         Make Payment
                     </button>
                 </div>
             </div>
-
+            <div className="package-summary-page-next-btn">
+            <button onClick={() => navigate('/', { state: { price: _get(item, 'price', 0) + 100 } })} className="m-l-1 main-btn ">
+                NEXT
+            </button>
+            </div>
         </div></>);
 }
 

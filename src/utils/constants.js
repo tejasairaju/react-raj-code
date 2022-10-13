@@ -117,6 +117,20 @@ export const questions = {
     }]
 }
 
+export const empCount = [
+    {
+        label: '50-100',
+        value: '100'
+    },
+    {
+        label: '100-150',
+        value: '150'
+    }, {
+        label: '150-200',
+        value: '200-250'
+    }
+];
+
 
 export const clientUserMenu = [{
     clsName: '',

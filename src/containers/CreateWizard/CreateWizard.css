@@ -380,7 +380,7 @@
     .create-framework__input, .add__file-window {
         font-size: 14px;
     }
-    .add__logo-form, .add__logo-remove {
+    .add__logo-form, .add__logo-remove, .framework__input {
         font-size: 14px;
     }
     .assign__categories-item {
@@ -416,7 +416,7 @@
     .add__logo-logo img {
         width: 70%;
     }
-    .create-framework__input, .add__file-window,
+    .create-framework__input, .add__file-window, .framework__input,
     .add__logo-form, .add__logo-remove, .assign__categories-item, 
     .browse__btn {
         font-size: 14px;
@@ -455,7 +455,7 @@
     .add__logo-logo img {
         width: 70%;
     }
-    .create-framework__input, .add__file-window,
+    .create-framework__input, .add__file-window, .framework__input,
     .add__logo-form, .add__logo-remove, .assign__categories-item, 
     .browse__btn {
         font-size: 12px;

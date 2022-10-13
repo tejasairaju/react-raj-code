@@ -33,6 +33,7 @@ import SubSector from "../containers/ManageMaster/SubSector.jsx";
 import StripePayment from "../containers/StripePayment/StripePayment.jsx";
 import PackageSummary from "../Components/PackageSummary/PackageSummary.jsx";
 import PaymentSuccess from "../Components/PaymentSuccess/PaymentSuccess.jsx";
+import OrganisationInfo from "../containers/OrganisationInfo/OrganisationInfo.jsx";
 
 
 const RootRouter = () => {
@@ -45,6 +46,7 @@ const RootRouter = () => {
       const fn = async () => {
         try {
           const token = await getTokenSilently();
+          // console.log('::::::::::::::jwt::::', jwt(token));
           setLoginUserDetails(jwt(token));
         } catch (error) {
           setLoginUserDetails({});
@@ -74,13 +76,13 @@ const RootRouter = () => {
         <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
         <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
       </Routes></React.Fragment>)
-  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  } else if (isAuthenticated && loginUserDetails.user_role === 'esg_admin') {
     renderRouteComponent = (<Routes>
-      <Route element={<CreateWizard logoutHandler={() => logoutHandler}/>}>
-      <Route index element={<SystemAdminDashboard />} />
+      <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
+        <Route index element={<SystemAdminDashboard />} />
         <Route path="/createframe" element={<CreateFramework />} />
-        <Route path="/createdisclosures" element={<CreateDisclosures/>} />
-        <Route path="/createquestions" element={<CreateQuestions/>} />
+        <Route path="/createdisclosures" element={<CreateDisclosures />} />
+        <Route path="/createquestions" element={<CreateQuestions />} />
         <Route path="/manageframework" element={<ViewFrameWork />} />
         <Route path="/viewdisclosures" element={<ViewDisclosures />} />
         <Route path="/viewquestions" element={<ViewQuestions />} />
@@ -95,23 +97,30 @@ const RootRouter = () => {
         <Route path="/adminuser" element={<ESGAdmin />} />
         <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
         <Route path="/systemsettings" element={<ManageFrameWork component='Welcome to System Settings' />} />
-        <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} /> 
+        <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
       </Route>
     </Routes>)
-  } else if(isAuthenticated && loginUserDetails.user_role === 'client_admin') {
-  renderRouteComponent = (<Routes>
-    <Route element={<CreateWizard logoutHandler={() => logoutHandler}/>}>
-    <Route index element={<ManageFrameWork component='Welcome to ESG KPI' />} />
-      <Route path="/select/framework" element={<StripePayment />} />
-      <Route path="/framework" element={<ManageFrameWork component='Welcome to framework'/>} />
-      <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework'/>} />
-      <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
-      <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
-      <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
-      <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
-      <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
-    </Route>
-  </Routes>);
+  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+    renderRouteComponent = (<Routes>
+      <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
+        <Route index element={<ManageFrameWork component='Welcome to ESG KPI' />} />
+        <Route path="/select/framework" element={<StripePayment />} />
+        <Route path="/framework" element={<ManageFrameWork component='Welcome to framework' />} />
+        <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
+        <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
+        <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
+        <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
+        <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
+        <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
+      </Route>
+      <Route path="/orginfo" element={<OrganisationInfo />} />
+      <Route path="/packege" element={<Packeges />} />
+      <Route path="/checkout" element={<StripePayment />} />
+      <Route path="/packege/summary" element={<PackageSummary />} />
+      <Route path="/payment/success" element={<PaymentSuccess />} />
+      <Route path="/signup" element={<RegistrationForm />} />
+
+    </Routes>);
   }
 
   return (
@@ -119,19 +128,10 @@ const RootRouter = () => {
       {!isAuthenticated && (<React.Fragment>
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
-           <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>}/> 
+          <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>} />
         </Routes>
       </React.Fragment>
       )}
-      {isAuthenticated && 
-      <Routes>
-        <Route path="/packages" element={<Packeges />} />
-        <Route path="/checkout" element={<StripePayment />} />
-        <Route path="/package/summary" element={<PackageSummary />} />
-        <Route path="/payment/success" element={<PaymentSuccess />} />
-        <Route path="/signup" element={<RegistrationForm />} />
-      </Routes>
-}
       {renderRouteComponent}
 
     </>

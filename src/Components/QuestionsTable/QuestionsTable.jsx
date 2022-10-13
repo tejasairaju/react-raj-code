@@ -25,7 +25,7 @@ const QuestionsTable = ({ tableData= null, tableHeader = null, handleInputChange
                         <Input isEditable={true} label='' type="text" name='code' value={x.code} className="create-framework__input question-ref-code" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                     </td>
                     <td>
-                        <TextArea isEditable={true} label='' name='label' value={x.label} className="create-framework__input question-title" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
+                        <TextArea isEditable={true} label='' name='label' value={x.label} className="create-framework__input question-title create-framework__textarea" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                     </td>
                     <td>
                         <Dropdown isEditable={true} className_1={'questions__select select1'} className_2={'questions__select-item'} options={dataType} name='type' value={x.type} onChangeHandler={(e) => handleInputChange(e, i)} />
