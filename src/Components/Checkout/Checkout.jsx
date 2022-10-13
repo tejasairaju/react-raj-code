@@ -33,7 +33,7 @@ function Checkout() {
   return (
     <div className="checkout" style={{ width: "25%" }}>
       <CardElement />
-      <button className="main__button proceed-pay" onClick={pay}>Pay</button>
+      <button className="main__button proceed-pay" onClick={() => pay()}>Pay</button>
     </div>
   );
 }
