@@ -35,6 +35,7 @@ import PackageSummary from "../Components/PackageSummary/PackageSummary.jsx";
 import PaymentSuccess from "../Components/PaymentSuccess/PaymentSuccess.jsx";
 import OrganisationInfo from "../containers/OrganisationInfo/OrganisationInfo.jsx";
 import ClientAdminDashboard from "../containers/ClientAdminDashboard/ClientAdminDashboard.jsx";
+import AnswerQuestions from "../containers/AnswerQuestions/AnswerQuestions.jsx";
 
 
 const RootRouter = () => {
@@ -104,7 +105,7 @@ const RootRouter = () => {
   // } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
     renderRouteComponent = (<Routes>
       <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
-        <Route index element={<ClientAdminDashboard />} />
+        <Route index element={<AnswerQuestions />} />
         <Route path="/select/framework" element={<StripePayment />} />
         <Route path="/framework" element={<ManageFrameWork component='Welcome to framework' />} />
         <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />

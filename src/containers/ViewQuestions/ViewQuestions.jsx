@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import QuestionHeader from "../../Components/QuestionHeader/QuestionHeader.jsx";
 import QuestionsTable from "../../Components/QuestionsTable/QuestionsTable.jsx";
-import listQuestions from '../../../__mocks__/listQuestions.json';
+import {listQuestions} from '../../../__mocks__/listQuestions.js';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
 const { RadioButton } = Fields;
 

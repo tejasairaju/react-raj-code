@@ -81,3 +81,6 @@ padding: 4px 0;
 .m-4 { margin: 4px;}
 .m-5 { margin: 5px;}
 .m-6 { margin: 6px;}
+.ans-main__assign-item:not(:last-child) {
+    margin-bottom: 20px !important;
+}

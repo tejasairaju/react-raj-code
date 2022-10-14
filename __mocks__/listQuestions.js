@@ -1,4 +1,4 @@
-{
+export const listQuestions = {
     "id": "82f7fce8-e1d7-4294-b177-1f734a9e714b",
     "children": [
         {
@@ -8,7 +8,11 @@
             "code": "102-6-b",
             "type": "NA",
             "field_type": "Radio button",
-            "field_choices": ["option_1", "option_2", "option_3"],
+            "field_choices": [
+                "option_1",
+                "option_2",
+                "option_3"
+            ],
             "field_unit_values": [],
             "order": 1,
             "children": [
@@ -92,7 +96,7 @@
             "label": "\"d.describe significant changes above compared to the previous reporting period.\"",
             "code": "102-6-d",
             "type": "Number",
-                    "field_type": "Currency",
+            "field_type": "Currency",
             "field_choices": [],
             "field_unit_values": [],
             "order": 1,

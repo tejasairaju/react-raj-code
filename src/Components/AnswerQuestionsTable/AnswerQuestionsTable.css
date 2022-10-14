@@ -1,0 +1,6 @@
+.text-overflow-control { white-space: nowrap;
+text-overflow: ellipsis;
+width: 238px;
+display: block !important;
+overflow: hidden;
+}
