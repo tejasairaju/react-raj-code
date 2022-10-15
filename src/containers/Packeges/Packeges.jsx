@@ -104,7 +104,7 @@ const Packeges = (props) => {
                 </li>)
               }
             </ul>
-            <a onClick={() => { navigate('/package/summary', { state: { packageDetails: { ...item } } }) }} className="package__item-subscribe">
+            <a onClick={() => { navigate('/packege/summary', { state: { packageDetails: { ...item } } }) }} className="package__item-subscribe">
               Subscribe
             </a>
           </li>)}

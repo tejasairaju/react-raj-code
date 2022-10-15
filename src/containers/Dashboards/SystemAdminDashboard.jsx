@@ -8,12 +8,12 @@ import Axios from 'axios';
 import moment from 'moment';
 import _get from 'lodash/get';
 import Chart from 'chart.js/auto';
-
+import { useDBStatus } from "../../Components/IsDBReady/IsDBReady.jsx";
 import './dashboard.css';
 
 const SystemAdminDashboard = (props) => {
     const navigate = useNavigate();
-
+    const isDbReady = useDBStatus();
 
     const [frameWorkData, setFrameWorkData] = useState({});
     const [organizationData, setOrganizationData] = useState({});
@@ -27,35 +27,35 @@ const SystemAdminDashboard = (props) => {
         const getChart = async () => {
             const labels = ["January", "February", "March", "April", "May", "June"];
             const data = {
-              labels: labels,
-              datasets: [
-                {
-                  label: "Client Subscriptions",
-                  backgroundColor: "hsl(252, 82.9%, 67.8%)",
-                  borderColor: "hsl(252, 82.9%, 67.8%)",
-                  data: [0, 10, 5, 2, 20, 30, 45],
-                },
-              ],
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Client Subscriptions",
+                        backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                        borderColor: "hsl(252, 82.9%, 67.8%)",
+                        data: [0, 10, 5, 2, 20, 30, 45],
+                    },
+                ],
             };
-          
+
             const configLineChart = {
-              type: "line",
-              data,
-              options: {},
+                type: "line",
+                data,
+                options: {},
             };
-          
+
 
             const configBarChart = {
                 type: "bar",
                 data,
                 options: {},
-              };
+            };
 
             chartLine = new Chart(
-              document.getElementById("chartLine"),
-              configLineChart
+                document.getElementById("chartLine"),
+                configLineChart
             );
-            
+
             chartBar = new Chart(
                 document.getElementById("chartBar"),
                 configBarChart
@@ -74,17 +74,17 @@ const SystemAdminDashboard = (props) => {
             }
         }
         const getOrganization = async () => {
- 
-                try {
-                    setStatusData({ type: 'loading', message: '' });
-                    const response = await axios.get(`${process.env.API_BASE_URL}/organizations/`).then(({ data }) => data);
-                    setStatusData({ type: '', message: '' });
-                    setOrganizationData(response);
-                } catch (e) {
-                    setStatusData({ type: 'error', message: e.message });
-                }
+
+            try {
+                setStatusData({ type: 'loading', message: '' });
+                const response = await axios.get(`${process.env.API_BASE_URL}/organizations/`).then(({ data }) => data);
+                setStatusData({ type: '', message: '' });
+                setOrganizationData(response);
+            } catch (e) {
+                setStatusData({ type: 'error', message: e.message });
             }
- 
+        }
+
 
         getOrganization();
         getFramework();
@@ -93,105 +93,105 @@ const SystemAdminDashboard = (props) => {
 
 
 
-   
+
 
     return (<>
-  
 
- <div class="container mx-auto">
-   
- <div id="main" class="grid grid-cols-3 gap-6 justify-evenly"> 
+        {isDbReady &&
+            <div class="container mx-auto">
 
-  <div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-    <br/>
-    
-    <a onClick={() => { navigate(`/manageframework`) }}>
-        <h1 class="mb-2 text-7xl font-bold tracking-tight 
+                <div id="main" class="grid grid-cols-3 gap-6 justify-evenly">
+
+                    <div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                        <br />
+
+                        <a onClick={() => { navigate(`/manageframework`) }}>
+                            <h1 class="mb-2 text-7xl font-bold tracking-tight 
         text-gray-900 dark:text-white text-center box-color-green"><span className="box-color-green">{frameWorkData.count}</span></h1>
-    </a>
-    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-indigo-900">
-        <span className="box-color-green">Total Framework</span>
-    </p>
-    <a onClick={() => { navigate(`/manageframework`) }} 
-    class="inline-flex items-center py-2 px-3 text-sm font-medium
+                        </a>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-indigo-900">
+                            <span className="box-color-green">Total Framework</span>
+                        </p>
+                        <a onClick={() => { navigate(`/manageframework`) }}
+                            class="inline-flex items-center py-2 px-3 text-sm font-medium
      text-center text-white rounded-lg hover:bg-blue-800 
      focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600
      dark:hover:bg-blue-700 dark:focus:ring-blue-800 view-arrow">
-        View
-        <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" 
-        fill="currentColor" viewBox="0 0 20 20" 
-        xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" 
-            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-    </a>
-</div>
+                            View
+                            <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4"
+                                fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </a>
+                    </div>
 
-<div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-<br/>
+                    <div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                        <br />
 
-    <a onClick={() => { navigate(`/manageclient`) }}>
-        <h1 class="mb-2 text-7xl font-bold tracking-tight 
+                        <a onClick={() => { navigate(`/manageclient`) }}>
+                            <h1 class="mb-2 text-7xl font-bold tracking-tight 
         text-gray-900 dark:text-white text-center "><span className="box-color-blue">{organizationData.count}</span></h1>
-    </a>
-    <p class="color-green mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-emerald-700 box-color-blue">
-    <span className="box-color-blue">Total Client</span>
-    </p>
+                        </a>
+                        <p class="color-green mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-emerald-700 box-color-blue">
+                            <span className="box-color-blue">Total Client</span>
+                        </p>
 
-    <a onClick={() => { navigate(`/manageclient`) }} 
-    class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 view-arrow">
-        View
-        <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-    </a>
-</div>
+                        <a onClick={() => { navigate(`/manageclient`) }}
+                            class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 view-arrow">
+                            View
+                            <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </a>
+                    </div>
 
 
-<div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
- 
+                    <div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
 
-<br/>
 
-<a onClick={() => { navigate(`/manageclient`) }}>
-    <h1 class="mb-2 text-7xl font-bold tracking-tight 
+                        <br />
+
+                        <a onClick={() => { navigate(`/manageclient`) }}>
+                            <h1 class="mb-2 text-7xl font-bold tracking-tight 
     text-gray-900 dark:text-white text-center box-color-red"><span className="box-color-red">5</span></h1>
-</a>
-<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-rose-900 box-color-red">
-<span className="box-color-red">Onboarding Pending </span> 
-</p>
+                        </a>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-rose-900 box-color-red">
+                            <span className="box-color-red">Onboarding Pending </span>
+                        </p>
 
-<a onClick={() => { navigate(`/manageclient`) }} 
-class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 view-arrow">
-    View
-    <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-</a>
-
-
-</div>
-
-</div>
-  
-  <br/>
-  <br/>
-  
-  <div id="main1" class="grid grid-cols-2 gap-6 justify-evenly"> 
-
-<div class="shadow-lg rounded-lg overflow-hidden">
-  <div class="py-3 px-5 bg-gray-50 text-center">Subscription</div>
-  <canvas class="p-10" id="chartBar"></canvas>
-</div>
-
-<div class="shadow-lg rounded-lg overflow-hidden">
-  <div class="py-3 px-5 bg-gray-50 text-center">Sales</div>
-  <canvas class="p-10" id="chartLine"></canvas>
-</div>
-
-</div>
+                        <a onClick={() => { navigate(`/manageclient`) }}
+                            class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 view-arrow">
+                            View
+                            <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </a>
 
 
-</div>
+                    </div>
 
- 
+                </div>
 
- {/* <div class="main__content-wrapper">
+                <br />
+                <br />
+
+                <div id="main1" class="grid grid-cols-2 gap-6 justify-evenly">
+
+                    <div class="shadow-lg rounded-lg overflow-hidden">
+                        <div class="py-3 px-5 bg-gray-50 text-center">Subscription</div>
+                        <canvas class="p-10" id="chartBar"></canvas>
+                    </div>
+
+                    <div class="shadow-lg rounded-lg overflow-hidden">
+                        <div class="py-3 px-5 bg-gray-50 text-center">Sales</div>
+                        <canvas class="p-10" id="chartLine"></canvas>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        }
+
+        {/* <div class="main__content-wrapper">
 
 <div class="framework__row-wrapper">
 

@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import './PaymentSuccess.css';
 
 const PaymentSuccess = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+setTimeout(() => {navigate('/')}, 6000)
+
+  });
     
 
     return (<div className="payment-success-card">

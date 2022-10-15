@@ -19,8 +19,8 @@ const AnswerQuestionsTable = (props) => {
             setStatusData({ type: 'loading', message: '' });
             // const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${frameworkId}/disclosures/${itemDetails.id}`).then(({ data }) => data);
             setStatusData({ type: '', message: '' });
-            const ListData = response.children;
-            ListData[0]['isSelected'] = true;
+            // const ListData = response.children;
+            // ListData[0]['isSelected'] = true;
             // setQuestionsList([...ListData]);
             setQuestionsList([...listQuestions.children]); //Dummy
             // return response.results || [];

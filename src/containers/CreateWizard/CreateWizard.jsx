@@ -15,9 +15,11 @@ import { clientUserMenu, client_admin } from '../../utils/constants.js'
 import CreateFramework from './CreateFramework/CreateFramework.jsx';
 import axios from 'axios';
 import Pagination from '../../Components/Pagination/Pagination.jsx';
+import { useDBStatus } from '../../Components/IsDBReady/IsDBReady.jsx';
+import PageInprogress from '../../Components/Common/PageInprogress/PageInprogress.jsx';
 
 const CreateWizard = ({ logoutHandler = () => {}} ) => {
-
+    const [dbStatus] = useDBStatus();
     const navigate = useNavigate();
     const [sideMenu, updateSideMenu] = useState(client_admin);
     const [statusData, setStatusData] = useState({});
@@ -74,7 +76,10 @@ const CreateWizard = ({ logoutHandler = () => {}} ) => {
         </li>)}</>
         return render;
     };
+    console.log('::::::isDBReady:::::::::::', dbStatus);
     return (<>
+    {(dbStatus === 'Done')?
+    <>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <aside className="aside-framework">
             <div className="aside-framework__logo-container">
@@ -93,6 +98,8 @@ const CreateWizard = ({ logoutHandler = () => {}} ) => {
             {/* <Pagination /> */}
             <Outlet />
         </main>
+    </>
+    :<><PageInprogress /></>}
     </>)
 }
 
