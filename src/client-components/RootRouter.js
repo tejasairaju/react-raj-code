@@ -35,19 +35,27 @@ import PackageSummary from "../Components/PackageSummary/PackageSummary.jsx";
 import PaymentSuccess from "../Components/PaymentSuccess/PaymentSuccess.jsx";
 import OrganisationInfo from "../containers/OrganisationInfo/OrganisationInfo.jsx";
 import ClientAdminDashboard from "../containers/ClientAdminDashboard/ClientAdminDashboard.jsx";
+import action from '../actions/SignUpActions.js'
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const RootRouter = () => {
-  const navigator = useNavigate();
+  const navigae = useNavigate();
+  const dispatch = useDispatch();
   const { isAuthenticated = false, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
   const [isVarified, setIsVarified] = useState(false);
+  const { orgDetails = {} } = useSelector(state => state.signup);
   useMemo(() => {
     if (isAuthenticated) {
       const fn = async () => {
         try {
           const token = await getTokenSilently();
-          // console.log('::::::::::::::jwt::::', jwt(token));
+          const response = await axios.get('https://13.40.76.135/backend/organizations/Xlicon').then(({ data }) => data);
+          if (response) {
+            dispatch(action.organisationDatails(response));
+          }
           setLoginUserDetails(jwt(token));
           // Navigate('')
         } catch (error) {
@@ -57,6 +65,21 @@ const RootRouter = () => {
       fn();
     }
   }, [isAuthenticated]);
+
+  useMemo(() => {
+    if (!_isEmpty(orgDetails) && isAuthenticated) {
+      if (!orgDetails.is_payment_done) {
+        navigae('/packege');
+      }
+       else if (is_payment_done && !is_db_created) {
+      } else if (is_payment_done&&is_db_created&&orgDetails.status === 'Initial') {
+        navigae('/orginfo');
+      }
+      else if (orgDetails.is_payment_done && orgDetails.is_db_created && (orgDetails.status === 'Active')) {
+        navigae('/');
+      }
+    }
+  }, [isAuthenticated, orgDetails])
 
   const loginHandler = (email) => {
     loginWithRedirect();
@@ -71,7 +94,7 @@ const RootRouter = () => {
   }
 
   let renderRouteComponent = null;
-  if (isAuthenticated && loginUserDetails.orgi) {
+  // if (isAuthenticated && loginUserDetails.orgi) {
     //   renderRouteComponent = (<React.Fragment>
     //     <Routes>
     //       <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
@@ -104,27 +127,28 @@ const RootRouter = () => {
     //     </Route>
     //   </Routes>)
     // } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
-    //   renderRouteComponent = (<Routes>
-    //     <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
-    //       <Route index element={<ClientAdminDashboard />} />
-    //       <Route path="/select/framework" element={<StripePayment />} />
-    //       <Route path="/framework" element={<ManageFrameWork component='Welcome to framework' />} />
-    //       <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
-    //       <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
-    //       <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
-    //       <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
-    //       <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
-    //       <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
-    //     </Route>
-    //     <Route path="/orginfo" element={<OrganisationInfo />} />
-    //     <Route path="/packege" element={<Packeges />} />
-    //     <Route path="/checkout" element={<StripePayment />} />
-    //     <Route path="/packege/summary" element={<PackageSummary />} />
-    //     <Route path="/payment/success" element={<PaymentSuccess />} />
-    //     <Route path="/signup" element={<RegistrationForm />} />
+      renderRouteComponent = (<Routes>
+        {/* <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
+          <Route index element={<ClientAdminDashboard />} />
+          <Route path="/select/framework" element={<StripePayment />} />
+          <Route path="/framework" element={<ManageFrameWork component='Welcome to framework' />} />
+          <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
+          <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
+          <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
+          <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
+          <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
+          <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
+        </Route> */}
+        <Route path="/" element={<Packeges />} />
+        <Route path="/orginfo" element={<OrganisationInfo />} />
+        
+        <Route path="/checkout" element={<StripePayment />} />
+        <Route path="/packege/summary" element={<PackageSummary />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/signup" element={<RegistrationForm />} />
 
-    //   </Routes>);
-  }
+       </Routes>);
+  // }
 
   return (
     <>
@@ -135,16 +159,19 @@ const RootRouter = () => {
         </Routes>
       </React.Fragment>
       )} */}
-      <Routes>
-        <Route path="/" element={<Packeges />} />
-        <Route path="/orginfo" element={<OrganisationInfo />} />
-        <Route path="/packege" element={<Packeges />} />
-        <Route path="/checkout" element={<StripePayment />} />
-        <Route path="/packege/summary" element={<PackageSummary />} />
-        <Route path="/payment/success" element={<PaymentSuccess />} />
-        <Route path="/signup" element={<RegistrationForm />} />
-      </Routes>
+      
+        {/* <Routes>
+          <Route path="/" element={<ClientAdminDashboard />} />
+          <Route path="/packege" element={<Packeges />} />
+          <Route path="/orginfo" element={<OrganisationInfo />} />
+          <Route path="/packege" element={<Packeges />} />
+          <Route path="/checkout" element={<StripePayment />} />
+          <Route path="/packege/summary" element={<PackageSummary />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/signup" element={<RegistrationForm />} />
+        </Routes> */}
       {renderRouteComponent}
+      
 
     </>
   );

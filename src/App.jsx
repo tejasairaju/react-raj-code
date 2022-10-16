@@ -22,7 +22,6 @@ import PrivateRoute from "./client-components/PrivateRoute.js";
 import RootRouter from "./client-components/RootRouter.js";
 const App = (props) => {
     const { isAuthenticated, users } = useAuth0();
-    console.log('::::::::::::::::::app:::::::', isAuthenticated);
     return (
         <section className="wrapper">
             <Provider store={store}>

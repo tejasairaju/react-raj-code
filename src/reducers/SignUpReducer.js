@@ -8,6 +8,12 @@ const initialState = { component: "SignUp Page"};
         ...state,
         response
       }
+      case 'ORGANISATIONS_DETAILS':
+        const { payload } = action
+        return {
+          ...state,
+          orgDetails: payload
+        }
     default:
       return state
   }

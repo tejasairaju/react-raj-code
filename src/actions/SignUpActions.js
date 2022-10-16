@@ -3,6 +3,12 @@ const signUp = (payload)=> ({
     payload
 });
 
+const organisationDatails = (payload)=> ({
+    type: 'ORGANISATIONS_DETAILS',
+    payload
+});
+
 export default {
-    signUp
+    signUp,
+    organisationDatails
 }
