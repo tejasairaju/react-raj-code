@@ -8,6 +8,12 @@ const PackegeReducer = (state = {...initialState}, action)  => {
        ...state,
        data: response.results
      }
+     case 'UPDATE_SUBSCRIBE_DETAILS':
+     const { payload } = action
+     return {
+       ...state,
+       selectedPakege: {...payload}
+     }
    default:
      return state
  }

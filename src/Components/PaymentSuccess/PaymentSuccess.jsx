@@ -9,8 +9,13 @@ import './PaymentSuccess.css';
 const PaymentSuccess = () => {
   const { search } = _get(window, 'location', '?');
   const params = queryString.parse(search);
-  const { payment_intent = "", redirect_status = '' } = params;
+  const { payment_intent = "", redirect_status = '', id ='' } = params;
   const { orgDetails = {} } = useSelector(state => state.signup)
+  const { selectedPakege = {}} = useSelector((state) => state.packeges);
+  const packegeDetails = localStorage.getItem("selectedPackege");
+  const retrivePackegeDetails = JSON.parse(packegeDetails);
+   const orgInfo = localStorage.getItem("orgInfo");
+  const retriveOrgInfo = JSON.parse(orgInfo);
   const navigate = useNavigate();
   useEffect(() => {
 
@@ -22,12 +27,13 @@ const PaymentSuccess = () => {
     const payload = {
       transaction_id: payment_intent,
       payment_status_frontend: redirect_status,
-      package_selected: "5faa3752-7083-4c02-8ecf-a588bfb97233",
-      organization: orgDetails.id || '37c46b6f-15be-490e-87f6-59d62a977d34',
-      paid_by: orgDetails.employees_count || 150
+      package_selected: retrivePackegeDetails.id ,
+      organization: retriveOrgInfo.id,
+      paid_by: retriveOrgInfo.employees_count
     }
     try {
       const response = await axios.post(`${process.env.API_BASE_URL}/backend/payments/`, { ...payload }).then(({ data }) => data);
+      localStorage.setItem("selectedPackege", JSON.stringify({}));
       navigate('/');
 
     } catch (e) {

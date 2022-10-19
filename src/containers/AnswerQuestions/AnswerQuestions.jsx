@@ -112,7 +112,7 @@ const AnswerQuestions = () => {
         </div>
         <div className="ans-main__assign-item">
             <h1 className="assign__title">
-                Frameworks:{(apiData.listData || []).length}
+                Frameworks:
             </h1>
             <div className="frameworks__choose">
                 {(frameworkData || []).map((item, i) => {

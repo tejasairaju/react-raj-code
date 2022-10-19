@@ -32,6 +32,7 @@ const Packeges = (props) => {
 
   useEffect(() => {
     if (_isEmpty(data)) {
+      localStorage.setItem("selectedPackege", JSON.stringify({}));
       dispatch(actions.getPackegeDetails());
     }
   }, []);
@@ -54,6 +55,12 @@ const Packeges = (props) => {
       setDbStatus('');
     }
   }
+const onClickSubscribe = (item) => {
+  dispatch(actions.updateSubscribeDetails(item));
+  localStorage.setItem("selectedPackege", JSON.stringify({...item}));
+   navigate('/packege/summary', { state: { packageDetails: { ...item } } });
+}
+  
 
   // const getPaymentDetails = async () => {
   //   try {
@@ -104,7 +111,7 @@ const Packeges = (props) => {
                 </li>)
               }
             </ul>
-            <a onClick={() => { navigate('/packege/summary', { state: { packageDetails: { ...item } } }) }} className="package__item-subscribe">
+            <a onClick={() => onClickSubscribe(item)} className="package__item-subscribe">
               Subscribe
             </a>
           </li>)}

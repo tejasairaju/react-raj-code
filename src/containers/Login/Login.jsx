@@ -8,9 +8,10 @@ import '../../components/RegistrationForm/RegistrationForm.css';
 
 export const Login = ({loginHandler}) => {
     const { loginWithRedirect = () => {}, logout, isAuthenticated } = useAuth0();
-    // useEffect(() => {
-    //     logout()
-    // }, []);
+    useEffect(() => {
+        localStorage.setItem("orgInfo", JSON.stringify({ }));
+        localStorage.setItem("selectedPackege", JSON.stringify({}));
+    }, []);
 
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');

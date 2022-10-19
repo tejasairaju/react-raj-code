@@ -37,7 +37,9 @@ import OrganisationInfo from "../containers/OrganisationInfo/OrganisationInfo.js
 import ClientAdminDashboard from "../containers/ClientAdminDashboard/ClientAdminDashboard.jsx";
 import action from '../actions/SignUpActions.js'
 import axios from "axios";
+import AssignDisclosures from "../containers/AssignDisclosures/AssignDisclosures.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { org } from "../../__mocks__/org.js";
 
 
 const RootRouter = () => {
@@ -52,12 +54,13 @@ const RootRouter = () => {
       const fn = async () => {
         try {
           const token = await getTokenSilently();
-          const response = await axios.get('https://13.40.76.135/backend/organizations/Xlicon').then(({ data }) => data);
+          let decodedData = jwt(token); //decodedData.org/test8
+          const response = await axios.get(`${process.env.API_BASE_URL}/organizations/test8`).then(({ data }) => data);
           if (response) {
+            localStorage.setItem("orgInfo", JSON.stringify({ ...response }));
             dispatch(action.organisationDatails(response));
           }
           setLoginUserDetails(jwt(token));
-          // Navigate('')
         } catch (error) {
           setLoginUserDetails({});
         }
@@ -71,8 +74,8 @@ const RootRouter = () => {
       if (!orgDetails.is_payment_done) {
         navigae('/packege');
       }
-       else if (is_payment_done && !is_db_created) {
-      } else if (is_payment_done&&is_db_created&&orgDetails.status === 'Initial') {
+      else if (is_payment_done && !is_db_created) {
+      } else if (is_payment_done && is_db_created && orgDetails.status === 'Initial') {
         navigae('/orginfo');
       }
       else if (orgDetails.is_payment_done && orgDetails.is_db_created && (orgDetails.status === 'Active')) {
@@ -94,84 +97,77 @@ const RootRouter = () => {
   }
 
   let renderRouteComponent = null;
-  // if (isAuthenticated && loginUserDetails.orgi) {
-    //   renderRouteComponent = (<React.Fragment>
-    //     <Routes>
-    //       <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
-    //       <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
-    //       <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
-    //     </Routes></React.Fragment>)
-    // } 
-    // else if (isAuthenticated && loginUserDetails.user_role === 'esg_admin') {
-    //   renderRouteComponent = (<Routes>
-    //     <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
-    //       <Route index element={<SystemAdminDashboard />} />
-    //       <Route path="/createframe" element={<CreateFramework />} />
-    //       <Route path="/createdisclosures" element={<CreateDisclosures />} />
-    //       <Route path="/createquestions" element={<CreateQuestions />} />
-    //       <Route path="/manageframework" element={<ViewFrameWork />} />
-    //       <Route path="/viewdisclosures" element={<ViewDisclosures />} />
-    //       <Route path="/viewquestions" element={<ViewQuestions />} />
-    //       <Route path="/createdisclosures" element={<CreateFramework />} />
-    //       <Route path="/mapdisclosures" element={<MapDisclosures />} />
-    //       <Route path="/manageclient" element={<ClientInfo />} />
-    //       <Route path="/country" element={<ManageCountry />} />
-    //       <Route path="/category" element={<ManageCategory />} />
-    //       <Route path="/sector" element={<Sector />} />
-    //       <Route path="/subsector" element={<SubSector />} />
-    //       <Route path="/customeronboardbyadmin" element={<CustomerOnboardByAdmin />} />
-    //       <Route path="/adminuser" element={<ESGAdmin />} />
-    //       <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
-    //       <Route path="/systemsettings" element={<ManageFrameWork component='Welcome to System Settings' />} />
-    //       <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
-    //     </Route>
-    //   </Routes>)
-    // } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  if (isAuthenticated && loginUserDetails.orgi) {
+    renderRouteComponent = (<React.Fragment>
+      <Routes>
+        <Route path="/" element={<PrivateRoute component={ExternalApi} />} />
+        <Route path="/external-api" element={<PrivateRoute component={ExternalApi} />} />
+        <Route path="*" element={<main style={{ padding: "1rem" }}><p>There's nothing here!</p></main>} />
+      </Routes></React.Fragment>)
+  }
+  else if (isAuthenticated && loginUserDetails.user_role === 'esg_admin') {
+    renderRouteComponent = (<Routes>
+      <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
+        <Route index element={<SystemAdminDashboard />} />
+        <Route path="/createframe" element={<CreateFramework />} />
+        <Route path="/createdisclosures" element={<CreateDisclosures />} />
+        <Route path="/createquestions" element={<CreateQuestions />} />
+        <Route path="/manageframework" element={<ViewFrameWork />} />
+        <Route path="/viewdisclosures" element={<ViewDisclosures />} />
+        <Route path="/viewquestions" element={<ViewQuestions />} />
+        <Route path="/createdisclosures" element={<CreateFramework />} />
+        <Route path="/mapdisclosures" element={<MapDisclosures />} />
+        <Route path="/manageclient" element={<ClientInfo />} />
+        <Route path="/country" element={<ManageCountry />} />
+        <Route path="/category" element={<ManageCategory />} />
+        <Route path="/sector" element={<Sector />} />
+        <Route path="/subsector" element={<SubSector />} />
+        <Route path="/customeronboardbyadmin" element={<CustomerOnboardByAdmin />} />
+        <Route path="/adminuser" element={<ESGAdmin />} />
+        <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
+        <Route path="/systemsettings" element={<ManageFrameWork component='Welcome to System Settings' />} />
+        <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
+      </Route>
+    </Routes>)
+  } else
+    if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
       renderRouteComponent = (<Routes>
-        {/* <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
+        <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
           <Route index element={<ClientAdminDashboard />} />
           <Route path="/select/framework" element={<StripePayment />} />
           <Route path="/framework" element={<ManageFrameWork component='Welcome to framework' />} />
+          <Route path="/assigndisclosure" element={<AssignDisclosures />} />
           <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
           <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
           <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
           <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
           <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
           <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
-        </Route> */}
-        <Route path="/" element={<Packeges />} />
+        </Route>
+
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/packege" element={<Packeges />} />
         <Route path="/orginfo" element={<OrganisationInfo />} />
-        
         <Route path="/checkout" element={<StripePayment />} />
         <Route path="/packege/summary" element={<PackageSummary />} />
-        <Route path="/payment/success" element={<PaymentSuccess />} />
-        <Route path="/signup" element={<RegistrationForm />} />
 
-       </Routes>);
-  // }
+      </Routes>);
+    }
 
   return (
     <>
-      {/* {!isAuthenticated && (<React.Fragment>
+      {!isAuthenticated && (<React.Fragment>
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
-          <Route path="*" element={<div>Please login <button className="default-login-btn" onClick={() => navigator('/')}>Login</button></div>} />
         </Routes>
       </React.Fragment>
-      )} */}
-      
-        {/* <Routes>
-          <Route path="/" element={<ClientAdminDashboard />} />
-          <Route path="/packege" element={<Packeges />} />
-          <Route path="/orginfo" element={<OrganisationInfo />} />
-          <Route path="/packege" element={<Packeges />} />
-          <Route path="/checkout" element={<StripePayment />} />
-          <Route path="/packege/summary" element={<PackageSummary />} />
-          <Route path="/payment/success" element={<PaymentSuccess />} />
-          <Route path="/signup" element={<RegistrationForm />} />
-        </Routes> */}
+      )}
+      <Routes>
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/signup" element={<RegistrationForm />} />
+      </Routes>
       {renderRouteComponent}
-      
+
 
     </>
   );
