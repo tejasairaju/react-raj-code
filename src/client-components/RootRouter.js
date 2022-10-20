@@ -40,22 +40,25 @@ import axios from "axios";
 import AssignDisclosures from "../containers/AssignDisclosures/AssignDisclosures.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { org } from "../../__mocks__/org.js";
+import PageInprogress from "../Components/Common/PageInprogress/PageInprogress.jsx";
+import CreateReport from "../containers/CreateReport/CreateReport.jsx";
 
 
 const RootRouter = () => {
-  const navigae = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated = false, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
   const [isVarified, setIsVarified] = useState(false);
   const { orgDetails = {} } = useSelector(state => state.signup);
-  useMemo(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       const fn = async () => {
         try {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
-          const response = await axios.get(`${process.env.API_BASE_URL}/organizations/test8`).then(({ data }) => data);
+          
+          const response = await axios.get(`${process.env.API_BASE_URL}/organizations/${decodedData.org}`).then(({ data }) => data);
           if (response) {
             localStorage.setItem("orgInfo", JSON.stringify({ ...response }));
             dispatch(action.organisationDatails(response));
@@ -69,17 +72,18 @@ const RootRouter = () => {
     }
   }, [isAuthenticated]);
 
-  useMemo(() => {
+  useEffect(() => {
     if (!_isEmpty(orgDetails) && isAuthenticated) {
       if (!orgDetails.is_payment_done) {
-        navigae('/packege');
+        navigate('/packege');
       }
-      else if (is_payment_done && !is_db_created) {
-      } else if (is_payment_done && is_db_created && orgDetails.status === 'Initial') {
-        navigae('/orginfo');
+      else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && !orgDetails.is_db_created) {
+        navigate('/pageinprogress')
+      } else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && orgDetails.is_db_created && orgDetails.status === 'Initial') {
+        navigate('/orginfo');
       }
-      else if (orgDetails.is_payment_done && orgDetails.is_db_created && (orgDetails.status === 'Active')) {
-        navigae('/');
+      else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && orgDetails.is_db_created && (orgDetails.status === 'Active')) {
+        navigate('/');
       }
     }
   }, [isAuthenticated, orgDetails])
@@ -129,14 +133,14 @@ const RootRouter = () => {
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
       </Route>
     </Routes>)
-  } else
-    if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
       renderRouteComponent = (<Routes>
         <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
           <Route index element={<ClientAdminDashboard />} />
           <Route path="/select/framework" element={<StripePayment />} />
-          <Route path="/framework" element={<ManageFrameWork component='Welcome to framework' />} />
-          <Route path="/assigndisclosure" element={<AssignDisclosures />} />
+          <Route path="/report" element={<CreateReport />} />
+          <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
+          <Route path="/report/:reportid/disclosures" element={<AssignDisclosures />} />
           <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
           <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
           <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
@@ -145,12 +149,13 @@ const RootRouter = () => {
           <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
         </Route>
 
-        <Route path="/payment/success" element={<PaymentSuccess />} />
+        {/* <Route path="/payment/success" element={<PaymentSuccess />} /> */}
         <Route path="/packege" element={<Packeges />} />
         <Route path="/orginfo" element={<OrganisationInfo />} />
         <Route path="/checkout" element={<StripePayment />} />
         <Route path="/packege/summary" element={<PackageSummary />} />
-
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/pageinprogress" element={<PageInprogress />} />
       </Routes>);
     }
 
@@ -163,7 +168,7 @@ const RootRouter = () => {
       </React.Fragment>
       )}
       <Routes>
-        <Route path="/payment/success" element={<PaymentSuccess />} />
+       
         <Route path="/signup" element={<RegistrationForm />} />
       </Routes>
       {renderRouteComponent}

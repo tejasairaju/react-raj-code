@@ -295,7 +295,7 @@ export const client_admin = [{
     isActive: false,
     icon1: 'masters-icon.svg',
     icon2: '',
-    route: '/publish/reports'
+    route: '/report'
 },
 {
     clsName: '',

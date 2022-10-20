@@ -19,25 +19,27 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
   useEffect(() => {
 
-    setTimeout(() => { updatePaymentStatus(); }, 6000);
+    setTimeout(() => { navigate('/') }, 6000);
 
   }, []);
   // Required transaction details: 'transaction_id', 'package_selected', 'organization', 'paid_by', 'payment_status_frontend'
   const updatePaymentStatus = async () => {
+    let pay_status = '';
+    if(redirect_status === 'succeeded') {
+      pay_status = 'Successful';
+    }
     const payload = {
       transaction_id: payment_intent,
-      payment_status_frontend: redirect_status,
-      package_selected: retrivePackegeDetails.id ,
-      organization: retriveOrgInfo.id,
-      paid_by: retriveOrgInfo.employees_count
+      status: pay_status,
+      package: retrivePackegeDetails.id,
+      organization: retriveOrgInfo.id
     }
     try {
-      const response = await axios.post(`${process.env.API_BASE_URL}/backend/payments/`, { ...payload }).then(({ data }) => data);
       localStorage.setItem("selectedPackege", JSON.stringify({}));
-      navigate('/');
+      navigate('/orginfo');
 
     } catch (e) {
-
+      navigate('/orginfo');
     }
 
   }

@@ -3,10 +3,10 @@ import axios from 'axios';
 import _get from 'lodash/get';
 import _toLower from 'lodash/toLower';
 import queryString from 'query-string';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import AnswerQuestionsTable from "../../Components/AnswerQuestionsTable/AnswerQuestionsTable.jsx";
-
+import Popup from "../../components/Common/Popup/Popup.jsx";
 const { RadioButton } = Fields;
 import './AssignDisclosures.css';
 import { listDisclosures } from '../../../__mocks__/listDisclosures.js';
@@ -16,6 +16,7 @@ import UserListView from "../../Components/UserListView/UserListView.jsx";
 
 
 const AssignDisclosures = () => {
+    const { reportid } = useParams();
     const navigate = useNavigate();
     const [apiData, setApiData] = useState({ listData: [] });
     const [isOpen, setIsopen] = useState(false);
@@ -29,7 +30,8 @@ const AssignDisclosures = () => {
     const params = queryString.parse(search);
 
     useEffect(() => {
-        getCatagoryList();
+        // getCatagoryList();
+        getDisclosures();
         // ();
     }, []);
 
@@ -37,20 +39,21 @@ const AssignDisclosures = () => {
         try {
             const response = axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`);
             setCatagoryList([...response.results]);
-        } catch(e) {
+        } catch (e) {
             setCatagoryList([]);
         }
 
     }
 
-    const getDisclosures = async (frameworkId) => {
+    const getDisclosures = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${frameworkId}/disclosures`).then(({ data }) => data);
-           
+            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportid}/disclosures?organization=sprint2`).then(({ data }) => data);
+
             setStatusData({ type: '', message: '' });
-            return response.results || [];
-            // return response.results || [];
+            setApiData({...apiData, listData: [...response.disclosures] })
+            // return response.disclosures || [];
+            // return listDisclosures.results || [];
         } catch (e) {
             return [];
         }
@@ -82,28 +85,80 @@ const AssignDisclosures = () => {
 
     const onClickUserSelect = (user) => {
         console.log(user);
-        setSelectedUser({...user})
+        setSelectedUser({ ...user })
     }
 
-    const onClickAssignDisclosure = () => {
-        console.log(selectedUser);
-        // /reports/:id/disclosures/:disclosure_id/assign
-        // {
-        //     "disclosure_type": "Custom",
-        //     "assigned_to": "1a540d6f-3fb3-7096-5275-7c36f8e28342",
-        //     "disclosure_kpi_id": "q"
-        //   }
+    const onClickAssignDisclosure = async () => {
+        const { listData = [] } = apiData;
+        let filterListData = [...listData];
+        filterListData = (filterListData || []).map(disclosure => {
+            if (disclosure.isSelected === true) {
+                const payload = {};
+                payload['disclosure_id'] = disclosure.id;
+                payload['disclosure_type'] = "Standard";
+                payload['assigned_to'] = selectedUser.id;
+                return {...payload}
+            }
+        });
+
+        if (((filterListData || []).length > 0) && selectedUser.id) {
+
+            try {
+                // const payload = {};
+                // payload['disclosure_id'] = [...filterListData];
+                // payload['disclosure_type'] = "Standard";
+                // payload['assigned_to'] = selectedUser.id;
+                const response = axios.post(`${process.env.API_BASE_URL}/reports/${reportid}/disclosures/assign?organization=sprint2`, filterListData).then(({ data }) => data);
+                setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
+            } catch (e) {
+                setStatusData({ type: 'error', message: e.message });
+            }
+        }
+    }
+    // setStatusData({ type: 'loading', message: '' });
+    // for (let x = 0; x < listData.length; x++) {
+    //     if (listData[x].isSelected === true) {
+    //         let postData = {}
+    //         postData['disclosure_type'] = 'Custom';
+    //         postData['assigned_to'] = selectedUser.id;
+    //         postData['disclosure_kpi_id'] = listData[x].id;
+    //         let newPromise = axios({
+    //             method: 'post',
+    //             url: `${process.env.API_BASE_URL}/reports/${'62ad8e7f-d034-41c7-b156-a52321a2a32f'}/disclosures/${listData[x].id}/assign`,
+    //             data: postData
+    //         })
+    //         axiosArray.push(newPromise)
+    //     }
+
+    //     axios
+    //         .all(axiosArray)
+    //         .then(axios.spread((...responses) => {
+    //             responses.forEach(res => console.log('Success'))
+    //             console.log('submitted all axios calls');
+    //             setStatusData({ type: 'success', message: 'DisClosures assigned successfully' });
+    //         }))
+    //         .catch(error => {
+    //             setStatusData({ type: 'error', message: 'Error' });
+    //         })
+    //}
+
+
+
+    const onCloseHandler = () => {
+
     }
 
     const filterList = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
     return (<>
-        <div className="main__top-wrapper">
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
+        <div className="main__top-wrapper assign-disclosure-title">
             <h1 className="main__title">
-                Assign Disclosures
+                <b>Assign Disclosures</b>
             </h1>
         </div>
+        {/* <div class="framework-toggle-container"><button className="framework-btn-toogle toggle-active">Framework</button><button className="framework-btn-toogle">Besopke Framework</button></div> */}
         <div className="ans-main__assign-item">
-            <ListFramework onClickFrameworkHandler={onClickFrameworkHandler} />
+            {/* <ListFramework onClickFrameworkHandler={onClickFrameworkHandler} /> */}
             <CategoryFilter filterList={filterList} filterKey={catagoryType} radioChangeHandler={radioChangeHandler} />
         </div>
         <div class="">
@@ -173,10 +228,10 @@ const AssignDisclosures = () => {
             <div class="right__arrow"></div>
         </div> */}
         <div class="buttons__panel">
-            <button onClick={() => onClickAssignDisclosure} class="buttons__panel-button">
+            <button onClick={() => { }} class="buttons__panel-button">
                 BACK
             </button>
-            <button class="main__button">
+            <button onClick={() => onClickAssignDisclosure()} class="main__button">
                 ASSIGN
             </button>
         </div>

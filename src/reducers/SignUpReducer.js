@@ -14,6 +14,15 @@ const initialState = { component: "SignUp Page"};
           ...state,
           orgDetails: payload
         }
+      case 'UPDATE_DB_STATUS': 
+      const { flag } = action;
+      return {
+        ...state,
+        orgDetails: {
+          ...state.orgDetails,
+          is_db_created: true
+        }
+      }
     default:
       return state
   }

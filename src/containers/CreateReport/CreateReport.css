@@ -1,0 +1,153 @@
+.GenerateReport-framework__overflow {
+    overflow: auto;
+}
+
+.GenerateReport-framework__input {
+    padding: 8px 12px;
+    font-size: 14px;
+    outline: none;
+    background: rgba(32, 136, 189, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-basis: 100%;
+}
+
+.btn_generate {
+    margin-left: 45%;
+}
+
+.Generate_frame {
+    flex-basis: 5%;
+}
+
+.Generate_button {
+    align-self: flex-end;
+    background: #499E43;
+    border-radius: 5px;
+    margin-top: 0em;
+    padding: 5px 30px;
+    font-size: 15px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    min-width: 185px;
+}
+
+.Generate_Report {
+    margin-top: 15px;
+}
+.Generate_Report.GenerateReport1-framework__row {
+    margin-top: 40px;
+}
+.Generate_report_head {
+    margin-top: 30px;
+    display: flex;
+    flex-basis: 100%;
+}
+
+.Generate_report_button_row {
+    margin-top: 100px;
+    display: flex;
+    flex-basis: 50%;
+}
+
+.GenerateReport-framework__row {
+    display: flex;
+    flex-basis: 100%;
+    margin-bottom: 4px;
+}
+
+.Generate_h1_label1 {
+    display: flex;
+    flex-basis: 16%;
+    margin-left: 2%;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.Generate_h1_label {
+    display: flex;
+    flex-basis: 40%;
+    margin-left: 5%;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.GenerateReport_row {
+    display: flex;
+    flex-basis: 100%;
+}
+
+.GenerateReport_card {
+
+    border: 1px solid #ddd;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    height: 85px;
+    margin: 1%;
+    background-color: aliceblue;
+}
+.GenerateReport_card1 {
+    border: 1px solid #ddd;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    height: 85px;
+    margin: 1%;
+    background-color: white;
+}
+img.GenerateReport-image {
+    width: 70px;
+}
+.framework__col-wrapper {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+}
+
+.framework__col-wrapper .framework__title {
+    white-space: nowrap;
+    display: flex;
+    flex-basis: 40%;
+}
+.create-report-btn {
+    justify-content: flex-end;
+}
+@media screen and (max-width: 767px) {
+    
+    .Generate_report_head {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .Generate_h1_label {
+        flex-wrap: nowrap;
+        flex-basis: 50%;
+    }
+
+    .GenerateReport-framework__row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .Generate_report_button_row {
+        display: flex;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .Generate_button {
+        margin-bottom: 10px;
+    }
+
+    .GenerateReport-framework__input {
+        display: flex;
+        flex-basis: 100%;
+        margin-bottom: 10px;
+    }
+}

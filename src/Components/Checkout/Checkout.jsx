@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React from "react";
+import { useEffect } from "react";
 import "./Checkout.css";
 
 function Checkout() {

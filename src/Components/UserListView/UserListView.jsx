@@ -7,54 +7,46 @@ const userListMock = [{
     id: 1,
     name: 'John Smith',
     job: 'Admin Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }, {
     id: 1,
     name: 'Cooper',
     job: 'Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }, {
     id: 1,
     name: 'Mark',
     job: 'Ass.Admin Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }, {
     id: 1,
     name: 'John william',
     job: 'Admin Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }, {
     id: 1,
     name: 'John',
     job: 'Admin Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }, {
     id: 1,
     name: 'Cooper hook',
     job: 'Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }, {
     id: 1,
     name: 'Donal',
     job: 'Ass.Admin Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }, {
     id: 1,
     name: 'Raj',
     job: 'Admin Manager',
-    "logo": "https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_01.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221018%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T173353Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3c0a0a9535f14519d8631a33dae3ef5e97eb399d12eef60af3b2e5c39ab8e3",
-
+    "logo":"https://s3.eu-west-2.amazonaws.com/admin.esgdisclose/media/Avatar_3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY47EUU7TAIE7BH5V%2F20221019%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221019T102535Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d875784ab6aa9f3b9bd3ff2ee50776af819bc15e963e35cbf9f660501d4f756c"
 }]
 
 
-
+const avatarLogo = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFw5-Xzbno5hzXlze0BCT6QqKqzy7QV1CrS-vMvSUCI3bsYglxWZtjwWJZ1v8MWVgLnTM&usqp=CAU';
 const UserListView = (props) => {
     const {onClickUserSelect = () => {}} = props
     const { orgDetails = {} } = useSelector(state => state.signup);
@@ -63,10 +55,11 @@ const UserListView = (props) => {
         getUserList();
     }, []);
 
-    const getUserList = () => {
+    const getUserList = async() => {
         try {
-            // const response = axios.get(`${process.env.API_BASE_URL}/users/?organization=${orgDetails.id}`);
-            setUserList([...userListMock]);
+            const response = await axios.get(`${process.env.API_BASE_URL}/users/?organization=sprint2`).then(({data}) => data);
+            console.log(':::::::::::', response)
+            setUserList([...response.results]);
         } catch (e) {
             setUserList([])
         }
@@ -92,12 +85,12 @@ const UserListView = (props) => {
         <div class="user__wrapper user-wrapper-scroll">
             <div class="left__arrow"></div>
             {(userList || []).map((user, i) => <div key={i} onClick={() => onClickHandler(i, user)} class={`user__container ${user.isSelected ? 'active': null}`}>
-                <img src={user.logo} alt="avatar" />
+                <img src='' width={'75px'} height={'50px'} alt="avatar" />
                 <p class="user-name">
-                    {user.name}
+                    {user.first_name}&nbsp;{user.last_name}
                 </p>
                 <p class="job-title">
-                    {user.job}
+                    {user.role}
                 </p>
             </div>)
             }
