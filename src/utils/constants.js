@@ -283,15 +283,15 @@ export const client_admin = [{
     icon2: '',
     route: '/answer/questions'
 }, 
-{
-    clsName: '',
-    role: 'client-admin',
-    label: "Organisation Info",
-    isActive: false,
-    icon1: 'users-icon.svg',
-    icon2: '',
-    route: '/organisation/details'
-},
+// {
+//     clsName: '',
+//     role: 'client-admin',
+//     label: "Organisation Info",
+//     isActive: false,
+//     icon1: 'users-icon.svg',
+//     icon2: '',
+//     route: '/organisation/details'
+// },
 {
     clsName: '',
     role: 'client-admin',
