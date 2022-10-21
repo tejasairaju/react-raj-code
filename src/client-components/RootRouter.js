@@ -43,6 +43,7 @@ import { org } from "../../__mocks__/org.js";
 import PageInprogress from "../Components/Common/PageInprogress/PageInprogress.jsx";
 import CreateReport from "../containers/CreateReport/CreateReport.jsx";
 import Requests from "../Requests";
+import MyTaskDashboard from "../containers/MyTaskDashboard/MyTaskDashboard.jsx";
 
 
 const RootRouter = () => {
@@ -133,10 +134,13 @@ const RootRouter = () => {
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
       </Route>
     </Routes>)
-  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  } else 
+  // {
+   if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
       renderRouteComponent = (<Routes>
         <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
-          <Route index element={<ClientAdminDashboard />} />
+          <Route index element={<MyTaskDashboard />} />
+          <Route path="/clientadmin" element={<ClientAdminDashboard />} />
           <Route path="/select/framework" element={<StripePayment />} />
           <Route path="/report" element={<CreateReport />} />
           <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
@@ -148,8 +152,6 @@ const RootRouter = () => {
           <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
           <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
         </Route>
-
-        {/* <Route path="/" element={<PageInprogress />} /> */}
         <Route path="/packege" element={<Packeges />} />
         <Route path="/orginfo" element={<OrganisationInfo />} />
         <Route path="/checkout" element={<StripePayment />} />

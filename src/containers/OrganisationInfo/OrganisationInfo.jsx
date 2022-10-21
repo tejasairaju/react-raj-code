@@ -11,6 +11,8 @@ import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { empCount } from '../../utils/constants.js';
 import axios from 'axios';
 import EsgImageNavBar from '../../components/EsgImageNavBar/EsgImageNavBar.jsx';
+import Popup from '../../components/Common/Popup/Popup.jsx';
+
 const { Input, TextArea, Pills, UploadFile, Button, InputBox, Label, Dropdown, TextAreaBox } = Fields;
 const OrganisationInfo = () => {
     const dispatch = useDispatch();
@@ -79,13 +81,12 @@ const OrganisationInfo = () => {
     }
 
     const onSaveHandler = async () => {
-        console.log('::::::::::::::::onsave', inputValue);
         if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email) && (inputValue.operating_countries || []).length
             && (inputValue.sectors || []).length && inputValue.employees_count) {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('headquarters', inputValue.headquarters)
-            form.append('mobile_no', inputValue.mobile);
+            form.append('mobile_number', inputValue.mobile);
             form.append('zip_code', inputValue.zipcode);
             form.append('email', inputValue.email);
             form.append('address', inputValue.address);
@@ -99,14 +100,14 @@ const OrganisationInfo = () => {
             const getMultisector = getFilterArrayValue(inputValue.sectors);
             for (const a of getMultisector) {
                 if (!_isEmpty(a)) {
-                    form.append("supported_sectors", a);
+                    form.append("sectors", a);
                 }
 
             }
             const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
             for (const a of getMultisubsector) {
                 if (!_isEmpty(a)) {
-                    form.append("supported_sub_sectors", a);
+                    form.append("sub_sectors", a);
                 }
             }
             const getMultisubcountries = getFilterArrayValue(inputValue.operating_countries);
@@ -195,7 +196,10 @@ const OrganisationInfo = () => {
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
             navigate(`/`);
+        } else {
+            navigate(`/`);
         }
+       
         setStatusData({ type: '', message: '' });
     }
 
@@ -208,6 +212,7 @@ const OrganisationInfo = () => {
 
     return (
         <>
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
           <EsgImageNavBar />
          <section className="right-section acc-info">
             <div class="main__top-wrapper">
