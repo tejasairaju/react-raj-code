@@ -122,3 +122,9 @@
 .org-image-size {
     width: auto !important;
 }
+
+.save-orgi-btn {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}

@@ -14,9 +14,8 @@ import ListFramework from "../../Components/ListFramework/ListFramework.jsx";
 import CategoryFilter from "../../Components/CategoryFilter/CategoryFilter.jsx";
 import UserListView from "../../Components/UserListView/UserListView.jsx";
 
-
 const AssignDisclosures = () => {
-    const { reportid } = useParams();
+    const { reportid = '6b80fe4d-719d-49f7-81c1-e988b136ec2c' } = useParams();
     const navigate = useNavigate();
     const [apiData, setApiData] = useState({ listData: [] });
     const [isOpen, setIsopen] = useState(false);
@@ -180,7 +179,7 @@ const AssignDisclosures = () => {
                                 id={disclosureIndex}
                                 checked={disclosure.isSelected === true}
                             />
-                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{disclosure.isSelected ? <img src="assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>
+                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{disclosure.isSelected ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>
                         </label>
                     </div>)
                 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import './UserListView.css';
 import axios from "axios";
-
 const userListMock = [{
     id: 1,
     name: 'John Smith',
@@ -85,12 +84,12 @@ const UserListView = (props) => {
         <div class="user__wrapper user-wrapper-scroll">
             <div class="left__arrow"></div>
             {(userList || []).map((user, i) => <div key={i} onClick={() => onClickHandler(i, user)} class={`user__container ${user.isSelected ? 'active': null}`}>
-                <img src='' width={'75px'} height={'50px'} alt="avatar" />
+                <img src='../../assets/images/user-avatar.svg' width={'30px'} height={'30px'} alt="avatar" />
                 <p class="user-name">
-                    {user.first_name}&nbsp;{user.last_name}
+                    <span><b>Name:</b></span>{user.first_name}&nbsp;{user.last_name}
                 </p>
                 <p class="job-title">
-                    {user.role}
+                <span><b>Role:</b></span>{user.role}
                 </p>
             </div>)
             }

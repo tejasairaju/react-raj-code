@@ -1,0 +1,121 @@
+.welcome__task__container3 {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.welcome__task__container2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.welcome__task__right__heading {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.welcome__task__container {
+
+    display: flex;
+    justify-content: center;
+    margin: 1%;
+}
+
+.welcome__taskbox {
+    background-color: white;
+    display: flex;
+    height: 85px;
+    width: 95px;
+    padding: -19px;
+    margin-left: 50px;
+    /* box-shadow: rgb(0 0 0 / 8%) 0px 0px 50px 10px; */
+}
+
+.welcome__taskbox.active {
+    background-color: lightblue;
+}
+
+.welcome__task__logo1 {
+    vertical-align: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 67px;
+    margin-left: 13px;
+    margin-top: 11px;
+}
+
+.welcome__task__logo3 {
+    vertical-align: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 67px;
+    margin-left: 15px;
+    margin-top: 27px;
+}
+
+.welcome__task__heading {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.welcome__task__top_line {
+    display: flex;
+    margin-left: 20px;
+}
+
+.welcome__task__box2 {
+    background-color: white;
+    margin-left: 8%;
+    height: 160px;
+    width: 190px;
+    font-size: x-large;
+    /* box-shadow: rgb(0 0 0 / 8%) 0px 0px 50px 10px; */
+}
+
+.welcome__task__numbers {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+h4.welcome__task__bottom_content {
+    display: flex;
+    justify-content: center;
+}
+
+h1.welcome__task__box_content {
+    font-size: xxx-large;
+}
+
+.welcome__task__box2.color_blue {
+    color: #2387ab;
+}
+
+.welcome__task__box2.color_red {
+    color: rgb(139, 0, 0);
+}
+
+.welcome__task__box2.color_green {
+    color: rgb(0, 128, 0);
+}
+
+h4.welcome__task__content_bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    color: #e9e92e;
+    font-size: large;
+}
+
+.welcome__task__logo4 {
+    vertical-align: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    margin-left: 42px;
+}

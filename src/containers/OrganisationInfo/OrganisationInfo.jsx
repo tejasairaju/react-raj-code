@@ -289,9 +289,11 @@ const OrganisationInfo = () => {
                     </div>
                 </div>
             </div>
+            <div className='flex save-orgi-btn' >
             <button onClick={() =>onSaveHandler()} class="main__button">
                 SAVE
             </button>
+            </div>
             </section>
         </>
     );

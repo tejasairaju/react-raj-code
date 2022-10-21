@@ -312,10 +312,11 @@ textarea {
     }
     .user__container {
         margin: 0 auto;
+        width: 11em;
         padding: 8px;
     }
     .user__container img {
-        width: 45%;
+        width: 20%;
         margin-bottom: 5px;
     }
     .user__container .user-name, .user__container .job-title {
