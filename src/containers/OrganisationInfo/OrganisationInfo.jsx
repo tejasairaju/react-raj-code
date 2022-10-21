@@ -91,7 +91,7 @@ const OrganisationInfo = () => {
             form.append('email', inputValue.email);
             form.append('address', inputValue.address);
             form.append('employees_count', inputValue.employees_count);
-            if (!_isEmpty(uploadImage.fileName)) {
+            if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
                 form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
             }
             form.append('created_at', moment().format());
