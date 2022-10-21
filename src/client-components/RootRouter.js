@@ -42,12 +42,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { org } from "../../__mocks__/org.js";
 import PageInprogress from "../Components/Common/PageInprogress/PageInprogress.jsx";
 import CreateReport from "../containers/CreateReport/CreateReport.jsx";
+import Requests from "../Requests";
 
 
 const RootRouter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuthenticated = false, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
+  const { isAuthenticated, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
   const [isVarified, setIsVarified] = useState(false);
   const { orgDetails = {} } = useSelector(state => state.signup);
@@ -58,9 +59,8 @@ const RootRouter = () => {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
           
-          const response = await axios.get(`${process.env.API_BASE_URL}/organizations/${decodedData.org}`).then(({ data }) => data);
+          const response = await Requests.Get(`/organizations/${decodedData.org}`);
           if (response) {
-            localStorage.setItem("orgInfo", JSON.stringify({ ...response }));
             dispatch(action.organisationDatails(response));
           }
           setLoginUserDetails(jwt(token));
@@ -149,7 +149,7 @@ const RootRouter = () => {
           <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
         </Route>
 
-        {/* <Route path="/payment/success" element={<PaymentSuccess />} /> */}
+        {/* <Route path="/" element={<PageInprogress />} /> */}
         <Route path="/packege" element={<Packeges />} />
         <Route path="/orginfo" element={<OrganisationInfo />} />
         <Route path="/checkout" element={<StripePayment />} />
@@ -168,7 +168,6 @@ const RootRouter = () => {
       </React.Fragment>
       )}
       <Routes>
-       
         <Route path="/signup" element={<RegistrationForm />} />
       </Routes>
       {renderRouteComponent}

@@ -8,13 +8,19 @@ const organisationDatails = (payload)=> ({
     payload
 });
 
-const updateDbStatus = (flag) => ({
+const updateDbStatus = (flag = true) => ({
     type: 'UPDATE_DB_STATUS',
     flag
 });
 
+const updatePaymentStatus = (flag = true) => ({
+    type: 'UPDATE_PAYMENT_STATUS',
+    flag
+})
+
 export default {
     signUp,
     organisationDatails,
-    updateDbStatus
+    updateDbStatus,
+    updatePaymentStatus
 }

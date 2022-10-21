@@ -4,12 +4,15 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import action from '../../actions/PackegeAction.js';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const CheckoutForm = ()  => {
+const CheckoutForm = () => {
   const stripe = useStripe();
+  const dispatch = useDispatch();
   const elements = useElements();
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,16 +57,14 @@ const navigate = useNavigate();
     }
 
     setIsLoading(true);
-try{
-  const response = await stripe.confirmPayment({elements,redirect: 'if_required'}).then(res => res);
-  console.log('::::::::::::::',response);
-  // if(response.id) {
-    navigate('/payment/success');
-  // }
-} catch(e){
-  console.log(e)
-}
- 
+    try {
+      const response = await stripe.confirmPayment({ elements, redirect: 'if_required' }).then(res => res);
+      dispatch(action.paySuccess(response));
+      navigate('/payment/success');
+    } catch (e) {
+      console.log(e)
+    }
+
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
@@ -79,8 +80,8 @@ try{
   };
 
   return (<>
-  <img src="assets/icons/esg_logo.png" alt="esg_logo" width={'185px'} height="100px" style={{margin: 'auto'}} /> 
-    <form id="payment-form"  className="stripe-pymt-form"  onSubmit={handleSubmit}>
+    <img src="assets/icons/esg_logo.png" alt="esg_logo" width={'185px'} height="100px" style={{ margin: 'auto' }} />
+    <form id="payment-form" className="stripe-pymt-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
       <button className="stripe-pay-btn" disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
@@ -90,7 +91,7 @@ try{
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
-    </>
+  </>
   );
 }
 

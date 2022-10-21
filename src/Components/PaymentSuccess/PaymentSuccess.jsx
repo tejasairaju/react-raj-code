@@ -2,44 +2,43 @@ import axios from "axios";
 import _get from 'lodash/get';
 import React, { useContext, useEffect } from "react";
 import queryString from 'query-string';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import actions from '../../actions/SignUpActions.js'
 import './PaymentSuccess.css';
+import Requests from "../../Requests";
 
 const PaymentSuccess = () => {
-  const { search } = _get(window, 'location', '?');
-  const params = queryString.parse(search);
-  const { payment_intent = "", redirect_status = '', id ='' } = params;
-  const { orgDetails = {} } = useSelector(state => state.signup)
-  const { selectedPakege = {}} = useSelector((state) => state.packeges);
-  const packegeDetails = localStorage.getItem("selectedPackege");
-  const retrivePackegeDetails = JSON.parse(packegeDetails);
-   const orgInfo = localStorage.getItem("orgInfo");
-  const retriveOrgInfo = JSON.parse(orgInfo);
+  // const { search } = _get(window, 'location', '?');
+  // const params = queryString.parse(search);
+  // const { payment_intent = "", redirect_status = '', id = '' } = params;
+
+  const { orgDetails = {} } = useSelector(state => state.signup);
+  const { selectedPakege = {}, paymentIntent={}  } = useSelector((state) => state.packeges);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
 
-    setTimeout(() => { navigate('/') }, 6000);
+    setTimeout(() => { updatePaymentStatus() }, 6000);
 
   }, []);
   // Required transaction details: 'transaction_id', 'package_selected', 'organization', 'paid_by', 'payment_status_frontend'
   const updatePaymentStatus = async () => {
     let pay_status = '';
-    if(redirect_status === 'succeeded') {
+    if (paymentIntent.status === 'succeeded') {
       pay_status = 'Successful';
     }
     const payload = {
-      transaction_id: payment_intent,
+      transaction_id: paymentIntent.id,
       status: pay_status,
-      package: retrivePackegeDetails.id,
-      organization: retriveOrgInfo.id
+      package: selectedPakege.id,
+      organization: orgDetails.id
     }
     try {
-      localStorage.setItem("selectedPackege", JSON.stringify({}));
-      navigate('/orginfo');
-
+      const response = await Requests.Post('/subscriptions/payments', payload, orgDetails.name);
+      dispatch(actions.updatePaymentStatus());
     } catch (e) {
-      navigate('/orginfo');
+      console.log(e);
     }
 
   }

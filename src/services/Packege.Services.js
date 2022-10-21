@@ -1,8 +1,8 @@
-import Request from '../requests';
+import Request from '../Requests';
 import axios from 'axios';
 const { API_BASE_URL } = process.env;
 const getPackegeDteils = async({payload}) => {
-    return await Request.Get(`${API_BASE_URL}/subscriptions/pricing`);
+    return await Request.Get(`/subscriptions/pricing`);
 }
 
 export default {

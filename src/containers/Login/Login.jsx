@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react'
 import _isEmpty from 'lodash/isEmpty';
-import Request from '../../requests';
+import Request from '../../Requests';
 import './Login.css';
 import '../../components/RegistrationForm/RegistrationForm.css';
 

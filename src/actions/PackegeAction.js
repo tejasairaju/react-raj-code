@@ -7,7 +7,13 @@ const updateSubscribeDetails = (payload) => ({
  payload,
 })
 
+const paySuccess = (payload) => ({
+    type: 'UPDATE_PAYMENT_SUCCESS',
+    payload
+})
+
 export default {
     getPackegeDetails,
-    updateSubscribeDetails
+    updateSubscribeDetails,
+    paySuccess
 }

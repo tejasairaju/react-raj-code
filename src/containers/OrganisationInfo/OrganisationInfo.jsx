@@ -80,56 +80,55 @@ const OrganisationInfo = () => {
 
     const onSaveHandler = async () => {
         console.log('::::::::::::::::onsave', inputValue);
-        // if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && (inputValue.countries || []).length
-        //     && (inputValue.categories || []).length && (inputValue.sectors || []).length) {
-        //     const form = new FormData();
-        //     form.append('name', inputValue.name);
-        //     form.append('description', inputValue.description)
-        //     if (!_isEmpty(uploadImage.fileName)) {
-        //         form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-        //     }
-        //     form.append('created_at', moment().format());
-        //     form.append('updated_at', moment().format());
-        //     const getMultiCategories = getFilterArrayValue(inputValue.categories);
-        //     for (const a of getMultiCategories) {
-        //         if (!_isEmpty(a)) {
-        //             form.append("supported_category", a);
-        //         }
-        //     }
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email) && (inputValue.operating_countries || []).length
+            && (inputValue.sectors || []).length && inputValue.employees_count) {
+            const form = new FormData();
+            form.append('name', inputValue.name);
+            form.append('headquarters', inputValue.headquarters)
+            form.append('mobile_no', inputValue.mobile);
+            form.append('zip_code', inputValue.zipcode);
+            form.append('email', inputValue.email);
+            form.append('address', inputValue.address);
+            form.append('employees_count', inputValue.employees_count);
+            if (!_isEmpty(uploadImage.fileName)) {
+                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+            }
+            form.append('created_at', moment().format());
+            form.append('updated_at', moment().format());
 
-        //     const getMultisector = getFilterArrayValue(inputValue.sectors);
-        //     for (const a of getMultisector) {
-        //         if (!_isEmpty(a)) {
-        //             form.append("supported_sectors", a);
-        //         }
+            const getMultisector = getFilterArrayValue(inputValue.sectors);
+            for (const a of getMultisector) {
+                if (!_isEmpty(a)) {
+                    form.append("supported_sectors", a);
+                }
 
-        //     }
-        //     const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
-        //     for (const a of getMultisubsector) {
-        //         if (!_isEmpty(a)) {
-        //             form.append("supported_sub_sectors", a);
-        //         }
-        //     }
-        //     const getMultisubcountries = getFilterArrayValue(inputValue.countries);
-        //     for (const a of getMultisubcountries) {
-        //         if (!_isEmpty(a)) {
-        //             form.append("supported_countries", a);
-        //         }
-        //     }
-        //     try {
-        //         const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, form, {
-        //             headers: { "Content-Type": "multipart/form-data" }
-        //         }).then(({ data }) => data);
-        //         setApiData(response);
-        //         setStatusData({ type: 'success', message: 'Thanks! Your framework has been successfully created' });
-        //         setInputValue({});
-        //         setLogo(null);
-        //     } catch (e) {
-        //         setStatusData({ type: 'error', message: e.message });
-        //     }
-        // } else {
-        //     setErrorValidation(true);
-        // }
+            }
+            const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
+            for (const a of getMultisubsector) {
+                if (!_isEmpty(a)) {
+                    form.append("supported_sub_sectors", a);
+                }
+            }
+            const getMultisubcountries = getFilterArrayValue(inputValue.operating_countries);
+            for (const a of getMultisubcountries) {
+                if (!_isEmpty(a)) {
+                    form.append("supported_countries", a);
+                }
+            }
+            try {
+                const response = await axios.post(`${process.env.API_BASE_URL}/organizations`, form, {
+                    headers: { "Content-Type": "multipart/form-data" }
+                }).then(({ data }) => data);
+                setApiData(response);
+                setStatusData({ type: 'success', message: 'Thanks! Your organizations has been successfully created' });
+                setInputValue({});
+                setLogo(null);
+            } catch (e) {
+                setStatusData({ type: 'error', message: e.message });
+            }
+        } else {
+            setErrorValidation(true);
+        }
     }
 
     const fetchSubSector = async (index, cloneObject) => {
@@ -195,7 +194,7 @@ const OrganisationInfo = () => {
 
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
-            navigate(`/createdisclosures?id=${apiData.id}`);
+            navigate(`/`);
         }
         setStatusData({ type: '', message: '' });
     }
@@ -223,7 +222,7 @@ const OrganisationInfo = () => {
                     <div class="framework__row"></div>
                 </div>
                 <div class="framework__row-wrapper bot1">
-                    {OrgInputFields('Company', true, 'company', inputValue.company)}
+                    {OrgInputFields('Company', true, 'name', inputValue.name)}
                     <div class="framework__row">
                         <Label label={'Location'} className={`framework__title right`} required={true} />
                         <InputBox name={'location'} value={inputValue.location} onChangeHandler={onChangeHandler} />

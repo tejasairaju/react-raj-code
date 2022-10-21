@@ -6,7 +6,7 @@ import _get from 'lodash/get';
 import axios from 'axios';
 import Popup from '../Common/Popup/Popup.jsx';
 import actions from '../../actions/SignUpActions.js';
-import Request from '../../requests';
+import Request from '../../Requests';
 import './RegistrationForm.css';
 import OrganisationInfo from '../../containers/OrganisationInfo/OrganisationInfo.jsx';
 import EsgImageNavBar from '../EsgImageNavBar/EsgImageNavBar.jsx';
