@@ -12,15 +12,15 @@ const getHeaders = () => {
     }
 }
 
-async function Get(url,org, cookie) {
+async function Get(url, org = '', cookie) {
     const config = getHeaders(cookie);
-    return await axios.get(`${process.env.API_BASE_URL}${url}?organizations=${org}`, config)
+    return await axios.get(`${process.env.API_BASE_URL}${url}?organization=${org}`, config)
         .then(({ data }) => data);
 }
 
-async function Post(url = '', data = {}, org, cookie) {
+async function Post(url = '', data = {}, org = null, cookie) {
     const config = getHeaders(cookie);
-    return await axios.post(`${process.env.API_BASE_URL}${url}?organizations=${org}`, {...data}, config)
+    return await axios.post(`${process.env.API_BASE_URL}${url}?organization=${org}`, { ...data }, config)
         .then(({ data }) => data);
 }
 
@@ -29,11 +29,11 @@ async function Put(url, data, cookie) {
     return await axios.put(url, data, config)
         .then(({ data }) => data);
 }
- async function Delete(url, cookie) {
+async function Delete(url, cookie) {
     const config = getHeaders(cookie);
     return await axios.delete(url, config)
         .then(({ data }) => data);
- }
+}
 
 export default {
     Get,

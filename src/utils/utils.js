@@ -1,3 +1,4 @@
+import _toLower from 'lodash/toLower';
 export const checkValidation = (inputValue) => {
     let cloneInputValue = { ...inputValue };
     let errors = {};
@@ -20,4 +21,27 @@ export const checkValidation = (inputValue) => {
         errors['guidance'] = "";
     }
     return errors;
+}
+
+export const getTaskCount =(response) => {
+    let cloneCount = {pending: 0, completed: 0, disclosures: 0};
+    cloneCount.disclosures = response.count;
+     (response.results || []).map((item) => {
+        if (_toLower(item.status) === 'pending') {
+            cloneCount.pending += 1;
+        }
+        if (_toLower(item.status) === 'completed') {
+            cloneCount.completed += 1;
+        }
+    });
+
+    return {...cloneCount};
+}
+
+export const getColor = (status) => {
+    switch (status) {
+        case 'Disclosures': return 'color_blue';
+        case 'Completed': return 'color_green';
+        case 'Pending': return 'color_red';
+    }
 }

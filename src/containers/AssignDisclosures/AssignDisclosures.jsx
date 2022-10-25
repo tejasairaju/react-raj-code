@@ -15,7 +15,8 @@ import CategoryFilter from "../../Components/CategoryFilter/CategoryFilter.jsx";
 import UserListView from "../../Components/UserListView/UserListView.jsx";
 
 const AssignDisclosures = () => {
-    const { reportid = '6b80fe4d-719d-49f7-81c1-e988b136ec2c' } = useParams();
+    const { reportId = '6b80fe4d-719d-49f7-81c1-e988b136ec2c' } = useParams();
+    const { orgDetails = {} } = useSelector(state => state.signup);
     const navigate = useNavigate();
     const [apiData, setApiData] = useState({ listData: [] });
     const [isOpen, setIsopen] = useState(false);
@@ -47,7 +48,7 @@ const AssignDisclosures = () => {
     const getDisclosures = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportid}/disclosures?organization=sprint2`).then(({ data }) => data);
+            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures?organization=${orgDetails.name}`).then(({ data }) => data);
 
             setStatusData({ type: '', message: '' });
             setApiData({...apiData, listData: [...response.disclosures] })
@@ -107,7 +108,7 @@ const AssignDisclosures = () => {
                 // payload['disclosure_id'] = [...filterListData];
                 // payload['disclosure_type'] = "Standard";
                 // payload['assigned_to'] = selectedUser.id;
-                const response = axios.post(`${process.env.API_BASE_URL}/reports/${reportid}/disclosures/assign?organization=sprint2`, filterListData).then(({ data }) => data);
+                const response = axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, filterListData).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
             } catch (e) {
                 setStatusData({ type: 'error', message: e.message });
@@ -144,6 +145,9 @@ const AssignDisclosures = () => {
 
 
     const onCloseHandler = () => {
+        if(statusData.type === 'success') {
+            navigate(`/task/${selectedUser.id}`);
+        }
 
     }
 

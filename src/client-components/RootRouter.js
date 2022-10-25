@@ -44,7 +44,8 @@ import PageInprogress from "../Components/Common/PageInprogress/PageInprogress.j
 import CreateReport from "../containers/CreateReport/CreateReport.jsx";
 import Requests from "../Requests";
 import MyTaskDashboard from "../containers/MyTaskDashboard/MyTaskDashboard.jsx";
-
+import ViewMyTaskList from "../containers/ViewMyTaskList/ViewMyTaskList.jsx";
+import AnswerQuestions from "../containers/AnswerQuestions/AnswerQuestions.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
@@ -139,12 +140,14 @@ const RootRouter = () => {
    if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
       renderRouteComponent = (<Routes>
         <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
-          <Route index element={<MyTaskDashboard />} />
+          <Route index element={<ClientAdminDashboard/>} />
           <Route path="/clientadmin" element={<ClientAdminDashboard />} />
           <Route path="/select/framework" element={<StripePayment />} />
           <Route path="/report" element={<CreateReport />} />
+          <Route path="/task/:userId" element={<MyTaskDashboard />} />
+          <Route path="/task/status/:status" element={<ViewMyTaskList />} />
           <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
-          <Route path="/report/:reportid/disclosures" element={<AssignDisclosures />} />
+          <Route path="/report/:reportId/disclosures" element={<AssignDisclosures />} />
           <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
           <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
           <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />

@@ -7,7 +7,8 @@
 .welcome__task__container2 {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin: auto;
 }
 
 .welcome__task__right__heading {
@@ -70,9 +71,10 @@
 .welcome__task__box2 {
     background-color: white;
     margin-left: 8%;
-    height: 160px;
-    width: 190px;
+    height: 7em;
+    width: 12em;
     font-size: x-large;
+    box-shadow: 0px 0px 50px 10px #b8b5b5;
     /* box-shadow: rgb(0 0 0 / 8%) 0px 0px 50px 10px; */
 }
 

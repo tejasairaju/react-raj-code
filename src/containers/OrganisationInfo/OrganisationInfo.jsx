@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './OrganisationInfo.css';
 import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import moment from 'moment';
@@ -15,17 +15,19 @@ import Popup from '../../components/Common/Popup/Popup.jsx';
 
 const { Input, TextArea, Pills, UploadFile, Button, InputBox, Label, Dropdown, TextAreaBox } = Fields;
 const OrganisationInfo = () => {
+    const { orgDetails = {} } = useSelector(state => state.signup);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
-    const [inputValue, setInputValue] = useState({});
+    const [inputValue, setInputValue] = useState({ name: orgDetails.name});
     const [errorValidation, setErrorValidation] = useState(false);
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [statusData, setStatusData] = useState({});
     const [apiData, setApiData] = useState({});
     const [currentFrame, setCurrentFrame] = useState('');
+
     const validation = {};
     // accordion 
     // const toke = getAccessTokenSilently(const accessToken = await getAccessTokenSilently({
@@ -50,7 +52,7 @@ const OrganisationInfo = () => {
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
             ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                setInputValue({ operating_countries: countries.results, sectors: sectors.results,  });
+                setInputValue({...inputValue, operating_countries: countries.results, sectors: sectors.results,  });
             });
         } catch (error) {
             console.log(error);
@@ -90,10 +92,11 @@ const OrganisationInfo = () => {
             form.append('zip_code', inputValue.zipcode);
             form.append('email', inputValue.email);
             form.append('address', inputValue.address);
+            form.append('status', 'Active');
             form.append('employees_count', inputValue.employees_count);
-            if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
-                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-            }
+            // if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
+            //     form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+            // }
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());
 
@@ -117,7 +120,7 @@ const OrganisationInfo = () => {
                 }
             }
             try {
-                const response = await axios.post(`${process.env.API_BASE_URL}/organizations`, form, {
+                const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${orgDetails.name}`, form, {
                     headers: { "Content-Type": "multipart/form-data" }
                 }).then(({ data }) => data);
                 setApiData(response);
@@ -197,7 +200,7 @@ const OrganisationInfo = () => {
         if (statusData.type === 'success') {
             navigate(`/`);
         } else {
-            navigate(`/`);
+            // navigate(`/`);
         }
        
         setStatusData({ type: '', message: '' });
@@ -206,7 +209,7 @@ const OrganisationInfo = () => {
     const OrgInputFields = (label = '', labelRequired = false, inputName = '', inputVal = '', labelCls = '') => (
         <div class="framework__row">
             <Label label={label} required={labelRequired} />
-            <InputBox name={inputName} value={inputVal} onChangeHandler={onChangeHandler} />
+            <InputBox name={inputName} value={inputVal} onChangeHandler={onChangeHandler} disabled={true}/>
         </div>
     );
 

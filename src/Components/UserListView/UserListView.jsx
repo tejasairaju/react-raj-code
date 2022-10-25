@@ -56,8 +56,7 @@ const UserListView = (props) => {
 
     const getUserList = async() => {
         try {
-            const response = await axios.get(`${process.env.API_BASE_URL}/users/?organization=sprint2`).then(({data}) => data);
-            console.log(':::::::::::', response)
+            const response = await axios.get(`${process.env.API_BASE_URL}/users/?organization=${orgDetails.name}`).then(({data}) => data);
             setUserList([...response.results]);
         } catch (e) {
             setUserList([])

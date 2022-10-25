@@ -156,7 +156,7 @@ const AnswerQuestions = () => {
         </div>
         <ul className="assign__categories answer__detalis">
             {(apiData.listData || []).map((item) =>
-                <AnswerQuestionsTable itemDetails={item} frameworkId={frameworkData.id}/>)
+                <AnswerQuestionsTable itemDetails={item} frameworkId={frameworkData.id} />)
             }
         </ul>
         {/* <button className="main__button">
