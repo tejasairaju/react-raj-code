@@ -92,7 +92,7 @@ const OrganisationInfo = () => {
             form.append('zip_code', inputValue.zipcode);
             form.append('email', inputValue.email);
             form.append('address', inputValue.address);
-            form.append('status', 'Active');
+            form.append('status', orgDetails.status);
             form.append('employees_count', inputValue.employees_count);
             // if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
             //     form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
