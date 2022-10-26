@@ -13,6 +13,7 @@ import { listDisclosures } from '../../../__mocks__/listDisclosures.js';
 import ListFramework from "../../Components/ListFramework/ListFramework.jsx";
 import CategoryFilter from "../../Components/CategoryFilter/CategoryFilter.jsx";
 import UserListView from "../../Components/UserListView/UserListView.jsx";
+import { useSelector } from "react-redux";
 
 const AssignDisclosures = () => {
     const { reportId = '6b80fe4d-719d-49f7-81c1-e988b136ec2c' } = useParams();
@@ -55,7 +56,8 @@ const AssignDisclosures = () => {
             // return response.disclosures || [];
             // return listDisclosures.results || [];
         } catch (e) {
-            return [];
+            setStatusData({ type: '', message: '' });
+            // return [];
         }
     }
 

@@ -36,7 +36,7 @@ const PaymentSuccess = () => {
     }
     try {
       const response = await Requests.Post('/subscriptions/payments', payload, orgDetails.name);
-      dispatch(actions.updatePaymentStatus());
+      dispatch(actions.updatePaymentStatus(true));
     } catch (e) {
       console.log(e);
     }
