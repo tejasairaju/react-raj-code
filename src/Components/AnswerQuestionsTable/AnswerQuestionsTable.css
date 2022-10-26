@@ -4,3 +4,16 @@ width: 238px;
 display: block !important;
 overflow: hidden;
 }
+
+.question-save-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.question-save-btn {
+    padding: 4px 11px;
+    background: #499E43;;
+    margin: 4px 4px;
+    color: #FFFFFF;
+}

@@ -60,7 +60,9 @@ const CheckoutForm = () => {
     try {
       const response = await stripe.confirmPayment({ elements, redirect: 'if_required' }).then(res => res);
       dispatch(action.paySuccess(response));
-      navigate('/payment/success');
+      if(response.paymentIntent) {
+        navigate('/payment/success');
+      }
     } catch (e) {
       console.log(e)
     }

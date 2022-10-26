@@ -4,30 +4,28 @@ import _get from 'lodash/get';
 import './PageInprogress.css'
 import actions from '../../../actions/SignUpActions.js'
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { useMemo } from 'react';
 
 const PageInprogress = (props) => {
-    const { is_db_created = false, name=''  } = useSelector(state => _get(state, 'signup.orgDetails', {}));
-    const [dbStatus, setDbStatus] = useState(is_db_created);
+    const { is_db_created = false, name = 'sprint2' } = useSelector(state => _get(state, 'signup.orgDetails', {}));
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (!dbStatus) {
+    useMemo(() => {
+        if (!is_db_created) {
             setTimeout(() => getDBStatus(), 2000)
         }
     });
 
     const getDBStatus = async () => {
         try {
-            const response = await Requests.Get(`/organizations/${name}`);
-            if (response.is_db_created) {
-                dispatch(actions.updateDbStatus());
-                setDbStatus(true);
-            }
+            const response = await Requests.Get(`/organizations/${name}`, name).then(({ data }) => data);
+            dispatch(actions.updatePaymentStatus(response.is_db_created));
         } catch (error) {
-            setDbStatus(false);
+            dispatch(actions.updatePaymentStatus(false));
         }
     }
-    return (<>{!dbStatus ? <div className='pageinprogress-container'>
+    return (<>{!is_db_created ? <div className='pageinprogress-container'>
         <div className='pageinprogress_inner'>
             <div className='pageinprogress-block'>
                 <div className='pageinprogress-body'>

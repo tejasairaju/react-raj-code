@@ -13,7 +13,7 @@ const updateDbStatus = (flag = true) => ({
     flag
 });
 
-const updatePaymentStatus = (flag = true) => ({
+const updatePaymentStatus = (flag) => ({
     type: 'UPDATE_PAYMENT_STATUS',
     flag
 })

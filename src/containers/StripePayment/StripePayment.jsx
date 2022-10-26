@@ -6,6 +6,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../../Components/CheckoutFrom/CheckoutForm.jsx";
 import "./StripePayment.css";
 import { useLocation } from "react-router-dom";
+import Requests from "../../Requests/index.js";
+import axios from "axios";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -18,17 +20,30 @@ const StripePayment = () => {
   const price = _get(location, 'state.price', 0);
   useEffect(() => {
     if (price > 0) {
-      fetch(`${process.env.NODE_BASE_URL}/create-payment-intent`, {
-        // fetch("/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: price }),
-      })
-        .then((res) => res.json())
-        .then((data) => setClientSecret(data.clientSecret));
+      getClientSecret();
     }
+    //   const  data = {"clientSecret": "pi_3LwpBgSAF2CnYiZz0f2AkwOe_secret_kWMIdYAWmahScDT7bPp7hn1KS"}
+    //   setClientSecret(data.clientSecret);
+    // }
+    //   fetch(`${process.env.NODE_BASE_URL}/create-payment-intent`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ amount: price }),
+    //   })
+    //     .then((res) => res.json())
+    //     .then((data) => setClientSecret(data.clientSecret));
+    // }
   }, []);
 
+  const getClientSecret = async () => {
+    try {
+      const response = await axios.post(`${process.env.API_BASE_URL}/subscriptions/paymentindent`, { amount: price, currency: 'eur'}).then(({data}) => data);
+      setClientSecret(response.clientSecret);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+  
   const appearance = {
     theme: 'stripe',
   };

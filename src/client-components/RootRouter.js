@@ -79,9 +79,9 @@ const RootRouter = () => {
       if (!orgDetails.is_payment_done) {
         navigate('/packege');
       }
-      // else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && !orgDetails.is_db_created) {
-      //   navigate('/pageinprogress')
-      // }
+      else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && !orgDetails.is_db_created) {
+        navigate(`/pageinprogress`);
+      }
        else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && orgDetails.is_db_created && orgDetails.status === 'Initial') {
         navigate('/orginfo');
       }
