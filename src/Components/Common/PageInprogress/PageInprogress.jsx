@@ -20,9 +20,9 @@ const PageInprogress = (props) => {
     const getDBStatus = async () => {
         try {
             const response = await Requests.Get(`/organizations/${name}`, name).then(({ data }) => data);
-            dispatch(actions.updatePaymentStatus(response.is_db_created));
+            dispatch(actions.updateDbStatus(response.is_payment_done));
         } catch (error) {
-            dispatch(actions.updatePaymentStatus(false));
+            dispatch(actions.updateDbStatus(false));
         }
     }
     return (<>{!is_db_created ? <div className='pageinprogress-container'>
