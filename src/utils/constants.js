@@ -119,6 +119,10 @@ export const questions = {
 
 export const empCount = [
     {
+        label: 'Select',
+        value: ''
+    },
+    {
         label: '0-50',
         value: '50'
     },
