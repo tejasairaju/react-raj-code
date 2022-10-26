@@ -60,7 +60,6 @@ const RootRouter = () => {
         try {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
-          
           const response = await Requests.Get(`/organizations/${decodedData.org}`);
           if (response) {
             dispatch(action.organisationDatails(response));

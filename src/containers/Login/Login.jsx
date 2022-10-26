@@ -65,8 +65,8 @@ export const Login = ({loginHandler}) => {
                     <a type="submit" className="form__btn" onClick={onClickloginHandler}>
                         LOGIN
                     </a>
-                    {/* <a href="/signup" className='form_create_account'>Create an account</a>
-                    <a onClick={logoutExistUSer} className='form_create_account'>Logout Existing USer</a> */}
+                    <a href="/signup" className='form_create_account'>Create an account</a>
+                    {/* <a onClick={logoutExistUSer} className='form_create_account'>Logout Existing USer</a> */}
                 </form>
             </div>
         </div>

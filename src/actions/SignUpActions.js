@@ -16,11 +16,16 @@ const updateDbStatus = (flag = true) => ({
 const updatePaymentStatus = (flag) => ({
     type: 'UPDATE_PAYMENT_STATUS',
     flag
-})
+});
+
+const clearSignupDetails = (flag) => ({
+    type: 'CLEAR_SIGNUP_DETAILS',
+});
 
 export default {
     signUp,
     organisationDatails,
     updateDbStatus,
-    updatePaymentStatus
+    updatePaymentStatus,
+    clearSignupDetails
 }

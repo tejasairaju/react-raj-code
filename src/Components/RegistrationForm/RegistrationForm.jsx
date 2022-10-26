@@ -119,7 +119,7 @@ const RegistrationForm = () => {
 
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
-            navigate('/login');
+            navigate('/');
         }
     }
 

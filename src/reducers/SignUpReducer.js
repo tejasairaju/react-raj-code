@@ -38,6 +38,13 @@ const CounterReducer = (state = { ...initialState }, action) => {
       }
     }
 
+    case 'CLEAR_SIGNUP_DETAILS': {
+      return {
+        ...state,
+        orgDetails: {}
+      }
+    }
+
     default:
       return state
   }
