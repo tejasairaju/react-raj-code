@@ -1,0 +1,105 @@
+.main {
+    padding: 8% 4% 2% !important;
+}
+.main {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #FAFCFE;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0 20px 20px 0;
+    -webkit-border-radius: 0 20px 20px 0;
+    -moz-border-radius: 0 20px 20px 0;
+    -ms-border-radius: 0 20px 20px 0;
+    -o-border-radius: 0 20px 20px 0;
+    width: 100%;
+    padding: 12% 4% 3%;
+}
+.header {
+    top: 15px;
+    padding: 10px 14px;
+}
+.header {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 50px 10px rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    width: 90%;
+    padding: 18px;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+.main__top-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.intelligent_main {
+    line-height: 3em;
+}
+.system_admin_container_intelligent {
+    display: flex;
+    justify-content: center;             
+}
+.framework__col-wrapper {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+}
+.intelligent_main {
+    line-height: 3em;
+}
+.intelligent_content_wrapper {
+    overflow: auto;
+}
+
+.intelligent_mapping_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    margin: 20px;
+}
+.main_title_top_mapping {
+    border-top: 1px solid #00B7FF;
+}
+.main_title_bottom_mapping {
+    border-bottom: 1px solid #00B7FF;
+}
+.framework__row-wrapper {
+    display: flex;
+    flex-basis: 100%;
+    padding: 0px;
+}
+.framework__row {
+    display: flex;
+    flex-basis: 50%;
+}
+.main__title_intelligent {
+    font-weight: 500;
+    font-size: 14px;
+    color: #2C2C2C;
+    line-height: 30px;
+}
+.main__top-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
