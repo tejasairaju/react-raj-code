@@ -890,9 +890,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     width: 25%;
     padding: 0 2%;
+    overflow: hidden;
 }
 .details__categories .assign__categories-item{
     justify-content: flex-start;
     padding: 2px 8px;
     line-height: 1.8;
 }
+
+.btn-save-all-anw-change {
+    white-space: nowrap !important;
+    padding: 0.5em 6em !important;
+}
+

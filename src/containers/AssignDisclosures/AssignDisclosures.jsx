@@ -93,24 +93,26 @@ const AssignDisclosures = () => {
     const onClickAssignDisclosure = async () => {
         const { listData = [] } = apiData;
         let filterListData = [...listData];
-        filterListData = (filterListData || []).map(disclosure => {
+        let params = [];
+        (filterListData || []).map(disclosure => {
             if (disclosure.isSelected === true) {
                 const payload = {};
                 payload['disclosure_id'] = disclosure.id;
                 payload['disclosure_type'] = "Standard";
                 payload['assigned_to'] = selectedUser.id;
-                return {...payload}
+                params = [...params, payload];
+                // return {...payload}
             }
         });
 
-        if (((filterListData || []).length > 0) && selectedUser.id) {
+        if (((params || []).length > 0) && selectedUser.id) {
 
             try {
                 // const payload = {};
                 // payload['disclosure_id'] = [...filterListData];
                 // payload['disclosure_type'] = "Standard";
                 // payload['assigned_to'] = selectedUser.id;
-                const response = axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, filterListData).then(({ data }) => data);
+                const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name || 'sprint2'}`, params).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
             } catch (e) {
                 setStatusData({ type: 'error', message: e.message });

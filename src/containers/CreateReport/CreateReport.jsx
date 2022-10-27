@@ -18,7 +18,6 @@ const CreateReport = () => {
     const [statusData, setStatusData] = useState({});
 
     const onClickFrameworkHandler = async (indexKey, frameworkId) => {
-        console.log('::::::::::::', frameworkId);
         setInputValue({ ...inputValue, frameworks: [frameworkId] });
     }
 

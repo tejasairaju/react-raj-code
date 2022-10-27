@@ -146,6 +146,7 @@ const RootRouter = () => {
           <Route path="/report" element={<CreateReport />} />
           <Route path="/task/:userId" element={<MyTaskDashboard />} />
           <Route path="/task/status/:status" element={<ViewMyTaskList />} />
+          <Route path="/report/:reportId/disclosures/:disclosureId" element={<AnswerQuestions />} />
           <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
           <Route path="/report/:reportId/disclosures" element={<AssignDisclosures />} />
           <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />

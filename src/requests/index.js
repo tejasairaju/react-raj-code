@@ -24,7 +24,7 @@ async function Get(url, org = '', cookie) {
         .then(({ data }) => data);
 }
 
-async function Post(url = '', data = {}, org = null, cookie) {
+async function Post(url = '', data = {}, org = '', cookie) {
     const config = getHeaders(cookie);
     let pathUrl = '';
     if (org) {
