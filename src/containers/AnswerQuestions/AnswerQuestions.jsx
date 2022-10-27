@@ -4,7 +4,7 @@ import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
 import _toLower from 'lodash/toLower';
 import queryString from 'query-string';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import AnswerQuestionsTable from "../../Components/AnswerQuestionsTable/AnswerQuestionsTable.jsx";
 import Popup from "../../components/Common/Popup/Popup.jsx";
@@ -16,12 +16,16 @@ import { useSelector } from "react-redux";
 
 const AnswerQuestions = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const state = _get(location, 'state', {});
+    const { createdDate = '20-03-2022', updatedDate = '23-03-2022'} = state || {};
     const { reportId = '5eafbd8f-502e-4859-b54f-65d1846dad48', disclosureId = "97a7744e-41d0-4303-8ad8-75528a736e9f" } = useParams();
     const [apiData, setApiData] = useState({ listData: null, groupListData: {} });
     const { orgDetails = {} } = useSelector(state => state.signup);
     const [isOpen, setIsopen] = useState(false);
     const [catagoryType, setCatagoryType] = useState('All');
     const [frameworkData, setFrameworkData] = useState(null);
+    // const [reportDate, setReportDate] = useState({});
     // const [listDisclosuresData, setListDisclosuresData] = useState([]);
     const [statusData, setStatusData] = useState({});
     const { search } = _get(window, 'location', '?');
@@ -30,6 +34,7 @@ const AnswerQuestions = () => {
     useEffect(() => {
         // getFramework();
         getDisclosures();
+        // setReportDate({createdDate, updatedDate});
     }, []);
 
     const getDisclosures = async (frameworkId) => {
@@ -43,7 +48,8 @@ const AnswerQuestions = () => {
             // return response.results;
             // return response.results || [];
         } catch (e) {
-            return [];
+            setStatusData({ type: '', message: '' });
+            // return [];
         }
     }
 
@@ -178,14 +184,14 @@ const AnswerQuestions = () => {
                     From:
                 </h1>
                 <label for="create-framework__date-from" className="create-framework__label">
-                    <input type="date" className="create-framework__input" id="create-framework__date-from" required />
+                    <input type="date" value={createdDate} className="create-framework__input" id="create-framework__date-from" required />
                     <img src="./assets/icons/celendar.svg" alt="" />
                 </label>
                 <h1 className="create-framework__title">
                     To:
                 </h1>
                 <label for="create-framework__date-to" className="create-framework__label">
-                    <input type="date" className="create-framework__input" id="create-framework__date-to" required />
+                    <input type="date" value={updatedDate} className="create-framework__input" id="create-framework__date-to" required />
                     <img src="./assets/icons/celendar.svg" alt="" />
                 </label>
             </div>

@@ -55,6 +55,10 @@ const AnswerQuestionsTable = (props) => {
         // setAnswer(value);
     }
 
+    const onClickMultiSelect = (value, disclosureIndex, questionIndex) => {
+        onClickSaveAnswer(value, disclosureIndex, questionIndex)
+    }
+
     const getAnswerInputField = (questionItem, questionIndex) => {
         if (_toLower(questionItem.field_type) === 'dropdown') {
             return (<select onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} value={_get(questionItem, 'value','Select')} className="framework__input" name="question-dropdown" id="answers-dropdown">
@@ -72,7 +76,7 @@ const AnswerQuestionsTable = (props) => {
         </ul>
          } else if (_toLower(questionItem.field_type) === 'multiselect') {
             return <ul className="assign__categories">
-           {/* <li className={`assign__categories-item ${( === true || questionItem.value) ? 'active' : ''}`}>></li> */}
+           {(questionItem.field_choices || []).map((choice, i) => <li onClick={() => onClickMultiSelect(choice, disclosureIndex, questionIndex)} className={`assign__categories-item ${( choice === questionItem.value) ? 'active' : ''}`}>{choice}</li>)}
         </ul>
         }
         else return <input type="text" className="assign__categories" value={questionItem.value} onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} />

@@ -28,7 +28,7 @@ const ViewMyTaskList = (props) => {
     }
 
     const redirectToAnswerQuestion = (task) => {
-        navigate(`/report/${task.report.id}/disclosures/${task.disclosure.id}`)
+        navigate(`/report/${task.report.id}/disclosures/${task.disclosure.id, { state: {...task}}}`)
     }
 
     return (<>
