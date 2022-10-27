@@ -5,14 +5,16 @@ import _toLower from 'lodash/toLower';
 import './AnswerQuestionsTable.css';
 import { listQuestions } from '../../../__mocks__/listQuestions.js';
 import Fields from "../Common/Fields/Fields.jsx";
+import ReAssignDisclosures from "../ReAssignDisclosures/ReAssignDisclosures.jsx";
 const { RadioButton } = Fields
 const AnswerQuestionsTable = (props) => {
     const [isOpenQAcard, setIsOpenQAcard] = useState(false);
     const [statusData, setStatusData] = useState({});
     const [questionsList, setQuestionsList] = useState([]);
     const [answer, setAnswer] = useState('');
+    const [isOpenReAssign, setIsOpenReAssign] = useState(false);
     // const []
-    const { itemDetails = {}, frameworkId = '', disclosureIndex, onClickSaveAnswer = () => { } } = props;
+    const { itemDetails = {}, reportId= '', frameworkId = '', disclosureIndex, onClickSaveAnswer = () => { } } = props;
 
     useEffect(() => {
         // getQuestionList();
@@ -61,23 +63,23 @@ const AnswerQuestionsTable = (props) => {
 
     const getAnswerInputField = (questionItem, questionIndex) => {
         if (_toLower(questionItem.field_type) === 'dropdown') {
-            return (<select onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} value={_get(questionItem, 'value','Select')} className="framework__input" name="question-dropdown" id="answers-dropdown">
-            {(questionItem.field_choices || []).map(choice => <option value={choice} selected={(choice === questionItem.value) ? 'selected' : null}>{choice}</option>)}
-        </select>);
+            return (<select onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} value={_get(questionItem, 'value', 'Select')} className="framework__input" name="question-dropdown" id="answers-dropdown">
+                {(questionItem.field_choices || []).map(choice => <option value={choice} selected={(choice === questionItem.value) ? 'selected' : null}>{choice}</option>)}
+            </select>);
         } else if (_toLower(questionItem.field_type) === 'radio') {
             return <ul className="assign__categories">
-            {(questionItem.field_choices || []).map((radioVal, i) => (<RadioButton
-                changed={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)}
-                id={i}
-                isSelected={_toLower(questionItem.value) === _toLower(radioVal)}
-                label={radioVal}
-                value={radioVal}
-            />))}
-        </ul>
-         } else if (_toLower(questionItem.field_type) === 'multiselect') {
+                {(questionItem.field_choices || []).map((radioVal, i) => (<RadioButton
+                    changed={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)}
+                    id={i}
+                    isSelected={_toLower(questionItem.value) === _toLower(radioVal)}
+                    label={radioVal}
+                    value={radioVal}
+                />))}
+            </ul>
+        } else if (_toLower(questionItem.field_type) === 'multiselect') {
             return <ul className="assign__categories">
-           {(questionItem.field_choices || []).map((choice, i) => <li onClick={() => onClickMultiSelect(choice, disclosureIndex, questionIndex)} className={`assign__categories-item ${( choice === questionItem.value) ? 'active' : ''}`}>{choice}</li>)}
-        </ul>
+                {(questionItem.field_choices || []).map((choice, i) => <li onClick={() => onClickMultiSelect(choice, disclosureIndex, questionIndex)} className={`assign__categories-item ${(choice === questionItem.value) ? 'active' : ''}`}>{choice}</li>)}
+            </ul>
         }
         else return <input type="text" className="assign__categories" value={questionItem.value} onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} />
     }
@@ -113,13 +115,14 @@ const AnswerQuestionsTable = (props) => {
 
 
     return <li className="detalis__item">
+       {isOpenReAssign&&<ReAssignDisclosures setIsOpenReAssign={setIsOpenReAssign} disclosure={itemDetails} reportId={reportId} />}
         <div className="detalis__top-item" onClick={() => setIsOpenQAcard(!isOpenQAcard)}>
             <div className="details__item-wrapper">
                 <h3 className="detalis__title">
                     {itemDetails.code} {itemDetails.name}
                 </h3>
                 <img src="../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />
-                <a href="#" className="detalis__reassign">
+                <a onClick={(e) => {setIsOpenReAssign(!isOpenReAssign); e.preventDefault(); e.stopPropagation();} } className="detalis__reassign">
                     Reassign
                     <img src="../../../assets/icons/assign-icon.svg" alt="question" width={'16px'} height="16px" />
                 </a>

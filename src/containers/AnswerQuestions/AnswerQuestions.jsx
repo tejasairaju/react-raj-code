@@ -211,7 +211,7 @@ const AnswerQuestions = () => {
         <ul className="assign__categories answer__detalis">
             {(apiData.listData || []).map((item, disclosureIndex) => {
                 if (_toLower(item.category) === _toLower(catagoryType) || _toLower(catagoryType) === 'all') {
-                    return <AnswerQuestionsTable itemDetails={item} disclosureIndex={disclosureIndex} onClickSaveAnswer={onClickSaveAnswer} />
+                    return <AnswerQuestionsTable reportId={reportId} itemDetails={item} disclosureIndex={disclosureIndex} onClickSaveAnswer={onClickSaveAnswer} />
                 }
             })
             }
