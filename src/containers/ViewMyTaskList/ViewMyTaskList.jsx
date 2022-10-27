@@ -18,8 +18,7 @@ const ViewMyTaskList = (props) => {
     const { taskList = null } = useSelector(state => state.mytask);
     const headers = [
         'Report',
-        'Disclosure Id',
-        'Disclosure Type',
+        'Disclosure',
         'Status',
         'Action'
        ];
@@ -29,7 +28,7 @@ const ViewMyTaskList = (props) => {
     }
 
     const redirectToAnswerQuestion = (task) => {
-        navigate(`/report/${task.report}/disclosures/${task.disclosure_id}`)
+        navigate(`/report/${task.report.id}/disclosures/${task.disclosure.id}`)
     }
 
     return (<>
@@ -50,9 +49,8 @@ const ViewMyTaskList = (props) => {
                         {(taskList || []).map((task, index) => {
                             if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
                             return (<tr key={index}>
-                                <td>{task.report}</td>
-                                <td>{task.disclosure_id}</td>
-                                <td>{task.disclosure_type}</td>
+                                <td>{task.report.name}</td>
+                                <td>{task.disclosure.name}</td>
                                 <td>{task.status}</td>
                                 {task.status!=='completed'&&<td><a onClick={() => redirectToAnswerQuestion(task)} className={`answer-redirect-link`}>Answer</a></td>}
                             </tr>)
@@ -60,9 +58,6 @@ const ViewMyTaskList = (props) => {
                         })}
                     </tbody>
             </table>
-             
-            
-
     </>)
 }
 export default ViewMyTaskList;
