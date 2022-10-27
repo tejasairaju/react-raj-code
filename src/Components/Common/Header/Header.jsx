@@ -3,14 +3,16 @@ import _get from 'lodash/get';
 import { useAuth0 } from "../../../react-auth0-spa";
 import action from '../../../actions/SignUpActions.js';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const logoutHandler = () => {
         logout();
         dispatch(action.clearSignupDetails());
-        
+        navigate('/'); 
     }
 
     const { logout, user = {} } = useAuth0();
