@@ -46,7 +46,7 @@ const ReAssignDisclosures = (props) => {
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} />}
         <div className='reassign-disclosure_inner'>
             <div className='reassign-disclosure-block'>
-                <div className='reassign-popup-close'><img onClick={() => setIsOpenReAssign(false)} src="../../../assets/icons/close.svg" width='30px' height='30px' /></div>
+                <div className='reassign-popup-close'><img onClick={() => setIsOpenReAssign(false)} src="../../../../assets/icons/close.svg" width='30px' height='30px' /></div>
                 <div className='reassign-disclosure-body'>
                     <h5 class="detalis__information-title">
                         If you want to reassign, select the user from the list below:

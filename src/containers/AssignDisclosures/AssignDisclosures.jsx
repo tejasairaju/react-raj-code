@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import _get from 'lodash/get';
+import _isEmpty from 'lodash/isEmpty';
 import _toLower from 'lodash/toLower';
 import queryString from 'query-string';
 import { useNavigate, useParams } from "react-router-dom";
@@ -49,7 +50,7 @@ const AssignDisclosures = () => {
     const getDisclosures = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures?organization=${orgDetails.name}`).then(({ data }) => data);
+            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures?organization=${orgDetails.name|| 'sprint2'}`).then(({ data }) => data);
 
             setStatusData({ type: '', message: '' });
             setApiData({...apiData, listData: [...response.disclosures] })
@@ -155,7 +156,14 @@ const AssignDisclosures = () => {
 
     }
 
-    const filterList = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
+    const isAssignedDisclosure = (disclosure) => {
+        if(!_isEmpty(_get(disclosure, 'assigned_to.id', ''))) return true;
+        if(disclosure.isSelected === true) return true;
+        return false;
+        
+    }
+
+    const filterList = ['All', 'Environmental', 'Social', 'Universal', 'Goverance', 'General'];
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper assign-disclosure-title">
@@ -185,9 +193,10 @@ const AssignDisclosures = () => {
                             <input type="checkbox"
                                 class="disclosures__checkbox"
                                 id={disclosureIndex}
-                                checked={disclosure.isSelected === true}
+                                checked={isAssignedDisclosure(disclosure)}
+                                disabled={!_isEmpty(_get(disclosure, 'assigned_to.id', ''))}
                             />
-                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{disclosure.isSelected ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>
+                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{isAssignedDisclosure(disclosure) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>
                         </label>
                     </div>)
                 }
