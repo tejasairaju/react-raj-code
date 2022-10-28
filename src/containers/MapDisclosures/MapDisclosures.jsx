@@ -57,20 +57,46 @@ const MapDisclosures = () => {
     const radioChangeHandler = (type, value, plane) => {
         if (type === "kpi") {
             if (plane == "parent") {
-                setKPradioType(value.id)
+                if (radioKPType != value.id) {
+                    setKPradioType(value.id)
+                }
+                else {
+                    setKPradioType("")
+                }
+
             }
             else {
-                setKCradioType(value.id)
+                if (radioKCType != value.id) {
+                    setKCradioType(value.id)
+                }
+                else {
+                    setKCradioType("")
+                }
             }
         }
         else if (type === "disclousure") {
+            var isCheck = false;
             if (plane == "parent") {
-                setDPradioType(value.id)
+                isCheck = radioDPType != value.id
+                if (isCheck) {
+                    setDPradioType(value.id)
+                } else {
+                    setDPradioType("")
+                    setParentKPI([])
+                }
             }
             else {
-                setDCradioType(value.id)
+                isCheck = radioDCType != value.id
+                if (isCheck) {
+                    setDCradioType(value.id)
+                } else {
+                    setDPradioType("")
+                    setChildKPI([])
+                }
             }
-            getKPI(value.framework, value.id, plane)
+            if (isCheck) {
+                getKPI(value.framework, value.id, plane)
+            }
         }
     };
 
@@ -253,7 +279,7 @@ const MapDisclosures = () => {
             setDestinationFrameworkId(val)
         }
         if ((Object.keys(sourceFrameworkId).length > 0 && type === "child") || (Object.keys(destinationFrameworkId).length > 0 && type === "parent")) {
-            getMappingDisclosures(Object.keys(sourceFrameworkId).length >0?sourceFrameworkId:val, Object.keys(destinationFrameworkId).length >0?destinationFrameworkId:val)
+            getMappingDisclosures(Object.keys(sourceFrameworkId).length > 0 ? sourceFrameworkId : val, Object.keys(destinationFrameworkId).length > 0 ? destinationFrameworkId : val)
             // getMappingDisclosures({ name: "Xlicon_Custom" }, { name: "Xlicon_Custom" })
         }
 
@@ -293,7 +319,7 @@ const MapDisclosures = () => {
 
     return (
         <>
-         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
+            {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             <div class="main__top-wrapper">
                 <h1 class="main__title">
                     Map Disclosure - Questions
