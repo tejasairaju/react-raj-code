@@ -48,6 +48,8 @@ import ViewMyTaskList from "../containers/ViewMyTaskList/ViewMyTaskList.jsx";
 import AnswerQuestions from "../containers/AnswerQuestions/AnswerQuestions.jsx";
 import ViewMyTaskDisclosuresList from "../Components/ViewMyTaskDisclosuresList/ViewMyTaskDisclosuresList.jsx";
 import OverlappingDisclosures from "../containers/OverlappingDisclosures/OverlappingDisclosures.jsx";
+import CreateTemplate from "../containers/CreateTemplate/CreateTemplate.jsx";
+import ClientAdminFrameworkList from "../containers/ClientAdminFrameworkList/ClientAdminFrameworkList.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
@@ -62,9 +64,11 @@ const RootRouter = () => {
         try {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
-          const response = await Requests.Get(`/organizations/${decodedData.org}`);
-          if (response) {
-            dispatch(action.organisationDatails(response));
+          if(decodedData.user_role === 'client_admin') {
+            const response = await Requests.Get(`/organizations/${decodedData.org}`);
+            if (response) {
+              dispatch(action.organisationDatails(response));
+            }
           }
           dispatch(action.loginDatails(decodedData));
           setLoginUserDetails(decodedData);
@@ -77,7 +81,7 @@ const RootRouter = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (!_isEmpty(orgDetails) && isAuthenticated) {
+    if (!_isEmpty(orgDetails) && isAuthenticated&&(loginUserDetails.user_role === 'client_admin')) {
       if (!orgDetails.is_payment_done) {
         navigate('/packege');
       }
