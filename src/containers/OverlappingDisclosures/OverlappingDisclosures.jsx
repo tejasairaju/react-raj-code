@@ -17,7 +17,7 @@ const OverlappingDisclosures = ({ component = '' }) => {
                     <div class="framework__col-wrapper">
                         <div class="intelligent_boxvalue">
                             <div>
-                                <img src="./assets/images/gri.png" class="recommended_framework_intellgent" />
+                                <img src="../../assets/images/gri.png" class="recommended_framework_intellgent" />
                             </div>
                         </div>
                         <div class="framework__row">
@@ -28,7 +28,7 @@ const OverlappingDisclosures = ({ component = '' }) => {
                     <div class="framework__col-wrapper">
                         <div class="intelligent_boxvalue">
                             <div>
-                                <img src="./assets/images/sasb.png" class="recommended_framework_intellgent" />
+                                <img src="../../assets/images/sasb.png" class="recommended_framework_intellgent" />
                             </div>
                         </div>
                         <div class="framework__row">

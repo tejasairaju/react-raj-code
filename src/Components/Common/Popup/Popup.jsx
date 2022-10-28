@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import actions from '../../../actions/PopupActions';
+import actions from '../../../actions/PopupActions.js';
 import './Popup.css';
 
 const Popup = (props) => {
@@ -17,9 +17,9 @@ const Popup = (props) => {
         :
         <div className='popup_inner'>
           <div className='popup-block'>
-            <div className='popup-header'><img onClick={closePopupModal} src="assets/icons/close.svg" width='30px' height='30px' /></div>
+            <div className='popup-header'><img onClick={closePopupModal} src="../../../../assets/icons/close.svg" width='30px' height='30px' /></div>
             <div className='popup-body'>
-              <img src={`assets/icons/${data.type}.svg`} width='30px' height='30px' />
+              <img src={`../../../../assets/icons/${data.type}.svg`} width='30px' height='30px' />
               <div className={`${data.type}-message`}>{data.message}</div>
             </div>
           </div>

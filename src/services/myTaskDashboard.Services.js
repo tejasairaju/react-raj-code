@@ -5,6 +5,11 @@ const getMytaskDashboardData = async({userId = '', orgName = ''}) => {
     return await Request.Get(`/users/${userId}/tasks`, orgName);
 }
 
+const getReportListData = async({userId = '', orgName = ''}) => {
+    return await Request.Get(`/users/${userId}/reports`, orgName);
+}
+
 export default {
-    getMytaskDashboardData
+    getMytaskDashboardData,
+    getReportListData
 }

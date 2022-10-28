@@ -11,6 +11,15 @@ const MyTaskDashboardReducer = (state = { ...initialState }, action) => {
                 taskList: response.results
             }
         }
+        case 'GET_REPORT_LIST_SUCCESS': {
+            const { response } = action;
+            return {
+                ...state,
+                reportCount: (response.results || []).length,
+                reportList: response.results
+            }
+        }
+        
 
         default:
             return state

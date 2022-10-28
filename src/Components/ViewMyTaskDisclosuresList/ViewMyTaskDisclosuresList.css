@@ -1,0 +1,16 @@
+.view-task-list-contianer.color_blue {
+    color: #2387ab;
+}
+
+.view-task-list-contianer.color_red {
+    color: rgb(139, 0, 0);
+}
+
+.view-task-list-contianer.color_green {
+    color: rgb(0, 128, 0);
+}
+.answer-redirect-link {
+    color: #0ca2c4;
+    text-decoration: revert;
+    font-weight: 700;
+}

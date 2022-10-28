@@ -10,13 +10,13 @@ import actions from '../../actions/MyTaskDashboardAction.js'
 const MyTaskDashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { userId = 'fc16d19f-0bbd-4890-b62a-d514381f1c40' } = useParams();
+    // const { userId = 'fc16d19f-0bbd-4890-b62a-d514381f1c40' } = useParams();
     const [myTaskCount, setMyTaskCount] = useState({ disclosures: 0, completed: 0, pending: 0 });
-    const { orgDetails = {} } = useSelector(state => state.signup);
+    const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
     const mytask = useSelector(state => state.mytask);
-
-    useEffect(() => { 
-        dispatch(actions.getDisclosuresList({userId, orgName: orgDetails.name||'sprint2'}));
+    useEffect(() => {
+        dispatch(actions.getDisclosuresList({ userId: loginDetails.user_id, orgName: orgDetails.name || 'sprint2' }));
+        dispatch(actions.getReportList({ userId: loginDetails.user_id, orgName: orgDetails.name || 'sprint2' }));
     }, []);
 
     // const getColor = (status) => {
@@ -27,9 +27,14 @@ const MyTaskDashboard = () => {
     //     }
     // }
 
-    const renderCard = (status, count) => (<div onClick={() => navigate(`/task/status/${_toLower(status)}`)} class={`welcome__task__box2 ${getColor(status)}`}>
+    const renderCard = (status, count) => (<div onClick={() => {
+        if (status === 'Reports') {
+            navigate(`/task/reports`)
+        }
+    }
+    } class={`welcome__task__box2 ${getColor(status)}`}>
         <div class="welcome__task__numbers">
-            <h1 class="welcome__task__box_content">{count}</h1>
+            <h1 class="welcome__task__box_content">{count || 0}</h1>
         </div>
         <div>
             <h4 class="welcome__task__bottom_content">{status}</h4>
@@ -59,6 +64,7 @@ const MyTaskDashboard = () => {
             </div>
         </div>
         <div class="welcome__task__container2">
+            {renderCard('Reports', mytask.reportCount)}
             {renderCard('Disclosures', mytask.disclosures)}
             {renderCard('Completed', mytask.completed)}
             {renderCard('Pending', mytask.pending)}

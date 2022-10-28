@@ -1,5 +1,5 @@
 
-const initialState = { component: "SignUp Page" };
+const initialState = { component: "SignUp Page", /* loginDetails: { user_id: "a190f7b4-b6ff-4caa-ba43-180e54e329bf"} */ };
 const CounterReducer = (state = { ...initialState }, action) => {
   switch (action.type) {
     case 'SIGNUP_SUCCESS': {
@@ -38,10 +38,19 @@ const CounterReducer = (state = { ...initialState }, action) => {
       }
     }
 
+    case 'REQUEST_TO_UPDATE_LOGIN_DETAILS': {
+      const { payload } = action;
+      return {
+        ...state,
+      loginDetails: {...payload }
+      }
+    }
+
     case 'CLEAR_SIGNUP_DETAILS': {
       return {
         ...state,
-        orgDetails: {}
+        orgDetails: {},
+        loginDetails: {}
       }
     }
 

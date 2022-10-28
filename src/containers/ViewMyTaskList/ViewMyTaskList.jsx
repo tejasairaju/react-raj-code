@@ -14,11 +14,12 @@ import './ViewMyTaskList.css';
 const ViewMyTaskList = (props) => {
     const { status  = '' } = useParams();
     const navigate = useNavigate();
-
-    const { taskList = null } = useSelector(state => state.mytask);
+    const { orgDetails = {}, loginDetails={} } = useSelector(state => state.signup);
+    const { taskList = null, reportList = null } = useSelector(state => state.mytask);
     const headers = [
-        'Report',
-        'Disclosure',
+        'Name',
+        'Start Date',
+        'End Date',
         'Status',
         'Action'
        ];
@@ -27,15 +28,16 @@ const ViewMyTaskList = (props) => {
         headers.pop(); 
     }
 
-    const redirectToAnswerQuestion = (task) => {
-        navigate(`/report/${task.report.id}/disclosures/${task.disclosure.id, { state: {...task}}}`)
+    const redirectToViewDisclosures = (report) => {
+        // navigate(`/report/${task.report.id}/disclosures/${task.disclosure.id, { state: {...task}}}`)
+        navigate(`/task/report/${report.id}/disclosures`)
     }
 
     return (<>
 
             <div class="main__top-wrapper view-task-list-contianer">
                 <h1 class={`main__title ${getColor(status)}`}>
-                {status} - MY Task List
+                MY Task - Reports
                 </h1>
             </div>
             <br/>
@@ -46,15 +48,16 @@ const ViewMyTaskList = (props) => {
                         </tr>
                 </thead>
                 <tbody>
-                        {(taskList || []).map((task, index) => {
-                            if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
+                        {(reportList || []).map((report, index) => {
+                            // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
                             return (<tr key={index}>
-                                <td>{task.report.name}</td>
-                                <td>{task.disclosure.name}</td>
-                                <td>{task.status}</td>
-                                {task.status!=='completed'&&<td><a onClick={() => redirectToAnswerQuestion(task)} className={`answer-redirect-link`}>Answer</a></td>}
-                            </tr>)
-                            }
+                                <td>{report.name}</td>
+                                <td>{report.start_date}</td>
+                                <td>{report.end_date}</td>
+                                <td>{report.status}</td>
+                                <td><a onClick={() => redirectToViewDisclosures(report)} className={`answer-redirect-link`}>View Disclosures</a></td>
+                            </tr>);
+                            // }
                         })}
                     </tbody>
             </table>

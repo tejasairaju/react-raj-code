@@ -150,7 +150,7 @@ const AssignDisclosures = () => {
 
     const onCloseHandler = () => {
         if(statusData.type === 'success') {
-            navigate(`/task/${selectedUser.id}`);
+            // navigate(`/task`);
         }
 
     }

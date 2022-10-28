@@ -11,18 +11,25 @@ import Popup from "../../components/Common/Popup/Popup.jsx";
 import Header from '../../Components/Common/Header/Header.jsx';
 import './CreateWizard.css';
 import { useState } from 'react';
-import { clientUserMenu, client_admin } from '../../utils/constants.js'
+import { esg_admin, client_admin } from '../../utils/constants.js'
 import CreateFramework from './CreateFramework/CreateFramework.jsx';
 import axios from 'axios';
 import Pagination from '../../Components/Pagination/Pagination.jsx';
 import { useDBStatus } from '../../Components/IsDBReady/IsDBReady.jsx';
 import PageInprogress from '../../Components/Common/PageInprogress/PageInprogress.jsx';
 
-const CreateWizard = ({ logoutHandler = () => {}} ) => {
-    const [dbStatus] = useDBStatus();
+const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
     const navigate = useNavigate();
     const [sideMenu, updateSideMenu] = useState(client_admin);
     const [statusData, setStatusData] = useState({});
+
+    useEffect(() => {
+        if (userRole === 'esg_admin') {
+            updateSideMenu(esg_admin);
+        } else if (userRole === 'client_admin') {
+            updateSideMenu(client_admin);
+        }
+    }, []);
 
     const onCloseHandler = () => {
         setStatusData({ type: '', message: '' });
@@ -76,31 +83,27 @@ const CreateWizard = ({ logoutHandler = () => {}} ) => {
         </li>)}</>
         return render;
     };
-    console.log('::::::isDBReady:::::::::::', dbStatus);
     return (<>
-    {(dbStatus === 'Done')?
-    <>
-        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <aside className="aside-framework">
-            <div className="aside-framework__logo-container">
-                <a href="#">
-                    <img src="assets/icons/esg_logo.png" alt="logo" className="aside-framework__logo" />
-                </a>
-            </div>
-            <nav className="aside-framework__nav">
-                <ul className="nav__list">
-                    {renderSideMenu()}
-                </ul>
-            </nav>
-        </aside>
-        <main className="main">
-            <Header logoutHandler={() => logoutHandler()} />
-            {/* <Pagination /> */}
-            <Outlet />
-        </main>
-    </>
-    :<><PageInprogress /></>}
-    </>)
+                {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
+                <aside className="aside-framework">
+                    <div className="aside-framework__logo-container">
+                        <a href="#">
+                            <img src="../../../../assets/icons/esg_logo.png" alt="logo" className="aside-framework__logo" />
+                        </a>
+                    </div>
+                    <nav className="aside-framework__nav">
+                        <ul className="nav__list">
+                            {renderSideMenu()}
+                        </ul>
+                    </nav>
+                </aside>
+                <main className="main">
+                    <Header logoutHandler={() => logoutHandler()} />
+                    {/* <Pagination /> */}
+                    <Outlet />
+                </main>
+            </>
+           )
 }
 
 export default CreateWizard;

@@ -121,17 +121,17 @@ const AnswerQuestionsTable = (props) => {
                 <h3 className="detalis__title">
                     {itemDetails.code} {itemDetails.name}
                 </h3>
-                <img src="../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />
+                <img src="../../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />
                 <a onClick={(e) => {setIsOpenReAssign(!isOpenReAssign); e.preventDefault(); e.stopPropagation();} } className="detalis__reassign">
                     Reassign
-                    <img src="../../../assets/icons/assign-icon.svg" alt="question" width={'16px'} height="16px" />
+                    <img src="../../../../assets/icons/assign-icon.svg" alt="question" width={'16px'} height="16px" />
                 </a>
             </div>
             <div className="details__item-wrapper">
                 <p className="assign__categories-item active">
                     {itemDetails.category}
                 </p>
-                <img src="../../../assets/icons/downarrow.svg" alt="question" width={'16px'} height="16px" />
+                <img src="../../../../assets/icons/downarrow.svg" alt="question" width={'16px'} height="16px" />
             </div>
         </div>
         {isOpenQAcard &&

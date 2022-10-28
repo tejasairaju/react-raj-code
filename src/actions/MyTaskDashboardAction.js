@@ -4,7 +4,14 @@ const getDisclosuresList = ({userId, orgName})=> ({
     orgName
 });
 
+const getReportList = ({userId, orgName}) => ({
+    type: 'REQUEST_GET_REPORT_LIST',
+    userId,
+    orgName
+});
+
 
 export default {
     getDisclosuresList,
+    getReportList
 }

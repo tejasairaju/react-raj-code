@@ -45,7 +45,6 @@ const userListMock = [{
 }]
 
 
-const avatarLogo = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFw5-Xzbno5hzXlze0BCT6QqKqzy7QV1CrS-vMvSUCI3bsYglxWZtjwWJZ1v8MWVgLnTM&usqp=CAU';
 const UserListView = (props) => {
     const {onClickUserSelect = () => {}} = props
     const { orgDetails = {} } = useSelector(state => state.signup);

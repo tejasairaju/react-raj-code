@@ -11,7 +11,7 @@ const ClientAdminDashboard = () => {
                 </h1>
                 <div class="framework__row right font12 ">
                     <a href="#" class="right rightlink__color">ESG KPIs</a>
-                    <p class="right">| Admin Dasboard |</p> <a href="/welcome-to-mytasks.html" class="right rightlink__color">My Tasks</a>
+                    <p class="right">| Admin Dasboard |</p> <a href="/task" class="right rightlink__color">My Tasks</a>
                 </div>
             </div>
             <div class="client-main__content-wrapper admindashboard__content-wrapper">

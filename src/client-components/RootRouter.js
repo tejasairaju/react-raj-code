@@ -46,6 +46,8 @@ import Requests from "../Requests";
 import MyTaskDashboard from "../containers/MyTaskDashboard/MyTaskDashboard.jsx";
 import ViewMyTaskList from "../containers/ViewMyTaskList/ViewMyTaskList.jsx";
 import AnswerQuestions from "../containers/AnswerQuestions/AnswerQuestions.jsx";
+import ViewMyTaskDisclosuresList from "../Components/ViewMyTaskDisclosuresList/ViewMyTaskDisclosuresList.jsx";
+import OverlappingDisclosures from "../containers/OverlappingDisclosures/OverlappingDisclosures.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
@@ -64,7 +66,8 @@ const RootRouter = () => {
           if (response) {
             dispatch(action.organisationDatails(response));
           }
-          setLoginUserDetails(jwt(token));
+          dispatch(action.loginDatails(decodedData));
+          setLoginUserDetails(decodedData);
         } catch (error) {
           setLoginUserDetails({});
         }
@@ -113,7 +116,7 @@ const RootRouter = () => {
   }
   else if (isAuthenticated && loginUserDetails.user_role === 'esg_admin') {
     renderRouteComponent = (<Routes>
-      <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
+      <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
         <Route index element={<SystemAdminDashboard />} />
         <Route path="/createframe" element={<CreateFramework />} />
         <Route path="/createdisclosures" element={<CreateDisclosures />} />
@@ -139,18 +142,19 @@ const RootRouter = () => {
   // {
    if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
       renderRouteComponent = (<Routes>
-        <Route element={<CreateWizard logoutHandler={() => logoutHandler} />}>
+        <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
           <Route index element={<ClientAdminDashboard/>} />
           <Route path="/clientadmin" element={<ClientAdminDashboard />} />
           <Route path="/select/framework" element={<StripePayment />} />
           <Route path="/report" element={<CreateReport />} />
-          <Route path="/task/:userId" element={<MyTaskDashboard />} />
-          <Route path="/task/status/:status" element={<ViewMyTaskList />} />
-          <Route path="/report/:reportId/disclosures/:disclosureId" element={<AnswerQuestions />} />
+          <Route path="/task" element={<MyTaskDashboard />} />
+          <Route path="/task/reports" element={<ViewMyTaskList />} />
+          <Route path="/task/report/:reportId/disclosures" element={<ViewMyTaskDisclosuresList />} />
+          <Route path="/report/:reportId/disclosures/:disclosureId/answers" element={<AnswerQuestions />} />
           <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
           <Route path="/report/:reportId/disclosures" element={<AssignDisclosures />} />
           <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
-          <Route path="/intelligent/mapping" element={<ManageFrameWork component='Welcome to Intelligent Mapping' />} />
+          <Route path="/intelligent/mapping" element={<OverlappingDisclosures />} />
           <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
           <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
           <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />

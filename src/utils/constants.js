@@ -140,7 +140,7 @@ export const empCount = [
 ];
 
 
-export const clientUserMenu = [{
+export const esg_admin = [{
     clsName: '',
     role: 'client',
     label: "Home",

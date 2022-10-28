@@ -22,9 +22,15 @@ const clearSignupDetails = (flag) => ({
     type: 'CLEAR_SIGNUP_DETAILS',
 });
 
+const loginDatails = (payload) => ({
+    type: 'REQUEST_TO_UPDATE_LOGIN_DETAILS',
+    payload
+})
+
 export default {
     signUp,
     organisationDatails,
+    loginDatails,
     updateDbStatus,
     updatePaymentStatus,
     clearSignupDetails

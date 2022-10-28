@@ -43,7 +43,7 @@ const AnswerQuestions = () => {
             const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, orgDetails.name);
             setStatusData({ type: '', message: '' });
             setApiData({
-                listData: [...response.results]
+                listData: [response]
             });
             // return response.results;
             // return response.results || [];
