@@ -20,7 +20,7 @@ import PageInprogress from '../../Components/Common/PageInprogress/PageInprogres
 
 const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
     const navigate = useNavigate();
-    const [sideMenu, updateSideMenu] = useState(client_admin);
+    const [sideMenu, updateSideMenu] = useState([]);
     const [statusData, setStatusData] = useState({});
 
     useEffect(() => {
