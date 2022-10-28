@@ -18,7 +18,7 @@ const AnswerQuestions = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const state = _get(location, 'state', {});
-    const { createdDate = '20-03-2022', updatedDate = '23-03-2022'} = state || {};
+    const { start_date = '20-03-2022', end_date = '23-03-2022'} = _get(state, 'report', {});
     const { reportId = '5eafbd8f-502e-4859-b54f-65d1846dad48', disclosureId = "97a7744e-41d0-4303-8ad8-75528a736e9f" } = useParams();
     const [apiData, setApiData] = useState({ listData: null, groupListData: {} });
     const { orgDetails = {} } = useSelector(state => state.signup);
@@ -40,7 +40,7 @@ const AnswerQuestions = () => {
     const getDisclosures = async (frameworkId) => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, orgDetails.name);
+            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, orgDetails.name || 'sprint2');
             setStatusData({ type: '', message: '' });
             setApiData({
                 listData: [response]
@@ -184,14 +184,14 @@ const AnswerQuestions = () => {
                     From:
                 </h1>
                 <label for="create-framework__date-from" className="create-framework__label">
-                    <input type="date" value={createdDate} className="create-framework__input" id="create-framework__date-from" required />
+                    <input type="date" value={start_date} className="create-framework__input" id="create-framework__date-from" required />
                     <img src="./assets/icons/celendar.svg" alt="" />
                 </label>
                 <h1 className="create-framework__title">
                     To:
                 </h1>
                 <label for="create-framework__date-to" className="create-framework__label">
-                    <input type="date" value={updatedDate} className="create-framework__input" id="create-framework__date-to" required />
+                    <input type="date" value={end_date} className="create-framework__input" id="create-framework__date-to" required />
                     <img src="./assets/icons/celendar.svg" alt="" />
                 </label>
             </div>
