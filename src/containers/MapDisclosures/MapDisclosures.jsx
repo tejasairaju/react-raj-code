@@ -56,6 +56,14 @@ const MapDisclosures = () => {
 
     const radioChangeHandler = (type, value, plane) => {
         if (type === "kpi") {
+
+            existingMapping.map(i => {
+                if (i.source_disclosure_kpi.id === value.id || i.target_disclosure_kpi.id === value.id) {
+                    console.log("Already Mapped do nothing")
+                    return
+                }
+            })
+
             if (plane == "parent") {
                 if (radioKPType != value.id) {
                     setKPradioType(value.id)
@@ -103,15 +111,32 @@ const MapDisclosures = () => {
     const addToolTip = (id) => {
         return existingMapping.map(i => {
             if (i.source_disclosure_kpi.id === id) {
-                return "Its already mapped with " + i.target_disclosure.name + " : " + i.target_disclosure_kpi.label
+                return "Its already mapped with " + i.target_disclosure.name + " : " + i.target_disclosure_kpi.name
             }
             if (i.target_disclosure_kpi.id === id) {
-                return "Its already mapped with " + i.source_disclosure.name + " : " + i.source_disclosure_kpi.label
+                return "Its already mapped with " + i.source_disclosure.name + " : " + i.source_disclosure_kpi.name
             }
             else {
                 return ""
             }
         })[0]
+    }
+
+    const isAlreadyMapped = (id) => {
+        return existingMapping.map(i => {
+            if (i.source_disclosure_kpi.id === id) {
+                console.log("source")
+                return true
+            }
+            if (i.target_disclosure_kpi.id === id) {
+                console.log("tage")
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        )
     }
 
     const onCanceltHandler = async () => {
@@ -376,6 +401,7 @@ const MapDisclosures = () => {
                                             checked={(radioKPType === val.id)}
                                             label={""}
                                             value={val}
+                                            disabled
                                         />
                                         <div class={`${radioKPType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
                                     </label>
@@ -427,7 +453,7 @@ const MapDisclosures = () => {
                                     <p class="disclosures__detalis">
                                         {val.code + " " + val.label}
                                     </p>
-                                    <label for="organisational__checkbox" class="disclosures__label" onClick={() => radioChangeHandler("kpi", val, "child")}>
+                                    <label for="organisational__checkbox" class="disclosures__label"  onClick={() => radioChangeHandler("kpi", val, "child")}>
                                         <input type="checkbox"
                                             class="disclosures__checkbox"
                                             id={val.id}
@@ -435,7 +461,7 @@ const MapDisclosures = () => {
                                             label={""}
                                             value={val}
                                         />
-                                        <div class={`${radioKCType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                        <div class={`${radioKCType === val.id  ||  isAlreadyMapped(val.id)? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
                                     </label>
                                 </div>)
                             )}
