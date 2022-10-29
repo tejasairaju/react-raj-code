@@ -8,10 +8,11 @@ import { useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { mapCatagory_1, mapCatagory_2 } from "../../utils/constants.js";
 const { RadioButton, Button, Pills } = Fields;
+import Animation from "../Animation/Animation.jsx";
 
 const { Get } = Request;
 
-const OverlappingDisclosures = ({ component = '' }) => {
+const OverlappingDisclosures = (props) => {
 
     const [mappingFramework, setMappingFramework] = useState([]);
     const [isReverse, setIsReverse] = useState(false);
@@ -36,12 +37,13 @@ const OverlappingDisclosures = ({ component = '' }) => {
     const [existingMapping, setExistingMapping] = useState([])
     const [statusData, setStatusData] = useState({});
     const { search } = _get(window, 'location', '?');
+    const {selectedFramework={}} = props
     const params = queryString.parse(search);
+    const [isLoading, setisLoading] = useState(true);
 
     useEffect(() => {
-        // getMappingFramework("SASB%20Test", "My%20App%20ESGf");
-        getMappingFramework("My App ESGf","SASB Test");
-        // getMappingFramework("SASB Test","My App ESGf");
+        console.log(selectedFramework) 
+        getMappingFramework(selectedFramework.from.name,selectedFramework.to.name);
     }, []);
 
     const getMappingFramework = async (source_framework = "", target_framework = "") => {
@@ -50,7 +52,6 @@ const OverlappingDisclosures = ({ component = '' }) => {
             if (frameDetails.results.length > 0 && frameDetails.results[0].source_framework.name != source_framework) {
                 setIsReverse(true)
             }
-            console.log(frameDetails.results);
             var mapData = Object.values(frameDetails.results.reduce((result, data) => {
                 var nameValue=data.source_disclosure.code+" "+data.source_disclosure.name + "_" + data.target_disclosure.code+" "+data.target_disclosure.name;
                 if (!result[nameValue]) result[nameValue] = {
@@ -60,11 +61,15 @@ const OverlappingDisclosures = ({ component = '' }) => {
                 result[nameValue].MappingsContext.push(data);
                 return result;
             }, {}));
-            console.log(mapData)
             setMappingFramework(mapData)
+            
         } catch (e) {
-            console.log(e)
-            setMappingFramework({});
+            setMappingFramework([]);
+        }
+        finally{
+            setTimeout(() => {
+                setisLoading(false)
+            }, 5000);
         }
     }
 
@@ -90,6 +95,8 @@ const OverlappingDisclosures = ({ component = '' }) => {
 
     return (<>
 
+    {isLoading?<Animation /> :
+
         <main class="main">
             <div class="main__top-wrapper">
                 <h1 class="main__title_intelligent">
@@ -97,76 +104,30 @@ const OverlappingDisclosures = ({ component = '' }) => {
                 </h1>
             </div>
             <hr />
-            <br />
-            <br />
-            <br />
+            <br/>
             <div class="intelligent-framework">
                 <div class="system_admin_container_intelligent intelligent_main">
-
                     <div class="framework__col-wrapper">
                         <div class="intelligent_boxvalue">
                             <div>
-                                <img src="../../assets/images/gri.png" class="recommended_framework_intellgent" />
+                                <img src={selectedFramework.from.logo} class="recommended_framework_intellgent" width="100px" height="100px" />
                             </div>
                         </div>
-                        {/* <div class="framework__row">
-                            <h2 class="main__title_intelligent"><b>2.1 Organizational details</b></h2>
-                        </div> */}
                     </div>
 
                     <div class="framework__col-wrapper">
                         <div class="intelligent_boxvalue">
                             <div>
-                                <img src="../../assets/images/sasb.png" class="recommended_framework_intellgent" />
+                                <img src={selectedFramework.to.logo} class="recommended_framework_intellgent"  width="100px" height="100px" />
                             </div>
                         </div>
-                        {/* <div class="framework__row">
-                            <h2 class="main__title_intelligent"><b>CO-2 Give a general description and introdution
-                                to your
-                                organization</b></h2>
-                        </div> */}
                     </div>
                 </div>
             </div>
 
             <div class="intelligent_content_wrapper">
-                {/* <div class="intelligent_mapping_wrapper ">
-
-                    <div class="framework__row-wrapper main_title_bottom_mapping main_title_top_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2-1-a. report its legal name</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-a. Legal name </h2>
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper main_title_bottom_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2.1-b. report nature of ownership and legal form</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-b. Nature of ownership and legal form </h2>
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper main_title_bottom_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2.1-c. report the location of its headquarters</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-c. Location of its headquarters</h2>
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper main_title_bottom_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2.1-d. report its countries of operation</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-d. Countries of operation </h2>
-                        </div>
-                    </div>
-                </div> */}
-                {/* {mappingFramework} */}
-                {(mappingFramework || []).map((val, index) => (
+                {mappingFramework.length>0?
+                (mappingFramework || []).map((val, index) => (
                     <div>
                         <div class="main__top-wrapper">
                             <div class="framework__row">
@@ -195,67 +156,10 @@ const OverlappingDisclosures = ({ component = '' }) => {
                         ))}
                         </div>
                     </div>
-                ))}
-                {/* <div class="main__top-wrapper">
-                    <div class="framework__row">
-                        <h2 class="main__title_intelligent"><b>2-3 Reporting period, frequency and contact poiint</b>
-                        </h2>
-                    </div>
-                    <div class="framework__row">
-                        <h2 class="main__title_intelligent"><b>CO-2 State the start and end date of the year of which
-                            you for
-                            which you are reporting data</b></h2>
-                    </div>
-                </div>
-
-                <div class="intelligent_mapping_wrapper">
-
-                    <div class="framework__row-wrapper main_title_bottom_mapping  main_title_top_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2-1-a. report its legal name</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-a. Legal name </h2>
-                        </div>
-                    </div>
-                </div> */}
-                {/* <div class="framework__row-wrapper main_title_bottom_mapping ">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2.1-b. report nature of ownership and legal form</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-b. Nature of ownership and legal form </h2>
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper main_title_bottom_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2.1-b. report nature of ownership and legal form</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-b. Nature of ownership and legal form </h2>
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper main_title_bottom_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2.1-b. report nature of ownership and legal form</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-b. Nature of ownership and legal form </h2>
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper main_title_bottom_mapping">
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">2.1-b. report nature of ownership and legal form</h2>
-                        </div>
-                        <div class="framework__row">
-                            <h2 class="main__title_intelligent">CO-2-b. Nature of ownership and legal form </h2>
-                        </div>
-                    </div> */}
-                {/* </div> */}
+                )):"Mapping Not Found with the selected disclosure"}
             </div>
 
-        </main>
-
+        </main>}
     </>)
 }
 export default OverlappingDisclosures;

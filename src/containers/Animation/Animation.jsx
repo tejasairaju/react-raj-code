@@ -7,7 +7,7 @@
     
         return (<>
         <div class="circles-container">
-    <div>1qqqqqq</div>
+    <div></div>
     <div></div>
     <div></div>
     <div></div>

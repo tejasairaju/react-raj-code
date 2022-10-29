@@ -5,6 +5,7 @@ import './ClientAdminFrameworkList.css';
 import _isEmpty from 'lodash/isEmpty';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import OverlappingDisclosures from "../OverlappingDisclosures/OverlappingDisclosures.jsx";
 
 const ClientAdminFrameworkList = (props) => {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ const ClientAdminFrameworkList = (props) => {
     const [selectedFramework, setSelectedFramework] = useState({from: '', to: ''});
     const [frameworkData, setFrameworkData] = useState(null);
     const [rightFrameworkData, setRightFrameworkData] = useState(null);
+    const [isOpenOverlappingDislosures, setIsOpenOverlappingDislosures] = useState(false);
     useEffect(() => {
         getFramework();
     }, []);
@@ -55,11 +57,11 @@ const ClientAdminFrameworkList = (props) => {
 
         if(type === 'left'){
             setFrameworkData([...cloneFrameWork]);
-            setSelectedFramework({ ...selectedFramework, from: cloneFrameWork[index]['id']});
+            setSelectedFramework({ ...selectedFramework, from: cloneFrameWork[index]});
             setRightFrameworkData([...cloneOppositeFrameWork]);
         } else {
             setRightFrameworkData([...cloneFrameWork]);
-            setSelectedFramework({ ...selectedFramework, to: cloneFrameWork[index]['id']});
+            setSelectedFramework({ ...selectedFramework, to: cloneFrameWork[index]});
             setFrameworkData([...cloneOppositeFrameWork]);
         }
     }
@@ -76,7 +78,8 @@ const ClientAdminFrameworkList = (props) => {
             <div className="frameworks__choose cli-admin-frame-list">
                 {(((type === 'left') ? frameworkData : rightFrameworkData) || []).map((item, i) => {
                     return (<div key={i} onClick={() => onClickLogoHandler(item, i, type)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)} ${item.isSource ? ' hide' : null}`}>
-                        <img src={item.logo} alt="GRI" />
+                        <img src={item.logo} alt={item.name} />
+                        {item.name}
                     </div>)
                 }
                 )}
@@ -87,11 +90,15 @@ const ClientAdminFrameworkList = (props) => {
     const onClickNextHandler = () => {
         console.log('::::::::::::', selectedFramework);
         if(selectedFramework.from&&selectedFramework.to) {
-            navigate('/intelligent/mapping');
+            // navigate('/intelligent/mapping');
+            setIsOpenOverlappingDislosures(true);
+
         }
     }
 
     return (<>
+    {!isOpenOverlappingDislosures?
+    <>
     <h1 className="assign__title">
                 Framework:
             </h1>
@@ -100,6 +107,8 @@ const ClientAdminFrameworkList = (props) => {
             {renderFrameworkLogo('To', 'right')}
         </div>
         <a type="submit" className="next-btn form-btn" onClick={() => onClickNextHandler()}>Next</a>
+        </>
+        :<OverlappingDisclosures selectedFramework={selectedFramework}/> }
         </>);
 }
 

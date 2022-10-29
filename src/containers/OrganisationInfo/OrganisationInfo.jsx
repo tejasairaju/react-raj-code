@@ -94,9 +94,9 @@ const OrganisationInfo = () => {
             form.append('address', inputValue.address);
             form.append('status', 'Active');
             form.append('employees_count', inputValue.employees_count);
-            // if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
-            //     form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-            // }
+            if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
+                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+            }
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());
 
