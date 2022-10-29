@@ -156,7 +156,7 @@ const RootRouter = () => {
         <Route index element={<ClientAdminDashboard/>} />
         <Route path="/clientadmin" element={<ClientAdminDashboard />} />
         <Route path="/select/framework" element={<StripePayment />} />
-        <Route path="/template" element={<CreateTemplate />} />
+        {/* <Route path="/template" element={<CreateTemplate />} /> */}
         {/* Duplicate route */}
         <Route path="/createdisclosures" element={<CreateDisclosures />} />
         <Route path="/createquestions" element={<CreateQuestions />} />
@@ -172,7 +172,7 @@ const RootRouter = () => {
         <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
         <Route path="/report/:reportId/disclosures" element={<AssignDisclosures />} />
         <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
-        <Route path="/intelligent/mapping" element={<OverlappingDisclosures />} />
+        <Route path="/intelligent/mapping" element={<ClientAdminFrameworkList />} />
         <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
         <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
         <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />

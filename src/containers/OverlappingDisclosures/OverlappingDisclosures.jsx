@@ -47,9 +47,9 @@ const OverlappingDisclosures = (props) => {
             setMappingFramework([]);
         }
         finally{
-            // setTimeout(() => {
-            //     setisLoading(false)
-            // }, 5000);
+            setTimeout(() => {
+                setisLoading(false)
+            }, 5000);
         }
     }
 
