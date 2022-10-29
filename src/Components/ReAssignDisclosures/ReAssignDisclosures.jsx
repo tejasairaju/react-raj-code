@@ -4,7 +4,8 @@ import _get from 'lodash/get';
 import './ReAssignDisclosures.css'
 // import actions from '../../../actions/SignUpActions.js'
 import { useDispatch, useSelector } from 'react-redux';
-import Popup from '../Common/Popup/Popup.jsx';
+// import Popup from '../Common/Popup/Popup.jsx';
+import Popup from "../../components/Common/Popup/Popup.jsx";
 import axios from 'axios';
 import { useMemo } from 'react';
 
