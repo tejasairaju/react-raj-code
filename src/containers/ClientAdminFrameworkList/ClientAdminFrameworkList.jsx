@@ -78,7 +78,7 @@ const ClientAdminFrameworkList = (props) => {
             <div className="frameworks__choose cli-admin-frame-list">
                 {(((type === 'left') ? frameworkData : rightFrameworkData) || []).map((item, i) => {
                     return (<div key={i} onClick={() => onClickLogoHandler(item, i, type)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)} ${item.isSource ? ' hide' : null}`}>
-                        <img src={item.logo} alt={item.name} />
+                        <img src={item.logo} alt={item.name}  widith="97px" height="97px"/>
                         {item.name}
                     </div>)
                 }
@@ -100,11 +100,11 @@ const ClientAdminFrameworkList = (props) => {
     {!isOpenOverlappingDislosures?
     <>
     <h1 className="assign__title">
-                Framework:
+                Select Any one framework from source and target
             </h1>
         <div className="cli-framework-list-container">
-            {renderFrameworkLogo('From', 'left')}
-            {renderFrameworkLogo('To', 'right')}
+            <div>{renderFrameworkLogo('Source Framework', 'left')}</div>
+            <div>{renderFrameworkLogo('Target Framework', 'right')}</div>
         </div>
         <a type="submit" className="next-btn form-btn" onClick={() => onClickNextHandler()}>Next</a>
         </>

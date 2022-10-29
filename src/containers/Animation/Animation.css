@@ -83,4 +83,9 @@
   .circles-container > *:nth-child(n + 5):hover {
     transform: scale(1.15);
   }
-/*end*/
+
+  .div_margin_auto{
+    margin: auto;
+  }
+
+  /*end*/

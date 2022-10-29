@@ -16,26 +16,6 @@ const OverlappingDisclosures = (props) => {
 
     const [mappingFramework, setMappingFramework] = useState([]);
     const [isReverse, setIsReverse] = useState(false);
-    const navigate = useNavigate();
-    const [listCatagory_1, setListCatagory_1] = useState([...mapCatagory_1]);
-    const [listCatagory_2, setListCatagory_2] = useState([...mapCatagory_2]);
-    const [apiData, setApiData] = useState({});
-    const [radioDPType = "", setDPradioType] = useState({});
-    const [radioDCType = "", setDCradioType] = useState({});
-    const [radioKPType = "", setKPradioType] = useState({});
-    const [radioKCType = "", setKCradioType] = useState({});
-    const [sourceFrameworkId = null, setSourceFrameworkId] = useState({});
-    const [destinationFrameworkId = null, setDestinationFrameworkId] = useState({});
-    const [catagoryParentType, setParentCatagoryType] = useState();
-    const [catagoryChildType, setChildCatagoryType] = useState();
-    const [parentDisclosure, setParentDisclosureData] = useState([]);
-    const [childDisclosure, setChildDisclosureData] = useState([]);
-    const [parentKPI, setParentKPI] = useState([]);
-    const [childKPI, setChildKPI] = useState([]);
-    const [frameworksData, setFrameworksData] = useState([]);
-    const [childFrameworksData, setChildFrameworksData] = useState([])
-    const [existingMapping, setExistingMapping] = useState([])
-    const [statusData, setStatusData] = useState({});
     const { search } = _get(window, 'location', '?');
     const {selectedFramework={}} = props
     const params = queryString.parse(search);
@@ -67,9 +47,9 @@ const OverlappingDisclosures = (props) => {
             setMappingFramework([]);
         }
         finally{
-            setTimeout(() => {
-                setisLoading(false)
-            }, 5000);
+            // setTimeout(() => {
+            //     setisLoading(false)
+            // }, 5000);
         }
     }
 

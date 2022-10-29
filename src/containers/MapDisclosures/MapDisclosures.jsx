@@ -144,6 +144,8 @@ const MapDisclosures = () => {
         setChildDisclosureData([])
         setParentKPI([])
         setChildKPI([])
+        setSourceFrameworkId({})
+        setDestinationFrameworkId({})
     }
 
     const onNextHandler = async () => {
