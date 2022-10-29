@@ -1,0 +1,86 @@
+/*Loading image*/
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+.circles-container {
+    --s:150px; /* adjust this to control the size*/
+    width:  var(--s);
+    height: var(--s);
+    margin:calc(var(--s)/3) auto;
+    display:grid;
+    margin-top: 17%;
+    animation: rotation 8s infinite linear;
+  }
+  .circles-container > * {
+    grid-area: 1/1;
+    transition: all 1s;
+    border-radius:50%;
+    position:relative;
+  }
+  .aside__title {
+    margin-top: 15px;
+    display: inline-block;
+    font-size: 20px;
+    text-align: center;
+    background: #499E43;
+    padding: 5px;
+    color: #fff;
+    font-family: inherit;
+}
+
+  .circle-blue {
+    top:calc(var(--s)/3);
+    outline-style: auto;
+    outline: solid;
+    outline-color: #2088bd;
+  }
+  .circle-purple {
+    left:calc(0.866*calc(var(--s)/3));
+    top: calc(-0.5 *calc(var(--s)/3));
+    outline-style: auto;
+    outline: solid;
+    outline-color: #2088bd;
+  }
+  .circle-pink { 
+    right:calc(0.866*calc(var(--s)/3));
+    top:  calc(-0.5 *calc(var(--s)/3));
+    outline-style: auto;
+    outline: solid;
+    outline-color: #2088bd;
+  }
+  .circles-container > *:nth-child(1) {
+     top:calc(var(--s)/3);
+     clip-path:circle(calc(var(--s)/2) at 21% 0%);
+  }
+  .circles-container > *:nth-child(2) {
+     right:calc(0.866*calc(var(--s)/3));
+     top:  calc(-0.5 *calc(var(--s)/3));
+     clip-path:circle(calc(var(--s)/2) at 108% 50%);
+  }
+  .circles-container > *:nth-child(3) {
+     left:calc(0.866*calc(var(--s)/3));
+     top: calc(-0.5 *calc(var(--s)/3));
+     clip-path:circle(calc(var(--s)/2) at 21% 100%);
+  }
+  .circles-container > *:nth-child(4) {
+    clip-path: polygon(29% 38%, 50% 34%, 71% 38%, 64% 60%, 50% 74%, 36% 60%);
+  }
+  .circles-container > *:nth-child(-n + 4) {
+    z-index:1;
+  }
+  .circles-container > *:nth-child(1):hover ~ .circle-pink,
+  .circles-container > *:nth-child(1):hover ~ .circle-blue,
+  .circles-container > *:nth-child(2):hover ~ .circle-pink,
+  .circles-container > *:nth-child(2):hover ~ .circle-purple,
+  .circles-container > *:nth-child(3):hover ~ .circle-blue,
+  .circles-container > *:nth-child(3):hover ~ .circle-purple,
+  .circles-container > *:nth-child(4):hover ~ *,
+  .circles-container > *:nth-child(n + 5):hover {
+    transform: scale(1.15);
+  }
+/*end*/
