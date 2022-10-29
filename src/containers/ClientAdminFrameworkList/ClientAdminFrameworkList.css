@@ -1,0 +1,29 @@
+.cli-admin-frame-list {
+    display: block !important;
+    overflow-y: scroll !important;
+    /* min-height: 146e;
+    padding: -23px; */
+    min-height: 150px !important;
+    max-height: 530px;
+}
+
+.cli-admin-frame-list .frameworks__choose-item {
+    margin: 2.3em !important;
+    width: 120px;
+    height: 105px;
+}
+.cli-framework-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5em;
+}
+
+.cli-framework-list-container{
+    justify-content: space-around;
+    display: flex;
+}
+
+.cli-framework-title {
+    display: flex;
+    justify-content: center ;
+}

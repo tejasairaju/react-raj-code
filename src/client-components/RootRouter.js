@@ -49,7 +49,7 @@ import AnswerQuestions from "../containers/AnswerQuestions/AnswerQuestions.jsx";
 import ViewMyTaskDisclosuresList from "../Components/ViewMyTaskDisclosuresList/ViewMyTaskDisclosuresList.jsx";
 import OverlappingDisclosures from "../containers/OverlappingDisclosures/OverlappingDisclosures.jsx";
 // import CreateTemplate from "../containers/CreateTemplate/CreateTemplate.jsx";
-// import ClientAdminFrameworkList from "../containers/ClientAdminFrameworkList/ClientAdminFrameworkList.jsx";
+import ClientAdminFrameworkList from "../containers/ClientAdminFrameworkList/ClientAdminFrameworkList.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
