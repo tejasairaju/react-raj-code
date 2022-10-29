@@ -55,7 +55,7 @@ const MyTaskDashboard = () => {
                 </h1>
                 <span class="welcome__task__top_line">|</span>
                 <h1 class="welcome__task__heading">
-                    <a href="/admindashboard.html"><u>Admin Dashboard</u></a>
+                    <a onClick={() => navigate(-1)}><u>Admin Dashboard</u></a>
                 </h1>
                 <span class="welcome__task__top_line">|</span>
                 <h1 class="welcome__task__heading">

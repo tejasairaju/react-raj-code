@@ -98,7 +98,7 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
                     </nav>
                 </aside>
                 <main className="main">
-                    <Header logoutHandler={() => logoutHandler()} />
+                    <Header logoutHandler={() => logoutHandler()} userRole={userRole} />
                     {/* <Pagination /> */}
                     <Outlet />
                 </main>

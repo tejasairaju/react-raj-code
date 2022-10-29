@@ -4,9 +4,7 @@ import { useAuth0 } from "../../../react-auth0-spa";
 import action from '../../../actions/SignUpActions.js';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
-
-const Header = () => {
+const Header = ({userRole = ''}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const logoutHandler = () => {
@@ -55,13 +53,13 @@ const Header = () => {
                 3
             </span>
         </a> */}
-        <a href="#" className="header__name-avatar">
+        <a onClick={() => { navigate(`/personalinfo`) }}  className="header__name-avatar">
             <div className="avatar__info">
                 <span className="header__name">
                     {_get(user, 'nickname')}
                 </span>
                 <span className="header__job-title">
-                    Client Admin
+                    {userRole}
                 </span>
             </div>
             <img src={_get(user, 'picture', "assets/images/avatar.jpg")} className="header__avatar" alt="avatar" />

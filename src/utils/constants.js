@@ -312,5 +312,5 @@ export const client_admin = [{
     isActive: false,
     icon1: 'settings-icon.svg',
     // icon2: 'plus-icon.svg',
-    route: '/client/mangeuser'
+    route: '/client/users'
 }]

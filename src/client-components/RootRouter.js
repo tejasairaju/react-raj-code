@@ -51,6 +51,10 @@ import OverlappingDisclosures from "../containers/OverlappingDisclosures/Overlap
 // import CreateTemplate from "../containers/CreateTemplate/CreateTemplate.jsx";
 import ClientAdminFrameworkList from "../containers/ClientAdminFrameworkList/ClientAdminFrameworkList.jsx";
 
+import ClientUsers from "../containers/ClientUserManagment/ClientUsers.jsx";
+import AddClientUser from "../containers/ClientUserManagment/AddClientUser.jsx";
+import PersonalInformation from "../containers/ProfileInformation/PersonalInformation.jsx";
+
 const RootRouter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,7 +68,7 @@ const RootRouter = () => {
         try {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
-          if(decodedData.user_role === 'client_admin') {
+          if (decodedData.user_role === 'client_admin') {
             const response = await Requests.Get(`/organizations/${decodedData.org}`);
             if (response) {
               dispatch(action.organisationDatails(response));
@@ -81,14 +85,14 @@ const RootRouter = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (!_isEmpty(orgDetails) && isAuthenticated&&(loginUserDetails.user_role === 'client_admin')) {
+    if (!_isEmpty(orgDetails) && isAuthenticated && (loginUserDetails.user_role === 'client_admin')) {
       if (!orgDetails.is_payment_done) {
         navigate('/packege');
       }
       else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && !orgDetails.is_db_created) {
         navigate(`/pageinprogress`);
       }
-       else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && orgDetails.is_db_created && orgDetails.status === 'Initial') {
+      else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && orgDetails.is_db_created && orgDetails.status === 'Initial') {
         navigate('/orginfo');
       }
       else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && orgDetails.is_db_created && (orgDetails.status === 'Active')) {
@@ -123,12 +127,14 @@ const RootRouter = () => {
       <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
         <Route index element={<SystemAdminDashboard />} />
         <Route path="/createframe" element={<CreateFramework />} />
+        {/* Duplicate route */}
         <Route path="/createdisclosures" element={<CreateDisclosures />} />
         <Route path="/createquestions" element={<CreateQuestions />} />
+        {/* Duplicate route */}
         <Route path="/manageframework" element={<ViewFrameWork />} />
         <Route path="/viewdisclosures" element={<ViewDisclosures />} />
         <Route path="/viewquestions" element={<ViewQuestions />} />
-        <Route path="/createdisclosures" element={<CreateFramework />} />
+        {/* <Route path="/createdisclosures" element={<CreateFramework />} /> */}
         <Route path="/mapdisclosures" element={<MapDisclosures />} />
         <Route path="/manageclient" element={<ClientInfo />} />
         <Route path="/country" element={<ManageCountry />} />
@@ -144,34 +150,45 @@ const RootRouter = () => {
     </Routes>)
   } else 
   // {
-   if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
-      renderRouteComponent = (<Routes>
-        <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
-          <Route index element={<ClientAdminDashboard/>} />
-          <Route path="/clientadmin" element={<ClientAdminDashboard />} />
-          <Route path="/select/framework" element={<StripePayment />} />
-          <Route path="/report" element={<CreateReport />} />
-          <Route path="/task" element={<MyTaskDashboard />} />
-          <Route path="/task/reports" element={<ViewMyTaskList />} />
-          <Route path="/task/report/:reportId/disclosures" element={<ViewMyTaskDisclosuresList />} />
-          <Route path="/report/:reportId/disclosures/:disclosureId/answers" element={<AnswerQuestions />} />
-          <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
-          <Route path="/report/:reportId/disclosures" element={<AssignDisclosures />} />
-          <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
-          <Route path="/intelligent/mapping" element={<OverlappingDisclosures />} />
-          <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
-          <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
-          <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
-          <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
-        </Route>
-        <Route path="/packege" element={<Packeges />} />
-        <Route path="/orginfo" element={<OrganisationInfo />} />
-        <Route path="/checkout" element={<StripePayment />} />
-        <Route path="/packege/summary" element={<PackageSummary />} />
-        <Route path="/payment/success" element={<PaymentSuccess />} />
-        <Route path="/pageinprogress" element={<PageInprogress />} />
-      </Routes>);
-    }
+     if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+    renderRouteComponent = (<Routes>
+      <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
+        <Route index element={<ClientAdminDashboard/>} />
+        <Route path="/clientadmin" element={<ClientAdminDashboard />} />
+        <Route path="/select/framework" element={<StripePayment />} />
+        <Route path="/template" element={<CreateTemplate />} />
+        {/* Duplicate route */}
+        <Route path="/createdisclosures" element={<CreateDisclosures />} />
+        <Route path="/createquestions" element={<CreateQuestions />} />
+        <Route path="/manageframework" element={<ViewFrameWork />} />
+        <Route path="/viewdisclosures" element={<ViewDisclosures />} />
+        <Route path="/viewquestions" element={<ViewQuestions />} />
+        {/* Duplicate route */}
+        <Route path="/report" element={<CreateReport />} />
+        <Route path="/task" element={<MyTaskDashboard />} />
+        <Route path="/task/reports" element={<ViewMyTaskList />} />
+        <Route path="/task/report/:reportId/disclosures" element={<ViewMyTaskDisclosuresList />} />
+        <Route path="/report/:reportId/disclosures/:disclosureId/answers" element={<AnswerQuestions />} />
+        <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
+        <Route path="/report/:reportId/disclosures" element={<AssignDisclosures />} />
+        <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
+        <Route path="/intelligent/mapping" element={<OverlappingDisclosures />} />
+        <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
+        <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
+        <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
+        <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
+        <Route path="/client/users" element={<ClientUsers />} />
+        <Route path="/client/users/invite" element={<AddClientUser />} />
+        <Route path="/personalinfo" element={<PersonalInformation />} />
+      </Route>
+      <Route path="/packege" element={<Packeges />} />
+      <Route path="/orginfo" element={<OrganisationInfo />} />
+      <Route path="/checkout" element={<StripePayment />} />
+      <Route path="/packege/summary" element={<PackageSummary />} />
+      <Route path="/payment/success" element={<PaymentSuccess />} />
+      <Route path="/pageinprogress" element={<PageInprogress />} />
+    </Routes>);
+  }
 
   return (
     <>
