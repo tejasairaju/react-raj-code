@@ -21,6 +21,7 @@ const CreateFramework = (props) => {
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
+    const { isEdit = false} = params;
     const [inputValue, setInputValue] = useState({});
     const [errorValidation, setErrorValidation] = useState(false);
     const [logo, setLogo] = useState(null);
@@ -88,7 +89,7 @@ const CreateFramework = (props) => {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('description', inputValue.description)
-            if (!_isEmpty(uploadImage.fileName&&!params.isEdit)) {
+            if (!_isEmpty(uploadImage.fileName)&&(isEdit == false)) {
                 form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
             } else if(params.isEdit&&logo){
                 let blob = new Blob([logo], {

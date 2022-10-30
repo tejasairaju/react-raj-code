@@ -79,9 +79,6 @@ export const questions = {
         },{
         label: 'Input',
         value: 'Input'
-    },{
-        label: 'Text',
-        value: 'Text'
     },
      {
         label: 'Dropdown',
@@ -104,6 +101,10 @@ export const questions = {
     unitType: [{
         label: 'N/A',
         value: 'N/A'
+    },
+    {
+        label: 'Text',
+        value: 'Text'
     }, {
         label: 'Numbers',
         value: 'Numbers'
@@ -281,15 +282,6 @@ export const client_admin = [{
     icon1: 'client-icon.svg',
     icon2: '',
     route: '/intelligent/mapping'
-},
-{
-    clsName: '',
-    role: 'client-admin',
-    label: "Answer Questions",
-    isActive: false,
-    icon1: 'users-icon.svg',
-    icon2: '',
-    route: '/answer/questions'
 }, 
 // {
 //     clsName: '',
