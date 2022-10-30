@@ -22,7 +22,7 @@ import actions from '../../actions/AppWizardAction.js';
 const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [sideMenu, updateSideMenu] = useState(esg_admin);
+    const [sideMenu, updateSideMenu] = useState([]);
     const [statusData, setStatusData] = useState({});
 
     useEffect(() => {
