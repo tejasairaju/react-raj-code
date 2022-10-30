@@ -5,7 +5,7 @@ import MoreAction from '../MoreAction/MoreAction.jsx';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 
-const QuestionsTable = ({ tableData= null, tableHeader = null, handleInputChange=() => {}, handleRemoveClick = () => {}, handleAddClick =() => {}, isError=false}) => {
+const QuestionsTable = ({ isAddRemoveButton= false, tableData= null, tableHeader = null, handleInputChange=() => {}, handleRemoveClick = () => {}, handleAddClick =() => {}, isError=false}) => {
     const { dataType, inputType, unitType } = questions;
 
     const listChoices = (i) => {
@@ -45,7 +45,7 @@ const QuestionsTable = ({ tableData= null, tableHeader = null, handleInputChange
                     <td>
                         {/* {<MoreAction viewQuestions={true} index={i} state={x} />} */}
                     </td>
-                    {false&&<td>
+                    {isAddRemoveButton&&<td>
                         <div className='flex'>
                             {tableData.length !== 1 && <Button label="Remove" className='remove-btn' onClickHandler={(i) => handleRemoveClick(i)} />}
                             {tableData.length - 1 === i && <Button label="Add" className='add-btn' onClickHandler={() =>handleAddClick(i)} />}

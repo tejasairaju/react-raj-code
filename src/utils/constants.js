@@ -79,7 +79,11 @@ export const questions = {
         },{
         label: 'Input',
         value: 'Input'
-    }, {
+    },{
+        label: 'Text',
+        value: 'Text'
+    },
+     {
         label: 'Dropdown',
         value: 'Dropdown',
         field_choices: []
@@ -266,7 +270,7 @@ export const client_admin = [{
         clsName: '',
         label: "Create Bespoke Framework",
         isActive: false,
-        route: '/bespoke/framework',
+        route: '/template',
     }]
 },
 {

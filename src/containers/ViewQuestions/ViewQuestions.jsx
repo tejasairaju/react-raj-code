@@ -3,35 +3,38 @@ import axios from 'axios';
 import _get from 'lodash/get';
 import queryString from 'query-string';
 import './ViewQuestions.css';
+import Requests from "../../Requests";
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useLocation, useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import QuestionHeader from "../../Components/QuestionHeader/QuestionHeader.jsx";
 import QuestionsTable from "../../Components/QuestionsTable/QuestionsTable.jsx";
-import {listQuestions} from '../../../__mocks__/listQuestions.js';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
 const { RadioButton } = Fields;
-
-const { Get } = Request;
 
 const ViewQuestions = () => {
     const isEditable = false;
     const location = useLocation();
     const state = _get(location, 'state', {});
-    const { code = "4343", name = "GRI",  framework_id= '',
-    disclosure_id='' } = state || {};
+    const { code = "4343", name = "GRI", framework_id = '01cb61ea-5197-4461-9448-dffa702b46b3',
+        disclosure_id = '0ee84246-34c8-4d8a-ae44-a09112e00c58' } = state || {};
     // const { dataType, inputType, unitType } = questions;
     const [frameworkData, setFrameworkData] = useState({});
     const [statusData, setStatusData] = useState({});
     const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
-    const [inputList, setInputList] = useState([...listQuestions.children]);
+    const [inputList, setInputList] = useState([]);
     const [isError, setIsError] = useState(false);
     const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
 
-    // useEffect(() => {
-    //     setInputList({})
-    // }, [])
+    const getAllQuestions = async () => {
+        try {
+            const response = await Requests.Get(`/esgadmin/frameworks/${framework_id}/disclosures/${disclosure_id}`);
+            setInputList([...response.children]);
+        } catch (e) {
+            setInputList([]);
+        }
+    }
 
     // handle input change
     const handleInputChange = (e, index) => {
@@ -142,6 +145,7 @@ const ViewQuestions = () => {
                 setStatusData({ type: 'error', message: e.message });
             }
         }
+        getAllQuestions();
         getframeworkDetails();
         // getDisclosures();
     }, []);
@@ -172,13 +176,13 @@ const ViewQuestions = () => {
                 </h1>
             </div>
             {/* <div className="disc-framework-details"> */}
-                <table className="default-flex-table disc-framework-details">
-                    <tr>
-                        <td>{frameworkData && <img src={frameworkData.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
-                        <td>{frameworkData.name}</td>
-                        <td>{frameworkData.description}</td>
-                    </tr>
-                </table>
+            <table className="default-flex-table disc-framework-details">
+                <tr>
+                    <td>{frameworkData && <img src={frameworkData.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
+                    <td>{frameworkData.name}</td>
+                    <td>{frameworkData.description}</td>
+                </tr>
+            </table>
             {/* </div> */}
             <div id="viewQuestions" className="view-questions-container">
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
@@ -192,14 +196,13 @@ const ViewQuestions = () => {
 
                 {<QuestionHeader code={code} name={name} />}
                 <QuestionsTable
-                                isEditable={false}
-                                    tableData={inputList}
-                                    tableHeader={tableHeaders}
-                                    handleInputChange={handleInputChange}
-                                    handleRemoveClick={handleRemoveClick}
-                                    handleAddClick={handleAddClick}
-                                    isError={isError} />
-                {}
+                    isEditable={false}
+                    tableData={inputList}
+                    tableHeader={tableHeaders}
+                    handleInputChange={handleInputChange}
+                    handleRemoveClick={handleRemoveClick}
+                    handleAddClick={handleAddClick}
+                    isError={isError} />
                 {/* <table className="default-flex-table">
                     <thead>
                         <tr>

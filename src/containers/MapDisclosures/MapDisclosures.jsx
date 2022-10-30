@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
+import _toLower from 'lodash/toLower';
 import _get from 'lodash/get';
 import queryString from 'query-string';
 import './MapDisclosures.css';
@@ -7,15 +8,16 @@ import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { mapCatagory_1, mapCatagory_2 } from "../../utils/constants.js";
+import { useSelector } from "react-redux";
 const { RadioButton, Button, Pills } = Fields;
-
-
-const { Get } = Request;
 
 const MapDisclosures = () => {
     const navigate = useNavigate();
-    const [listCatagory_1, setListCatagory_1] = useState([...mapCatagory_1]);
-    const [listCatagory_2, setListCatagory_2] = useState([...mapCatagory_2]);
+    const { categories = []} = useSelector((state) => state.appWizard);
+    const [listCatagory_1, setListCatagory_1] = useState([...JSON.parse(JSON.stringify(categories))]);
+    const [listCatagory_1_filter_key, setListCatagory_1_filter_key] = useState('all');
+    const [listCatagory_2_filter_key, setListCatagory_2_filter_key] = useState('all');
+    const [listCatagory_2, setListCatagory_2] = useState([...JSON.parse(JSON.stringify(categories))]);
     const [apiData, setApiData] = useState({});
     const [radioDPType = "", setDPradioType] = useState({});
     const [radioDCType = "", setDCradioType] = useState({});
@@ -331,12 +333,18 @@ const MapDisclosures = () => {
         cloneListCatagory = (cloneListCatagory || []).map((item, i) => {
             if (index === i) {
                 item['isSelect'] = true;
+             if(mode === 'left') {
+                setListCatagory_1_filter_key(item.name);
+             } else {
+                setListCatagory_2_filter_key(item.name);
+             }
             } else {
                 item['isSelect'] = false;
             }
             return item;
         });
         if (mode == "left") {
+            
             setListCatagory_1([...cloneListCatagory])
         } else {
             setListCatagory_2([...cloneListCatagory])
@@ -365,7 +373,9 @@ const MapDisclosures = () => {
                             Disclosures:
                         </h1>
                         <div class="disclosures__wrapper">
-                            {(parentDisclosure || []).map((val, index) => (
+                            {(parentDisclosure || []).map((val, index) => {
+                            if((_toLower(listCatagory_1_filter_key) === _toLower(val.category)) || _toLower(listCatagory_1_filter_key) === 'all')
+                            return (
                                 <div class="disclosures__item">
                                     <p class="disclosures__detalis">
                                         {val.code + " " + val.name}
@@ -381,6 +391,7 @@ const MapDisclosures = () => {
                                         <div class={`${radioDPType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
                                     </label>
                                 </div>)
+                            }
                             )}
                         </div>
                     </div>
@@ -424,7 +435,10 @@ const MapDisclosures = () => {
                             Disclosures:
                         </h1>
                         <div class="disclosures__wrapper">
-                            {(childDisclosure || []).map((val, index) => (
+                            {(childDisclosure || []).map((val, index) => {
+                                
+                            if((_toLower(listCatagory_2_filter_key) === _toLower(val.category)) || _toLower(listCatagory_2_filter_key) === 'all') {
+                                return (
                                 <div class="disclosures__item">
                                     <p class="disclosures__detalis">
                                         {val.code + " " + val.name}
@@ -440,6 +454,8 @@ const MapDisclosures = () => {
                                         <div class={`${radioDCType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
                                     </label>
                                 </div>)
+                            }
+                            }
                             )}
                         </div>
                     </div>

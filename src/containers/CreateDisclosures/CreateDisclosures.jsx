@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
@@ -23,7 +23,9 @@ const CreateDisclosures = (props) => {
     const [currentFrame, setCurrentFrame] = useState(''); // 
     const {search} = _get(window, 'location', '?');
     const params = queryString.parse(search);
-    const {id = "", disclosureId= "", isEditable = false } = params;
+    const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
+
+    const {id = "782e56e1-f265-4206-9c79-751691de11e2/disclosures", disclosureId= "c7b056d8-4ccc-44bd-9971-5e46387a6c68", isEditable = false } = params;
 
     useEffect(() => {
         if (!_isEmpty(params.id) && _isEmpty(frameworkDetails) && !isEditable) {
@@ -38,7 +40,7 @@ const CreateDisclosures = (props) => {
 
     const getDisclosures = async() => {
         try {
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${id}/${disclosureId}`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
             setInputValue({...response, description: response.name, guidance: response.name, categories: [{name: response.category, isSelect: true}]  });
         } catch (error) {
         }
