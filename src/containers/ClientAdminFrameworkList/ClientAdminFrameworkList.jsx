@@ -78,8 +78,8 @@ const ClientAdminFrameworkList = (props) => {
             <div className="frameworks__choose cli-admin-frame-list">
                 {(((type === 'left') ? frameworkData : rightFrameworkData) || []).map((item, i) => {
                     return (<div key={i} onClick={() => onClickLogoHandler(item, i, type)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)} ${item.isSource ? ' hide' : null}`}>
-                        <img src={item.logo} alt={item.name}  widith="97px" height="97px"/>
-                        {item.name}
+                        <div className="m-p-6"><img className="client-framework-logo" src={item.logo} alt={item.name}/></div>
+                        <div className="m-p-6">{item.name}</div>
                     </div>)
                 }
                 )}
@@ -102,7 +102,7 @@ const ClientAdminFrameworkList = (props) => {
     <h1 className="assign__title">
                 Select Any one framework from source and target
             </h1>
-        <div className="cli-framework-list-container">
+        <div className="cli-framework-list-container m-t-2">
             <div>{renderFrameworkLogo('Source Framework', 'left')}</div>
             <div>{renderFrameworkLogo('Target Framework', 'right')}</div>
         </div>
