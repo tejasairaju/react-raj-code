@@ -4,7 +4,7 @@ import axios from 'axios';
 import _get from 'lodash/get';
 import queryString from 'query-string';
 import Popup from '../../components/Common/Popup/Popup.jsx';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { mapCatagory_1, mapCatagory_2 } from "../../utils/constants.js";
 const { RadioButton, Button, Pills } = Fields;
@@ -13,7 +13,7 @@ import Animation from "../Animation/Animation.jsx";
 const { Get } = Request;
 
 const OverlappingDisclosures = (props) => {
-
+const navigate = useNavigate();
     const [mappingFramework, setMappingFramework] = useState([]);
     const [isReverse, setIsReverse] = useState(false);
     const { search } = _get(window, 'location', '?');
@@ -71,12 +71,10 @@ const OverlappingDisclosures = (props) => {
         }
     }
 
-
-
     return (<>
 
     {isLoading?<Animation /> :
-
+<>
         <main class="main">
             <div class="main__top-wrapper">
                 <h1 class="main__title_intelligent">
@@ -139,7 +137,9 @@ const OverlappingDisclosures = (props) => {
                 )):"Mapping Not Found with the selected disclosure"}
             </div>
 
-        </main>}
+        </main>
+        <Button label='Back' onClickHandler={() => props.setIsOpenOverlappingDislosures(false)} className='main__button' /> 
+        </>}
     </>)
 }
 export default OverlappingDisclosures;

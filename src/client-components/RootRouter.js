@@ -73,13 +73,13 @@ const RootRouter = () => {
         try {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
-          // if (decodedData.user_role === 'client_admin') {
+          if (decodedData.user_role === 'client_admin') {
             const response = await Requests.Get(`/organizations/${decodedData.org}`);
             if (response) {
               setOrgDetailsData({...response})
               dispatch(action.organisationDatails(response));
             }
-          // }
+          }
           dispatch(action.loginDatails(decodedData));
           setLoginUserDetails(decodedData);
         } catch (error) {

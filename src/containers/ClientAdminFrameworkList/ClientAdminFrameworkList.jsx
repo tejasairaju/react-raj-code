@@ -110,7 +110,7 @@ const ClientAdminFrameworkList = (props) => {
         </div>
         <a type="submit" className="next-btn form-btn" onClick={() => onClickNextHandler()}>Next</a>
         </>
-        :<OverlappingDisclosures selectedFramework={selectedFramework}/> }
+        :<OverlappingDisclosures selectedFramework={selectedFramework} setIsOpenOverlappingDislosures={setIsOpenOverlappingDislosures}/> }
         </>);
 }
 

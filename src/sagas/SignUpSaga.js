@@ -9,7 +9,7 @@ function* signUpSaga(action) {
         yield put({ type: "SIGNUP_SUCCESS",  response });
         yield put({ type: "SUCCESS_RESPONSE",  resStatus: { type: 'success', message: 'Thanks! Your account has been successfully created'} });
     } catch (e) {
-        yield put({ type: "FAILURE_RESPONSE",  resStatus: { type: 'error', message: e.message} });
+        yield put({ type: "FAILURE_RESPONSE",  resStatus: { type: 'error', message: e.response.data.message} });
     }
 }
 export default function* SignUpSaga() {
