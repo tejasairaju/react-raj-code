@@ -64,7 +64,7 @@
 .intelligent_content_wrapper {
     overflow: auto;
     overflow-y: auto;
-    max-height: 60vh;
+    max-height: 45vh;
 }
 
 .intelligent_mapping_wrapper {
