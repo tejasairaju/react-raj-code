@@ -13,7 +13,7 @@ import Animation from "../Animation/Animation.jsx";
 const { Get } = Request;
 
 const OverlappingDisclosures = (props) => {
-const navigate = useNavigate();
+    
     const [mappingFramework, setMappingFramework] = useState([]);
     const [isReverse, setIsReverse] = useState(false);
     const { search } = _get(window, 'location', '?');
