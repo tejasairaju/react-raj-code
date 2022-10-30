@@ -21,7 +21,7 @@ const ReAssignDisclosures = (props) => {
 
     const getUserList = async () => {
         try {
-            const response = await Requests.Get(`/users/?organization=${orgDetails.name || 'sprint2'}`);
+            const response = await Requests.Get(`/users/?organization=${orgDetails.name}`);
             setUserList([...response.results]);
         } catch (e) {
             setUserList([]);
@@ -36,7 +36,7 @@ const ReAssignDisclosures = (props) => {
         params = [payload];
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name || 'sprint2'}`, params).then(({ data }) => data);
+            const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
             setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });

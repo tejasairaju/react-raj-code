@@ -6,6 +6,7 @@ import _isEmpty from 'lodash/isEmpty';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import OverlappingDisclosures from "../OverlappingDisclosures/OverlappingDisclosures.jsx";
+import { useSelector } from "react-redux";
 
 const ClientAdminFrameworkList = (props) => {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ const ClientAdminFrameworkList = (props) => {
     const [selectedFramework, setSelectedFramework] = useState({from: '', to: ''});
     const [frameworkData, setFrameworkData] = useState(null);
     const [rightFrameworkData, setRightFrameworkData] = useState(null);
+    const { orgDetails = {} } = useSelector(state => state.signup);
     const [isOpenOverlappingDislosures, setIsOpenOverlappingDislosures] = useState(false);
     useEffect(() => {
         getFramework();
@@ -21,7 +23,7 @@ const ClientAdminFrameworkList = (props) => {
     const getFramework = async () => {
         try {
             // setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks?organization=sprint2`).then(({ data }) => data);
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks?organization=${orgDetails.name}`).then(({ data }) => data);
             // setStatusData({ type: '', message: '' });
             setFrameworkData([...response.results]);
             setRightFrameworkData(JSON.parse(JSON.stringify(response.results)));

@@ -57,26 +57,29 @@ import ClientUsers from "../containers/ClientUserManagment/ClientUsers.jsx";
 import AddClientUser from "../containers/ClientUserManagment/AddClientUser.jsx";
 import PersonalInformation from "../containers/ProfileInformation/PersonalInformation.jsx";
 import CreateBespokeQuestions from "../containers/CreateBespokeQuestions/CreateBespokeQuestions.jsx";
+import ESGKpiDashboard from "../containers/ESGKpiDashboard/ESGKpiDashboard.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, loginWithRedirect = () => { }, getTokenSilently } = useAuth0();
   const [loginUserDetails, setLoginUserDetails] = useState({});
+  const [orgDetailsData, setOrgDetailsData] = useState({});
   const [isVarified, setIsVarified] = useState(false);
-  const { orgDetails = {} } = useSelector(state => state.signup);
+  const { orgDetails = {}, loginDatails = {} } = useSelector(state => state.signup);
   useEffect(() => {
     if (isAuthenticated) {
       const fn = async () => {
         try {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
-          if (decodedData.user_role === 'client_admin') {
+          // if (decodedData.user_role === 'client_admin') {
             const response = await Requests.Get(`/organizations/${decodedData.org}`);
             if (response) {
+              setOrgDetailsData({...response})
               dispatch(action.organisationDatails(response));
             }
-          }
+          // }
           dispatch(action.loginDatails(decodedData));
           setLoginUserDetails(decodedData);
         } catch (error) {
@@ -88,8 +91,8 @@ const RootRouter = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (!_isEmpty(orgDetails) && isAuthenticated && (loginUserDetails.user_role === 'client_admin')) {
-      if (!orgDetails.is_payment_done) {
+    if (!_isEmpty(orgDetails)&&isAuthenticated && (loginUserDetails.user_role == 'client_admin')) {
+      if (orgDetails.is_payment_done === false) {
         navigate('/packege');
       }
       else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && !orgDetails.is_db_created) {
@@ -102,7 +105,7 @@ const RootRouter = () => {
         navigate('/');
       }
     }
-  }, [isAuthenticated, orgDetails])
+  }, [orgDetails, loginUserDetails]);
 
   const loginHandler = (email) => {
     loginWithRedirect();
@@ -156,7 +159,7 @@ const RootRouter = () => {
      if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
     renderRouteComponent = (<Routes>
       <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
-        <Route index element={<ClientAdminDashboard/>} />
+        <Route index element={<ESGKpiDashboard/>} />
         <Route path="/clientadmin" element={<ClientAdminDashboard />} />
         <Route path="/select/framework" element={<StripePayment />} />
         <Route path="/template" element={<CreateBespokeFramework />} />
@@ -198,7 +201,7 @@ const RootRouter = () => {
 
   return (
     <>
-      {!isAuthenticated && (<React.Fragment>
+      {!isAuthenticated && (<React.Fragment> 
         <Routes>
           <Route path="/" element={<Login loginHandler={loginHandler} />} />
         </Routes>

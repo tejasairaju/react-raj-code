@@ -8,10 +8,12 @@ import Fields from '../../Components/Common/Fields/Fields.jsx';
 import Popup from "../../components/Common/Popup/Popup.jsx";
 import './CreateReport.css';
 import ListFramework from "../../Components/ListFramework/ListFramework.jsx";
+import { useSelector } from "react-redux";
 
 const { InputBox } = Fields
 const CreateReport = () => {
     const navigate = useNavigate();
+    const { orgDetails = {} } = useSelector(state => state.signup);
     const initialInputVal = { name: '', start_date: '', end_date: '', frameworks: null };
     const [inputValue, setInputValue] = useState(initialInputVal);
     const [reportData, setReportData] = useState({});
@@ -40,7 +42,7 @@ const CreateReport = () => {
                     ...inputValue,
                     status: 'Standard'
                 };
-                const response = await axios.post(`${process.env.API_BASE_URL}/reports/?organization=sprint2`, payload).then(({data}) => data);
+                const response = await axios.post(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`, payload).then(({data}) => data);
                 setReportData({...response});
                 setStatusData({ type: 'success', message: 'Thanks! Your framework report has been successfully created' });
                 setInputValue(initialInputVal);  

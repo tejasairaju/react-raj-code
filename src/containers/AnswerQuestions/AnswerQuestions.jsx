@@ -40,7 +40,7 @@ const AnswerQuestions = () => {
     const getDisclosures = async (frameworkId) => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, orgDetails.name || 'sprint2');
+            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, orgDetails.name);
             setStatusData({ type: '', message: '' });
             setApiData({
                 listData: [response]

@@ -15,8 +15,8 @@ const MyTaskDashboard = () => {
     const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
     const mytask = useSelector(state => state.mytask);
     useEffect(() => {
-        dispatch(actions.getDisclosuresList({ userId: loginDetails.user_id, orgName: orgDetails.name || 'sprint2' }));
-        dispatch(actions.getReportList({ userId: loginDetails.user_id, orgName: orgDetails.name || 'sprint2' }));
+        dispatch(actions.getDisclosuresList({ userId: loginDetails.user_id, orgName: orgDetails.name }));
+        dispatch(actions.getReportList({ userId: loginDetails.user_id, orgName: orgDetails.name }));
     }, []);
 
     // const getColor = (status) => {
@@ -51,11 +51,11 @@ const MyTaskDashboard = () => {
 
             <div class="welcome__task__right__heading">
                 <h1 class="welcome__task__heading">
-                    <a href=""><u>ESG KPIs</u></a>
+                    <a onClick={() => navigate('/')}><u>ESG KPIs</u></a>
                 </h1>
                 <span class="welcome__task__top_line">|</span>
                 <h1 class="welcome__task__heading">
-                    <a onClick={() => navigate(-1)}><u>Admin Dashboard</u></a>
+                    <a onClick={() => navigate('/clientadmin')}><u>Admin Dashboard</u></a>
                 </h1>
                 <span class="welcome__task__top_line">|</span>
                 <h1 class="welcome__task__heading">
