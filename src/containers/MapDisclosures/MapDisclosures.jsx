@@ -143,6 +143,8 @@ const MapDisclosures = () => {
             }
         }
 
+        return ""
+
     }
 
     const isAlreadyMapped = (id) => {
@@ -176,6 +178,7 @@ const MapDisclosures = () => {
             }).then(({ data }) => data);
             setStatusData({ type: 'success', message: 'Thanks! Successfully Mapped' });
             console.log('>>>>>>>>>>>>', response);
+            getMappingDisclosures(Object.keys(sourceFrameworkId).length > 0 ? sourceFrameworkId : val, Object.keys(destinationFrameworkId).length > 0 ? destinationFrameworkId : val)
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });
         }
@@ -400,7 +403,7 @@ const MapDisclosures = () => {
                                             label={""}
                                             value={val}
                                         />
-                                        <div class={`${radioDPType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                        {<div class={`fake__checkbox${radioDPType == val.id ? ' box-checked' : '-inactive'}`}>{(radioDPType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             }
@@ -414,7 +417,7 @@ const MapDisclosures = () => {
                         <div class="disclosures__wrapper">
                             {(parentKPI || []).map((val, index) => (
                                 <div title={`${addToolTip(val.id)
-                                    }`} class="disclosures__item">
+                                    }`} class={`disclosures__item ${isAlreadyMapped(val.id) ? ' disable-cursor' : ''}`} >
                                     <p class="disclosures__detalis">
                                         {/* {val.code + " " + val.label + "  " + existingMapping.filter(i => {return i.source_disclosure_kpi.id === val.id || i.target_disclosure_kpi.id === val.id})} */}
                                         {val.code + " " + val.label}
@@ -428,7 +431,9 @@ const MapDisclosures = () => {
                                             value={val}
                                             disabled
                                         />
-                                        <div class={`${radioKPType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                        {isAlreadyMapped(val.id)?
+                                        <div class="fake__checkbox-active"></div>:
+                                        <div class={`fake__checkbox${radioKPType == val.id ? ' box-checked' : '-inactive'}`}>{(radioKPType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             )}
@@ -463,7 +468,7 @@ const MapDisclosures = () => {
                                             label={""}
                                             value={val}
                                         />
-                                        <div class={`${radioDCType === val.id ? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                        {<div class={`fake__checkbox${radioDCType == val.id ? ' box-checked' : '-inactive'}`}>{(radioDCType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             }
@@ -479,7 +484,7 @@ const MapDisclosures = () => {
 
                             {(childKPI || []).map((val, index) => (
                                 <div title={`${addToolTip(val.id)
-                                    }`} class="disclosures__item">
+                                    }`} class={`disclosures__item ${isAlreadyMapped(val.id) ? ' disable-cursor' : ''}`}>
                                     <p class="disclosures__detalis">
                                         {val.code + " " + val.label}
                                     </p>
@@ -491,7 +496,9 @@ const MapDisclosures = () => {
                                             label={""}
                                             value={val}
                                         />
-                                        <div class={`${radioKCType === val.id  ||  isAlreadyMapped(val.id)? "fake__checkbox-active" : "fake__checkbox-inactive"}`}></div>
+                                        {isAlreadyMapped(val.id)?
+                                        <div class="fake__checkbox-active"></div>:
+                                        <div class={`fake__checkbox${radioKCType == val.id ? ' box-checked' : '-inactive'}`}>{(radioKCType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             )}

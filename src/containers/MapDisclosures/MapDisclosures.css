@@ -54,6 +54,20 @@
     -o-border-radius: 10px;
     cursor: pointer;
 }
+
+.box-inactive{
+    position: relative !important;
+    width: 40px !important;
+    height: 40px !important;
+    background: rgba(32, 136, 189, 0.1) !important;
+    border: 4px solid #2088BD !important;
+    border-radius: 10px !important;
+    -webkit-border-radius: 10px !important;
+    -moz-border-radius: 10px !important;
+    -ms-border-radius: 10px !important;
+    -o-border-radius: 10px !important;
+    cursor: pointer;
+}
 .map__check-item .fake__checkbox-active {
     position: relative;
     width: 40px;
@@ -66,7 +80,7 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    cursor: pointer;
+    cursor: not-allowed;
 }
 
 .map-diclosures-catagory {
@@ -118,4 +132,9 @@
     .map__check-item .disclosures__detalis {
         font-size: 12px;
     }
+}
+
+
+.disable-cursor{
+    cursor: not-allowed;
 }
