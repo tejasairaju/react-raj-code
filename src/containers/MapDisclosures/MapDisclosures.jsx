@@ -110,35 +110,47 @@ const MapDisclosures = () => {
         }
     };
 
-    const addToolTip = (id) => {
-        return existingMapping.map(i => {
-            if (i.source_disclosure_kpi.id === id) {
-                return "Its already mapped with " + i.target_disclosure.name + " : " + i.target_disclosure_kpi.name
+    const addToolTip = (id, type='') => {
+
+        var source_data= existingMapping.filter(i => {
+            if (i.source_disclosure_kpi.id === id ) {
+                // || i.target_disclosure_kpi.id === id
+                return true
             }
-            if (i.target_disclosure_kpi.id === id) {
+        })
+
+        var taget_data= existingMapping.filter(i => {
+            if (i.target_disclosure_kpi.id === id ) {
+                return true
+            }
+        })
+
+        if(source_data.length>0){
+            var i =source_data[0]
+            if(type=='source'){
+                return "Its already mapped with " + i.target_disclosure.name + " : " + i.target_disclosure_kpi.name
+            }else{
                 return "Its already mapped with " + i.source_disclosure.name + " : " + i.source_disclosure_kpi.name
             }
-            else {
-                return ""
+        }
+
+        if(taget_data.length>0){
+            var i =taget_data[0]
+            if(type=='source'){
+                return "Its already mapped with " + i.target_disclosure.name + " : " + i.target_disclosure_kpi.name
+            }else{
+                return "Its already mapped with " + i.source_disclosure.name + " : " + i.source_disclosure_kpi.name
             }
-        })[0]
+        }
+
     }
 
     const isAlreadyMapped = (id) => {
-        return existingMapping.map(i => {
-            if (i.source_disclosure_kpi.id === id) {
-                console.log("source")
+        return existingMapping.filter(i => {
+            if (i.source_disclosure_kpi.id === id || i.target_disclosure_kpi.id === id) {
                 return true
             }
-            if (i.target_disclosure_kpi.id === id) {
-                console.log("tage")
-                return true
-            }
-            else {
-                return false
-            }
-        }
-        )
+        }).length>0
     }
 
     const onCanceltHandler = async () => {
