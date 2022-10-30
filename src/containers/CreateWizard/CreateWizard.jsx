@@ -17,9 +17,11 @@ import axios from 'axios';
 import Pagination from '../../Components/Pagination/Pagination.jsx';
 import { useDBStatus } from '../../Components/IsDBReady/IsDBReady.jsx';
 import PageInprogress from '../../Components/Common/PageInprogress/PageInprogress.jsx';
+import actions from '../../actions/AppWizardAction.js';
 
 const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [sideMenu, updateSideMenu] = useState([]);
     const [statusData, setStatusData] = useState({});
 
@@ -29,8 +31,23 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
         } else if (userRole === 'client_admin') {
             updateSideMenu(client_admin);
         }
+        getUserAdminInfo(1);
     }, []);
 
+    const getUserAdminInfo = async () => {
+        try {
+            await Axios.all([
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
+            ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
+                dispatch(actions.updateWizardData({ countries: countries.results, sectors: sectors.results, categories: categories.results }));
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const onCloseHandler = () => {
         setStatusData({ type: '', message: '' });
     }

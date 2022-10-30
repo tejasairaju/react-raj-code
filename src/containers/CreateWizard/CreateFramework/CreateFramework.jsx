@@ -88,8 +88,13 @@ const CreateFramework = (props) => {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('description', inputValue.description)
-            if (!_isEmpty(uploadImage.fileName)) {
+            if (!_isEmpty(uploadImage.fileName&&!params.isEdit)) {
                 form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+            } else if(params.isEdit&&logo){
+                let blob = new Blob([logo], {
+                    type: "application/pdf"
+                });
+                form.append('logo', blob, uploadImage.fileName);
             }
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());

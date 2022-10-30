@@ -87,7 +87,7 @@ const AddClientUser = () => {
              }      
         </div>
 
-        <div class="main__content-wrapper content-wrapper">
+        <div class="cli-add-main__content-wrapper content-wrapper">
             <div class="framework__col-wrapper">
                 
                 <div class="Generate_report_head">

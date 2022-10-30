@@ -49,11 +49,14 @@ import AnswerQuestions from "../containers/AnswerQuestions/AnswerQuestions.jsx";
 import ViewMyTaskDisclosuresList from "../Components/ViewMyTaskDisclosuresList/ViewMyTaskDisclosuresList.jsx";
 import OverlappingDisclosures from "../containers/OverlappingDisclosures/OverlappingDisclosures.jsx";
 // import CreateTemplate from "../containers/CreateTemplate/CreateTemplate.jsx";
+import CreateBespokeFramework from "../containers/CreateBespokeFramework/CreateBespokeFramework.jsx";
+import CreateBespokeDisclosures from "../containers/CreateBespokeDisclosures/CreateBespokeDisclosures.jsx";
 import ClientAdminFrameworkList from "../containers/ClientAdminFrameworkList/ClientAdminFrameworkList.jsx";
 
 import ClientUsers from "../containers/ClientUserManagment/ClientUsers.jsx";
 import AddClientUser from "../containers/ClientUserManagment/AddClientUser.jsx";
 import PersonalInformation from "../containers/ProfileInformation/PersonalInformation.jsx";
+import CreateBespokeQuestions from "../containers/CreateBespokeQuestions/CreateBespokeQuestions.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
@@ -156,7 +159,10 @@ const RootRouter = () => {
         <Route index element={<ClientAdminDashboard/>} />
         <Route path="/clientadmin" element={<ClientAdminDashboard />} />
         <Route path="/select/framework" element={<StripePayment />} />
-        {/* <Route path="/template" element={<CreateTemplate />} /> */}
+        <Route path="/template" element={<CreateBespokeFramework />} />
+        <Route path="/template/:id" element={<CreateBespokeDisclosures />} />
+        <Route path="/template/:id/disclosures/:disclosureId" element={<CreateBespokeQuestions />} />
+
         {/* Duplicate route */}
         <Route path="/createdisclosures" element={<CreateDisclosures />} />
         <Route path="/createquestions" element={<CreateQuestions />} />
