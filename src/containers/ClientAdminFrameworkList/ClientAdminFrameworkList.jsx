@@ -77,7 +77,7 @@ const ClientAdminFrameworkList = (props) => {
             }
             <div className="frameworks__choose cli-admin-frame-list">
                 {(((type === 'left') ? frameworkData : rightFrameworkData) || []).map((item, i) => {
-                    return (<div key={i} onClick={() => onClickLogoHandler(item, i, type)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)} ${item.isSource ? ' hide' : null}`}>
+                    return (<div key={i} onClick={() => onClickLogoHandler(item, i, type)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)} ${item.isSource ? ' hide-framework' : null}`}>
                         <div className="m-p-6"><img className="client-framework-logo" src={item.logo} alt={item.name}/></div>
                         <div className="m-p-6">{item.name}</div>
                     </div>)

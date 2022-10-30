@@ -34,3 +34,7 @@
     width: 50px !important;
     height: 50px !important;
 }
+
+.hide-framework {
+    display: none !important;
+}
