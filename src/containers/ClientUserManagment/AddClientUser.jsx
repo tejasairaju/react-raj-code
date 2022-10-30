@@ -100,7 +100,7 @@ const AddClientUser = () => {
                             name='first_name' 
                             className="GenerateReport-framework__input"
                             placeholder="John" required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                     <div class="GenerateReport-framework__row">
@@ -112,7 +112,7 @@ const AddClientUser = () => {
                             name='last_name' 
                             className="GenerateReport-framework__input"
                             placeholder="John" required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@ const AddClientUser = () => {
                             name='email_id' 
                             className="GenerateReport-framework__input"
                             placeholder="user@example.com" required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                     <div class="GenerateReport-framework__row">
@@ -138,7 +138,7 @@ const AddClientUser = () => {
                             name='phone_number' 
                             className="GenerateReport-framework__input"
                             placeholder="+44235545" required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                 </div>
@@ -152,7 +152,7 @@ const AddClientUser = () => {
                             name='country' 
                             className="GenerateReport-framework__input"
                             placeholder="United Kingdom" required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                     <div class="GenerateReport-framework__row">
@@ -164,7 +164,7 @@ const AddClientUser = () => {
                             name='location' 
                             className="GenerateReport-framework__input"
                             placeholder="London" required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                 </div>
@@ -178,7 +178,7 @@ const AddClientUser = () => {
                             name='designation' 
                             className="GenerateReport-framework__input"
                             placeholder="HR Manager"  required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                     <div class="GenerateReport-framework__row">
@@ -190,7 +190,7 @@ const AddClientUser = () => {
                             name='department' 
                             className="GenerateReport-framework__input"
                             placeholder="HR" required={true} 
-                            onChangeHandler={onChangeHandler} />
+                            onChange={onChangeHandler} />
                         </div>
                     </div>
                 </div>

@@ -36,7 +36,7 @@ const ESGAdmin = (props) => {
     const headers = ['First Name',
     'Last Name',
     'Contact Number',
-    'Emil Id',
+    'Email Id',
     'Action'];
 
     return (<>

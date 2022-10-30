@@ -37,7 +37,7 @@ const ClientUsers = () => {
     const headers = ['First Name',
     'Last Name',
     'Contact Number',
-    'Emil Id',
+    'Email Id',
     'Country',
     'Location',
     'Designation',
