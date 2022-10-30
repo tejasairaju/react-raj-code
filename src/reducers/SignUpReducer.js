@@ -1,5 +1,5 @@
 
-const initialState = { component: "SignUp Page",orgDetails: {name: 'sprint2'}  /*loginDetails: { user_id: "a190f7b4-b6ff-4caa-ba43-180e54e329bf"}  */};
+const initialState = { component: "SignUp Page",orgDetails: {}  /*loginDetails: { user_id: "a190f7b4-b6ff-4caa-ba43-180e54e329bf"}  */};
 const CounterReducer = (state = { ...initialState }, action) => {
   switch (action.type) {
     case 'SIGNUP_SUCCESS': {

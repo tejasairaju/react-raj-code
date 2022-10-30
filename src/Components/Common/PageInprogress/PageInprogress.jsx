@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useMemo } from 'react';
 
 const PageInprogress = (props) => {
-    const { is_db_created = false, name = 'sprint2' } = useSelector(state => _get(state, 'signup.orgDetails', {}));
+    const { is_db_created = false, name = '' } = useSelector(state => _get(state, 'signup.orgDetails', {}));
     const dispatch = useDispatch();
 
     useMemo(() => {

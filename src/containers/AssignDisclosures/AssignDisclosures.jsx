@@ -17,7 +17,7 @@ import UserListView from "../../Components/UserListView/UserListView.jsx";
 import { useSelector } from "react-redux";
 
 const AssignDisclosures = () => {
-    const { reportId = '6b80fe4d-719d-49f7-81c1-e988b136ec2c' } = useParams();
+    const { reportId = '' } = useParams();
     const { orgDetails = {} } = useSelector(state => state.signup);
     const navigate = useNavigate();
     const [apiData, setApiData] = useState({ listData: [] });
@@ -50,7 +50,7 @@ const AssignDisclosures = () => {
     const getDisclosures = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures?organization=${orgDetails.name|| 'sprint2'}`).then(({ data }) => data);
+            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures?organization=${orgDetails.name}`).then(({ data }) => data);
 
             setStatusData({ type: '', message: '' });
             setApiData({...apiData, listData: [...response.disclosures] })
@@ -113,7 +113,7 @@ const AssignDisclosures = () => {
                 // payload['disclosure_id'] = [...filterListData];
                 // payload['disclosure_type'] = "Standard";
                 // payload['assigned_to'] = selectedUser.id;
-                const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name || 'sprint2'}`, params).then(({ data }) => data);
+                const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
             } catch (e) {
                 setStatusData({ type: 'error', message: e.message });

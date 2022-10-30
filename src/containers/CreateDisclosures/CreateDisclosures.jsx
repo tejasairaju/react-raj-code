@@ -25,7 +25,7 @@ const CreateDisclosures = (props) => {
     const params = queryString.parse(search);
     const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
 
-    const {id = "782e56e1-f265-4206-9c79-751691de11e2/disclosures", disclosureId= "c7b056d8-4ccc-44bd-9971-5e46387a6c68", isEditable = false } = params;
+    const {id = "", disclosureId= "", isEditable = false } = params;
 
     useEffect(() => {
         if (!_isEmpty(params.id) && _isEmpty(frameworkDetails) && !isEditable) {
