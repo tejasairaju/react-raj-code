@@ -13,7 +13,7 @@ const PageInprogress = (props) => {
 
     useMemo(() => {
         if (!is_db_created) {
-            setTimeout(() => getDBStatus(), 2000)
+            setTimeout(() => getDBStatus(), 30000);
         }
     });
 
