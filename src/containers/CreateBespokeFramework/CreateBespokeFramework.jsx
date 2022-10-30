@@ -37,7 +37,7 @@ const CreateBespokeFramework = () => {
 
     const onCloseHandler = () => {
         if(statusData.type === 'success') {
-            navigate(`/template?id=${apiData.id}`);
+            navigate(`/template/${apiData.id}`);
         }
 
     }

@@ -9,7 +9,7 @@
 
 .cli-admin-frame-list .frameworks__choose-item {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     margin: 2.3em !important;
     font-size: 1em;
     width: 24em;

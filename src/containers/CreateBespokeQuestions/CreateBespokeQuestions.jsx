@@ -16,7 +16,7 @@ const { Button, Input, TextArea, Dropdown } = Fields;
 const CreateBespokeQuestions = (props) => {
     const location = useLocation();
     const { id= 'a69ce9a8-4ee5-493f-a750-c72a4086fc19', disclosuresId = '204f42ce-7146-49a9-8c52-bb1c572ba04f' } = useParams();
-    const disclosures = _get(location, 'disclosures', { name: "testname", code: 'testcode'});
+    const disclosures = _get(location, 'disclosures', { name: "", code: ''});
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const { orgDetails = {} } = useSelector(state => state.signup);

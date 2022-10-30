@@ -6,13 +6,13 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 const Header = ({userRole = ''}) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { logout, user = {} } = useAuth0();
     const logoutHandler = () => {
-        logout();
+        logout({ returnTo: window.location.origin });
         dispatch(action.clearSignupDetails());
     }
 
-    const { logout, user = {} } = useAuth0();
     return (<header className="header">
     <form action="#" className="header__search">
         <button className="search__button">
