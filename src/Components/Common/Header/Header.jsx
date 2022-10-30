@@ -10,7 +10,6 @@ const Header = ({userRole = ''}) => {
     const logoutHandler = () => {
         logout();
         dispatch(action.clearSignupDetails());
-        navigate('/'); 
     }
 
     const { logout, user = {} } = useAuth0();
