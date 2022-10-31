@@ -36,9 +36,15 @@ async function Post(url = '', data = {}, org = '', cookie) {
         .then(({ data }) => data);
 }
 
-async function Put(url, data, cookie) {
+async function Put(url, data, org = '', cookie) {
     const config = getHeaders(cookie);
-    return await axios.put(url, data, config)
+    let pathUrl = '';
+    if (org) {
+        pathUrl = `${process.env.API_BASE_URL}${url}?organization=${org}`;
+    } else {
+        pathUrl = `${process.env.API_BASE_URL}${url}`;
+    }
+    return await axios.put(pathUrl, {...data}, config)
         .then(({ data }) => data);
 }
 async function Delete(url, cookie) {
