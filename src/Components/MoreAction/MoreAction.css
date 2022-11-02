@@ -19,6 +19,9 @@
     display: none;
   }
 
+  .more-action-contianer {
+    position: relative;
+  }
   /* .frametoggler:focus {
     outline: none;
   }

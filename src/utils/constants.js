@@ -255,23 +255,18 @@ export const client_admin = [{
     isActive: false,
     icon1: 'frame-icon.svg',
     icon2: 'plus-icon.svg',
-    subMenu: [{
-        clsName: '',
-        label: "Select Framework",
-        isActive: false,
-        route: '/select/framework',
-    },
-    {
-        clsName: '',
-        label: "Edit Framework",
-        isActive: false,
-        route: '/framework',
-    },
+    subMenu: [
     {
         clsName: '',
         label: "Create Bespoke Framework",
         isActive: false,
         route: '/template',
+    },
+    {
+        clsName: '',
+        label: "View Framework",
+        isActive: false,
+        route: '/view/template',
     }]
 },
 {

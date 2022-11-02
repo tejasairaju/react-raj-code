@@ -1,4 +1,6 @@
 import _toLower from 'lodash/toLower';
+import _isEmpty from 'lodash/isEmpty';
+import moment from 'moment';
 export const checkValidation = (inputValue) => {
     let cloneInputValue = { ...inputValue };
     let errors = {};
@@ -36,6 +38,11 @@ export const getTaskCount =(response) => {
     });
 
     return {...cloneCount};
+}
+
+export const getDataFormat = (date, formate = 'DD/MM/YYYY') => {
+    if(_isEmpty(date)) return moment.format(formate);
+    else return moment(date).format(formate);
 }
 
 export const getColor = (status) => {

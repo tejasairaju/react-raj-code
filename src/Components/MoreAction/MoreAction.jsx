@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './MoreAction.css';
 
 const MoreAction = (props) => {
-    const { value, index, viewListFramework = false, viewDisclosures = false, ...rest } = props;
+    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false, ...rest } = props;
     const [isOpen, setIsopen] = useState(false);
     const navigate = useNavigate();
     const onNavigateHandler = (url) => {
@@ -19,8 +19,8 @@ const MoreAction = (props) => {
         });
         setIsopen(false);
     }
-    return (<div onClick={() => setIsopen(false)}>
-        <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
+    return (<div onClick={() => setIsopen(false)} className='more-action-contianer'>
+        <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src='../../assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active" : "inactive"}`}>
             {viewListFramework && <>
                 <div onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
@@ -31,6 +31,11 @@ const MoreAction = (props) => {
                 <>
                     <div onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
                     <div><a onClick={() => { onRedirectWithState(`/viewQuestions`) }}>View Questions</a></div>
+                </>
+            }
+              {viewBespokeFramework &&
+                <>
+                    <div onClick={() => onRedirectWithState(`/template?isEditable=true`)}><a>Edit Framework</a></div>
                 </>
             }
         </div>
