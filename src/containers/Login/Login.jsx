@@ -44,13 +44,14 @@ export const Login = ({loginHandler}) => {
             <div className="content__info">
                 <img className="login-img" src="../../assets/images/login-img.jpg" alt="Hend with tree" />
                 <h1 className="info__title">
-                    Environmental, Social, Governance
+                    ESG DISCLOSURE REPORTING MADE EASY
                 </h1>
                 <h3 className="info__subtitle">
-                    Creating & Sharing your ESG Vision
+                Providing AI-Driven Insights For Our Sustainable Future
                 </h3>
                 <p className="info__text">
-                    Environmental, social, and governance (ESG) is a tool that businesses use to report their environmental, social, and governance policies and impacts. Usually undertaken by public companies to be more transparent about investment risks and opportunities.
+                    The ESG software market is fragmented, with no one tool delivering an end to end solution from understanding which regulations business
+                    need to comply with to data collection, compliance assurance and reporting.
                 </p>
             </div>
             <div className="content__form">
