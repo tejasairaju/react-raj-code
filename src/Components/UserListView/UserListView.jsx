@@ -82,7 +82,7 @@ const UserListView = (props) => {
         <div class="user__wrapper user-wrapper-scroll">
             <div class="left__arrow"></div>
             {(userList || []).map((user, i) => <div key={i} onClick={() => onClickHandler(i, user)} class={`user__container ${user.isSelected ? 'active': null}`}>
-                <img src='../../assets/images/user-avatar.svg' width={'30px'} height={'30px'} alt="avatar" />
+                {/* <img src='../../assets/images/user-avatar.svg' width={'30px'} height={'30px'} alt="avatar" /> */}
                 <p class="user-name">
                     <span><b>Name:</b></span>{user.first_name}&nbsp;{user.last_name}
                 </p>

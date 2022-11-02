@@ -43,9 +43,9 @@ const CreateReport = () => {
                     status: 'Standard'
                 };
                 const response = await axios.post(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`, payload).then(({data}) => data);
-                setReportData({...response});
                 setStatusData({ type: 'success', message: 'Thanks! Your framework report has been successfully created' });
-                setInputValue(initialInputVal);  
+                setReportData({...response});
+                setInputValue({...initialInputVal});  
             }
             catch (e) {
                 setStatusData({ type: 'error', type: e.message });
@@ -105,13 +105,19 @@ const CreateReport = () => {
                     <div class="GenerateReport-framework__row">
                         <div class="GenerateReport_row">
                             <h1 class="Generate_h1_label">From :</h1>
+                            <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
                             <input type="date" name={'start_date'} value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                            <img src="./assets/icons/celendar.svg" alt="" className="report-calender-icon" />
+                        </label>
                         </div>
                     </div>
                     <div class="GenerateReport-framework__row">
                         <div class="GenerateReport_row">
                             <h1 class="Generate_h1_label">To :</h1>
+                            <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
                             <input type="date" name={'end_date'} value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                            <img src="./assets/icons/celendar.svg" alt="" className="report-calender-icon" />
+                        </label>
                         </div>
                     </div>
                 </div>

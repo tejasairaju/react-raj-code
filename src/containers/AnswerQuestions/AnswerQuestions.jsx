@@ -19,7 +19,7 @@ const AnswerQuestions = () => {
     const location = useLocation();
     const state = _get(location, 'state', {});
     const { start_date = '20-03-2022', end_date = '23-03-2022'} = _get(state, 'report', {});
-    const { reportId = '5eafbd8f-502e-4859-b54f-65d1846dad48', disclosureId = "97a7744e-41d0-4303-8ad8-75528a736e9f" } = useParams();
+    const { reportId = '', disclosureId = "" } = useParams();
     const [apiData, setApiData] = useState({ listData: null, groupListData: {} });
     const { orgDetails = {} } = useSelector(state => state.signup);
     const [isOpen, setIsopen] = useState(false);
@@ -202,7 +202,7 @@ const AnswerQuestions = () => {
                 {radioButton.map((radioVal, i) => (<RadioButton
                     changed={radioChangeHandler}
                     id={i}
-                    isSelected={catagoryType === radioVal}
+                    isSelected={_toLower(catagoryType) === _toLower(radioVal)}
                     label={radioVal}
                     value={radioVal}
                 />))}

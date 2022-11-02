@@ -1,6 +1,6 @@
-.GenerateReport-framework__overflow {
+/* .GenerateReport-framework__overflow {
     overflow: auto;
-}
+} */
 
 .GenerateReport-framework__input {
     padding: 8px 12px;
@@ -150,4 +150,17 @@ img.GenerateReport-image {
         flex-basis: 100%;
         margin-bottom: 10px;
     }
+}
+
+.report-calender-icon {
+    margin-left: -1.85em;
+}
+
+.report-cal-input-box input {
+    z-index: 1;
+}
+.report-cal-input-box {
+display: contents;
+cursor: pointer;
+
 }

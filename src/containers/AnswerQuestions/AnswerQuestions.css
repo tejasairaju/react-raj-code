@@ -195,8 +195,8 @@ textarea {
     -o-border-radius: 10px;
 }
 .left__arrow {
-    width: 30px;
-    height: 50px;
+    width: 22px;
+    height: 35px;
     background: url('../../assets/icons/left-arrow.png') no-repeat center/100%;
     cursor: pointer;
 }
@@ -320,7 +320,7 @@ textarea {
         margin-bottom: 5px;
     }
     .user__container .user-name, .user__container .job-title {
-        font-size: 10px;
+        font-size: medium;
     }
     .left__arrow, .right__arrow {
         width: 20px;
@@ -383,7 +383,7 @@ textarea {
         margin-bottom: 5px;
     }
     .user__container .user-name, .user__container .job-title {
-        font-size: 10px;
+        font-size: medium;
     }
     .left__arrow, .right__arrow {
         width: 15px;
@@ -649,7 +649,7 @@ textarea {
         margin-bottom: 5px;
     }
     .user__container .user-name, .user__container .job-title {
-        font-size: 10px;
+        font-size: medium;
     }
     .left__arrow, .right__arrow {
         width: 15px;

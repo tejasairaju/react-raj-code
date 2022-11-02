@@ -181,7 +181,7 @@ const AssignDisclosures = () => {
         </div>
         <div class="disclosures__wrapper list-disclosures-container">
             {_get(apiData, 'listData', []).map((disclosure, disclosureIndex) => {
-                if ((_toLower(catagoryType) === _toLower('All')) || _toLower(disclosure.category) === (_toLower(catagoryType))) {
+                if (_toLower(disclosure.category) === _toLower(catagoryType) || _toLower(catagoryType) === 'all') {
                     return (<div key={disclosureIndex} class="disclosures__item">
                         <p class="disclosures__title">
                             {disclosure.category}
@@ -244,7 +244,7 @@ const AssignDisclosures = () => {
             <div class="right__arrow"></div>
         </div> */}
         <div class="buttons__panel">
-            <button onClick={() => { }} class="buttons__panel-button">
+            <button onClick={() => navigate(-1)} class="buttons__panel-button">
                 BACK
             </button>
             <button onClick={() => onClickAssignDisclosure()} class="main__button">

@@ -24,7 +24,6 @@ const PersonalInformation = () => {
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
-    console.log('>>>>>>>>>>>>>>>>>>>>>', appWizard.countries, appWizard.countries);
     const [inputValue, setInputValue] = useState({ name: orgDetails.name});
     const [errorValidation, setErrorValidation] = useState(false);
     const [logo, setLogo] = useState(null);

@@ -95,7 +95,7 @@ const AnswerQuestionsTable = (props) => {
                     <p className="detalis__information-title">
                         Guidance Notes
                     </p>
-                    <input type="text" className="assign__categories" value={itemDetails.metaData[0].value || ''} disabled />
+                    <input type="text" className="assign__categories" value={_get(itemDetails, 'metaData[0].value', '')} disabled />
                     <p className="detalis__information-title">
                         Answer
                     </p>

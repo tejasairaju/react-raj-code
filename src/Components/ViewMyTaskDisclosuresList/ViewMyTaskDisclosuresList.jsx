@@ -13,8 +13,8 @@ import _get from 'lodash/get';
 import './ViewMyTaskDisclosuresList.css';
 
 const ViewMyTaskDisclosuresList = (props) => {
-    const { userId  = 'a190f7b4-b6ff-4caa-ba43-180e54e329bf', reportId = '720bce88-bc36-44a8-b0c6-7209445f6c3b', status ='' } = useParams();
-    const { orgDetails = {} } = useSelector(state => state.signup);
+    const { reportId = '', status ='' } = useParams();
+    const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
     const [disclosureData, setDisclosureData] = useState(null);
     const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const ViewMyTaskDisclosuresList = (props) => {
 
     const getReportDisclosures = async() => {
         try {
-            const response = await axios.get(`${process.env.API_BASE_URL}/users/${userId}/tasks?organization=${orgDetails.name}&report_id=${reportId}`).then(({data}) => data);
+            const response = await axios.get(`${process.env.API_BASE_URL}/users/${loginDetails.user_id}/tasks?organization=${orgDetails.name}&report_id=${reportId}`).then(({data}) => data);
             setDisclosureData([...response.results]);
         } catch(e) {
             setDisclosureData([])

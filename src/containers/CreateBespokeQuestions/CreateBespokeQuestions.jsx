@@ -15,7 +15,7 @@ const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateBespokeQuestions = (props) => {
     const location = useLocation();
-    const { id= 'a69ce9a8-4ee5-493f-a750-c72a4086fc19', disclosuresId = '204f42ce-7146-49a9-8c52-bb1c572ba04f' } = useParams();
+    const { id= '', disclosureId = '' } = useParams();
     const disclosures = _get(location, 'disclosures', { name: "", code: ''});
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
@@ -79,11 +79,10 @@ const CreateBespokeQuestions = (props) => {
         }
 
         let lastInputList = newInputList[newInputList.length - 1];
-        console.log(':::::::lastInputList:::::', lastInputList);
         if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
 
             try {
-                const response = await axios.put(`${'https://13.40.76.135/backend'}/templates/${id}/disclosures/${disclosuresId}?organization=${orgDetails.name}`, payload).then(({ data }) => data);
+                const response = await axios.put(`${process.env.API_BASE_URL}/templates/${id}/disclosures/${disclosureId}?organization=${orgDetails.name}`, payload).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
                 setInputList([initialRow]);
             } catch (e) {
@@ -203,9 +202,9 @@ const CreateBespokeQuestions = (props) => {
 
         </div>
         <div className='create-question-main-btn'>
-            <button onClick={onCreateCancelQuestions} className="main__button m-l-1 cancel-btn">
+            {/* <button onClick={onCreateCancelQuestions} className="main__button m-l-1 cancel-btn">
                 Cancel
-            </button>
+            </button> */}
             <button onClick={onCreateQuestions} className="main__button m-l-1">
                 FINISH
             </button>

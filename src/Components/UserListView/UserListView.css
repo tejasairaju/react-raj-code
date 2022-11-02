@@ -17,10 +17,15 @@
 }
 
 .user-wrapper-scroll {
+    height: 12em;
     overflow-x: scroll;
     overflow-y: hidden;
 }
 
 .user-wrapper-scroll .user__container {
     margin: none !important;
+}
+
+.user__container .user-name {
+    font-size: medium;
 }

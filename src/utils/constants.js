@@ -224,7 +224,7 @@ export const esg_admin = [{
     },
     {
         clsName: '',
-        label: "SubSector",
+        label: "Sub Sector",
         isActive: false,
         route: '/subsector',
     },
