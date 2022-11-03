@@ -35,7 +35,6 @@ const CreateBespokeDisclosures = () => {
 
     useEffect(() => {
         if(isEditable) {
-            console.log(':::::::::::::::::', state.children);
             let cloneCategory = [...appWizard.categories];
             cloneCategory = (cloneCategory || []).map(item => {
                 if(_toLower(item.name) === _toLower(state.category)) {
@@ -46,7 +45,7 @@ const CreateBespokeDisclosures = () => {
             setInputValue({...initialValue, name:state.name, categories: [...cloneCategory], children: state.children  });
 
         } else {
-            setInputValue({...initialValue,  categories: appWizard.categories  });
+            setInputValue({...initialValue,  categories: [...appWizard.categories]  });
             // getUserAdminInfo(1);
         }
     }, []);
@@ -68,6 +67,7 @@ const CreateBespokeDisclosures = () => {
         console.log(inputValue);
         if (!_isEmpty(inputValue.name)&& !_isEmpty(inputValue.categories)) {
             try {
+                setStatusData({ type: 'loading', message: '' });
                 const getSelectedCategory = (inputValue.categories || []).find(value => value.isSelect === true);
                 const data = {
                     disclosures: [{
@@ -88,7 +88,7 @@ const CreateBespokeDisclosures = () => {
                 setInputValue({...initialValue});  
             }
             catch (e) {
-                setStatusData({ type: 'error', type: e.message });
+                setStatusData({ type: 'error', message: '500 Internal Server Error' });
             }
         }
     }
@@ -108,9 +108,9 @@ const CreateBespokeDisclosures = () => {
 
     const onCloseHandler = () => {
         if(statusData.type === 'success' && !isEditable) {
-            navigate(`/template/${id}/disclosures/${apiData.disclosures[0].id}`, { disclosures: {...apiData.disclosures[0]}});
+            navigate(`/template/${id}/disclosures/${apiData.disclosures[0].id}`, { state: {...apiData.disclosures[0]}});
         }
-
+        setStatusData({});
     }
 
     return (<>
@@ -126,7 +126,7 @@ const CreateBespokeDisclosures = () => {
               </div>
               <div class="GenerateReport-framework__row Generate_report_head">
                   <h2 class="Generate_h1_label1">Category:</h2>
-                  <Pills label='' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} />
+                  <Pills label='' data={inputValue.categories|| null} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} />
 
               </div>
               

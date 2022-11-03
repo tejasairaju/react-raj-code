@@ -57,7 +57,7 @@ const ClientUsers = () => {
             </div>
             <br/>
 
-            <table className="default-flex-table">
+            <table className="default-flex-table table-scroll">
 
                 <thead>
                         <tr>

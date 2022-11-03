@@ -9,3 +9,14 @@
     -ms-border-radius: 0 20px 20px 0;
     -o-border-radius: 0 20px 20px 0;
 }
+
+.bespoke-question-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.5em;
+}
+
+.bespoke-question-disclosure {
+    margin-left: 1em;
+    width: 100%;
+}

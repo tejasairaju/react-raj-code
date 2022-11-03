@@ -5,6 +5,7 @@ import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import Fields from "../../Components/Common/Fields/Fields.jsx";
 import Popup from "../../components/Common/Popup/Popup.jsx";
+import Requests from "../../Requests/index.js";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -38,17 +39,20 @@ const CreateBespokeFramework = () => {
         if (!_isEmpty(inputValue.name)) {
             try {
                 let response = '';
+                setStatusData({ type: 'loading', message: '' });
                 if (isEditable) {
                     response = await axios.put(`${process.env.API_BASE_URL}/templates/${state.id|| ''}?organization=${orgDetails.name}`, { ...inputValue }).then(({ data }) => data);
                 } else {
-                    response = await axios.post(`${process.env.API_BASE_URL}/templates/?organization=${orgDetails.name}`, { ...inputValue }).then(({ data }) => data);
+                    response = await Requests.Post(`/templates/`, { ...inputValue }, orgDetails.name);
                 }
-                setApiData({ ...response });
-                setStatusData({ type: 'success', message: `Thanks! Your framework has been successfully ${isEditable ? 'updated': 'created'}` });
+                if(response) {
+                setStatusData({...statusData, type: 'success', message: `Thanks! Your framework has been successfully ${isEditable ? 'updated': 'created'}` });
                 setInputValue({ name: '' });
+                setApiData({ ...response });
+                }
             }
             catch (e) {
-                setStatusData({ type: 'error', type: e.message });
+                setStatusData({ type: 'error', message: '500 Internal server error.' });
             }
         }
     }
@@ -57,12 +61,12 @@ const CreateBespokeFramework = () => {
         if (statusData.type === 'success' && !isEditable) {
             navigate(`/template/${apiData.id}`);
         }
-
+        setStatusData({});
     }
 
     return (<>
         <div>
-            {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
+            {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={() => onCloseHandler()} />}
             <h1><b>Create Bespoke framework</b></h1>
             <div class="Generate_Report GenerateReport-framework__overflow">
 

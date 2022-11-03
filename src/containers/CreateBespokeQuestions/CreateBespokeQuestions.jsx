@@ -16,7 +16,7 @@ const { Button, Input, TextArea, Dropdown } = Fields;
 const CreateBespokeQuestions = (props) => {
     const location = useLocation();
     const { id= '', disclosureId = '' } = useParams();
-    const disclosures = _get(location, 'disclosures', { name: "", code: ''});
+    const state = _get(location, 'state', {});
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const { orgDetails = {} } = useSelector(state => state.signup);
@@ -80,13 +80,13 @@ const CreateBespokeQuestions = (props) => {
 
         let lastInputList = newInputList[newInputList.length - 1];
         if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
-
             try {
+                setStatusData({ type: 'loading', message: '' });
                 const response = await axios.put(`${process.env.API_BASE_URL}/templates/${id}/disclosures/${disclosureId}?organization=${orgDetails.name}`, payload).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
                 setInputList([initialRow]);
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                setStatusData({ type: 'error', message: '500 Internal Server Error' });
             }
             setIsError(false);
         } else {
@@ -142,18 +142,13 @@ const CreateBespokeQuestions = (props) => {
                 </div>
             </Modal>}
             <div>
-                <div className="create-framework__row-wrapper">
-                    <h1 className="create-framework__title">
-                        Ref No
-                    </h1>
-                    <input type="text" min="0" step=".1" className="refno_create_question" value={disclosures.code || ''}
-                        required disabled></input>
+                <div className="bespoke-question-container">
                     <h1 className="create-framework__title disclosure">
                         Disclosure
-                        <img src='assets/images/questions.svg' alt='?' width='15px' height='15px' />
+                        <img src='../../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />
                     </h1>
-                    <input type="text" className="create-framework__input"
-                        value={disclosures.name} required disabled></input>
+                    <input type="text" className="create-framework__input bespoke-question-disclosure"
+                        value={_get(state, 'name', '')} required disabled></input>
                 </div>
             </div>
             <div className="create_questions_table__container">
@@ -186,7 +181,7 @@ const CreateBespokeQuestions = (props) => {
                                 </td>
                                 <td>
                                     <div className='flex'>
-                                        {inputList.length !== 1 && <Button label="Remove" className='remove-btn' onClickHandler={(i) => handleRemoveClick(i)} />}
+                                        {inputList.length !== 1 && <Button label="Remove" className='remove-btn' onClickHandler={() => handleRemoveClick(i)} />}
                                         {inputList.length - 1 === i && <Button label="Add" className='add-btn' onClickHandler={() => handleAddClick(i)} />}
                                     </div>
                                 </td>

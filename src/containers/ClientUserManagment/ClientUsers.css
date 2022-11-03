@@ -264,4 +264,7 @@ i.fa.fa-file-archive-o {
 margin-left: 7px;
 }
 
-
+.table-scroll {
+    display: block;
+    overflow-y: scroll;
+}
