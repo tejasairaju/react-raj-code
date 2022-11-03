@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './MoreAction.css';
 
 const MoreAction = (props) => {
-    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false, ...rest } = props;
+    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false,viewBespokeDisclosures=false, ...rest } = props;
     const [isOpen, setIsopen] = useState(false);
     const navigate = useNavigate();
     const onNavigateHandler = (url) => {
@@ -36,6 +36,15 @@ const MoreAction = (props) => {
               {viewBespokeFramework &&
                 <>
                     <div onClick={() => onRedirectWithState(`/template?isEditable=true`)}><a>Edit Framework</a></div>
+                    {/* <div onClick={() => onRedirectWithState(`/template/${value.id}/bespoke/disclosures`)}><a>View Disclosures</a></div> */}
+                    <div onClick={() => onRedirectWithState(`/view/bespoke/${value.id}/disclosures`)}><a>View Disclosures</a></div>
+                    
+                </>
+            }
+            {
+                viewBespokeDisclosures && 
+                <>
+                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}?isEditable=true`)}><a>Edit Disclosure</a></div>
                 </>
             }
         </div>

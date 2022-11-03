@@ -1,36 +1,64 @@
 import React from "react";
 import { useState } from "react";
 import _isEmpty from 'lodash/isEmpty';
+import _get from 'lodash/get';
+import _toLower from 'lodash/toLower';
+import queryString from 'query-string';
 import Fields from "../../Components/Common/Fields/Fields.jsx";
 import Popup from "../../components/Common/Popup/Popup.jsx";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Requests from "../../Requests/index.js";
 const { InputBox, Pills } = Fields;
 
 const CreateBespokeDisclosures = () => {
     const navigate = useNavigate();
-    const { id='a69ce9a8-4ee5-493f-a750-c72a4086fc19'} = useParams();
-    const initialValue = { name: '',categories: '', section: "Custom" };
-    const [inputValue, setInputValue] = useState(initialValue);
-    const [apiData, setApiData] = useState();
-    const [statusData, setStatusData] = useState({});
+    const { id=''} = useParams();;
+    const location = useLocation();
     const { orgDetails = {} } = useSelector(state => state.signup);
+    const appWizard= useSelector(state => state.appWizard);
+
+    const [apiData, setApiData] = useState({});
+    const [statusData, setStatusData] = useState({});
+    const initialValue = { name: '',categories: '', section: "Custom", children: [] };
+    const [inputValue, setInputValue] = useState(initialValue);
+
+    const state = _get(location, 'state', {});
+    const {search} = _get(window, 'location', '?');
+    const params = queryString.parse(search);
+    const { isEditable = false } = params;
+
+  
 
 
     useEffect(() => {
-        getUserAdminInfo(1);
+        if(isEditable) {
+            console.log(':::::::::::::::::', state.children);
+            let cloneCategory = [...appWizard.categories];
+            cloneCategory = (cloneCategory || []).map(item => {
+                if(_toLower(item.name) === _toLower(state.category)) {
+                    item['isSelect'] =true;
+                }
+                return item;
+            });
+            setInputValue({...initialValue, name:state.name, categories: [...cloneCategory], children: state.children  });
+
+        } else {
+            setInputValue({...initialValue,  categories: appWizard.categories  });
+            // getUserAdminInfo(1);
+        }
     }, []);
 
-    const getUserAdminInfo = async () => {
-        try {
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`).then(({ data }) => data);
-            setInputValue({ categories: response.results });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    // const getUserAdminInfo = async () => {
+    //     try {
+    //         const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`).then(({ data }) => data);
+    //         setInputValue({ categories: response.results });
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
     const onChangeHandler = (e) => {
         const { value, name } = e.target;
         setInputValue({...inputValue, [name]: value });
@@ -45,13 +73,19 @@ const CreateBespokeDisclosures = () => {
                     disclosures: [{
                     name: inputValue.name,
                     category: getSelectedCategory.name || '',
-                    section: "Custom"
+                    section: "Custom",
+                    children: [...initialValue.children]
                     }]
                 }
-                const response = await axios.post(`https://13.40.76.135/backend/templates/${id}/disclosures?organization=${orgDetails.name}`, {...data}).then(({data}) => data);
+                let response = {};
+                if(isEditable) {                   
+                    response = await Requests.Put(`/templates/${id}/disclosures/${state.id}`, {...data}, orgDetails.name);
+                } else {
+                    response = await axios.post(`${process.env.API_BASE_URL}/templates/${id}/disclosures?organization=${orgDetails.name}`, {...data}).then(({data}) => data);
+                }
                 setApiData({...response});
                 setStatusData({ type: 'success', message: 'Thanks! Your disclosures has been successfully created' });
-                setInputValue(initialValue);  
+                setInputValue({...initialValue});  
             }
             catch (e) {
                 setStatusData({ type: 'error', type: e.message });
@@ -73,7 +107,7 @@ const CreateBespokeDisclosures = () => {
     }
 
     const onCloseHandler = () => {
-        if(statusData.type === 'success') {
+        if(statusData.type === 'success' && !isEditable) {
             navigate(`/template/${id}/disclosures/${apiData.disclosures[0].id}`, { disclosures: {...apiData.disclosures[0]}});
         }
 
@@ -99,7 +133,7 @@ const CreateBespokeDisclosures = () => {
               <div class="Generate_report_button_row create-report-btn">
                   <div class="Generate_frame"></div>
                   <button onClick={() => createTemplate()} class="Generate_button">
-                      Create
+                      {isEditable ? 'Update':'Create'}
                   </button>
               </div>
           </div>
