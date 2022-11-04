@@ -44,7 +44,7 @@ const ClientUserAction = (props) => {
 
 
     return (<div onClick={() => setIsopen(false)}>
-        <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
+        <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='../../assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
             <div><a onClick={() => { navigate(`/client/users/invite`, {state: {userDetails: value}}) }}>Edit</a></div>
             <div><a onClick={() => onUpdateUser(value, 1)}>Activate</a></div>
