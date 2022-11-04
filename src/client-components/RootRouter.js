@@ -60,6 +60,7 @@ import CreateBespokeQuestions from "../containers/CreateBespokeQuestions/CreateB
 import ESGKpiDashboard from "../containers/ESGKpiDashboard/ESGKpiDashboard.jsx";
 import ViewBespokeFramework from "../containers/ViewBespokeFramework/ViewBespokeFramework.jsx";
 import ViewBespokeDisclosures from "../containers/ViewBespokeDisclosures/ViewBespokeDisclosures.jsx";
+import ViewBespokeQuestions from "../containers/ViewBespokeQuestions/ViewBespokeQuestions.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
@@ -169,6 +170,7 @@ const RootRouter = () => {
         <Route path="/template/:id/disclosures/:disclosureId" element={<CreateBespokeQuestions />} />
         <Route path="/view/template" element={<ViewBespokeFramework />} />
         <Route path="/view/bespoke/:template_id/disclosures" element={<ViewBespokeDisclosures />} />
+        <Route path="/template/:template_id/disclosures/:disclosure_id/questions" element={<ViewBespokeQuestions />} />
         {/* Duplicate route */}
         <Route path="/createdisclosures" element={<CreateDisclosures />} />
         <Route path="/createquestions" element={<CreateQuestions />} />

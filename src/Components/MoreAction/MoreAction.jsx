@@ -45,6 +45,7 @@ const MoreAction = (props) => {
                 viewBespokeDisclosures && 
                 <>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}?isEditable=true`)}><a>Edit Disclosure</a></div>
+                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}><a>View Questions</a></div>
                 </>
             }
         </div>

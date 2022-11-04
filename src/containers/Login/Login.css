@@ -27,14 +27,14 @@
 }
 .info__title {
   font-weight: 500;
-  font-size: 48px;
+ font-size: 1.5em;
   text-align: center;
   color: #2C2C2C;
   margin-bottom: 8px;
 }
 .info__subtitle {
   font-weight: 500;
-  font-size: 36px;
+  font-size: 1.5em;
   text-align: center;
   color: #2C2C2C;
   margin-bottom: 24px;
@@ -220,10 +220,10 @@
       margin: 0 auto 27px;
   }
   .info__title {
-      font-size: 34px;
+      font-size: 1.5em;
   }
   .info__subtitle {
-      font-size: 26px;
+      font-size: 1.5em;
       margin-bottom: 20px;
   }
   .info__text {
@@ -258,10 +258,10 @@
       padding: 0 80px 0 0;
   }
   .info__title {
-      font-size: 30px;
+      font-size: 1.5em;
   }
   .info__subtitle {
-      font-size: 22px;
+      font-size: 1.5em;
       margin-bottom: 15px;
   }
   .info__text {
@@ -298,10 +298,10 @@
       padding: 0 80px 0 0;
   }
   .info__title {
-      font-size: 28px;
+      font-size: 1.5em;
   }
   .info__subtitle {
-      font-size: 24px;
+      font-size: 1.5em;
   }
   .login__form-title {
       margin-bottom: 60px;
@@ -329,10 +329,10 @@
       padding: 0 20px;
   }
   .info__title {
-      font-size: 24px;
+      font-size: 1.5em;
   }
   .info__subtitle {
-      font-size: 20px;
+      font-size: 1.5em;
   }
   .info__text {
       font-size: 12px;
