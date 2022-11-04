@@ -8,6 +8,7 @@ import Fields from '../../Components/Common/Fields/Fields.jsx';
 import Popup from "../../components/Common/Popup/Popup.jsx";
 import './CreateReport.css';
 import ListFramework from "../../Components/ListFramework/ListFramework.jsx";
+import { getErrorMessage } from '../../utils/utils.js';
 import { useSelector } from "react-redux";
 
 const { InputBox } = Fields
@@ -37,6 +38,7 @@ const CreateReport = () => {
 
     const onClickCreateReportHandler = async () => {
         if (inputValue.name && inputValue.start_date && inputValue.end_date) {
+            setStatusData({ type: 'loading', message: ''});
             try {
                 const payload = {
                     ...inputValue,
@@ -48,7 +50,8 @@ const CreateReport = () => {
                 setInputValue({...initialInputVal});  
             }
             catch (e) {
-                setStatusData({ type: 'error', type: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         }
     }

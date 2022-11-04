@@ -10,6 +10,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { getErrorMessage } from '../../utils/utils.js';
 import Requests from "../../Requests/index.js";
 const { InputBox, Pills } = Fields;
 
@@ -88,7 +89,8 @@ const CreateBespokeDisclosures = () => {
                 setInputValue({...initialValue});  
             }
             catch (e) {
-                setStatusData({ type: 'error', message: '500 Internal Server Error' });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         }
     }

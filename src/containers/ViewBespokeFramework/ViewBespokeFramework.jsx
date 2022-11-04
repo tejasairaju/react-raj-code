@@ -6,7 +6,7 @@ import Popup from '../../components/Common/Popup/Popup.jsx';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getDataFormat } from '../../utils/utils';
+import { getDataFormat, getErrorMessage } from '../../utils/utils';
 
 const { Get } = Request;
 
@@ -23,7 +23,8 @@ const ViewBespokeFramework = () => {
                 setStatusData({ type: '', message: '' });
                 setApiData({...response});
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         }
         getFramework();

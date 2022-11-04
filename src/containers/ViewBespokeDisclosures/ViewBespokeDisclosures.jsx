@@ -5,7 +5,7 @@ import Popup from '../../components/Common/Popup/Popup.jsx';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getDataFormat } from '../../utils/utils';
+import { getDataFormat, getErrorMessage } from '../../utils/utils';
 import Requests from "../../Requests";
 
 const ViewBespokeDisclosures = () => {
@@ -22,7 +22,8 @@ const ViewBespokeDisclosures = () => {
                 setStatusData({ type: '', message: '' });
                 setApiData({...response});
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         }
         getDisclosures();

@@ -12,13 +12,14 @@ const { RadioButton } = Fields;
 import './AnswerQuestions.css';
 import { listDisclosures } from '../../../__mocks__/listDisclosures.js';
 import Requests from "../../Requests/index.js";
+import { getErrorMessage } from '../../utils/utils.js';
 import { useSelector } from "react-redux";
 
 const AnswerQuestions = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const state = _get(location, 'state', {});
-    const { start_date = '20-03-2022', end_date = '23-03-2022'} = _get(state, 'report', {});
+    const { start_date = '', end_date = ''} = _get(state, 'report', {});
     const { reportId = '', disclosureId = "" } = useParams();
     const [apiData, setApiData] = useState({ listData: null, groupListData: {} });
     const { orgDetails = {} } = useSelector(state => state.signup);
@@ -106,7 +107,6 @@ const AnswerQuestions = () => {
     }
 
     const onClickSaveAnswer = async (answer, disclosureIndex, questionIndex) => {
-        console.log('>>>>>>>>>>>>>>>>>', answer, disclosureIndex, questionIndex);
         let cloneApiData = {...apiData};
         apiData.listData[disclosureIndex].children[questionIndex].value = answer;
         setApiData({
@@ -134,13 +134,13 @@ const AnswerQuestions = () => {
 
         try {
             setStatusData({ type: 'loading', message: '' });
-            console.log('>>>>>>>>>>>>>>>>payload>>>>', payload);
             const response = Requests.Post(`/reports/${reportId}/disclosures/${disclosureId}/data`, {data}, orgDetails.name);
             if(response) {
                 setStatusData({ type: 'success', message: 'Your answers has been successfully saved' });
             }
         } catch(e) {
-            setStatusData({ type: 'error', message: e.message });
+            let error = getErrorMessage(e);
+            setStatusData({...error});
         }
     }
 

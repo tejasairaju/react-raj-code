@@ -8,6 +8,7 @@ import { questions } from '../../utils/constants.js';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import Modal from '../../Components/Common/Modal/Modal.jsx';
 import './CreateBespokeQuestions.css';
+import { getErrorMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -86,7 +87,8 @@ const CreateBespokeQuestions = (props) => {
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
                 setInputList([initialRow]);
             } catch (e) {
-                setStatusData({ type: 'error', message: '500 Internal Server Error' });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
             setIsError(false);
         } else {

@@ -10,6 +10,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { getErrorMessage } from '../../utils/utils.js';
 const { InputBox } = Fields;
 
 const CreateBespokeFramework = () => {
@@ -52,7 +53,8 @@ const CreateBespokeFramework = () => {
                 }
             }
             catch (e) {
-                setStatusData({ type: 'error', message: '500 Internal server error.' });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         }
     }

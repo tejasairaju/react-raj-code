@@ -14,6 +14,7 @@ import { listDisclosures } from '../../../__mocks__/listDisclosures.js';
 import ListFramework from "../../Components/ListFramework/ListFramework.jsx";
 import CategoryFilter from "../../Components/CategoryFilter/CategoryFilter.jsx";
 import UserListView from "../../Components/UserListView/UserListView.jsx";
+import { getErrorMessage } from '../../utils/utils.js';
 import { useSelector } from "react-redux";
 
 const AssignDisclosures = () => {
@@ -109,6 +110,7 @@ const AssignDisclosures = () => {
         if (((params || []).length > 0) && selectedUser.id) {
 
             try {
+                setStatusData({ type: 'loading', message: '' });
                 // const payload = {};
                 // payload['disclosure_id'] = [...filterListData];
                 // payload['disclosure_type'] = "Standard";
@@ -116,44 +118,16 @@ const AssignDisclosures = () => {
                 const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         }
     }
-    // setStatusData({ type: 'loading', message: '' });
-    // for (let x = 0; x < listData.length; x++) {
-    //     if (listData[x].isSelected === true) {
-    //         let postData = {}
-    //         postData['disclosure_type'] = 'Custom';
-    //         postData['assigned_to'] = selectedUser.id;
-    //         postData['disclosure_kpi_id'] = listData[x].id;
-    //         let newPromise = axios({
-    //             method: 'post',
-    //             url: `${process.env.API_BASE_URL}/reports/${'62ad8e7f-d034-41c7-b156-a52321a2a32f'}/disclosures/${listData[x].id}/assign`,
-    //             data: postData
-    //         })
-    //         axiosArray.push(newPromise)
-    //     }
-
-    //     axios
-    //         .all(axiosArray)
-    //         .then(axios.spread((...responses) => {
-    //             responses.forEach(res => console.log('Success'))
-    //             console.log('submitted all axios calls');
-    //             setStatusData({ type: 'success', message: 'DisClosures assigned successfully' });
-    //         }))
-    //         .catch(error => {
-    //             setStatusData({ type: 'error', message: 'Error' });
-    //         })
-    //}
-
-
-
+   
     const onCloseHandler = () => {
         if(statusData.type === 'success') {
             // navigate(`/task`);
         }
-
     }
 
     const isAssignedDisclosure = (disclosure) => {

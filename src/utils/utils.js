@@ -1,5 +1,6 @@
 import _toLower from 'lodash/toLower';
 import _isEmpty from 'lodash/isEmpty';
+import _get from 'lodash/get';
 import moment from 'moment';
 export const checkValidation = (inputValue) => {
     let cloneInputValue = { ...inputValue };
@@ -51,4 +52,18 @@ export const getColor = (status) => {
         case 'Completed': return 'color_green';
         case 'Pending': return 'color_red';
     }
+}
+
+export const getErrorMessage = (error) => {
+    let errorObject = { type: 'error'};
+    if(_get(error, 'response.status', 400) === 400) {
+        const data = _get(error, 'response.data', {});
+        const flatData = Object.values(data).flat();
+        if(flatData.length > 0) {
+            errorObject['message'] = flatData[0];
+        } 
+    } else {
+        errorObject['message'] = error.message;
+    }
+    return {...errorObject};
 }

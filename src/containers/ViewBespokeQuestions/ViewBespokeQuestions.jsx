@@ -11,6 +11,7 @@ import Fields from '../../Components/Common/Fields/Fields.jsx';
 import QuestionHeader from "../../Components/QuestionHeader/QuestionHeader.jsx";
 import QuestionsTable from "../../Components/QuestionsTable/QuestionsTable.jsx";
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
+import { getErrorMessage } from '../../utils/utils';
 import { useSelector } from "react-redux";
 const { RadioButton } = Fields;
 
@@ -144,7 +145,8 @@ const ViewBespokeQuestions = () => {
                 setStatusData({ type: '', message: '' });
                 setApiData(response);
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         }
         getAllQuestions();
