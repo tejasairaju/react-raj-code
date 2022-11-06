@@ -79,7 +79,6 @@ const CreateQuestions = (props) => {
         }
 
         let lastInputList = newInputList[newInputList.length - 1];
-        console.log(':::::::lastInputList:::::', lastInputList);
         if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
 
             try {

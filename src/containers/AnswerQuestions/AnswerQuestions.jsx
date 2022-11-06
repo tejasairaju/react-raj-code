@@ -41,7 +41,7 @@ const AnswerQuestions = () => {
     const getDisclosures = async (frameworkId) => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, orgDetails.name);
+            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, {organization: orgDetails.name});
             setStatusData({ type: '', message: '' });
             setApiData({
                 listData: [response]
@@ -134,7 +134,7 @@ const AnswerQuestions = () => {
 
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = Requests.Post(`/reports/${reportId}/disclosures/${disclosureId}/data`, {data}, orgDetails.name);
+            const response = Requests.Post(`/reports/${reportId}/disclosures/${disclosureId}/data`, {data}, {organization: orgDetails.name});
             if(response) {
                 setStatusData({ type: 'success', message: 'Your answers has been successfully saved' });
             }
@@ -145,6 +145,7 @@ const AnswerQuestions = () => {
     }
 
     const onCloseHandler = () => {
+        setStatusData({ type: '', message: '' });
 
     }
 
@@ -185,17 +186,15 @@ const AnswerQuestions = () => {
                 </h1>
                 <label for="create-framework__date-from" className="create-framework__label">
                     <input type="date" value={start_date} className="create-framework__input" id="create-framework__date-from" required />
-                    <img src="./assets/icons/celendar.svg" alt="" />
                 </label>
                 <h1 className="create-framework__title">
                     To:
                 </h1>
                 <label for="create-framework__date-to" className="create-framework__label">
                     <input type="date" value={end_date} className="create-framework__input" id="create-framework__date-to" required />
-                    <img src="./assets/icons/celendar.svg" alt="" />
                 </label>
             </div>
-            <h1 className="assign__title">
+            {/* <h1 className="assign__title">
                 Categories:
             </h1>
             <ul className="assign__categories">
@@ -206,7 +205,7 @@ const AnswerQuestions = () => {
                     label={radioVal}
                     value={radioVal}
                 />))}
-            </ul>
+            </ul> */}
         </div>
         <ul className="assign__categories answer__detalis">
             {(apiData.listData || []).map((item, disclosureIndex) => {

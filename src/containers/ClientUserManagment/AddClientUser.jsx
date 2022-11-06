@@ -7,6 +7,7 @@ import moment from 'moment';
 import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import _isEmpty from 'lodash/isEmpty';
+import Requests from "../../Requests/index.js";
 
 const { Input, TextArea, Pills, UploadFile, Button,InputBox } = Fields;
 
@@ -47,7 +48,7 @@ const AddClientUser = () => {
  
         try {
              
-            const response = await axios.post(`${process.env.API_BASE_URL}/users/?organization=`+orgDetails.name, 
+            const response = await Requests.Post(`/users/`, 
                 { first_name: inputValue.first_name , 
                     last_name: inputValue.last_name ,
                 email_id: inputValue.email_id ,
@@ -55,7 +56,7 @@ const AddClientUser = () => {
                 phone_number: inputValue.phone_number, 
                 department: inputValue.department,
                 designation: inputValue.designation, 
-                organization_name : orgDetails.name}).then(({ data }) => data);
+                organization_name : orgDetails.name},  {organization:orgDetails.name});
                 navigate('/client/users');
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
@@ -66,8 +67,8 @@ const AddClientUser = () => {
  
         try {
              
-            const response = await axios.put(`${process.env.API_BASE_URL}/users/`+inputValue.id+`?organization=`+orgDetails.name, 
-            inputValue).then(({ data }) => data);
+            const response = await Requests.Put(`/users/`+inputValue.id, 
+            inputValue, {organization: orgDetails.name});
                 navigate('/client/users');
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {

@@ -33,7 +33,7 @@ const ViewBespokeQuestions = () => {
 
     const getAllQuestions = async () => {
         try {
-            const response = await Requests.Get(`/templates/${template_id}/disclosures/${disclosure_id}`, orgDetails.name);
+            const response = await Requests.Get(`/templates/${template_id}/disclosures/${disclosure_id}`, {organization: orgDetails.name});
             setInputList([...response.children]);
         } catch (e) {
             setInputList([]);

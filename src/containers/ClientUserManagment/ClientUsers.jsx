@@ -9,6 +9,7 @@ import ClientUserAction from './MoreAction.jsx';
 import AddClientUser from './AddClientUser.jsx';
 import moment from 'moment';
 import _get from 'lodash/get';
+import Requests from "../../Requests/index.js";
 import './ClientUsers.css';
 
 const ClientUsers = () => {
@@ -23,7 +24,7 @@ const ClientUsers = () => {
         const getClientUsers = async () => {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await axios.get(`${process.env.API_BASE_URL}/users/?organization=`+orgDetails.name).then(({ data }) => data);
+                const response = await Requests.Get(`/users/`, {organization: orgDetails.name});
                 setStatusData({ type: '', message: '' });
                 setClientData(response);
             } catch (e) {

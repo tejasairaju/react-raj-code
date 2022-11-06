@@ -12,8 +12,9 @@ import { useMemo } from 'react';
 const ReAssignDisclosures = (props) => {
     const dispatch = useDispatch();
     const [statusData, setStatusData] = useState({});
-    const { disclosure = {}, reportId='', setIsOpenReAssign = () => {} } = props
+    const { disclosure = {}, reportId = '', setIsOpenReAssign = () => { } } = props
     const { orgDetails = {} } = useSelector(state => state.signup);
+    const { loginDetails = {} } = useSelector(state => state.signup);
     const [userList, setUserList] = useState([]);
     useEffect(() => {
         getUserList();
@@ -21,8 +22,13 @@ const ReAssignDisclosures = (props) => {
 
     const getUserList = async () => {
         try {
-            const response = await Requests.Get(`/users/?organization=${orgDetails.name}`);
-            setUserList([...response.results]);
+            const response = await Requests.Get(`/users/`, { organization: orgDetails.name });
+            if(response) {
+                let userList = [...response.results];
+                userList = (userList || []).filter(item =>  item.id !== loginDetails.user_id);
+                setUserList([...userList]);
+            }
+            
         } catch (e) {
             setUserList([]);
         }
@@ -36,12 +42,13 @@ const ReAssignDisclosures = (props) => {
         params = [payload];
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
+            const response = await Requests.Post(`/reports/${reportId}/disclosures/assign`, params, {organization: orgDetails.name});
             setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });
         }
     }
+    const headers = ['Name', 'Designation', 'Action']
 
     return (<>{<div className='reassign-disclosure-container'>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} />}
@@ -54,34 +61,27 @@ const ReAssignDisclosures = (props) => {
                     </h5>
                     <div class="modal__text-wrapper">
                         <div class="modal__content-wrapper">
-                            <ul class="table__titles-list">
-                                <li class="table__titles-list-item">
-                                    Name
-                                </li>
-                                <li class="table__titles-list-item">
-                                    Designation
-                                </li>
-                                <li class="table__titles-list-item">
-                                    Action
-                                </li>
-                            </ul>
-                            <div class="table__row-wrapper">
-                                {(userList || []).map((user, index) => <ul class="table__row-list">
-                                    <li class="table__row-list-item">
-                                        <p class="row__item-info username" id="">
-                                            {user.first_name} {user.last_name}
-                                        </p>
-                                        <p class="row__item-info designation" id="">
-                                            {user.role}
-                                        </p>
-                                        <a onClick={() => onClickReAssignHandler(user)} class="detalis__reassign row__item-info action" id="">
+                        <table className="default-flex-table">
+                    <thead>
+                        <tr>
+                            {headers.map(header => <th>{header}</th>)}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {(userList.length > 0) ? <>{(userList || []).map((user, index)=> {
+                            return (<tr>
+                                <td>{user.first_name} {user.last_name}</td>
+                                <td>{user.role}</td>
+                                <td><a onClick={() => onClickReAssignHandler(user)} class="detalis__reassign row__item-info action" id="">
                                             Reassign
-                                        </a>
-                                    </li>
-                                </ul>)
-                                }
-
-                            </div>
+                                        </a></td>
+                               
+                            </tr>)
+                        })}</> : <tr><td colspan="3">
+                            <div className='no-data-found'>No Data Found.</div></td></tr> }
+                    </tbody>
+                </table>
+                           
                         </div>
                     </div>
                 </div>

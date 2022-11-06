@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import './UserListView.css';
 import axios from "axios";
+import Requests from "../../Requests";
 const userListMock = [{
     id: 1,
     name: 'John Smith',
@@ -55,7 +56,7 @@ const UserListView = (props) => {
 
     const getUserList = async() => {
         try {
-            const response = await axios.get(`${process.env.API_BASE_URL}/users/?organization=${orgDetails.name}`).then(({data}) => data);
+            const response = await Requests.Get(`/users/`, {organization:orgDetails.name});
             setUserList([...response.results]);
         } catch (e) {
             setUserList([])

@@ -42,9 +42,9 @@ const CreateBespokeFramework = () => {
                 let response = '';
                 setStatusData({ type: 'loading', message: '' });
                 if (isEditable) {
-                    response = await axios.put(`${process.env.API_BASE_URL}/templates/${state.id|| ''}?organization=${orgDetails.name}`, { ...inputValue }).then(({ data }) => data);
+                    response = await Requests.Put(`/templates/${state.id|| ''}`, { ...inputValue }, {organization: orgDetails.name});
                 } else {
-                    response = await Requests.Post(`/templates/`, { ...inputValue }, orgDetails.name);
+                    response = await Requests.Post(`/templates/`, { ...inputValue }, {organization: orgDetails.name});
                 }
                 if(response) {
                 setStatusData({...statusData, type: 'success', message: `Thanks! Your framework has been successfully ${isEditable ? 'updated': 'created'}` });

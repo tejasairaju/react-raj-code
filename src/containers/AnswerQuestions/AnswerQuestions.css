@@ -784,6 +784,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -ms-border-radius: 10px 10px 0px 0px;
     -o-border-radius: 10px 10px 0px 0px;
 }
+.table__titles-list-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 10px;
+    border-radius: 10px 10px 0px 0px;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    -moz-border-radius: 10px 10px 0px 0px;
+    -ms-border-radius: 10px 10px 0px 0px;
+    -o-border-radius: 10px 10px 0px 0px;
+}
 .table__titles-list-item, .row__item-info {
     text-align: start;
     font-size: 16px;

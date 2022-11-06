@@ -4,6 +4,7 @@ import './ListFramework.css';
 import _isEmpty from 'lodash/isEmpty';
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Requests from "../../Requests/index.js";
 
 const ListFramework = (props) => {
     const { onClickFrameworkHandler = () => { }, label = 'Framework' } = props;
@@ -16,7 +17,7 @@ const ListFramework = (props) => {
     const getFramework = async () => {
         try {
             // setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks?organization=${orgDetails.name}`).then(({ data }) => data);
+            const response = await Requests.Get(`/esgadmin/frameworks`, { organization: orgDetails.name });
             // setStatusData({ type: '', message: '' });
             setFrameworkData([...response.results]);
         } catch (e) {
