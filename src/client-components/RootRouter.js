@@ -42,6 +42,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { org } from "../../__mocks__/org.js";
 import PageInprogress from "../Components/Common/PageInprogress/PageInprogress.jsx";
 import CreateReport from "../containers/CreateReport/CreateReport.jsx";
+import ViewReport from "../containers/ViewReport/ViewReport.jsx"
 import Requests from "../Requests";
 import MyTaskDashboard from "../containers/MyTaskDashboard/MyTaskDashboard.jsx";
 import ViewMyTaskList from "../containers/ViewMyTaskList/ViewMyTaskList.jsx";
@@ -178,7 +179,8 @@ const RootRouter = () => {
         <Route path="/viewdisclosures" element={<ViewDisclosures />} />
         <Route path="/viewquestions" element={<ViewQuestions />} />
         {/* Duplicate route */}
-        <Route path="/report" element={<CreateReport />} />
+        <Route path="/report/create" element={<CreateReport />} />
+        <Route path="/report/view" element={<ViewReport />} />
         <Route path="/task" element={<MyTaskDashboard />} />
         <Route path="/task/reports" element={<ViewMyTaskList />} />
         <Route path="/task/report/:reportId/disclosures" element={<ViewMyTaskDisclosuresList />} />

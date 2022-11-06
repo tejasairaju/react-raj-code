@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './MoreAction.css';
 
 const MoreAction = (props) => {
-    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false,viewBespokeDisclosures=false, ...rest } = props;
+    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false,viewBespokeDisclosures=false,viewReport=false, ...rest } = props;
     const [isOpen, setIsopen] = useState(false);
     const navigate = useNavigate();
     const onNavigateHandler = (url) => {
@@ -46,6 +46,13 @@ const MoreAction = (props) => {
                 <>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}?isEditable=true`)}><a>Edit Disclosure</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}><a>View Questions</a></div>
+                </>
+            }
+            {
+                viewReport && 
+                <>
+                    <div><a>Edit Report</a></div>
+                    <div><a>Delete Report</a></div>
                 </>
             }
         </div>
