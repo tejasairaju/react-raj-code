@@ -52,8 +52,6 @@ const MoreAction = (props) => {
                 viewReport && 
                 <>
                     <div onClick={() => onRedirectWithState(`/report/${value.id}/disclosures`)}><a>Assign Disclosures</a></div>
-                    <div><a>Edit Report</a></div>
-                    <div><a>Delete Report</a></div>
                 </>
             }
         </div>
