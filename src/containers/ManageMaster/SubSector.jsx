@@ -24,8 +24,8 @@ const SubSector = (props) => {
     const getSectorList = async () => {
         try {
           
-            const response = await Requests.Get(`/esgadmin/master/subsectors`);
-            setSectorList(response);
+            const response = await Requests.Get(`/esgadmin/master/sectors`);
+            setSectorList({...response});
         } catch (e) {
             console.log(e);
         }
@@ -51,7 +51,7 @@ const SubSector = (props) => {
         }
         try {
             const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`, { ...payload }).then(({ data }) => data);
-            getSectorList();
+            getSubSectorList();
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });
