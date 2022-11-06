@@ -35,7 +35,7 @@ const PaymentSuccess = () => {
       organization: orgDetails.id
     }
     try {
-      const response = await Requests.Post('/subscriptions/payments', payload, orgDetails.name);
+      const response = await Requests.Post('/subscriptions/payments', payload, {organization: orgDetails.name});
       setTimeout(() => {getUpdatedOrgDetails()}, 2000);
       // dispatch(actions.updatePaymentStatus(true));
     } catch (e) {
@@ -47,7 +47,6 @@ const PaymentSuccess = () => {
   const getUpdatedOrgDetails = async() => {
     try {
       const response = await Requests.Get(`/organizations/${orgDetails.name}`);
-      console.log('::::::::::::updated org details', response);
       if (response) {
         dispatch(actions.organisationDatails(response));
       }

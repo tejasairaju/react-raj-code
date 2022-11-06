@@ -28,7 +28,7 @@ const ViewMyTaskDisclosuresList = (props) => {
 
     const getReportDisclosures = async() => {
         try {
-            const response = await axios.get(`${process.env.API_BASE_URL}/users/${loginDetails.user_id}/tasks?organization=${orgDetails.name}&report_id=${reportId}`).then(({data}) => data);
+            const response = await Requests.Get(`/users/${loginDetails.user_id}/tasks`, {organization: orgDetails.name, report_id:reportId});
             setDisclosureData([...response.results]);
         } catch(e) {
             setDisclosureData([])

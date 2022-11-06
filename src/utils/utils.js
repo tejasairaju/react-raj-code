@@ -26,10 +26,10 @@ export const checkValidation = (inputValue) => {
     return errors;
 }
 
-export const getTaskCount =(response) => {
-    let cloneCount = {pending: 0, completed: 0, disclosures: 0};
+export const getTaskCount = (response) => {
+    let cloneCount = { pending: 0, completed: 0, disclosures: 0 };
     cloneCount.disclosures = response.count;
-     (response.results || []).map((item) => {
+    (response.results || []).map((item) => {
         if (_toLower(item.status) === 'pending') {
             cloneCount.pending += 1;
         }
@@ -38,11 +38,11 @@ export const getTaskCount =(response) => {
         }
     });
 
-    return {...cloneCount};
+    return { ...cloneCount };
 }
 
 export const getDataFormat = (date, formate = 'DD/MM/YYYY') => {
-    if(_isEmpty(date)) return moment.format(formate);
+    if (_isEmpty(date)) return moment.format(formate);
     else return moment(date).format(formate);
 }
 
@@ -55,15 +55,35 @@ export const getColor = (status) => {
 }
 
 export const getErrorMessage = (error) => {
-    let errorObject = { type: 'error'};
-    if(_get(error, 'response.status', 400) === 400) {
+    let errorObject = { type: 'error' };
+    if (_get(error, 'response.status', 400) === 400) {
         const data = _get(error, 'response.data', {});
         const flatData = Object.values(data).flat();
-        if(flatData.length > 0) {
+        if (flatData.length > 0) {
             errorObject['message'] = flatData[0];
-        } 
+        }
     } else {
         errorObject['message'] = error.message;
     }
-    return {...errorObject};
+    return { ...errorObject };
 }
+
+export const constractURLQueryStr = (data = {}) => {
+    let str = '?';
+    if(_isEmpty(data)) {
+        return ''
+    }
+    console.log('>>>>>>>>', data);
+    var dataKey = Object.keys(data) || null;
+    var dataValue = Object.values(data) || null;
+    (dataKey || []).forEach((item, i) => {
+        if ((dataKey.length === 0) || (i === dataKey.length - 1)) {
+            str += item + "=" + encodeURIComponent(dataValue[i]);
+        } else {
+            str += item + '=' + encodeURIComponent(dataValue[i]) + '&';
+        }
+
+    });
+    return str;
+}
+

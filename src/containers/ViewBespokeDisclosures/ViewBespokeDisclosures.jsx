@@ -18,7 +18,7 @@ const ViewBespokeDisclosures = () => {
         const getDisclosures = async () => {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await Requests.Get(`/templates/${template_id}/disclosures`, orgDetails.name);
+                const response = await Requests.Get(`/templates/${template_id}/disclosures`, {organization: orgDetails.name});
                 setStatusData({ type: '', message: '' });
                 setApiData({...response});
             } catch (e) {

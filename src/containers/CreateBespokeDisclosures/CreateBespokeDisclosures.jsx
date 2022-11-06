@@ -51,14 +51,6 @@ const CreateBespokeDisclosures = () => {
         }
     }, []);
 
-    // const getUserAdminInfo = async () => {
-    //     try {
-    //         const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`).then(({ data }) => data);
-    //         setInputValue({ categories: response.results });
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
     const onChangeHandler = (e) => {
         const { value, name } = e.target;
         setInputValue({...inputValue, [name]: value });
@@ -80,12 +72,12 @@ const CreateBespokeDisclosures = () => {
                 }
                 let response = {};
                 if(isEditable) {                   
-                    response = await Requests.Put(`/templates/${id}/disclosures/${state.id}`, {...data}, orgDetails.name);
+                    response = await Requests.Put(`/templates/${id}/disclosures/${state.id}`, {...data.disclosures[0]}, {organization:orgDetails.name});
                 } else {
-                    response = await axios.post(`${process.env.API_BASE_URL}/templates/${id}/disclosures?organization=${orgDetails.name}`, {...data}).then(({data}) => data);
+                    response = await Requests.Post(`/templates/${id}/disclosures`, {...data}, {organization: orgDetails.name});
                 }
                 setApiData({...response});
-                setStatusData({ type: 'success', message: 'Thanks! Your disclosures has been successfully created' });
+                setStatusData({ type: 'success', message: `Thanks! Your disclosures has been successfully ${isEditable? 'created' : 'updated'}` });
                 setInputValue({...initialValue});  
             }
             catch (e) {
@@ -111,7 +103,10 @@ const CreateBespokeDisclosures = () => {
     const onCloseHandler = () => {
         if(statusData.type === 'success' && !isEditable) {
             navigate(`/template/${id}/disclosures/${apiData.disclosures[0].id}`, { state: {...apiData.disclosures[0]}});
+        } else {
+            navigate(-1);
         }
+
         setStatusData({});
     }
 

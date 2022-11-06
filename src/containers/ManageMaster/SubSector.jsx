@@ -3,6 +3,7 @@ import './Country.css'
 import axios from 'axios';
 import _isEmpty from 'lodash/isEmpty';
 import _toLower from 'lodash/toLower';
+import Requests from "../../Requests";
 import Popup from "../../components/Common/Popup/Popup.jsx";
 import _get from 'lodash/get';
 
@@ -12,13 +13,25 @@ import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.js
 
 const SubSector = (props) => {
     const [subSectorList, setSubSectorList] = useState({});
+    const [sectorList, setSectorList] = useState({});
     const [statusData, setStatusData] = useState({});
     const [inputValue, setInputValue] = useState({});
     useEffect(() => {
+        getSubSectorList();
         getSectorList();
     }, []);
 
     const getSectorList = async () => {
+        try {
+          
+            const response = await Requests.Get(`/esgadmin/master/sectors`);
+            setSectorList({...response});
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const getSubSectorList = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
             const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`).then(({ data }) => data);
@@ -31,15 +44,14 @@ const SubSector = (props) => {
 
     const updateMoreOption = async (option) => {
 
-        let getSector = (subSectorList.results || []).find(val => _toLower(_get(val, 'sector.name', '')) === _toLower(inputValue.sector));
-
+        let getSector = (sectorList.results || []).find(val => _get(val, 'name', '') === inputValue.sector);
         const payload = {
-            sector: _get(getSector, 'sector.id', null),
+            sector: _get(getSector, 'id', null),
             name: inputValue.subsector
         }
         try {
             const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`, { ...payload }).then(({ data }) => data);
-            getSectorList();
+            getSubSectorList();
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });

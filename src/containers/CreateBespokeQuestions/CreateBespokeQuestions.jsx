@@ -11,12 +11,13 @@ import './CreateBespokeQuestions.css';
 import { getErrorMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Requests from '../../Requests/index.js';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateBespokeQuestions = (props) => {
     const location = useLocation();
-    const { id= '', disclosureId = '' } = useParams();
+    const { id = '', disclosureId = '' } = useParams();
     const state = _get(location, 'state', {});
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
@@ -76,19 +77,22 @@ const CreateBespokeQuestions = (props) => {
             return rest;
         });
         const payload = {
-            children: newInputList
+            children: newInputList,
+            category: state.category,
+            section: state.section,
+            name: state.name
         }
 
         let lastInputList = newInputList[newInputList.length - 1];
         if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await axios.put(`${process.env.API_BASE_URL}/templates/${id}/disclosures/${disclosureId}?organization=${orgDetails.name}`, payload).then(({ data }) => data);
+                const response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, payload, { organization: orgDetails.name});
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
                 setInputList([initialRow]);
             } catch (e) {
                 let error = getErrorMessage(e);
-                setStatusData({...error});
+                setStatusData({ ...error });
             }
             setIsError(false);
         } else {

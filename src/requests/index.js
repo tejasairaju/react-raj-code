@@ -1,4 +1,5 @@
 import axios from "axios";
+import { constractURLQueryStr } from '../utils/utils.js';
 
 const getHeaders = () => {
 
@@ -12,11 +13,11 @@ const getHeaders = () => {
     }
 }
 
-async function Get(url, org = '', cookie) {
+async function Get(url, org = {}, cookie) {
     const config = getHeaders(cookie);
     let pathUrl = '';
     if (org) {
-        pathUrl = `${process.env.API_BASE_URL}${url}?organization=${org}`;
+        pathUrl = `${process.env.API_BASE_URL}${url}${constractURLQueryStr(org)}`;
     } else {
         pathUrl = `${process.env.API_BASE_URL}${url}`;
     }
@@ -24,15 +25,21 @@ async function Get(url, org = '', cookie) {
         .then(({ data }) => data);
 }
 
-async function Post(url = '', data = {}, org = '', cookie) {
+async function Post(url = '', data = {}, org = {}, cookie) {
     const config = getHeaders(cookie);
     let pathUrl = '';
     if (org) {
-        pathUrl = `${process.env.API_BASE_URL}${url}?organization=${org}`;
+        pathUrl = `${process.env.API_BASE_URL}${url}${constractURLQueryStr(org)}`;
     } else {
         pathUrl = `${process.env.API_BASE_URL}${url}`;
     }
-    return await axios.post(pathUrl, { ...data }, config)
+    let payload = null;
+    if(Array.isArray(data)) {
+        payload = [...data];
+    } else {
+        payload = { ...data };
+    }
+    return await axios.post(pathUrl, payload, config)
         .then(({ data }) => data);
 }
 
@@ -40,7 +47,7 @@ async function Put(url, data, org = '', cookie) {
     const config = getHeaders(cookie);
     let pathUrl = '';
     if (org) {
-        pathUrl = `${process.env.API_BASE_URL}${url}?organization=${org}`;
+        pathUrl = `${process.env.API_BASE_URL}${url}${constractURLQueryStr(org)}`;
     } else {
         pathUrl = `${process.env.API_BASE_URL}${url}`;
     }

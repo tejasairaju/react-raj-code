@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Requests from "../../Requests";
 import axios from 'axios';
 
 const ClientUserAction = (props) => {
@@ -31,8 +32,8 @@ const ClientUserAction = (props) => {
         }
         try {
             inputValue.status =  user_status;
-            const response = await axios.put(`${process.env.API_BASE_URL}/users/`+inputValue.id+`?organization=`+orgDetails.name, 
-            inputValue).then(({ data }) => data);
+            const response = await Requests.Put(`/users/`+inputValue.id,
+            inputValue, {organization:orgDetails.name});
                 navigate('/client/users');
             setStatusData({ type: 'success', message: 'Thanks! Successfully Updated' });
         } catch (e) {
@@ -43,7 +44,7 @@ const ClientUserAction = (props) => {
     }
 
 
-    return (<div onClick={() => setIsopen(false)}>
+    return (<div className="more-action-contianer" onClick={() => setIsopen(false)}>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='../../assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
             <div><a onClick={() => { navigate(`/client/users/invite`, {state: {userDetails: value}}) }}>Edit</a></div>

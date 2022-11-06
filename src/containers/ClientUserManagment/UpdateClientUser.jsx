@@ -5,6 +5,7 @@ import axios from 'axios';
 import Axios from 'axios';
 import moment from 'moment';
 import _get from 'lodash/get';
+import Requests from "../../Requests/index.js";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 
 const { Input, TextArea, Pills, UploadFile, Button,InputBox } = Fields;
@@ -23,7 +24,7 @@ const UpdateClientUser = () => {
         const getClientUsers = async () => {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await axios.get(`${process.env.API_BASE_URL}/users/?organization=`+orgDetails.name).then(({ data }) => data);
+                const response = await Requests.Get(`/users/`, {organization: orgDetails.name});
                 setStatusData({ type: '', message: '' });
                 setClientData(response);
             } catch (e) {
@@ -51,7 +52,7 @@ const UpdateClientUser = () => {
  
         try {
              
-            const response = await axios.post(`${process.env.API_BASE_URL}/users/?organization=`+orgDetails.name, 
+            const response = await Requests.Post(`/users/`, 
                 { first_name: inputValue.first_name , 
                     last_name: inputValue.last_name ,
                 email_id: inputValue.email_id ,
@@ -59,7 +60,7 @@ const UpdateClientUser = () => {
                 phone_number: inputValue.phone_number, 
                 department: inputValue.department,
                 designation: inputValue.designation, 
-                organization_name : orgDetails.name}).then(({ data }) => data);
+                organization_name : orgDetails.name}, {organization: orgDetails.name});
                 navigate('/client/users');
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {

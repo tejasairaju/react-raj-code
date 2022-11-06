@@ -10,6 +10,7 @@ import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { empCount } from '../../utils/constants.js';
 import axios from 'axios';
+import Requests from '../../Requests';
 import EsgImageNavBar from '../../components/EsgImageNavBar/EsgImageNavBar.jsx';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 
@@ -61,7 +62,7 @@ const OrganisationInfo = () => {
 
     const getframeworkDetails = async (id = "") => {
         try {
-            const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`).then(({ data }) => data);
+            const frameDetails = await Requests.Get(`/esgadmin/frameworks/${params.id}`);
             setLogo(frameDetails.logo);
             !_isEmpty(frameDetails.logo) && setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
             setInputValue({ ...frameDetails, categories: updateArrayObjects(frameDetails.supported_category), countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
@@ -141,7 +142,7 @@ const OrganisationInfo = () => {
             delete cloneObject.groupSubsectors[sectorName];
             setInputValue({ ...cloneObject, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat()] });
         } else {
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/subsectors?sector=${sectorName}`).then(res => res.data);
+            const response = await Requests.Get(`/esgadmin/master/subsectors`, {sector: sectorName});
             setInputValue({
                 ...cloneObject, groupSubsectors: {
                     ...cloneObject['groupSubsectors'],

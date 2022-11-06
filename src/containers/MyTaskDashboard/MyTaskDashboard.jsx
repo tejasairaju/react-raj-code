@@ -12,7 +12,7 @@ const MyTaskDashboard = () => {
     const navigate = useNavigate();
     // const { userId = 'fc16d19f-0bbd-4890-b62a-d514381f1c40' } = useParams();
     const [myTaskCount, setMyTaskCount] = useState({ disclosures: 0, completed: 0, pending: 0 });
-    const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
+    const { orgDetails = {}, loginDetails ={} } = useSelector(state => state.signup);
     const mytask = useSelector(state => state.mytask);
     useEffect(() => {
         dispatch(actions.getDisclosuresList({ userId: loginDetails.user_id, orgName: orgDetails.name }));

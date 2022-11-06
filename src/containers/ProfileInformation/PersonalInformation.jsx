@@ -57,7 +57,7 @@ const PersonalInformation = () => {
 
     const getUserDetails = async (id = "") => {
         try {
-            const userDetails = await Requests.Get(`/users/${loginDetails.user_id}`, orgDetails.name);
+            const userDetails = await Requests.Get(`/users/${loginDetails.user_id}`, {organization: orgDetails.name});
             setInputValue({ first_name: userDetails.first_name, last_name: userDetails.last_name, email_id:userDetails.email_id, phone_number:userDetails.phone_number,zipcode:(userDetails.zipcode || ''), country:userDetails.country, organization_name: userDetails.organization_name  });
         } catch (e) {
             setInputValue({});
@@ -76,58 +76,58 @@ const PersonalInformation = () => {
         return filterData;
     }
 
-    const onSaveHandler = async () => {
-        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email) && (inputValue.operating_countries || []).length
-            && (inputValue.sectors || []).length && inputValue.employees_count) {
-            const form = new FormData();
-            form.append('name', inputValue.name);
-            form.append('headquarters', inputValue.headquarters)
-            form.append('mobile_number', inputValue.mobile);
-            form.append('zip_code', inputValue.zipcode);
-            form.append('email', inputValue.email);
-            form.append('address', inputValue.address);
-            form.append('status', 'Active');
-            form.append('employees_count', inputValue.employees_count);
-            if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
-                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-            }
-            form.append('created_at', moment().format());
-            form.append('updated_at', moment().format());
+    // const onSaveHandler = async () => {
+    //     if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email) && (inputValue.operating_countries || []).length
+    //         && (inputValue.sectors || []).length && inputValue.employees_count) {
+    //         const form = new FormData();
+    //         form.append('name', inputValue.name);
+    //         form.append('headquarters', inputValue.headquarters)
+    //         form.append('mobile_number', inputValue.mobile);
+    //         form.append('zip_code', inputValue.zipcode);
+    //         form.append('email', inputValue.email);
+    //         form.append('address', inputValue.address);
+    //         form.append('status', 'Active');
+    //         form.append('employees_count', inputValue.employees_count);
+    //         if (!_isEmpty(uploadImage&&uploadImage.fileName)) {
+    //             form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+    //         }
+    //         form.append('created_at', moment().format());
+    //         form.append('updated_at', moment().format());
 
-            const getMultisector = getFilterArrayValue(inputValue.sectors);
-            for (const a of getMultisector) {
-                if (!_isEmpty(a)) {
-                    form.append("sectors", a);
-                }
+    //         const getMultisector = getFilterArrayValue(inputValue.sectors);
+    //         for (const a of getMultisector) {
+    //             if (!_isEmpty(a)) {
+    //                 form.append("sectors", a);
+    //             }
 
-            }
-            const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
-            for (const a of getMultisubsector) {
-                if (!_isEmpty(a)) {
-                    form.append("sub_sectors", a);
-                }
-            }
-            const getMultisubcountries = getFilterArrayValue(inputValue.operating_countries);
-            for (const a of getMultisubcountries) {
-                if (!_isEmpty(a)) {
-                    form.append("supported_countries", a);
-                }
-            }
-            try {
-                const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${orgDetails.name}`, form, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                }).then(({ data }) => data);
-                setApiData(response);
-                setStatusData({ type: 'success', message: 'Thanks! Your organizations has been successfully created' });
-                setInputValue({});
-                setLogo(null);
-            } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
-            }
-        } else {
-            setErrorValidation(true);
-        }
-    }
+    //         }
+    //         const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
+    //         for (const a of getMultisubsector) {
+    //             if (!_isEmpty(a)) {
+    //                 form.append("sub_sectors", a);
+    //             }
+    //         }
+    //         const getMultisubcountries = getFilterArrayValue(inputValue.operating_countries);
+    //         for (const a of getMultisubcountries) {
+    //             if (!_isEmpty(a)) {
+    //                 form.append("supported_countries", a);
+    //             }
+    //         }
+    //         try {
+    //             const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${orgDetails.name}`, form, {
+    //                 headers: { "Content-Type": "multipart/form-data" }
+    //             }).then(({ data }) => data);
+    //             setApiData(response);
+    //             setStatusData({ type: 'success', message: 'Thanks! Your organizations has been successfully created' });
+    //             setInputValue({});
+    //             setLogo(null);
+    //         } catch (e) {
+    //             setStatusData({ type: 'error', message: e.message });
+    //         }
+    //     } else {
+    //         setErrorValidation(true);
+    //     }
+    // }
 
     const fetchSubSector = async (index, cloneObject) => {
         const sectorName = inputValue.sectors[index].name;
@@ -135,7 +135,7 @@ const PersonalInformation = () => {
             delete cloneObject.groupSubsectors[sectorName];
             setInputValue({ ...cloneObject, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat()] });
         } else {
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/subsectors?sector=${sectorName}`).then(res => res.data);
+            const response = await Requests.Get(`/esgadmin/master/subsectors`, {sector: sectorName});
             setInputValue({
                 ...cloneObject, groupSubsectors: {
                     ...cloneObject['groupSubsectors'],
@@ -207,7 +207,7 @@ const PersonalInformation = () => {
 
     const onSaveUserDetails = async() => {
         try {
-          const respose = await Requests.Put(`/users/${loginDetails.user_id}`, {...inputValue}, orgDetails.name);
+          const respose = await Requests.Put(`/users/${loginDetails.user_id}`, {...inputValue}, {organization: orgDetails.name});
         //   if(respose) {
             setStatusData({ type: 'success', message: 'Your profile details has been successfully updated' });
         //   }
@@ -230,7 +230,7 @@ const PersonalInformation = () => {
       
         <div class="profile-info-container">
             <div class="framework__col-wrapper">
-                <div class="framework__row-wrapper bot10 profile-info-fileds">
+                {/* <div class="framework__row-wrapper bot10 profile-info-fileds">
                     <div class="framework__row">
                         <UploadFile imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
 
@@ -238,7 +238,7 @@ const PersonalInformation = () => {
                         <div class="framework__row"> </div>
                         <div class="framework__row"> </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div class="framework__row-wrapper profile-info-fileds">
                     <div class="framework__row">
@@ -268,11 +268,7 @@ const PersonalInformation = () => {
                     <InputBox name={'country'} value={inputValue.country} onChangeHandler={onChangeHandler} />
                         {/* <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} /> */}
                     </div>
-                    <div class="framework__row">
-                        <Label label={'Zip/PostalCode'} className={`framework__title right`} required={true} />
-                        <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue.zipcode} onChangeHandler={onChangeHandler} />
-
-                    </div>
+                  
                 </div>
 
             </div>

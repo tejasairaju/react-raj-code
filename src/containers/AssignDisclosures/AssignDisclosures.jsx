@@ -15,6 +15,7 @@ import ListFramework from "../../Components/ListFramework/ListFramework.jsx";
 import CategoryFilter from "../../Components/CategoryFilter/CategoryFilter.jsx";
 import UserListView from "../../Components/UserListView/UserListView.jsx";
 import { getErrorMessage } from '../../utils/utils.js';
+import Requests from "../../Requests/index.js";
 import { useSelector } from "react-redux";
 
 const AssignDisclosures = () => {
@@ -33,26 +34,14 @@ const AssignDisclosures = () => {
     const params = queryString.parse(search);
 
     useEffect(() => {
-        // getCatagoryList();
         getDisclosures();
         // ();
     }, []);
 
-    const getCatagoryList = () => {
-        try {
-            const response = axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`);
-            setCatagoryList([...response.results]);
-        } catch (e) {
-            setCatagoryList([]);
-        }
-
-    }
-
     const getDisclosures = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.get(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures?organization=${orgDetails.name}`).then(({ data }) => data);
-
+            const response = await Requests.Get(`/reports/${reportId}/disclosures`, {organization:orgDetails.name});
             setStatusData({ type: '', message: '' });
             setApiData({...apiData, listData: [...response.disclosures] })
             // return response.disclosures || [];
@@ -115,7 +104,8 @@ const AssignDisclosures = () => {
                 // payload['disclosure_id'] = [...filterListData];
                 // payload['disclosure_type'] = "Standard";
                 // payload['assigned_to'] = selectedUser.id;
-                const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
+                // const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
+                const response = await Requests.Post(`/reports/${reportId}/disclosures/assign`, params, {organization:orgDetails.name});
                 setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
             } catch (e) {
                 let error = getErrorMessage(e);
