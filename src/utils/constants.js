@@ -293,8 +293,21 @@ export const client_admin = [{
     label: "Publish Reports",
     isActive: false,
     icon1: 'masters-icon.svg',
-    icon2: '',
-    route: '/report'
+    icon2: 'plus-icon.svg',
+    // route: '/report'
+    subMenu: [
+        {
+            clsName: '',
+            label: "Create Report",
+            isActive: false,
+            route: '/report/create',
+        },
+        {
+            clsName: '',
+            label: "View Report",
+            isActive: false,
+            route: '/report/view',
+        }]
 },
 {
     clsName: '',
