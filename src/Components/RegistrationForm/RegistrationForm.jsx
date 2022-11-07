@@ -56,6 +56,9 @@ const RegistrationForm = () => {
         } else {
             errors.organization_name = "";
         }
+        if(inputValues.organization_name.length<3 || inputValues.organization_name.length>50){
+            errors.organization_name="Organization name should be between 3 and 50"
+        }
 
         const emailCond = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (!inputValues.email_id.trim()) {
