@@ -63,25 +63,29 @@ const AnswerQuestionsTable = (props) => {
 
     const getAnswerInputField = (questionItem, questionIndex) => {
         if (_toLower(questionItem.field_type) === 'dropdown') {
-            return (<select onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} value={_get(questionItem, 'value', 'Select')} className="framework__input" name="question-dropdown" id="answers-dropdown">
-                {(questionItem.field_choices || []).map(choice => <option value={choice} selected={(choice === questionItem.value) ? 'selected' : null}>{choice}</option>)}
+            return (<select defaultValue ={(typeof questionItem.value == "object"?questionItem.value.value:questionItem.value)}  onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} value={(typeof questionItem.value == "object"?questionItem.value.value:questionItem.value)} className="framework__input" name="question-dropdown" id="answers-dropdown">
+                {(questionItem.field_choices || []).map(
+                    choice => <option value={choice} 
+                    defaultValue ={(typeof questionItem.value == "object"?questionItem.value.value:questionItem.value)}
+                    selected={(choice === (typeof questionItem.value == "object"?questionItem.value.value:questionItem.value
+                    )) ? 'selected' : null}>{choice}</option>)}
             </select>);
-        } else if (_toLower(questionItem.field_type) === 'radio') {
+        } else if (_toLower(questionItem.field_type) === 'radio button') {
             return <ul className="assign__categories">
                 {(questionItem.field_choices || []).map((radioVal, i) => (<RadioButton
                     changed={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)}
                     id={i}
-                    isSelected={_toLower(questionItem.value) === _toLower(radioVal)}
+                    isSelected={_toLower(typeof questionItem.value == "object"?questionItem.value.value:questionItem.value) === _toLower(radioVal)}
                     label={radioVal}
                     value={radioVal}
                 />))}
             </ul>
         } else if (_toLower(questionItem.field_type) === 'multiselect') {
             return <ul className="assign__categories">
-                {(questionItem.field_choices || []).map((choice, i) => <li onClick={() => onClickMultiSelect(choice, disclosureIndex, questionIndex)} className={`assign__categories-item ${(choice === questionItem.value) ? 'active' : ''}`}>{choice}</li>)}
+                {(questionItem.field_choices || []).map((choice, i) => <li onClick={() => onClickMultiSelect(choice, disclosureIndex, questionIndex)} className={`assign__categories-item ${(choice === (typeof questionItem.value == "object"?questionItem.value.value:questionItem.value)) ? 'active' : ''}`}>{choice}</li>)}
             </ul>
         }
-        else return <input type="text" className="assign__categories" value={questionItem.value} onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} />
+        else return <input type="text" className="assign__categories" value={typeof questionItem.value == "object"?questionItem.value.value:questionItem.value} onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} />
     }
 
     const renderAnswerComponent = () => <>{

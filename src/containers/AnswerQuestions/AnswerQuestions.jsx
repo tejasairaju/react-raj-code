@@ -123,7 +123,7 @@ const AnswerQuestions = () => {
                 if(!_isEmpty(subItem.value)){
                     data = [...data, {
                         disclosure_kpi_id: subItem.id,
-                        value: subItem.value,
+                        value: typeof subItem.value == "object"?subItem.value.value:subItem.value,
                         value_unit: String(subItem.field_unit_values || '')
                     }];
                 }
