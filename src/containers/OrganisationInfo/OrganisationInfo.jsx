@@ -9,6 +9,7 @@ import moment from 'moment';
 import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { empCount } from '../../utils/constants.js';
+import {getErrorMessage } from '../../utils/utils.js'
 import axios from 'axios';
 import Requests from '../../Requests';
 import EsgImageNavBar from '../../components/EsgImageNavBar/EsgImageNavBar.jsx';
@@ -121,6 +122,7 @@ const OrganisationInfo = () => {
                 }
             }
             try {
+                setStatusData({ type: 'loading', message: ''});
                 const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${orgDetails.name}`, form, {
                     headers: { "Content-Type": "multipart/form-data" }
                 }).then(({ data }) => data);
@@ -129,7 +131,8 @@ const OrganisationInfo = () => {
                 setInputValue({});
                 setLogo(null);
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
             }
         } else {
             setErrorValidation(true);

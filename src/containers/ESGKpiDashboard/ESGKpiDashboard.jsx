@@ -12,8 +12,8 @@ const ESGKpiDashboard = () => {
                  </h1>
                 <div class="framework__row right font12 ">
                     <a onClick={() => navigate('/')} class="right">ESG KPIs</a>
-                    <a onClick={() => navigate('/clientadmin')} class="right rightlink__color">| Admin Dasboard |</a>
-                    <a onClick={() => navigate('/task')} class="right rightlink__color">My Tasks</a>
+                    <a onClick={() => navigate('/clientadmin')} class="right rightlink__color cursor-pointer">| Admin Dasboard |</a>
+                    <a onClick={() => navigate('/task')} class="right rightlink__color cursor-pointer">My Tasks</a>
                 </div>
             </div>
     <div className="esg-kpi-container">

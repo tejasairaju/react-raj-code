@@ -97,3 +97,6 @@ input:disabled
   -webkit-filter: blur(0.5px);
   opacity:1;
 }
+.cursor-pointer{
+    cursor: pointer;
+}
