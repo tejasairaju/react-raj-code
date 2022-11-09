@@ -51,11 +51,11 @@ const MyTaskDashboard = () => {
 
             <div class="welcome__task__right__heading">
                 <h1 class="welcome__task__heading">
-                    <a className="cursor-pointer" onClick={() => navigate('/')}><u>ESG KPIs</u></a>
+                    <a className="rightlink__color cursor-pointer" onClick={() => navigate('/')}><u>ESG KPIs</u></a>
                 </h1>
                 <span class="welcome__task__top_line">|</span>
                 <h1 class="welcome__task__heading">
-                    <a className="cursor-pointer" onClick={() => navigate('/clientadmin')}><u>Admin Dashboard</u></a>
+                    <a className="rightlink__color cursor-pointer" onClick={() => navigate('/clientadmin')}><u>Admin Dashboard</u></a>
                 </h1>
                 <span class="welcome__task__top_line">|</span>
                 <h1 class="welcome__task__heading">
