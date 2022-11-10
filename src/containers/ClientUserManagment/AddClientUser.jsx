@@ -8,10 +8,13 @@ import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import _isEmpty from 'lodash/isEmpty';
 import Requests from "../../Requests/index.js";
+import { getErrorMessage } from "../../utils/utils.js";
 
-const { Input, TextArea, Pills, UploadFile, Button,InputBox } = Fields;
 
 import './AddClientUser.css';
+import Popup from "../../components/Common/Popup/Popup.jsx";
+
+const { Input, TextArea, Pills, UploadFile, Button,InputBox } = Fields;
 
 const AddClientUser = () => {
 
@@ -26,8 +29,13 @@ const AddClientUser = () => {
 
     const onChangeHandler = (e) => {
         console.log(e.target);
-        const { name, value } = e.target;
-        setInputValue({ ...inputValue, [name]: value });
+        const { name, value = '' } = e.target;
+        if(name === 'phone_number'&& (value&&value.length === 1)) {
+            setInputValue({ ...inputValue, [name]: '+'+value });
+        } else {
+            setInputValue({ ...inputValue, [name]: value });
+        }
+        
     }
 
     const onChangeRemoveFile = () => {
@@ -56,11 +64,13 @@ const AddClientUser = () => {
                 phone_number: inputValue.phone_number, 
                 department: inputValue.department,
                 designation: inputValue.designation, 
-                organization_name : orgDetails.name},  {organization:orgDetails.name});
-                navigate('/client/users');
+                organization_name : orgDetails.name},  {organization:orgDetails.name});        
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+            
         } catch (e) {
-            setStatusData({ type: 'error', message: e.message });
+            let error = getErrorMessage(e);
+            setStatusData({...error});
+            // setStatusData({ type: 'error', message: e.message });
         }
     }
     const onUpdateUser = async () => {
@@ -72,12 +82,21 @@ const AddClientUser = () => {
                 navigate('/client/users');
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
-            setStatusData({ type: 'error', message: e.message });
+            let error = getErrorMessage(e);
+            setStatusData({...error});
+            // setStatusData({ type: 'error', message: e.message });
         }
+    }
+    const onCloseHandler = () => {
+        if(statusData.type === 'success') {
+            navigate('/client/users');
+
+        }
+        setStatusData({});
     }
     return (<>
         <div class="main__top-wrapper">
-            
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             {state ? 
             <h1 class="main__title">
                 Update User
@@ -134,6 +153,8 @@ const AddClientUser = () => {
                         <div class="GenerateReport_row">
                             <h1 class="Generate_h1_label">Phone</h1>
                             <input 
+                            minLength={8}
+                            maxLength={15}
                             value = {inputValue.phone_number}
                             error={validation['phone_number']}  type="text" 
                             name='phone_number' 
