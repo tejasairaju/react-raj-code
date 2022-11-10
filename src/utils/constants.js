@@ -264,7 +264,7 @@ export const client_admin = [{
     },
     {
         clsName: '',
-        label: "View Framework",
+        label: "View Bespoke Framework",
         isActive: false,
         route: '/view/template',
     }]
