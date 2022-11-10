@@ -10,25 +10,44 @@ import './CreateReport.css';
 import ListFramework from "../../Components/ListFramework/ListFramework.jsx";
 import { getErrorMessage } from '../../utils/utils.js';
 import { useSelector } from "react-redux";
+import Requests from "../../Requests/index.js";
 
 const { InputBox } = Fields
 const CreateReport = () => {
     const navigate = useNavigate();
     const { orgDetails = {} } = useSelector(state => state.signup);
-    const initialInputVal = { name: '', start_date: '', end_date: '', frameworks: null };
+    const initialInputVal = { name: '', start_date: '', end_date: '' };
     const [inputValue, setInputValue] = useState(initialInputVal);
+    const [isCustomeFramework, setIsCustomeFramework] = useState(true);
     const [reportData, setReportData] = useState({});
     const [statusData, setStatusData] = useState({});
 
-    const onClickFrameworkHandler = async (indexKey, frameworkId) => {
-        // console.log('::::::::::::::framework', frameworkId);
-        setInputValue({ ...inputValue, frameworks: [frameworkId] });
+    const onClickFrameworkHandler = async (indexKey = null, frameworkId = '') => {
+        console.log('::::::::::::::framework', frameworkId);
+        let data = null;
+        if(isCustomeFramework) {
+            data = {
+                frameworks: [frameworkId]
+            };
+        } else {
+            data = {
+                template: frameworkId
+            };
+        }
+
+
+        setInputValue({ ...inputValue, ...data });
+    }
+    const onChangeToggle = () => {
+        setInputValue({ ...initialInputVal, frameworks: null });
     }
 
     const onCloseHandler = () => {
         if(statusData.type === 'success') {
             navigate(`/report/${reportData.id}/disclosures`);
         }
+        setInputValue({...initialInputVal});
+        setStatusData({ });
     }
 
     const onChangeHandler = (e) => {
@@ -37,14 +56,30 @@ const CreateReport = () => {
     }
 
     const onClickCreateReportHandler = async () => {
+        console.log('????>>>>>', inputValue);
         if (inputValue.name && inputValue.start_date && inputValue.end_date) {
             setStatusData({ type: 'loading', message: ''});
             try {
-                const payload = {
-                    ...inputValue,
+                let payload = null;
+                if(isCustomeFramework) {
+                    payload = {
+                        ...inputValue,
                     status: 'Standard'
-                };
-                const response = await axios.post(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`, payload).then(({data}) => data);
+                    } 
+                }else {
+                    let cloneInputValue = {...inputValue};
+                    delete cloneInputValue.frameworks;
+                    payload = {
+                        ...cloneInputValue,
+                    status: 'Standard'
+                    }     
+                }
+                const response = await Requests.Post(`/reports/`,payload, {organization:orgDetails.name});
+                // const payload = {
+                //     ...inputValue,
+                //     status: 'Standard'
+                // };
+                // const response = await axios.post(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`, payload).then(({data}) => data);
                 setStatusData({ type: 'success', message: 'Thanks! Your framework report has been successfully created' });
                 setReportData({...response});
                 setInputValue({...initialInputVal});  
@@ -52,6 +87,7 @@ const CreateReport = () => {
             catch (e) {
                 let error = getErrorMessage(e);
                 setStatusData({...error});
+                // setInputValue({...initialInputVal}); 
             }
         }
     }
@@ -59,9 +95,9 @@ const CreateReport = () => {
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper assign-disclosure-title">
-            <h1 className="main__title">
+            <h2>
                 <b>Generate Report</b>
-            </h1>
+            </h2>
         </div>
         <div class="Generate_Report GenerateReport-framework__overflow">
             <div class="GenerateReport-framework__row">
@@ -71,7 +107,7 @@ const CreateReport = () => {
             <div class="framework__col-wrapper">
 
                 {/* <div class="GenerateReport-framework__row"> */}
-                <ListFramework label={null} onClickFrameworkHandler={onClickFrameworkHandler} />
+                <ListFramework isCustomeFramework={isCustomeFramework} setIsCustomeFramework={setIsCustomeFramework} label={null} onClickFrameworkHandler={onClickFrameworkHandler} onChangeToggle={onChangeToggle} />
                 {/* </div> */}
 
                 <div class="Generate_Report GenerateReport1-framework__row">
@@ -110,7 +146,7 @@ const CreateReport = () => {
                             <h1 class="Generate_h1_label">From :</h1>
                             <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
                             <input type="date" name={'start_date'} value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
-                            <img src="./assets/icons/celendar.svg" alt="" className="report-calender-icon" />
+                            <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
                     </div>
@@ -119,7 +155,7 @@ const CreateReport = () => {
                             <h1 class="Generate_h1_label">To :</h1>
                             <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
                             <input type="date" name={'end_date'} value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
-                            <img src="./assets/icons/celendar.svg" alt="" className="report-calender-icon" />
+                            <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
                     </div>

@@ -931,5 +931,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .assign-disclosure-title {
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.assign-disclosure-container-block {
+    width: 60em;
+    height: 12em;
 }

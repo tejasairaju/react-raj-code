@@ -6,6 +6,7 @@ import _get from 'lodash/get';
 import axios from 'axios';
 import Popup from '../Common/Popup/Popup.jsx';
 import actions from '../../actions/SignUpActions.js';
+import PopupActions from '../../actions/PopupActions.js';
 import Request from '../../Requests';
 import './RegistrationForm.css';
 import OrganisationInfo from '../../containers/OrganisationInfo/OrganisationInfo.jsx';
@@ -124,6 +125,7 @@ const RegistrationForm = () => {
         if (statusData.type === 'success') {
             navigate('/');
         }
+        dispatch(PopupActions.closePageLoader());
     }
 
     return (

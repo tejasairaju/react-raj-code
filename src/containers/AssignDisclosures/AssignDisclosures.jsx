@@ -106,7 +106,11 @@ const AssignDisclosures = () => {
                 // payload['assigned_to'] = selectedUser.id;
                 // const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
                 const response = await Requests.Post(`/reports/${reportId}/disclosures/assign`, params, {organization:orgDetails.name});
+               
                 setStatusData({ type: 'success', message: 'Disclosures assigned successfully' });
+                setTimeout(() => {
+                    getDisclosures();
+                }, 3000)
             } catch (e) {
                 let error = getErrorMessage(e);
                 setStatusData({...error});
@@ -122,13 +126,13 @@ const AssignDisclosures = () => {
 
     const isAssignedDisclosure = (disclosure) => {
         if(!_isEmpty(_get(disclosure, 'assigned_to.id', ''))) return true;
-        if(disclosure.isSelected === true) return true;
+        // if(disclosure.isSelected === true) return true;
         return false;
         
     }
 
     const filterList = ['All', 'Environmental', 'Social', 'Universal', 'Goverance', 'General'];
-    return (<>
+    return (<div className="assign-disclosure-container-block">
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper assign-disclosure-title">
             <h1 className="main__title">
@@ -160,7 +164,7 @@ const AssignDisclosures = () => {
                                 checked={isAssignedDisclosure(disclosure)}
                                 disabled={!_isEmpty(_get(disclosure, 'assigned_to.id', ''))}
                             />
-                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{isAssignedDisclosure(disclosure) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>
+                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{!isAssignedDisclosure(disclosure) ? <>{(disclosure.isSelected === true) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</>: null}</div>
                         </label>
                     </div>)
                 }
@@ -216,7 +220,7 @@ const AssignDisclosures = () => {
             </button>
         </div>
 
-    </>)
+    </div>)
 }
 
 export default AssignDisclosures;

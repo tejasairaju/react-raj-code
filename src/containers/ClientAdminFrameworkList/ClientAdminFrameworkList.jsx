@@ -105,7 +105,7 @@ const ClientAdminFrameworkList = (props) => {
     <h1 className="assign__title">
                 Select Any one framework from source and target
             </h1>
-        <div className="cli-framework-list-container m-t-2">
+        <div className="cli-framework-list-container">
             <div>{renderFrameworkLogo('Source Framework', 'left')}</div>
             <div>{renderFrameworkLogo('Target Framework', 'right')}</div>
         </div>

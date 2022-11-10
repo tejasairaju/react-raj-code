@@ -3,8 +3,10 @@
     overflow-y: scroll !important;
     /* min-height: 146e;
     padding: -23px; */
-    min-height: 150px !important;
-    max-height: 530px;
+    /* min-height: 150px !important;
+    max-height: 530px; */
+    min-height: 110px !important;
+    max-height: 512px;
 }
 
 .cli-admin-frame-list .frameworks__choose-item {
@@ -12,8 +14,8 @@
     justify-content: flex-start;
     margin: 2.3em !important;
     font-size: 1em;
-    width: 24em;
-    height: 6em;
+    width: 18em;
+    height: 5em;
 }
 .cli-framework-title {
     display: flex;

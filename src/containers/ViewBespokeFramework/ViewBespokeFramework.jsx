@@ -19,7 +19,7 @@ const ViewBespokeFramework = () => {
         const getFramework = async () => {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await axios.get(`${process.env.API_BASE_URL}/templates/?template_type=Custom&organization=${orgDetails.name}`).then(({ data }) => data);
+                const response = await Requests.Get(`/templates/`, {template_type: 'Custom', organization: orgDetails.name});
                 setStatusData({ type: '', message: '' });
                 setApiData({...response});
             } catch (e) {
