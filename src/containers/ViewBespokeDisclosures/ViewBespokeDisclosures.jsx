@@ -33,12 +33,13 @@ const ViewBespokeDisclosures = () => {
     }
 
     const headers = ['Name','Created At', 'Category', 'Section', 'Action'];
+    const actionIcon = '../../../assets/icons/more-icon.svg';
 
     return (
         <>
             <div className="main__top-wrapper">
                 <h1 className="main__title">
-                    Edit Framework {'->'} List Frameworks
+                    Framework {'->'} List Disclosures
                 </h1>
             </div>
             <div id="viewFramework" className="view-framework-container">
@@ -57,7 +58,7 @@ const ViewBespokeDisclosures = () => {
                                 <td>{val.category}</td>
                                 <td>{val.section}</td>
                                 <td>
-                                <MoreAction viewBespokeDisclosures={true} value={{ ...val, template_id}} index={index} state={{...val}}/>
+                                <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} value={{ ...val, template_id}} index={index} state={{...val}}/>
                                 </td>
                             </tr>)
                         })}

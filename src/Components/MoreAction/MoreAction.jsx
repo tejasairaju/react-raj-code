@@ -5,7 +5,8 @@ import './MoreAction.css';
 import axios from "axios";
 
 const MoreAction = (props) => {
-    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false,viewBespokeDisclosures=false,viewReport=false, ...rest } = props;
+    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false,
+        viewBespokeDisclosures=false,viewReport=false, actionIcon = '../../assets/icons/more-icon.svg',  ...rest } = props;
     const [isOpen, setIsopen] = useState(false);
     const { orgDetails = {} } = useSelector(state => state.signup);
     const { loginDetails = {} } = useSelector(state => state.signup);
@@ -44,7 +45,7 @@ const MoreAction = (props) => {
         setIsopen(false);
     }
     return (<div onClick={() => setIsopen(false)} className='more-action-contianer'>
-        <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src='../../assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
+        <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src={actionIcon} alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active" : "inactive"}`}>
             {viewListFramework && <>
                 <div onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
@@ -60,7 +61,7 @@ const MoreAction = (props) => {
               {viewBespokeFramework &&
                 <>
                     <div onClick={() => onRedirectWithState(`/template?isEditable=true`)}><a>Edit Framework</a></div>
-                    {/* <div onClick={() => onRedirectWithState(`/template/${value.id}/bespoke/disclosures`)}><a>View Disclosures</a></div> */}
+                    <div onClick={() => onRedirectWithState(`/template/${value.id}`)}><a>Create Disclosures</a></div>
                     <div onClick={() => onRedirectWithState(`/view/bespoke/${value.id}/disclosures`, value.name)}><a>View Disclosures</a></div>
                     
                 </>
@@ -69,6 +70,7 @@ const MoreAction = (props) => {
                 viewBespokeDisclosures && 
                 <>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}?isEditable=true`)}><a>Edit Disclosure</a></div>
+                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}`)}><a>Create Questions</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}><a>View Questions</a></div>
                 </>
             }

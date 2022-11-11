@@ -23,7 +23,7 @@ const CreateReport = () => {
     const [statusData, setStatusData] = useState({});
 
     const onClickFrameworkHandler = async (indexKey = null, frameworkId = '') => {
-        console.log('::::::::::::::framework', frameworkId);
+        // console.log('::::::::::::::framework', frameworkId);
         let data = null;
         if(isCustomeFramework) {
             data = {
@@ -44,7 +44,7 @@ const CreateReport = () => {
 
     const onCloseHandler = () => {
         if(statusData.type === 'success') {
-            navigate(`/report/${reportData.id}/disclosures`);
+            navigate(`/report/${reportData.id}/disclosures?framework_type=${isCustomeFramework ? 'Standard':'Custom' }`);
         }
         setInputValue({...initialInputVal});
         setStatusData({ });
@@ -71,7 +71,7 @@ const CreateReport = () => {
                     delete cloneInputValue.frameworks;
                     payload = {
                         ...cloneInputValue,
-                    status: 'Standard'
+                    status: 'Custom'
                     }     
                 }
                 const response = await Requests.Post(`/reports/`,payload, {organization:orgDetails.name});

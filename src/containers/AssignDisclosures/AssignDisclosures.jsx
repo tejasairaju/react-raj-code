@@ -31,7 +31,7 @@ const AssignDisclosures = () => {
     // const [listDisclosuresData, setListDisclosuresData] = useState([]);
     const [statusData, setStatusData] = useState({});
     const { search } = _get(window, 'location', '?');
-    const params = queryString.parse(search);
+    const query= queryString.parse(search);
 
     useEffect(() => {
         getDisclosures();
@@ -89,7 +89,7 @@ const AssignDisclosures = () => {
             if (disclosure.isSelected === true) {
                 const payload = {};
                 payload['disclosure_id'] = disclosure.id;
-                payload['disclosure_type'] = "Standard";
+                payload['disclosure_type'] = query.framework_type || '';
                 payload['assigned_to'] = selectedUser.id;
                 params = [...params, payload];
                 // return {...payload}
