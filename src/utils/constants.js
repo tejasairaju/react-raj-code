@@ -278,15 +278,6 @@ export const client_admin = [{
     icon2: '',
     route: '/intelligent/mapping'
 }, 
-// {
-//     clsName: '',
-//     role: 'client-admin',
-//     label: "Organisation Info",
-//     isActive: false,
-//     icon1: 'users-icon.svg',
-//     icon2: '',
-//     route: '/organisation/details'
-// },
 {
     clsName: '',
     role: 'client-admin',
@@ -308,6 +299,15 @@ export const client_admin = [{
             isActive: false,
             route: '/report/view',
         }]
+},
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Organisation Info",
+    isActive: false,
+    icon1: 'users-icon.svg',
+    icon2: '',
+    route: '/orginfo?isEditable=true'
 },
 {
     clsName: '',
