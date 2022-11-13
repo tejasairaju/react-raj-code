@@ -82,7 +82,7 @@ const ListFramework = (props) => {
     const isSelectedFramework = (isSelected) => isSelected ? 'active' : null;
 
     return (<>
-        <div className="toggle-framework-container"><button onClick={() => onChangeToggleHangler(true) } className={`framework-toggle-btn ${isCustomeFramework ? 'active': null}`}>Custome framework</button><button onClick={() => onChangeToggleHangler(false) } className={`framework-toggle-btn ${!isCustomeFramework ? 'active': null}`}>Bespoke Framework</button></div>
+        <div className="toggle-framework-container"><button onClick={() => onChangeToggleHangler(true) } className={`framework-toggle-btn ${isCustomeFramework ? 'active': null}`}>Standard framework</button><button onClick={() => onChangeToggleHangler(false) } className={`framework-toggle-btn ${!isCustomeFramework ? 'active': null}`}>Bespoke Framework</button></div>
         {!_isEmpty(label) && <h1 className="assign__title">
             {label}
         </h1>

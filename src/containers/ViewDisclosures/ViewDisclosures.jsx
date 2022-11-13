@@ -65,8 +65,12 @@ const ViewDisclosures = () => {
     const getState = (value) => ({
         code: value.code,
         name: value.name,
+        section: value.section,
+        category: value.category,
         framework_id: frameworkData.id,
-        disclosure_id: value.id
+        disclosure_id: value.id,
+        framework: frameworkData.id,
+        id: value.id
     })
 
     const headers = ['Name', 'Description', 'Action'];

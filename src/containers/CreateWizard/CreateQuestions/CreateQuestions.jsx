@@ -82,6 +82,7 @@ const CreateQuestions = (props) => {
         if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
 
             try {
+                setStatusData({ type: 'loading', message: '' });
                 const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework}/disclosures/${id}`, payload).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
                 setInputList([initialRow]);
@@ -120,6 +121,7 @@ const CreateQuestions = (props) => {
     }
 
     const onCloseHandler = () => {
+        setStatusData({})
     }
     const closePopupModal = () => {
         setFieldOptions(initialFieldOptions);

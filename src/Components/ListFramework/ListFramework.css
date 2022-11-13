@@ -111,7 +111,7 @@
     right: 10%;
     background: url('../../assets/icons/check-mark.png') no-repeat center/100%;
 }
-.frameworks__choose-item.active, .framework-toggle-btn.active, .frame-card.active {
+.frameworks__choose-item.active, .frame-card.active {
     background: rgba(32, 136, 189, 0.3);
 }
 .frameworks__choose-item.active::after {
@@ -151,8 +151,10 @@
 .framework-toggle-btn{
     /* background: #1e7eaf; */
     margin: auto 8px;
-    color: e;
-    border: 1px solid lightblue;
+    /* color: e; */
+    /* border: 1px solid lightblue; */
+    background: white;
+    box-shadow: 6px 5px 8px #adb0b2;
     padding: 4px 6px;
 }
 
@@ -177,4 +179,8 @@
     padding: 40px;
     box-shadow: 2px 2px 2px 3px #c8d0d8;
     margin: 6px auto;
+    }
+
+    .framework-toggle-btn.active {
+        background: #90d0f1
     }
