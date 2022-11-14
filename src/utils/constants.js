@@ -300,15 +300,15 @@ export const client_admin = [{
             route: '/report/view',
         }]
 },
-{
-    clsName: '',
-    role: 'client-admin',
-    label: "Organisation Info",
-    isActive: false,
-    icon1: 'users-icon.svg',
-    icon2: '',
-    route: '/orginfo?isEditable=true'
-},
+// {
+//     clsName: '',
+//     role: 'client-admin',
+//     label: "Organisation Info",
+//     isActive: false,
+//     icon1: 'users-icon.svg',
+//     icon2: '',
+//     route: '/orginfo?isEditable=true'
+// },
 {
     clsName: '',
     role: 'client-admin',
