@@ -89,7 +89,7 @@ const AssignDisclosures = () => {
             if (disclosure.isSelected === true) {
                 const payload = {};
                 payload['disclosure_id'] = disclosure.id;
-                payload['disclosure_type'] = query.framework_type || '';
+                payload['disclosure_type'] = disclosure.type || '';
                 payload['assigned_to'] = selectedUser.id;
                 params = [...params, payload];
                 // return {...payload}
