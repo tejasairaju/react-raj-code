@@ -94,7 +94,7 @@ const AnswerQuestionsTable = (props) => {
             if (questionItem['isSelected']) {
                 return (<>
                     <h5 className="detalis__information-title">
-                        Size of Office space
+                        <b>{questionItem.label} ?</b>
                     </h5>
                     <p className="detalis__information-title">
                         Guidance Notes

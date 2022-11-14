@@ -62,7 +62,7 @@ const ViewReport = (props) => {
 
             <div class="main__top-wrapper view-task-list-contianer">
                 <h1 class={`main__title ${getColor(status)}`}>
-                MY Task - Reports
+                My Task - Reports
                 </h1>
             </div>
             <br/>

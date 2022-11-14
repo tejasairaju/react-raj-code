@@ -19,7 +19,7 @@ const AnswerQuestions = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const state = _get(location, 'state', {});
-    const { start_date = '', end_date = ''} = _get(state, 'report', {});
+    const { start_date = '', end_date = '', name = '' } = _get(state, 'report', {});
     const { reportId = '', disclosureId = "" } = useParams();
     const [apiData, setApiData] = useState({ listData: null, groupListData: {} });
     const { orgDetails = {} } = useSelector(state => state.signup);
@@ -41,7 +41,7 @@ const AnswerQuestions = () => {
     const getDisclosures = async (frameworkId) => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, {organization: orgDetails.name});
+            const response = await Requests.Get(`/reports/${reportId}/disclosures/${disclosureId}/data`, { organization: orgDetails.name });
             setStatusData({ type: '', message: '' });
             setApiData({
                 listData: [response]
@@ -107,44 +107,47 @@ const AnswerQuestions = () => {
     }
 
     const onClickSaveAnswer = async (answer, disclosureIndex, questionIndex) => {
-        let cloneApiData = {...apiData};
+        let cloneApiData = { ...apiData };
         apiData.listData[disclosureIndex].children[questionIndex].value = answer;
         setApiData({
-            ...cloneApiData,   
+            ...cloneApiData,
         });
 
     }
 
-    const onClickSaveAllChanges = async () =>{
+    const onClickSaveAllChanges = async () => {
         let cloneListData = [...apiData.listData];
         let data = [];
         await cloneListData.forEach((item, itemIndex) => {
             (item.children || []).forEach((subItem, subItemIndex) => {
-                if(!_isEmpty(subItem.value)){
+                if (!_isEmpty(subItem.value)) {
                     data = [...data, {
                         disclosure_kpi_id: subItem.id,
-                        value: typeof subItem.value == "object"?subItem.value.value:subItem.value,
+                        value: typeof subItem.value == "object" ? subItem.value.value : subItem.value,
                         value_unit: String(subItem.field_unit_values || '')
                     }];
                 }
             });
         });
 
-        const payload = {data}
+        const payload = { data }
 
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = Requests.Post(`/reports/${reportId}/disclosures/${disclosureId}/data`, {data}, {organization: orgDetails.name});
-            if(response) {
+            const response = Requests.Post(`/reports/${reportId}/disclosures/${disclosureId}/data`, { data }, { organization: orgDetails.name });
+            if (response) {
                 setStatusData({ type: 'success', message: 'Your answers has been successfully saved' });
             }
-        } catch(e) {
+        } catch (e) {
             let error = getErrorMessage(e);
-            setStatusData({...error});
+            setStatusData({ ...error });
         }
     }
 
     const onCloseHandler = () => {
+        if(statusData.type === 'success') {
+            navigate(-1);
+        }
         setStatusData({ type: '', message: '' });
 
     }
@@ -159,10 +162,13 @@ const AnswerQuestions = () => {
     const headers = ['Name', 'Description', 'Action'];
     const radioButton = ['All', 'Environmental', 'Universal', 'Social', 'Goverance', 'General'];
     return (<>
-    {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <div className="main__top-wrapper">
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
+        <div className="main__top-wrapper m-b-1">
             <h1 className="main__title">
                 Answer Questions
+            </h1>
+            <h1 className="main__title">
+                Report Name: <b>{name}</b>
             </h1>
         </div>
         <div className="ans-main__assign-item">
@@ -215,9 +221,14 @@ const AnswerQuestions = () => {
             })
             }
         </ul>
-        <button onClick={() => onClickSaveAllChanges()} className="main__button btn-save-all-anw-change">
-            SAVE ALL CHANGES
-        </button>
+        <div className='create-question-main-btn'>
+            <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
+                Back
+            </button>
+            <button onClick={() => onClickSaveAllChanges()} className="main__button btn-save-all-anw-change">
+                SAVE ALL CHANGES
+            </button>
+        </div>
     </>)
 }
 

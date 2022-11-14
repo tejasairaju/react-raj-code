@@ -915,5 +915,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .btn-save-all-anw-change {
     white-space: nowrap !important;
     padding: 0.5em 6em !important;
+    margin-left: 1em !important;
 }
 

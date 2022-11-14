@@ -30,14 +30,14 @@ const ViewMyTaskList = (props) => {
 
     const redirectToViewDisclosures = (report) => {
         // navigate(`/report/${task.report.id}/disclosures/${task.disclosure.id, { state: {...task}}}`)
-        navigate(`/task/report/${report.id}/disclosures`)
+        navigate(`/task/report/${report.id}/disclosures`, {state: {report:{...report}}});
     }
 
     return (<>
 
             <div class="main__top-wrapper view-task-list-contianer">
                 <h1 class={`main__title ${getColor(status)}`}>
-                MY Task - Reports
+                My Task - Reports
                 </h1>
             </div>
             <br/>
