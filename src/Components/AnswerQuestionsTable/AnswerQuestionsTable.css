@@ -17,3 +17,13 @@ overflow: hidden;
     margin: 4px 4px;
     color: #FFFFFF;
 }
+
+.answer_question-file_upload {
+    align-items: center;
+    justify-content: flex-start;
+    display: flex;
+}
+
+.answer_question-file_upload .create-framework__title {
+    margin-top: 1em !important;
+}

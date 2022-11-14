@@ -18,6 +18,7 @@ const { RadioButton } = Fields;
 const ViewBespokeQuestions = () => {
     const isEditable = false;
     const location = useLocation();
+    const navigate = useNavigate();
     const { template_id = '', disclosure_id = '' } = useParams();
     const state = _get(location, 'state', {});
     const { code = "", name = "" } = state || {};
@@ -206,6 +207,12 @@ const ViewBespokeQuestions = () => {
                     handleRemoveClick={handleRemoveClick}
                     handleAddClick={handleAddClick}
                     isError={isError} />
+            </div>
+            <div className='create-question-main-btn'>
+                <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
+                    Back
+                </button>
+                
             </div>
         </>)
 }

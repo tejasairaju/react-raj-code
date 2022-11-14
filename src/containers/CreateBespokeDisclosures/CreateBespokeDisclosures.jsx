@@ -12,6 +12,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getErrorMessage } from '../../utils/utils.js';
 import Requests from "../../Requests/index.js";
+import './CreateBespokeDisclosures.css';
 const { InputBox, Pills } = Fields;
 
 const CreateBespokeDisclosures = () => {
@@ -103,7 +104,7 @@ const CreateBespokeDisclosures = () => {
     const onCloseHandler = () => {
         if(statusData.type === 'success' && !isEditable) {
             navigate(`/template/${id}/disclosures/${apiData.disclosures[0].id}`, { state: {...apiData.disclosures[0]}});
-        } else {
+        } else if(isEditable) {
             navigate(-1);
         }
 
@@ -128,8 +129,10 @@ const CreateBespokeDisclosures = () => {
               </div>
               
               <div class="Generate_report_button_row create-report-btn">
-                  <div class="Generate_frame"></div>
-                  <button onClick={() => createTemplate()} class="Generate_button">
+              <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
+                Back
+            </button>
+                  <button onClick={() => createTemplate()} className="create-template-btn">
                       {isEditable ? 'Update':'Create'}
                   </button>
               </div>

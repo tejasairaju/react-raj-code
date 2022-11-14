@@ -18,12 +18,12 @@ const ViewBespokeDisclosures = () => {
         const getDisclosures = async () => {
             try {
                 setStatusData({ type: 'loading', message: '' });
-                const response = await Requests.Get(`/templates/${template_id}/disclosures`, {organization: orgDetails.name});
+                const response = await Requests.Get(`/templates/${template_id}/disclosures`, { organization: orgDetails.name });
                 setStatusData({ type: '', message: '' });
-                setApiData({...response});
+                setApiData({ ...response });
             } catch (e) {
                 let error = getErrorMessage(e);
-                setStatusData({...error});
+                setStatusData({ ...error });
             }
         }
         getDisclosures();
@@ -32,7 +32,7 @@ const ViewBespokeDisclosures = () => {
     const onCloseHandler = () => {
     }
 
-    const headers = ['Name','Created At', 'Category', 'Section', 'Action'];
+    const headers = ['Name', 'Created At', 'Category', 'Section', 'Action'];
     const actionIcon = '../../../assets/icons/more-icon.svg';
 
     return (
@@ -58,12 +58,18 @@ const ViewBespokeDisclosures = () => {
                                 <td>{val.category}</td>
                                 <td>{val.section}</td>
                                 <td>
-                                <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} value={{ ...val, template_id}} index={index} state={{...val}}/>
+                                    <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} value={{ ...val, template_id }} index={index} state={{ ...val }} />
                                 </td>
                             </tr>)
                         })}
                     </tbody>
                 </table>
+            </div>
+            <div className='create-question-main-btn'>
+                <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
+                    Back
+                </button>
+                
             </div>
         </>)
 }

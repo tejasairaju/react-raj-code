@@ -6,9 +6,11 @@ import './AnswerQuestionsTable.css';
 import { listQuestions } from '../../../__mocks__/listQuestions.js';
 import Fields from "../Common/Fields/Fields.jsx";
 import ReAssignDisclosures from "../ReAssignDisclosures/ReAssignDisclosures.jsx";
-const { RadioButton } = Fields
+const { RadioButton, UploadFile } = Fields
 const AnswerQuestionsTable = (props) => {
     const [isOpenQAcard, setIsOpenQAcard] = useState(false);
+    const [logo, setLogo] = useState(null);
+    
     const [statusData, setStatusData] = useState({});
     const [questionsList, setQuestionsList] = useState([]);
     const [answer, setAnswer] = useState('');
@@ -48,7 +50,10 @@ const AnswerQuestionsTable = (props) => {
             return question;
         });
         setQuestionsList([...cloneQuestionList]);
+    }
 
+    const onChangeRemoveFile = () => {
+        setLogo(null);
     }
 
     const onChangeAnswerHandler = (e, disclosureIndex, questionIndex) => {
@@ -88,6 +93,15 @@ const AnswerQuestionsTable = (props) => {
         else return <input type="text" className="assign__categories" value={typeof questionItem.value == "object"?questionItem.value.value:questionItem.value} onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} />
     }
 
+    const onChangeFile = (event) => {
+        const imageUrl = event.target.files[0];
+        const fileName = event.target.files[0].name;
+        setLogo(URL.createObjectURL(imageUrl));
+        if (imageUrl) {
+            // setUploadImage({ fileName, imageUrl });
+        }
+    }
+
     const renderAnswerComponent = () => <>{
         (questionsList || []).map((questionItem, questionIndex) => {
 
@@ -108,6 +122,11 @@ const AnswerQuestionsTable = (props) => {
                         Unit
                     </p>
                     <input type="text" className="assign__categories" value={String(questionItem.field_unit_values || '')} disabled />
+                    <br />
+                    <div class="framework__row-wrapper bot1 answer_question-file_upload">
+                        <UploadFile imgcls={'org-image-size'} label='Document Upload' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
+                        <div class="framework__row"></div>
+                    </div>
                     {/* <div>
                         <div className="question-save-btn-container"><button onClick={() => onClickSaveAnswer(answer, disclosureIndex, questionIndex)} className="question-save-btn">Save</button></div>
                     </div> */}

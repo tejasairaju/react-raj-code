@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { questions } from '../../utils/constants.js';
 import Popup from '../../components/Common/Popup/Popup.jsx';
@@ -17,6 +17,7 @@ const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateBespokeQuestions = (props) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { id = '', disclosureId = '' } = useParams();
     const state = _get(location, 'state', {});
     const { dataType, inputType, unitType } = questions;
@@ -126,6 +127,9 @@ const CreateBespokeQuestions = (props) => {
     }
 
     const onCloseHandler = () => {
+        if(statusData.type === 'success') {
+            navigate(-1)
+        }
     }
     const closePopupModal = () => {
         setFieldOptions(initialFieldOptions);
@@ -203,9 +207,9 @@ const CreateBespokeQuestions = (props) => {
 
         </div>
         <div className='create-question-main-btn'>
-            {/* <button onClick={onCreateCancelQuestions} className="main__button m-l-1 cancel-btn">
-                Cancel
-            </button> */}
+        <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
+                Back
+            </button>
             <button onClick={onCreateQuestions} className="main__button m-l-1">
                 FINISH
             </button>
