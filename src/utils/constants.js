@@ -256,6 +256,18 @@ export const client_admin = [{
     icon1: 'frame-icon.svg',
     icon2: 'plus-icon.svg',
     subMenu: [
+        {
+            clsName: '',
+            label: "Select Standard Framework",
+            isActive: false,
+            route: '/report/create',
+        },
+        {
+            clsName: '',
+            label: "Assign Disclosures",
+            isActive: false,
+            route: '/report/view',
+        },
     {
         clsName: '',
         label: "Create Bespoke Framework",
@@ -272,6 +284,24 @@ export const client_admin = [{
 {
     clsName: '',
     role: 'client-admin',
+    label: "Answer Questions",
+    isActive: false,
+    icon1: 'answer-question-menu.png',
+    icon2: '',
+    route: '/task'
+}, 
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "View Reports",
+    isActive: false,
+    icon1: 'masters-icon.svg',
+    icon2: '',
+    route: '/report/view'
+}, 
+{
+    clsName: '',
+    role: 'client-admin',
     label: "Intelligent Mapping",
     isActive: false,
     icon1: 'client-icon.svg',
@@ -281,40 +311,9 @@ export const client_admin = [{
 {
     clsName: '',
     role: 'client-admin',
-    label: "Publish Reports",
-    isActive: false,
-    icon1: 'masters-icon.svg',
-    icon2: 'plus-icon.svg',
-    // route: '/report'
-    subMenu: [
-        {
-            clsName: '',
-            label: "Create Report",
-            isActive: false,
-            route: '/report/create',
-        },
-        {
-            clsName: '',
-            label: "View Report",
-            isActive: false,
-            route: '/report/view',
-        }]
-},
-// {
-//     clsName: '',
-//     role: 'client-admin',
-//     label: "Organisation Info",
-//     isActive: false,
-//     icon1: 'users-icon.svg',
-//     icon2: '',
-//     route: '/orginfo?isEditable=true'
-// },
-{
-    clsName: '',
-    role: 'client-admin',
     label: "Manage Users",
     isActive: false,
     icon1: 'settings-icon.svg',
     // icon2: 'plus-icon.svg',
     route: '/client/users'
-}]
+}];

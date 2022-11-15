@@ -82,7 +82,7 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
         let render = <>{sideMenu.map((item, parentIndex) => <li key={parentIndex} className={`nav__list-item ${item.isActive && !(item.subMenu || []).length ? 'active' : null}`}>
             <div className="list-item__wrapper">
                 {<a onClick={() => onMenuClickHandler(item.route, parentIndex)}>
-                    <img src={`../../../../assets/icons/${item.icon1}`} className='menu-icon' alt={item.label} />
+                    <img src={`../../../../assets/icons/${item.icon1}`} className='menu-icon' width={'30px'} alt={item.label} />
                     {item.label}
                     {item.icon2 && <img src={`../../../../assets/icons/${item.icon2}`} className='list-item__plus' alt={item.label} />}
                 </a>}
