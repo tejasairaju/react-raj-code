@@ -50,7 +50,7 @@ const UploadFile = (props) => (
         <h1 className="create-framework__title">{props.label}{props.required && <span className="color-red P-4">*</span>}</h1>
         <form className="add__logo-form">
             <div className="add__logo-logo">
-                {props.imageUrl ? <img src={props.imageUrl} alt="GRI" className={props.imgcls}/> : null}
+                {props.imageUrl ? <img src={props.imageUrl} alt="" className={props.imgcls}/> : null}
             </div>
             <label for="add__logo" className="add__logo-label"><span>Upload
             </span>

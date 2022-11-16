@@ -23,7 +23,7 @@ const OrganisationInfo = () => {
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');
     const { isEditable = false } = queryString.parse(search);
-    const [inputValue, setInputValue] = useState({ name: orgDetails.name, sectors: [...appWizard.sectors] , subsectors: []});
+    const [inputValue, setInputValue] = useState({ name: orgDetails.name, sectors: [...appWizard.sectors], subsectors: [] });
     const [organizationInfo, setOrganizationInfo] = useState({});
     const [errorValidation, setErrorValidation] = useState(false);
     const [logo, setLogo] = useState(null);
@@ -104,14 +104,14 @@ const OrganisationInfo = () => {
                             return subItem;
                         });
                     }
-                    let clonegroupSubsectors = {...groupSubsectors};
-                    groupSubsectors = {...clonegroupSubsectors, [sectorName]: response.results || []};
-                    spreadsubsectors = [...response.results]; 
+                    let clonegroupSubsectors = { ...groupSubsectors };
+                    groupSubsectors = { ...clonegroupSubsectors, [sectorName]: response.results || [] };
+                    spreadsubsectors = [...response.results];
                 }
             }
-            setInputValue({ ...constractInputVal, groupSubsectors, subsectors: [...spreadsubsectors]});
+            setInputValue({ ...constractInputVal, groupSubsectors, subsectors: [...spreadsubsectors] });
         });
-   
+
     };
 
     const updateArrayObjects = (parantArray = null, selectedArray = null, key = 'isSelect', value = true, selectedSubSector = []) => {
@@ -278,88 +278,103 @@ const OrganisationInfo = () => {
         </div>
     );
 
+
+    const renderOrganisationmainContainer = () => {
+        return (<><div class="client-main__content-wrapper content-wrapper">
+            <div class="framework__row-wrapper bot1">
+                <UploadFile imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
+                <div class="framework__row"></div>
+                <div class="framework__row"></div>
+            </div>
+            <div class="framework__row-wrapper bot1">
+                {OrgInputFields('Company', true, 'name', inputValue.name)}
+                <div class="framework__row">
+                    <Label label={'Location'} className={`framework__title right`} required={true} />
+                    <InputBox name={'location'} value={inputValue.location} onChangeHandler={onChangeHandler} />
+                </div>
+            </div>
+            <div class="framework__row-wrapper bot1">
+                <div class="framework__row">
+                    <div class="framework__col-wrapper">
+                        <div class="framework__row bot1">
+                            <Label label={'Headquarters'} required={true} />
+                            <InputBox name={'headquarters'} value={inputValue.headquarters} onChangeHandler={onChangeHandler} />
+                        </div>
+
+                        <div class="framework__row">
+                            <Label label={'Employee'} required={true} />
+                            <Dropdown className_1={'framework__input'} className_2={''} options={empCount} name='employees_count' value={inputValue.employees_count || ''} onChangeHandler={(e) => onChangeHandler(e)} />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="framework__row">
+                    <Label label={'Address'} className={"framework__title right address_title"} required={true} />
+                    <TextAreaBox label='' name='address' value={inputValue.address} className="framework__input" placeholder="" required={true} onChangeHandler={(e) => onChangeHandler(e)} />
+                </div>
+            </div>
+            <div class="framework__row-wrapper bot1">
+                <div class="framework__row">
+                    <h1 class="framework__title"><b>Sector</b></h1>
+                    <Pills label='' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
+                </div>
+                <div class="framework__row">
+                    <h1 class="framework__title right"><b>SubSector</b></h1>
+                    <Pills label='' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={isEditable} />
+                </div>
+            </div>
+            <div class="framework__row-wrapper bot1">
+                <div class="framework__row">
+                    <Label label={'Email'} required={true} />
+                    <InputBox name={'email'} value={inputValue.email} onChangeHandler={onChangeHandler} />
+                </div>
+
+                <div class="framework__row">
+                    <Label className="framework__title right" label={'Mobile'} required={true} />
+                    <InputBox maxLength={10} text="number" name={'mobile'} value={inputValue.mobile} onChangeHandler={onChangeHandler} />
+                </div>
+            </div>
+
+            <div class="framework__row-wrapper bot40">
+                <div class="framework__row">
+                    <Label label={'Country'} required={true} />
+                    <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} />
+                </div>
+
+                <div class="framework__row">
+                    <Label label={'Zip/PostalCode'} lassName="framework__title right" required={true} />
+                    <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue.zipcode} onChangeHandler={onChangeHandler} />
+
+                </div>
+            </div>
+        </div>
+            <div className='flex save-orgi-btn' >
+                <button onClick={() => onSaveHandler()} class="main__button">SAVE</button>
+            </div></>);
+    }
+
+    const renderTitle = () => (<div class="main__top-wrapper">
+        <h1 class="main__title">
+            Organizations Information
+        </h1>
+    </div>);
+
     return (
         <>
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            {!isEditable&&<EsgImageNavBar />}
-            <section className="right-section acc-info">
-                <div class="main__top-wrapper">
-                    <h1 class="main__title">
-                        Organizations Information
-                    </h1>
-                </div>
-                <div class="client-main__content-wrapper content-wrapper">
-                    <div class="framework__row-wrapper bot1">
-                        <UploadFile imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
-                        <div class="framework__row"></div>
-                        <div class="framework__row"></div>
-                    </div>
-                    <div class="framework__row-wrapper bot1">
-                        {OrgInputFields('Company', true, 'name', inputValue.name)}
-                        <div class="framework__row">
-                            <Label label={'Location'} className={`framework__title right`} required={true} />
-                            <InputBox name={'location'} value={inputValue.location} onChangeHandler={onChangeHandler} />
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper bot1">
-                        <div class="framework__row">
-                            <div class="framework__col-wrapper">
-                                <div class="framework__row bot1">
-                                    <Label label={'Headquarters'} required={true} />
-                                    <InputBox name={'headquarters'} value={inputValue.headquarters} onChangeHandler={onChangeHandler} />
-                                </div>
-
-                                <div class="framework__row">
-                                    <Label label={'Employee'} required={true} />
-                                    <Dropdown className_1={'framework__input'} className_2={''} options={empCount} name='employees_count' value={inputValue.employees_count || ''} onChangeHandler={(e) => onChangeHandler(e)} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="framework__row">
-                            <Label label={'Address'} className={"framework__title right address_title"} required={true} />
-                            <TextAreaBox label='' name='address' value={inputValue.address} className="framework__input" placeholder="" required={true} onChangeHandler={(e) => onChangeHandler(e)} />
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper bot1">
-                        <div class="framework__row">
-                            <h1 class="framework__title"><b>Sector</b></h1>
-                            <Pills label='' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
-                        </div>
-                        <div class="framework__row">
-                            <h1 class="framework__title right"><b>SubSector</b></h1>
-                            <Pills label='' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={isEditable} />
-                        </div>
-                    </div>
-                    <div class="framework__row-wrapper bot1">
-                        <div class="framework__row">
-                            <Label label={'Email'} required={true} />
-                            <InputBox name={'email'} value={inputValue.email} onChangeHandler={onChangeHandler} />
-                        </div>
-
-                        <div class="framework__row">
-                            <Label className="framework__title right" label={'Mobile'} required={true} />
-                            <InputBox maxLength={10} text="number" name={'mobile'} value={inputValue.mobile} onChangeHandler={onChangeHandler} />
-                        </div>
-                    </div>
-
-                    <div class="framework__row-wrapper bot40">
-                        <div class="framework__row">
-                            <Label label={'Country'} required={true} />
-                            <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} />
-                        </div>
-
-                        <div class="framework__row">
-                            <Label label={'Zip/PostalCode'} lassName="framework__title right" required={true} />
-                            <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue.zipcode} onChangeHandler={onChangeHandler} />
-
-                        </div>
-                    </div>
-                </div>
-                <div className='flex save-orgi-btn' >
-                    <button onClick={() => onSaveHandler()} class="main__button">SAVE</button>
-                </div>
-            </section>
+            {!isEditable ?
+                <>
+                    <EsgImageNavBar />
+                    <section className="right-section acc-info">
+                        {renderTitle()}
+                        {renderOrganisationmainContainer()}
+                    </section>
+                </> :
+                <>
+                {renderTitle()}
+                {renderOrganisationmainContainer()}
+                </>
+            }
         </>
     );
 }
