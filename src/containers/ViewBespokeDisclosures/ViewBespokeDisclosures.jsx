@@ -39,7 +39,7 @@ const ViewBespokeDisclosures = () => {
         <>
             <div className="main__top-wrapper">
                 <h1 className="main__title">
-                    Framework {'->'} List Disclosures
+                    Edit Disclosures
                 </h1>
             </div>
             <div id="viewFramework" className="view-framework-container">

@@ -10,9 +10,11 @@ import Axios from 'axios';
 import moment from 'moment';
 import _get from 'lodash/get';
 import './ViewMyTaskList.css';
+import actions from '../../actions/MyTaskDashboardAction.js';
 
 const ViewMyTaskList = (props) => {
     const { status  = '' } = useParams();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { orgDetails = {}, loginDetails={} } = useSelector(state => state.signup);
     const { taskList = null, reportList = null } = useSelector(state => state.mytask);
@@ -23,6 +25,12 @@ const ViewMyTaskList = (props) => {
         'Status',
         'Action'
        ];
+
+       useEffect(() => {
+        if((reportList|| []).length === 0) {
+            dispatch(actions.getReportList({ userId: loginDetails.user_id, orgName: orgDetails.name }));
+        }
+    }, []);
 
     if(status ==='completed') {
         headers.pop(); 
@@ -37,7 +45,7 @@ const ViewMyTaskList = (props) => {
 
             <div class="main__top-wrapper view-task-list-contianer">
                 <h1 class={`main__title ${getColor(status)}`}>
-                My Task - Reports
+                View Disclosure and Answer Questions
                 </h1>
             </div>
             <br/>

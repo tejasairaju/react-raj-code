@@ -49,10 +49,10 @@ export const Login = ({loginHandler}) => {
                 <h3 className="info__subtitle">
                 Providing AI-Driven Insights For Our Sustainable Future
                 </h3>
-                <p className="info__text">
+                {/* <p className="info__text">
                     The ESG software market is fragmented, with no one tool delivering an end to end solution from understanding which regulations business
                     need to comply with to data collection, compliance assurance and reporting.
-                </p>
+                </p> */}
             </div>
             <div className="content__form">
                 <h2 className="login__form-title right-section__title">

@@ -177,7 +177,7 @@ const ViewBespokeQuestions = () => {
         <>
             <div className="main__top-wrapper">
                 <h1 className="main__title">
-                    Edit Framework {'->'} List Frameworks {'->'} View Disclosures {'->'} List Disclosures {'->'}  List Questions
+                    Edit Questions
                 </h1>
             </div>
             {/* <div className="disc-framework-details"> */}

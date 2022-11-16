@@ -242,7 +242,7 @@ export const esg_admin = [{
 export const client_admin = [{
     clsName: '',
     role: 'client-admin',
-    label: "ESG-KPI",
+    label: "Dashboard",
     isActive: true,
     icon1: 'home-icon.svg',
     icon2: '',
@@ -258,7 +258,7 @@ export const client_admin = [{
     subMenu: [
         {
             clsName: '',
-            label: "Select Standard Framework",
+            label: "Select Framework",
             isActive: false,
             route: '/report/create',
         },
@@ -266,7 +266,7 @@ export const client_admin = [{
             clsName: '',
             label: "Assign Disclosures",
             isActive: false,
-            route: '/report/view',
+            route: '/report/view?isAssignDisClosure=true',
         },
     {
         clsName: '',
@@ -276,7 +276,7 @@ export const client_admin = [{
     },
     {
         clsName: '',
-        label: "View Bespoke Framework",
+        label: "Edit Framework",
         isActive: false,
         route: '/view/template',
     }]
@@ -288,12 +288,12 @@ export const client_admin = [{
     isActive: false,
     icon1: 'answer-question-menu.png',
     icon2: '',
-    route: '/task'
+    route: '/task/reports'
 }, 
 {
     clsName: '',
     role: 'client-admin',
-    label: "View Reports",
+    label: "Publish Reports",
     isActive: false,
     icon1: 'masters-icon.svg',
     icon2: '',

@@ -155,7 +155,7 @@ const AssignDisclosures = () => {
                             {disclosure.category}
                         </p>
                         <p class="disclosures__detalis">
-                            {disclosure.code} &npsb;{disclosure.name}
+                            {disclosure.code} {disclosure.name}
                         </p>
                         <label for="organisational__checkbox" class="disclosures__label" onClick={(e) => onClickSelectHandler(e, disclosureIndex)}>
                             <input type="checkbox"

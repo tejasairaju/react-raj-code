@@ -39,7 +39,7 @@ const ViewBespokeFramework = () => {
         <>
             <div className="main__top-wrapper">
                 <h1 className="main__title">
-                    Edit Framework {'->'} List Frameworks
+                    Edit Framework
                 </h1>
             </div>
             <div id="viewFramework" className="view-framework-container">

@@ -5,7 +5,7 @@ import './MoreAction.css';
 import axios from "axios";
 
 const MoreAction = (props) => {
-    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false,
+    const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false, isAssignDisClosure = false,
         viewBespokeDisclosures=false,viewReport=false, actionIcon = '../../assets/icons/more-icon.svg',  ...rest } = props;
     const [isOpen, setIsopen] = useState(false);
     const { orgDetails = {} } = useSelector(state => state.signup);
@@ -77,8 +77,8 @@ const MoreAction = (props) => {
             {
                 viewReport && 
                 <>
-                    <div onClick={() => onRedirectWithState(`/report/${value.id}/disclosures`)}><a>Assign Disclosures</a></div>
-                    <div onClick={() => generateReport(value.id, value.name)}><a>Generate Reports</a></div>
+                    {isAssignDisClosure ?<div onClick={() => onRedirectWithState(`/report/${value.id}/disclosures`)}><a>Assign Disclosures</a></div>
+                    :<div onClick={() => generateReport(value.id, value.name)}><a>Generate Reports</a></div>}
                 </>
             }
         </div>

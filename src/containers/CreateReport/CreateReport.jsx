@@ -96,7 +96,7 @@ const CreateReport = () => {
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper assign-disclosure-title">
             <h2>
-                <b>Generate Report</b>
+                <b>Framework</b>
             </h2>
         </div>
         <div class="Generate_Report GenerateReport-framework__overflow">
@@ -111,7 +111,7 @@ const CreateReport = () => {
                 {/* </div> */}
 
                 <div class="Generate_Report GenerateReport1-framework__row">
-                    <h1>Choose Report Name and Report Period</h1>
+                    <h1>Assign Report Name and Period</h1>
                 </div>
 
                 <div class="GenerateReport-framework__row Generate_report_head">

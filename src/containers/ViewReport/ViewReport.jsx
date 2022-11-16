@@ -16,6 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 const ViewReport = (props) => {
     const { status  = '' } = useParams();
     const navigate = useNavigate();
+    const { search } = _get(window, 'location', '?');
+      const queryValue = queryString.parse(search);
+  const {isAssignDisClosure = false} = queryValue;
     const { orgDetails = {}, loginDetails={} } = useSelector(state => state.signup);
     const [ reportList , setReportList ] = useState([]);
     const [statusData, setStatusData] = useState({});
@@ -62,7 +65,7 @@ const ViewReport = (props) => {
 
             <div class="main__top-wrapper view-task-list-contianer">
                 <h1 class={`main__title ${getColor(status)}`}>
-                My Task - Reports
+                {isAssignDisClosure? 'Assign Disclosures' : 'Publish Reports'}
                 </h1>
             </div>
             <br/>
@@ -82,7 +85,7 @@ const ViewReport = (props) => {
                                 <td>{report.end_date}</td>
                                 <td>{report.status}</td>
                                 <td>
-                                <MoreAction viewReport={true} value={report} />
+                                <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} />
                                     </td>
                             </tr>);
                             // }
