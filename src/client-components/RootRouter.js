@@ -179,6 +179,7 @@ const RootRouter = () => {
         <Route path="/viewdisclosures" element={<ViewDisclosures />} />
         <Route path="/viewquestions" element={<ViewQuestions />} />
         {/* Duplicate route */}
+        <Route path="/organisation/info" element={<OrganisationInfo />} />
         <Route path="/report/create" element={<CreateReport />} />
         <Route path="/report/view" element={<ViewReport />} />
         <Route path="/task" element={<MyTaskDashboard />} />

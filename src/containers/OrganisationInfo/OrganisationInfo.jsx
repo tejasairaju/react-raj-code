@@ -106,8 +106,7 @@ const OrganisationInfo = () => {
                     }
                     let clonegroupSubsectors = {...groupSubsectors};
                     groupSubsectors = {...clonegroupSubsectors, [sectorName]: response.results || []};
-
-                    spreadsubsectors = [...Object.values(groupSubsectors || []).flat(), ...response.results]; 
+                    spreadsubsectors = [...response.results]; 
                 }
             }
             setInputValue({ ...constractInputVal, groupSubsectors, subsectors: [...spreadsubsectors]});
@@ -282,11 +281,11 @@ const OrganisationInfo = () => {
     return (
         <>
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            <EsgImageNavBar />
+            {!isEditable&&<EsgImageNavBar />}
             <section className="right-section acc-info">
                 <div class="main__top-wrapper">
                     <h1 class="main__title">
-                        Organization Information
+                        Organizations Information
                     </h1>
                 </div>
                 <div class="client-main__content-wrapper content-wrapper">
@@ -329,7 +328,7 @@ const OrganisationInfo = () => {
                         </div>
                         <div class="framework__row">
                             <h1 class="framework__title right"><b>SubSector</b></h1>
-                            <Pills label='' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={false} />
+                            <Pills label='' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={isEditable} />
                         </div>
                     </div>
                     <div class="framework__row-wrapper bot1">
@@ -341,7 +340,6 @@ const OrganisationInfo = () => {
                         <div class="framework__row">
                             <Label className="framework__title right" label={'Mobile'} required={true} />
                             <InputBox maxLength={10} text="number" name={'mobile'} value={inputValue.mobile} onChangeHandler={onChangeHandler} />
-
                         </div>
                     </div>
 
