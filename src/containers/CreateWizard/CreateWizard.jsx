@@ -11,7 +11,7 @@ import Popup from "../../components/Common/Popup/Popup.jsx";
 import Header from '../../Components/Common/Header/Header.jsx';
 import './CreateWizard.css';
 import { useState } from 'react';
-import { esg_admin, client_admin } from '../../utils/constants.js'
+import { esg_admin, client_admin, client_user } from '../../utils/constants.js'
 import CreateFramework from './CreateFramework/CreateFramework.jsx';
 import axios from 'axios';
 import Pagination from '../../Components/Pagination/Pagination.jsx';
@@ -30,6 +30,8 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
             updateSideMenu(esg_admin);
         } else if (userRole === 'client_admin') {
             updateSideMenu(client_admin);
+        } else {
+            updateSideMenu(client_user);
         }
         getUserAdminInfo(1);
     }, []);

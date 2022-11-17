@@ -326,3 +326,31 @@ export const client_admin = [{
     // icon2: 'plus-icon.svg',
     route: '/client/users'
 }];
+
+export const client_user = [{
+    clsName: '',
+    role: 'client-admin',
+    label: "Dashboard",
+    isActive: true,
+    icon1: 'home-icon.svg',
+    icon2: '',
+    route: '/'
+},
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Answer Questions",
+    isActive: false,
+    icon1: 'answer-question-menu.png',
+    icon2: '',
+    route: '/task/reports'
+},  
+{
+    clsName: '',
+    role: 'client-admin',
+    label: "Publish Reports",
+    isActive: false,
+    icon1: 'masters-icon.svg',
+    icon2: '',
+    route: '/report/view'
+}];

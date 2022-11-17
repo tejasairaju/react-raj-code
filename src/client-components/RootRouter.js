@@ -40,6 +40,7 @@ import axios from "axios";
 import AssignDisclosures from "../containers/AssignDisclosures/AssignDisclosures.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { org } from "../../__mocks__/org.js";
+import { client_user } from "../../__mocks__/client_user.js";
 import PageInprogress from "../Components/Common/PageInprogress/PageInprogress.jsx";
 import CreateReport from "../containers/CreateReport/CreateReport.jsx";
 import ViewReport from "../containers/ViewReport/ViewReport.jsx"
@@ -77,7 +78,7 @@ const RootRouter = () => {
         try {
           const token = await getTokenSilently();
           let decodedData = jwt(token); //decodedData.org/test8
-          if (decodedData.user_role === 'client_admin') {
+          if (decodedData.user_role === 'client_admin' || decodedData.user_role === 'client_user') {
             const response = await Requests.Get(`/organizations/${decodedData.org}`);
             if (response) {
               setOrgDetailsData({...response})
@@ -158,9 +159,7 @@ const RootRouter = () => {
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
       </Route>
     </Routes>)
-  } else 
-  // {
-     if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
+  } else if (isAuthenticated && loginUserDetails.user_role === 'client_admin') {
     renderRouteComponent = (<Routes>
       <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
         <Route index element={<ESGKpiDashboard/>} />
@@ -204,6 +203,47 @@ const RootRouter = () => {
       <Route path="/packege/summary" element={<PackageSummary />} />
       <Route path="/payment/success" element={<PaymentSuccess />} />
       <Route path="/pageinprogress" element={<PageInprogress />} />
+    </Routes>);
+  } else
+  // {
+   if (isAuthenticated && loginUserDetails.user_role === 'client_user') {
+    renderRouteComponent = (<Routes>
+      <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
+        <Route index element={<MyTaskDashboard/>} />
+        <Route path="/clientadmin" element={<ClientAdminDashboard />} />
+        <Route path="/select/framework" element={<StripePayment />} />
+        <Route path="/template" element={<CreateBespokeFramework />} />
+        <Route path="/template/:id" element={<CreateBespokeDisclosures />} />
+        <Route path="/template/:id/disclosures/:disclosureId" element={<CreateBespokeQuestions />} />
+        <Route path="/view/template" element={<ViewBespokeFramework />} />
+        <Route path="/view/bespoke/:template_id/disclosures" element={<ViewBespokeDisclosures />} />
+        <Route path="/template/:template_id/disclosures/:disclosure_id/questions" element={<ViewBespokeQuestions />} />
+        {/* Duplicate route */}
+        <Route path="/createdisclosures" element={<CreateDisclosures />} />
+        <Route path="/createquestions" element={<CreateQuestions />} />
+        <Route path="/manageframework" element={<ViewFrameWork />} />
+        <Route path="/viewdisclosures" element={<ViewDisclosures />} />
+        <Route path="/viewquestions" element={<ViewQuestions />} />
+        {/* Duplicate route */}
+        <Route path="/organisation/info" element={<OrganisationInfo />} />
+        <Route path="/report/create" element={<CreateReport />} />
+        <Route path="/report/view" element={<ViewReport />} />
+        <Route path="/task" element={<MyTaskDashboard />} />
+        <Route path="/task/reports" element={<ViewMyTaskList />} />
+        <Route path="/task/report/:reportId/disclosures" element={<ViewMyTaskDisclosuresList />} />
+        <Route path="/report/:reportId/disclosures/:disclosureId/answers" element={<AnswerQuestions />} />
+        <Route path="/framework/success" element={<ManageFrameWork component='Welcome to framework' />} />
+        <Route path="/report/:reportId/disclosures" element={<AssignDisclosures />} />
+        <Route path="/bespoke/framework" element={<ManageFrameWork component='Welcome to Create Bespoke Framework' />} />
+        <Route path="/intelligent/mapping" element={<ClientAdminFrameworkList />} />
+        <Route path="/answer/questions" element={<ManageFrameWork component='Welcome to Answer Questions' />} />
+        <Route path="/organisation/details" element={<ManageFrameWork component='Welcome to Organisation Info' />} />
+        <Route path="/publish/reports" element={<ManageFrameWork component='Welcome to Publish Reports' />} />
+        <Route path="/client/mangeuser" element={<ManageFrameWork component='Welcome to Manage Users' />} />
+        <Route path="/client/users" element={<ClientUsers />} />
+        <Route path="/client/users/invite" element={<AddClientUser />} />
+        <Route path="/personalinfo" element={<PersonalInformation />} />
+      </Route>
     </Routes>);
   }
 
