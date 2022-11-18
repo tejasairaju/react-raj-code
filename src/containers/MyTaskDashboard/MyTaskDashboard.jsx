@@ -49,7 +49,7 @@ const MyTaskDashboard = () => {
                 </h1>
             </div>
 
-            <div class="welcome__task__right__heading">
+            {(loginDetails.user_role === 'client_admin') &&<div class="welcome__task__right__heading">
                 <h1 class="welcome__task__heading">
                     <a className="rightlink__color cursor-pointer" onClick={() => navigate('/')}><u>ESG KPIs</u></a>
                 </h1>
@@ -61,7 +61,7 @@ const MyTaskDashboard = () => {
                 <h1 class="welcome__task__heading">
                     <b>My Tasks</b>
                 </h1>
-            </div>
+            </div>}
         </div>
         <div class="welcome__task__container2">
             {renderCard('Reports', mytask.reportCount)}
