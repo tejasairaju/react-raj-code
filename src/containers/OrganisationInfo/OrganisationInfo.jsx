@@ -355,7 +355,7 @@ const OrganisationInfo = () => {
 
     const renderTitle = () => (<div class="main__top-wrapper">
         <h1 class="main__title">
-            Organisations Information
+            Organisational Information
         </h1>
     </div>);
 

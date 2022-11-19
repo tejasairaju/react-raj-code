@@ -62,6 +62,8 @@ const CreateBespokeFramework = () => {
     const onCloseHandler = () => {
         if (statusData.type === 'success' && !isEditable) {
             navigate(`/template/${apiData.id}`);
+        } else if((statusData.type === 'success')&&isEditable) {
+            navigate(-1);
         }
         setStatusData({});
     }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import _get from 'lodash/get';
+import _isEmpty from 'lodash/isEmpty';
 import _toLower from 'lodash/toLower';
 import queryString from 'query-string';
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ const CreateReport = () => {
     const { orgDetails = {} } = useSelector(state => state.signup);
     const initialInputVal = { name: '', start_date: '', end_date: '' };
     const [inputValue, setInputValue] = useState(initialInputVal);
+    const [error, setError] = useState('');
     const [isCustomeFramework, setIsCustomeFramework] = useState(true);
     const [reportData, setReportData] = useState({});
     const [statusData, setStatusData] = useState({});
@@ -55,9 +57,21 @@ const CreateReport = () => {
         setInputValue({ ...inputValue, [name]: value });
     }
 
+    const handleErrorMessage = () => {
+        const error = {};
+        const cloneInputVal = {...inputValue};
+        if(_isEmpty(cloneInputVal.frameworks)) {
+            setError('Please choose any framework.');
+        } else if(_isEmpty(cloneInputVal.name)) {
+            setError('Please enter report name.');
+        } else  {
+            setError('Please select Date.');
+        }
+    }
+
     const onClickCreateReportHandler = async () => {
         console.log('????>>>>>', inputValue);
-        if (inputValue.name && inputValue.start_date && inputValue.end_date) {
+        if (inputValue.name && inputValue.start_date && inputValue.end_date&&inputValue.frameworks) {
             setStatusData({ type: 'loading', message: ''});
             try {
                 let payload = null;
@@ -89,6 +103,8 @@ const CreateReport = () => {
                 setStatusData({...error});
                 // setInputValue({...initialInputVal}); 
             }
+        } else {
+            handleErrorMessage();
         }
     }
 
@@ -145,7 +161,7 @@ const CreateReport = () => {
                         <div class="GenerateReport_row">
                             <h1 class="Generate_h1_label">From :</h1>
                             <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
-                            <input type="date" name={'start_date'} value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                            <input type="date" name={'start_date'} min="2000-01-01" value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
@@ -154,11 +170,15 @@ const CreateReport = () => {
                         <div class="GenerateReport_row">
                             <h1 class="Generate_h1_label">To :</h1>
                             <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
-                            <input type="date" name={'end_date'} value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                            <input type="date" name={'end_date'} max="2100-01-01" value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
                     </div>
+                </div>
+
+                <div class="Generate_report_head color-red">
+                    {!_isEmpty(error)&&<>* {error}</>}
                 </div>
 
                 <div class="Generate_report_button_row create-report-btn">

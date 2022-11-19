@@ -55,6 +55,7 @@ export const getColor = (status) => {
 }
 
 export const getErrorMessage = (error) => {
+    console.log('>>>>>>>>>>>>>>>>>>>??????????????/', error);
     let errorObject = { type: 'error' };
     if (_get(error, 'response.status', 400) === 400) {
         const data = _get(error, 'response.data', {});
@@ -62,7 +63,10 @@ export const getErrorMessage = (error) => {
         if (flatData.length > 0) {
             errorObject['message'] = flatData[0];
         }
+    } else if(_get(error, 'response.status', 400) === 409){
+        errorObject['message'] = _get(error, 'response.data.message', 'Request failed with status code 409');
     } else {
+        
         errorObject['message'] = error.message;
     }
     return { ...errorObject };

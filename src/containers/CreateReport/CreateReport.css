@@ -116,6 +116,7 @@ img.GenerateReport-image {
 }
 .create-report-btn {
     justify-content: flex-end;
+    margin-top: 80px !important;
 }
 @media screen and (max-width: 767px) {
     

@@ -7,6 +7,7 @@ import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import Popup from "../../components/Common/Popup/Popup.jsx";
+import { getErrorMessage } from '../../utils/utils.js';
 // import '../CreateWizard.css';
 import axios from 'axios';
 
@@ -104,7 +105,9 @@ const CreateDisclosures = (props) => {
                 setInputValue({});
                 setStatusData({ type: 'success', message: 'Thanks! Your account has been successfully created' });
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
+                // setStatusData({ type: 'error', message: e.message });
             }
         } else {
             checkValidation();
@@ -147,8 +150,10 @@ const CreateDisclosures = (props) => {
     }
 
     const onCloseHandler = () => {
-        if (statusData.type === 'success') {
+        if (statusData.type === 'success'&&!isEditable) {
             navigate('/createquestions', {state:{ section:apiData.section ,category: apiData.category, id: apiData.id, framework: apiData.framework, code:apiData.code, name:apiData.name }});
+        } else if(statusData.type === 'success'&&isEditable) {
+            navigate(-1)
         }
         setStatusData({ type: '', message: '' });
     }

@@ -86,7 +86,7 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
                 {<a onClick={() => onMenuClickHandler(item.route, parentIndex)}>
                     <img src={`../../../../assets/icons/${item.icon1}`} className='menu-icon' width={'30px'} alt={item.label} />
                     {item.label}
-                    {item.icon2 && <img src={`../../../../assets/icons/${item.icon2}`} className='list-item__plus' alt={item.label} />}
+                    {item.icon2&&<>{item.isActive ? <img src={`../../../../assets/icons/minus-side-menu.png`} width={'18px'} height={'28px'} className='list-item__plus' alt={item.label} /> :<img src={`../../../../assets/icons/${item.icon2}`} className='list-item__plus' alt={item.label} /> }</>}
                 </a>}
             </div>
             {item.isActive && ((item.subMenu || []).length > 0) && <ul className="sublist active">

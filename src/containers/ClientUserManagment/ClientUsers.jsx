@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import _toLower from 'lodash/toLower';
 import axios from 'axios';
 import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
@@ -35,14 +36,13 @@ const ClientUsers = () => {
         getClientUsers();
     }, []);
    
-    const headers = ['First Name',
-    'Last Name',
-    'Contact Number',
-    'Email Id',
-    'Country',
+    const headers = ['Username',
     'Location',
+    'Email iD',
+    'Phone Number',
     'Designation',
     'Department',
+    'Role',
     'Status',
     'Action'];
 
@@ -67,22 +67,22 @@ const ClientUsers = () => {
                 </thead>
                 <tbody>
                             {(clientData.results || []).map((val, index) => {
+                                if(_toLower(val.role) !== 'admin') {
                                 return (<tr>
-                            
                                     <td>{val.first_name}</td>
-                                    <td>{val.last_name}</td>
-                                    <td>{val.phone_number}</td>
-                                    <td>{val.email_id}</td>
-                                    <td>{val.country}</td>
                                     <td>{val.location}</td>
+                                    <td>{val.email_id}</td>
+                                    <td>{val.phone_number}</td>
                                     <td>{val.designation}</td>
                                     <td>{val.department}</td>
+                                    <td>{val.role}</td>
                                     <td>{val.status}</td>
                                     <td>
                                     <ClientUserAction value={val} index={index}/> 
                                         {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
                                     </td>
                                 </tr>)
+                                }
                             })}
                 </tbody>
             </table>

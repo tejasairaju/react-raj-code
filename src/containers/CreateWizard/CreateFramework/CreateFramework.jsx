@@ -12,6 +12,7 @@ import '../CreateWizard.css';
 import { useState } from 'react';
 // import CreateframeworkForm from '../createFrameworkForm/createFrameWorkForm.jsx';
 import axios from 'axios';
+import { getErrorMessage } from '../../../utils/utils.js';
 import CreateQuestions from '../CreateQuestions/CreateQuestions.jsx';
 
 const { Input, TextArea, Pills, UploadFile, Button } = Fields;
@@ -134,7 +135,9 @@ const CreateFramework = (props) => {
                 setInputValue({});
                 setLogo(null);
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
+                // setStatusData({ type: 'error', message: e.message });
             }
         } else {
             setErrorValidation(true);
@@ -190,8 +193,10 @@ const CreateFramework = (props) => {
     }
 
     const onCloseHandler = () => {
-        if (statusData.type === 'success') {
+        if (statusData.type === 'success'&&!isEdit) {
             navigate(`/createdisclosures?id=${apiData.id}`);
+        } else if(statusData.type === 'success'&&isEdit) {
+            navigate(-1);
         }
         setStatusData({ type: '', message: '' });
     }

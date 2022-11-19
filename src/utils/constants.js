@@ -293,7 +293,7 @@ export const client_admin = [{
 {
     clsName: '',
     role: 'client-admin',
-    label: "Oraganisations Info",
+    label: "Oraganisational Info",
     isActive: false,
     icon1: 'organisation-info-menu.png',
     icon2: '',

@@ -155,7 +155,7 @@ const RegistrationForm = () => {
                         </label>
                         <label for="form__phone_number" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Mobile number &nbsp; {validation.phone_number && <span className='error-msg'>({validation.phone_number})</span>}</div>
-                            <input type="text" max={10} value={inputValues.phone_number} name="phone_number" id="form__phone_number" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
+                            <input type="text" pattern="[0-9]" ondrop="false"maxLength={10} value={inputValues.phone_number} name="phone_number" id="form__phone_number" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
                     </div>
                     <div className="acc-info__form-item">

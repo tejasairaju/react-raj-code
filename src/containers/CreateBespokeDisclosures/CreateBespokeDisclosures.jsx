@@ -104,7 +104,7 @@ const CreateBespokeDisclosures = () => {
     const onCloseHandler = () => {
         if(statusData.type === 'success' && !isEditable) {
             navigate(`/template/${id}/disclosures/${apiData.disclosures[0].id}`, { state: {...apiData.disclosures[0]}});
-        } else if(isEditable) {
+        } else if(statusData.type === 'success' &&isEditable) {
             navigate(-1);
         }
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import _get from 'lodash/get';
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import './MoreAction.css';
@@ -44,6 +45,7 @@ const MoreAction = (props) => {
         });
         setIsopen(false);
     }
+
     return (<div onClick={() => setIsopen(false)} className='more-action-contianer'>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src={actionIcon} alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active" : "inactive"}`}>
@@ -54,6 +56,7 @@ const MoreAction = (props) => {
             </>}
             {viewDisclosures &&
                 <>
+                    <div onClick={() => onRedirectWithState(`/createdisclosures?id=${_get(props, 'state.framework', '')}&disclosureId=${_get(props, 'state.id', '')}&isEditable=true`)}><a>Edit Disclosure</a></div>
                     <div onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
                     <div><a onClick={() => { onRedirectWithState(`/viewQuestions`) }}>View Questions</a></div>
                 </>

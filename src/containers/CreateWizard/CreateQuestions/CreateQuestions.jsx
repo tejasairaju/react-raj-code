@@ -9,6 +9,7 @@ import Popup from '../../../components/Common/Popup/Popup.jsx';
 import Modal from '../../../Components/Common/Modal/Modal.jsx';
 import './CreateQuestions.css';
 import { useEffect } from 'react';
+import { getErrorMessage } from '../../../utils/utils.js';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 
@@ -87,7 +88,9 @@ const CreateQuestions = (props) => {
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
                 setInputList([initialRow]);
             } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
+                let error = getErrorMessage(e);
+                setStatusData({...error});
+                // setStatusData({ type: 'error', message: e.message });
             }
             setIsError(false);
         } else {
