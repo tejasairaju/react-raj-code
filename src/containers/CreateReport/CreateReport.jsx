@@ -42,6 +42,7 @@ const CreateReport = () => {
     }
     const onChangeToggle = () => {
         setInputValue({ ...initialInputVal, frameworks: null });
+        setError({});
     }
 
     const onCloseHandler = () => {
@@ -60,8 +61,11 @@ const CreateReport = () => {
     const handleErrorMessage = () => {
         const error = {};
         const cloneInputVal = {...inputValue};
-        if(_isEmpty(cloneInputVal.frameworks)) {
+        console.log('>>>>>>>>>', cloneInputVal, isCustomeFramework);
+        if(_isEmpty(cloneInputVal.frameworks)&&(isCustomeFramework === true)) {
             setError('Please choose any framework.');
+        } else if(_isEmpty(cloneInputVal.template)&&(isCustomeFramework === false)) {
+            setError('Please choose any template.');
         } else if(_isEmpty(cloneInputVal.name)) {
             setError('Please enter report name.');
         } else  {
@@ -71,7 +75,7 @@ const CreateReport = () => {
 
     const onClickCreateReportHandler = async () => {
         console.log('????>>>>>', inputValue);
-        if (inputValue.name && inputValue.start_date && inputValue.end_date&&inputValue.frameworks) {
+        if (inputValue.name && inputValue.start_date && inputValue.end_date&&((inputValue.frameworks && isCustomeFramework) || (inputValue.template&&!isCustomeFramework))) {
             setStatusData({ type: 'loading', message: ''});
             try {
                 let payload = null;

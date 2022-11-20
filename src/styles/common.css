@@ -163,7 +163,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 16px 0;
+    padding: 12px 0;
     color: #585E62;
     font-size: 22px;
 }
@@ -398,7 +398,7 @@ body {
     }
 
     .aside-framework .list-item__wrapper a {
-        padding: 12px 0;
+        padding: 10px 0;
     }
 
     .nav__list-item .list-item__wrapper a {
