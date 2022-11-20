@@ -8,8 +8,8 @@ import Requests from "../../Requests/index.js";
 
 const ListFramework = (props) => {
     const { onClickFrameworkHandler = () => { }, label = 'Framework', setIsCustomeFramework = () => {}, isCustomeFramework } = props;
-    const [frameworkData, setFrameworkData] = useState(null);
-    const [bespokeFrameworkData, setBespokeFrameworkData] = useState(null);
+    const [frameworkData, setFrameworkData] = useState([]);
+    const [bespokeFrameworkData, setBespokeFrameworkData] = useState([]);
   
     const { orgDetails = {} } = useSelector(state => state.signup);
     useEffect(() => {
