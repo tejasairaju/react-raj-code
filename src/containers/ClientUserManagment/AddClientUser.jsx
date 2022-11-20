@@ -30,12 +30,7 @@ const AddClientUser = () => {
     const onChangeHandler = (e) => {
         console.log(e.target);
         const { name, value = '' } = e.target;
-        if(name === 'phone_number'&& (value&&value.length === 1)) {
-            setInputValue({ ...inputValue, [name]: '+'+value });
-        } else {
-            setInputValue({ ...inputValue, [name]: value });
-        }
-        
+        setInputValue({ ...inputValue, [name]: value });
     }
 
     const onChangeRemoveFile = () => {
