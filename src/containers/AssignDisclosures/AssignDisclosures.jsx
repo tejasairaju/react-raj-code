@@ -164,7 +164,7 @@ const AssignDisclosures = () => {
                                 checked={isAssignedDisclosure(disclosure)}
                                 disabled={!_isEmpty(_get(disclosure, 'assigned_to.id', ''))}
                             />
-                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{!isAssignedDisclosure(disclosure) ? <>{(disclosure.isSelected === true) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</>: null}</div>
+                            <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>{!isAssignedDisclosure(disclosure) ? <>{(disclosure.isSelected === true) ? <img src="../../assets/icons/single_tick_checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</>: null}</div>
                         </label>
                     </div>)
                 }
