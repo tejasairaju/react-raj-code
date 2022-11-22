@@ -22,6 +22,14 @@ padding: 4px 0;
     margin: 6px 0;
 }
 
+.common-error-msg {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    color: red;
+    margin: 6px 0;
+}
+
 .flex {
     display: flex;
     justify-content: space-between;

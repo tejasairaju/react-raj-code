@@ -98,7 +98,7 @@ const RootRouter = () => {
   useEffect(() => {
     if (!_isEmpty(orgDetails)&&isAuthenticated && (loginUserDetails.user_role == 'client_admin')) {
       if (orgDetails.is_payment_done === false) {
-        navigate('/packege');
+        navigate('/package');
       }
       else if (!_isEmpty(orgDetails) && orgDetails.is_payment_done && !orgDetails.is_db_created) {
         navigate(`/pageinprogress`);
@@ -197,10 +197,10 @@ const RootRouter = () => {
         <Route path="/client/users/invite" element={<AddClientUser />} />
         <Route path="/personalinfo" element={<PersonalInformation />} />
       </Route>
-      <Route path="/packege" element={<Packeges />} />
+      <Route path="/package" element={<Packeges />} />
       <Route path="/orginfo" element={<OrganisationInfo />} />
       <Route path="/checkout" element={<StripePayment />} />
-      <Route path="/packege/summary" element={<PackageSummary />} />
+      <Route path="/package/summary" element={<PackageSummary />} />
       <Route path="/payment/success" element={<PaymentSuccess />} />
       <Route path="/pageinprogress" element={<PageInprogress />} />
     </Routes>);

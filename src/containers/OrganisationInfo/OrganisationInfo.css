@@ -128,3 +128,8 @@
     width: 100%;
     justify-content: flex-end;
 }
+
+.org-zip-code {
+    margin-left: 5.9em !important;
+    flex-basis: 30% !important;
+}

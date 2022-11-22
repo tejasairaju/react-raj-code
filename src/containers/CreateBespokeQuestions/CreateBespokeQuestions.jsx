@@ -23,7 +23,7 @@ const CreateBespokeQuestions = (props) => {
     const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const { orgDetails = {} } = useSelector(state => state.signup);
-    const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
+    const initialRow = { order: null, /*code: '',*/ label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
     const [inputList, setInputList] = useState([initialRow]);
     const [isError, setIsError] = useState(false);
@@ -58,7 +58,7 @@ const CreateBespokeQuestions = (props) => {
 
     // handle click event of the Add button
     const handleAddClick = (index) => {
-        if (!_isEmpty(inputList[index].code) && !_isEmpty(inputList[index].label) && !_isEmpty(inputList[index].type) && !_isEmpty(inputList[index].field_type) && !_isEmpty(inputList[index].field_unit_values)) {
+        if (/*!_isEmpty(inputList[index].code) && */ !_isEmpty(inputList[index].label) && !_isEmpty(inputList[index].type) && !_isEmpty(inputList[index].field_type) && !_isEmpty(inputList[index].field_unit_values)) {
             setInputList([...inputList, initialRow]);
             setIsError(false);
         } else {
@@ -85,7 +85,7 @@ const CreateBespokeQuestions = (props) => {
         }
 
         let lastInputList = newInputList[newInputList.length - 1];
-        if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
+        if (/*!_isEmpty(lastInputList.code) && */!_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
             try {
                 setStatusData({ type: 'loading', message: '' });
                 const response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, payload, { organization: orgDetails.name});
@@ -128,14 +128,14 @@ const CreateBespokeQuestions = (props) => {
 
     const onCloseHandler = () => {
         if(statusData.type === 'success') {
-            navigate(-1)
+            // navigate(-1)
         }
     }
     const closePopupModal = () => {
         setFieldOptions(initialFieldOptions);
     }
 
-    const tableHeaders = ['Code', 'Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+    const tableHeaders = ['Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
     return (<>
         <div className="main__top-wrapper">
             <h1 className="main__title">
@@ -168,9 +168,9 @@ const CreateBespokeQuestions = (props) => {
                     <tbody>
                         {(inputList || []).map((x, i) => {
                             return (<tr>
-                                <td>
+                                {/* <td>
                                     <Input label='' type="text" name='code' value={x.code} className="create-framework__input question-ref-code" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
-                                </td>
+                                </td> */}
                                 <td>
                                     <TextArea label='' name='label' value={x.label} className="create-framework__input question-title create-framework__textarea" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                                 </td>

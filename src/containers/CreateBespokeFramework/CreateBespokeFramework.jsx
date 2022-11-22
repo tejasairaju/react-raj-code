@@ -22,6 +22,7 @@ const CreateBespokeFramework = () => {
     const { isEditable = false } = params;
     const [inputValue, setInputValue] = useState({ name: '', template_type: "Custom" });
     const [apiData, setApiData] = useState();
+    const [error, setError] = useState(false);
     const [statusData, setStatusData] = useState({});
     const { orgDetails = {} } = useSelector(state => state.signup);
 
@@ -56,6 +57,9 @@ const CreateBespokeFramework = () => {
                 let error = getErrorMessage(e);
                 setStatusData({...error});
             }
+            setError(false);
+        }else {
+            setError(true)
         }
     }
 
@@ -86,6 +90,7 @@ const CreateBespokeFramework = () => {
                             {isEditable ? 'Update' : 'Create'}
                         </button>
                     </div>
+                    {error ? <div className='common-error-msg'>* Template name is required.</div> : null}
                 </div>
             </div>
         </div>

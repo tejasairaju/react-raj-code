@@ -14,3 +14,7 @@
     width: 100%;
     justify-content: initial;
 }
+
+.w-9-em {
+    width: 9em !important;
+}

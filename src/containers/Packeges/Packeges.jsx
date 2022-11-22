@@ -58,7 +58,7 @@ const Packeges = (props) => {
 const onClickSubscribe = (item) => {
   dispatch(actions.updateSubscribeDetails(item));
   localStorage.setItem("selectedPackege", JSON.stringify({...item}));
-   navigate('/packege/summary', { state: { packageDetails: { ...item } } });
+   navigate('/package/summary', { state: { packageDetails: { ...item } } });
 }
   
 

@@ -135,7 +135,7 @@ const ViewBespokeQuestions = () => {
         setFieldOptions(initialFieldOptions);
     }
 
-    const tableHeaders = ['Code', 'Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit'];
+    const tableHeaders = ['Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit'];
 
 
     useEffect(() => {

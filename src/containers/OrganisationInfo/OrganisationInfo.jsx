@@ -25,7 +25,8 @@ const OrganisationInfo = () => {
     const { isEditable = false } = queryString.parse(search);
     const [inputValue, setInputValue] = useState({ name: orgDetails.name, sectors: [...appWizard.sectors], subsectors: [] });
     const [organizationInfo, setOrganizationInfo] = useState({});
-    const [errorValidation, setErrorValidation] = useState(false);
+    // const [errorValidation, setErrorValidation] = useState(false);
+    const [error, setError] = useState(false);
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [statusData, setStatusData] = useState({});
@@ -136,8 +137,7 @@ const OrganisationInfo = () => {
     }
 
     const onSaveHandler = async () => {
-        console.log(':::::::::;;;', inputValue);
-        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email)
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email)&&!_isEmpty(uploadImage.fileName)&&!_isEmpty(logo)
             && (inputValue.sectors || []).length && inputValue.employees_count && inputValue.headquarters && inputValue.mobile
             && inputValue.address) {
             const form = new FormData();
@@ -149,7 +149,7 @@ const OrganisationInfo = () => {
             form.append('address', inputValue.address);
             form.append('status', 'Active');
             form.append('employees_count', inputValue.employees_count);
-            if (!_isEmpty(uploadImage && uploadImage.fileName && isEditable === false)) {
+            if (!_isEmpty(uploadImage && uploadImage.fileName )) {
                 form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
             } else {
                 let blob = new Blob([logo], {
@@ -192,8 +192,9 @@ const OrganisationInfo = () => {
                 let error = getErrorMessage(e);
                 setStatusData({ ...error });
             }
+            setError(false);
         } else {
-            setErrorValidation(true);
+            setError(true);
         }
     }
 
@@ -258,7 +259,7 @@ const OrganisationInfo = () => {
     }
 
     const onChangeRemoveFile = () => {
-        setLogo(null);
+        setLogo('');
     }
 
     const onCloseHandler = () => {
@@ -337,16 +338,18 @@ const OrganisationInfo = () => {
 
             <div class="framework__row-wrapper bot40">
                 <div class="framework__row">
-                    <Label label={'Country'} required={true} />
+                    <Label label={'Country'} required={false} />
                     <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} />
                 </div>
 
                 <div class="framework__row">
-                    <Label label={'Zip/PostalCode'} lassName="framework__title right" required={true} />
+                    <Label label={'Zip/PostalCode'} className="framework__title right" required={true} />
                     <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue.zipcode} onChangeHandler={onChangeHandler} />
 
                 </div>
+               
             </div>
+            {error ? <div className='common-error-msg'>* All mandatory filed is required.</div> : null}
         </div>
             <div className='flex save-orgi-btn' >
                 <button onClick={() => onSaveHandler()} class="main__button">SAVE</button>

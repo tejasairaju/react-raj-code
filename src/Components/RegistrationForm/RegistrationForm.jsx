@@ -161,7 +161,7 @@ const RegistrationForm = () => {
                     <div className="acc-info__form-item">
                         <label for="form__company-name" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Company Name&nbsp;{validation.organization_name && <span className='error-msg'>({validation.organization_name})</span>}</div>
-                            <input type="text" value={inputValues.organization_name} name="organization_name" id="form__company-name" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
+                            <input type="text" maxLength={50} value={inputValues.organization_name} name="organization_name" id="form__company-name" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
                         <label for="form__company-location" className="acc-info__form-label">
                             Company Location
