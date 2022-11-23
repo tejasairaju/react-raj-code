@@ -16,22 +16,22 @@ const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 const CreateDisclosures = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [inputValue, setInputValue] = useState({ code: 4343});
+    const [inputValue, setInputValue] = useState({ code: '' });
     const [validation, setValidation] = useState({});
     const [statusData, setStatusData] = useState({});
     const [frameworkDetails, setFrameworkdetails] = useState({});
     const [apiData, setApiData] = useState({});
     const [currentFrame, setCurrentFrame] = useState(''); // 
-    const {search} = _get(window, 'location', '?');
+    const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
     const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
 
-    const {id = "", disclosureId= "", isEditable = false } = params;
+    const { id = "", disclosureId = "", isEditable = false } = params;
 
     useEffect(() => {
         if (!_isEmpty(params.id) && _isEmpty(frameworkDetails) && !isEditable) {
-           
-        } else if(isEditable){
+
+        } else if (isEditable) {
             getDisclosures();
         }
         getframeworkDetails(params.id);
@@ -39,10 +39,10 @@ const CreateDisclosures = (props) => {
     }, []);
 
 
-    const getDisclosures = async() => {
+    const getDisclosures = async () => {
         try {
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${id}/${disclosureId}`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
-            setInputValue({...response, description: response.name, guidance: response.name, categories: [{name: response.category, isSelect: true}]  });
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${id}/disclosures/${disclosureId}`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
+            setInputValue({ ...response, description: response.name, guidance: response.name, categories: [{ name: response.category, isSelect: true }] });
         } catch (error) {
         }
     }
@@ -66,7 +66,7 @@ const CreateDisclosures = (props) => {
         }
     }
 
-    const checkValidation = () => {
+    const checkValidation = (category= {}) => {
         let cloneInputValue = { ...inputValue };
         let errors = {};
         if (!(_get(cloneInputValue, 'name', '')).trim()) {
@@ -82,35 +82,41 @@ const CreateDisclosures = (props) => {
         }
         if (!_get(cloneInputValue, 'guidance', '').trim()) {
             errors['guidance'] = "Guidance is required";
-        } else {
-            errors['guidance'] = "";
+        } else if(!_isEmpty(category)) {
+            errors['category'] = "Guidance is required";
         }
         setValidation(errors);
     }
 
     const onNextHandler = async () => {
-        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && !_isEmpty(inputValue.guidance)) {
-            const getSelectedCategory = (inputValue.categories || []).find(value => value.isSelect === true);
+        let getSelectedCategory = (inputValue.categories || []).find(value => value.isSelect === true);
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && !_isEmpty(inputValue.guidance && getSelectedCategory)) {
             const data = {
                 name: inputValue.name,
-                code: inputValue.code || 0,
+                code: inputValue.code,
                 category: getSelectedCategory.name || '',
                 section: 'sample',
                 framework: params.id
             }
 
             try {
-                const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`, data).then(({ data }) => data);
+                setStatusData({ type: 'loading', message: ''});
+                let response = {};
+                if (isEditable) {
+                    data['children'] = inputValue.children;
+                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures/${disclosureId}`, data).then(({ data }) => data);
+                } else {
+                    response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`, data).then(({ data }) => data);
+                }
                 setApiData(response);
                 setInputValue({});
-                setStatusData({ type: 'success', message: 'Thanks! Your Disclosure created successfully' });
+                setStatusData({ type: 'success', message: `Thanks! Your Disclosure ${isEditable ? 'updated' : 'created'} successfully` });
             } catch (e) {
                 let error = getErrorMessage(e);
-                setStatusData({...error});
-                // setStatusData({ type: 'error', message: e.message });
+                setStatusData({ ...error });
             }
         } else {
-            checkValidation();
+            checkValidation(getSelectedCategory);
         }
     }
 
@@ -150,9 +156,9 @@ const CreateDisclosures = (props) => {
     }
 
     const onCloseHandler = () => {
-        if (statusData.type === 'success'&&!isEditable) {
-            navigate('/createquestions', {state:{ section:apiData.section ,category: apiData.category, id: apiData.id, framework: apiData.framework, code:apiData.code, name:apiData.name }});
-        } else if(statusData.type === 'success'&&isEditable) {
+        if (statusData.type === 'success' && !isEditable) {
+            navigate('/createquestions', { state: { section: apiData.section, category: apiData.category, id: apiData.id, framework: apiData.framework, code: apiData.code, name: apiData.name } });
+        } else if (statusData.type === 'success' && isEditable) {
             navigate(-1)
         }
         setStatusData({ type: '', message: '' });
@@ -183,12 +189,12 @@ const CreateDisclosures = (props) => {
             </h1>
         </div>
         <>  <table className="default-flex-table create-disc-framework-details">
-                    <tr>
-                        <td>{frameworkDetails && <img src={frameworkDetails.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
-                        <td>{frameworkDetails.name}</td>
-                        <td>{frameworkDetails.description}</td>
-                    </tr>
-                </table></>
+            <tr>
+                <td>{frameworkDetails && <img src={frameworkDetails.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
+                <td>{frameworkDetails.name}</td>
+                <td>{frameworkDetails.description}</td>
+            </tr>
+        </table></>
         <div className="main__content-wrapper">
             <h1 class="create-framework__title">
                 Ref No
@@ -202,11 +208,11 @@ const CreateDisclosures = (props) => {
             </div>
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'guidance', false) ? 'user_input_error' : null}`} error={validation['guidance']} label='Guidance' name='guidance' value={inputValue.guidance || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} />
+            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} required={true}/>
             <Pills label='Sectors' data={frameworkDetails['supported_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
             <Pills label='Sub Sectors' data={frameworkDetails['supported_sub_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
         </div>
-        <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' /> 
+        <Button label={isEditable ? 'UPDATE' : 'NEXT'} onClickHandler={onNextHandler} className='main__button' />
     </>)
 }
 

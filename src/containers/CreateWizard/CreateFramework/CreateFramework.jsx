@@ -127,11 +127,19 @@ const CreateFramework = (props) => {
                 }
             }
             try {
-                const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, form, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                }).then(({ data }) => data);
+                let response = {};
+                if(isEdit) {
+                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`, form, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }).then(({ data }) => data);
+                } else {
+                     response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks`, form, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }).then(({ data }) => data);
+                }
+               
                 setApiData(response);
-                setStatusData({ type: 'success', message: 'Thanks! Your framework has been successfully created' });
+                setStatusData({ type: 'success', message: `Thanks! Your framework has been successfully ${isEdit? 'updated': 'created'}` });
                 setInputValue({});
                 setLogo(null);
             } catch (e) {
@@ -222,7 +230,7 @@ const CreateFramework = (props) => {
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
             <h1 className="main__title">
-                {`Welcome to Create Framework Wizard`}
+                {`Welcome to ${isEdit? 'Update' : 'Create'} Framework Wizard`}
             </h1>
         </div>
         <div id="createFramework" className="main__content-wrapper">
@@ -235,7 +243,7 @@ const CreateFramework = (props) => {
             <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={true} />
         </div>
         {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
-        <Button label='NEXT' onClickHandler={onNextHandler} className='main__button' />
+        <Button label={isEdit ? 'UPDATE':'NEXT'} onClickHandler={onNextHandler} className='main__button' />
     </>)
 }
 
