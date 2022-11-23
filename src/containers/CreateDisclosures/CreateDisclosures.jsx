@@ -103,7 +103,7 @@ const CreateDisclosures = (props) => {
                 const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`, data).then(({ data }) => data);
                 setApiData(response);
                 setInputValue({});
-                setStatusData({ type: 'success', message: 'Thanks! Your account has been successfully created' });
+                setStatusData({ type: 'success', message: 'Thanks! Your Disclosure created successfully' });
             } catch (e) {
                 let error = getErrorMessage(e);
                 setStatusData({...error});
