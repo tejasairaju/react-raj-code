@@ -102,6 +102,13 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
         </li>)}</>
         return render;
     };
+
+    let roleLabel = ''; 
+    if(userRole === 'esg_admin') {
+        roleLabel = 'System Admin';
+    } if(userRole === 'client_admin') {
+        roleLabel = 'Client Admin';
+    }
     return (<>
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
                 <aside className="aside-framework">
@@ -109,6 +116,8 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
                         <a href="#">
                             <img src="../../../../assets/icons/esg_logo.png" alt="logo" className="aside-framework__logo" />
                         </a>
+
+                        <div className='user-role-label'>{roleLabel}</div>
                     </div>
                     <nav className="aside-framework__nav">
                         <ul className="nav__list">

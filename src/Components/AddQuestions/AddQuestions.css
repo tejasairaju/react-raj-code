@@ -128,7 +128,7 @@
 
 .aside-framework__logo-container {
     padding: 44px 85px 0 79px;
-    margin-bottom: 79px;
+    margin-bottom: 50px;
     text-align: center;
 }
 
@@ -581,7 +581,7 @@
     }
 
     .aside-framework__logo-container {
-        margin-bottom: 49px;
+        margin-bottom: 39px;
     }
 
     .aside-framework__logo {
@@ -1995,7 +1995,7 @@ h1.create-framework__title.disclosure {
 }
 .aside-framework__logo-container {
     padding: 44px 85px 0 79px;
-    margin-bottom: 79px;
+    margin-bottom: 59px;
     text-align: center;
 }
 .companyname{

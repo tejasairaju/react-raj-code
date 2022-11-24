@@ -2,6 +2,14 @@
 .main {
     padding: 8% 4% 2% !important;
 }
+
+
+.user-role-label {
+    padding: 8px 4px;
+    margin: 8px 0px;
+    color: white;
+    background: #4a9d43;
+ }
 .create-framework__row-wrapper {
     display: flex;
     align-items: center;
