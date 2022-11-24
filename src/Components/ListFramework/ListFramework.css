@@ -166,7 +166,7 @@
     gap: 1rem;
     overflow: auto;
     padding-bottom: 0.5rem;
-    max-width: 53em;
+    max-width: 54em;
     padding-right: var(--page-margin);
   }
   .frame-card {

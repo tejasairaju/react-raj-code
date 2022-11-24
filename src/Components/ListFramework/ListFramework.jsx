@@ -89,7 +89,7 @@ const ListFramework = (props) => {
         }
         <>
         {isCustomeFramework ? 
-        <div className="frameworks__choose">
+        <div className="cards-wrapper">
             {(frameworkData || []).map((item, i) => {
                 return (<div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>
                     <img src={item.logo} alt="GRI" />

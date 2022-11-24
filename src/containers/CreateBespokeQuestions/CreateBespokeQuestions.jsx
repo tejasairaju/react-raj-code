@@ -12,63 +12,41 @@ import { getErrorMessage } from '../../utils/utils.js';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Requests from '../../Requests/index.js';
+import AddQuestions from '../../Components/AddQuestions/AddQuestions.jsx';
+import ViewQuestionsList from '../../Components/AddQuestions/ViewQuestionsList.jsx';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateBespokeQuestions = (props) => {
+    const {isTemplate=true, createQuestions = true, questionList = [], onUpdateQuestions = () => { } } = props;
     const location = useLocation();
     const navigate = useNavigate();
     const { id = '', disclosureId = '' } = useParams();
     const state = _get(location, 'state', {});
-    const { dataType, inputType, unitType } = questions;
     const [statusData, setStatusData] = useState({});
     const { orgDetails = {} } = useSelector(state => state.signup);
     const initialRow = { order: null, /*code: '',*/ label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
-    const [inputList, setInputList] = useState([initialRow]);
+    const [inputList, setInputList] = useState([]);
+    const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
+    const [editInfo, setEditInfo] = useState({ isEditable: false, editRowIndex: null });
     const [isError, setIsError] = useState(false);
     const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
 
-    // useEffect(() => {
-    //     setInputList({})
-    // }, [])
-
-    // handle input change
-    const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        const list = [...inputList];
-        if (name !== 'field_unit_values') {
-            list[index][name] = value;
-        } else {
-            list[index][name] = [value];
-        }
-        list[index]['order'] = index;
-        setInputList(list);
-        if (['Dropdown', 'Radio button', 'Multiselect'].indexOf(value) > -1) {
-            setFieldOptions({ selectedDropDownVal: value, setFieldIndex: index });
-        }
-    };
+    const tableHeaders = ['Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+    useEffect(() => {
+        setInputList([...questionList]);
+    }, []);
 
     // handle click event of the Remove button
-    const handleRemoveClick = index => {
+    const handleRemoveClick = (index) => {
         const list = [...inputList];
         list.splice(index, 1);
         setInputList(list);
     };
 
-    // handle click event of the Add button
-    const handleAddClick = (index) => {
-        if (/*!_isEmpty(inputList[index].code) && */ !_isEmpty(inputList[index].label) && !_isEmpty(inputList[index].type) && !_isEmpty(inputList[index].field_type) && !_isEmpty(inputList[index].field_unit_values)) {
-            setInputList([...inputList, initialRow]);
-            setIsError(false);
-        } else {
-            setIsError(true);
-        }
-        // setInputList([...inputList, initialRow]);
-    };
-
     const onCreateCancelQuestions = () => {
-        setInputList([initialRow]);
+        setInputList([]);
     }
 
     const onCreateQuestions = async () => {
@@ -83,60 +61,52 @@ const CreateBespokeQuestions = (props) => {
             section: state.section,
             name: state.name
         }
+        // setStatusData({ type: 'loading', message: '' });
+        if (createQuestions) {
 
-        let lastInputList = newInputList[newInputList.length - 1];
-        if (/*!_isEmpty(lastInputList.code) && */!_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
             try {
                 setStatusData({ type: 'loading', message: '' });
                 const response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, payload, { organization: orgDetails.name});
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
-                setInputList([initialRow]);
+                // setInputList([initialRow]);
             } catch (e) {
                 let error = getErrorMessage(e);
                 setStatusData({ ...error });
             }
             setIsError(false);
+        } else if (!createQuestions && (list || [].length)) {
+            onUpdateQuestions(payload, [...list]);
         } else {
             setIsError(true)
         }
     }
 
-    const onGetQuestionOptions = (e) => {
-        const { value } = e.target;
-        const list = [...inputList];
-        list[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] = value;
-        setInputList(list);
-    }
-
-    const onSetFieldOptions = () => {
-        let list = [...inputList];
-        let optionStringValue = list[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal];
-        if (!_isEmpty(optionStringValue)) {
-            list[fieldOptions.setFieldIndex]['field_choices'] = optionStringValue.split(',');
-            setInputList(list);
-            setFieldOptions(initialFieldOptions);
-        }
-    }
-
-    const listChoices = (i) => {
-        if (['Dropdown', 'Radio button', 'Multiselect'].indexOf((inputList[i].field_type || '')) > -1) {
-            return <>{(inputList[i]['field_choices'] || []).map((choice) => <li>{choice}</li>)}</>;
-        }
-        return null;
-
-    }
-
     const onCloseHandler = () => {
-        if(statusData.type === 'success') {
-            // navigate(-1)
+        if (statusData.type === 'success' && createQuestions) {
+            navigate('/template');
         }
-    }
-    const closePopupModal = () => {
-        setFieldOptions(initialFieldOptions);
+        setStatusData({});
+
     }
 
-    const tableHeaders = ['Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+    const onClickAddQuestion = () => {
+        setIsOpenAddQuestion(true);
+    }
+
+    const closeAddQuestionModal = () => {
+        setIsOpenAddQuestion(false);
+    }
+
+    const handleEditClick = (index) => {
+        setIsOpenAddQuestion(true);
+        setEditInfo({
+            isEditable: true,
+            editRowIndex: index
+        });
+    }
+
     return (<>
+    {isOpenAddQuestion && <AddQuestions isTemplate={true} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
         <div className="main__top-wrapper">
             <h1 className="main__title">
                 {`Welcome to Create Bespoke Questions`}
@@ -144,14 +114,17 @@ const CreateBespokeQuestions = (props) => {
         </div>
         <div id="createQuestions" className="create_question__wrapper">
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
+            {/* {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
                 <div className='create-options-title'>Please enter the options with comma separated value</div>
                 <div className='get-textarea-input-container'>
                     <TextArea rows="6" cols="50" label='' name='optionString' value={inputList[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] || ''} className="create-framework__textarea" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
                     <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
                 </div>
-            </Modal>}
-            <div>
+            </Modal>} */}
+            <ViewQuestionsList isTemplate={true} name={state.name} createQuestions={createQuestions} tableHeaders={tableHeaders} inputList={inputList} isError={isError}
+                onClickAddQuestion={onClickAddQuestion} handleEditClick={handleEditClick} handleRemoveClick={handleRemoveClick} />
+
+            {/* <div>
                 <div className="bespoke-question-container">
                     <h1 className="create-framework__title disclosure">
                         Disclosure
@@ -162,15 +135,14 @@ const CreateBespokeQuestions = (props) => {
                 </div>
             </div>
             <div className="create_questions_table__container">
-                {/* <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div> */}
                 <table className="default-table">
                     <thead><tr>{tableHeaders.map((header) => <th>{header}</th>)}</tr></thead>
                     <tbody>
                         {(inputList || []).map((x, i) => {
                             return (<tr>
-                                {/* <td>
+                                <td>
                                     <Input label='' type="text" name='code' value={x.code} className="create-framework__input question-ref-code" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
-                                </td> */}
+                                </td>
                                 <td>
                                     <TextArea label='' name='label' value={x.label} className="create-framework__input question-title create-framework__textarea" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                                 </td>
@@ -203,14 +175,14 @@ const CreateBespokeQuestions = (props) => {
 
                 </table>
                 {isError && <div className='overall-error-container color-red question-disclosure-error'>*Please fill all the columns</div>}
-            </div>
+            </div> */}
 
         </div>
         <div className='create-question-main-btn'>
-        <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
+            <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
                 Back
             </button>
-            <button onClick={onCreateQuestions} className="main__button m-l-1">
+            <button onClick={() => onCreateQuestions()} className="main__button m-l-1">
                 FINISH
             </button>
         </div>

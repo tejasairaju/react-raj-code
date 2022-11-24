@@ -54,6 +54,19 @@ async function Put(url, data, org = '', cookie) {
     return await axios.put(pathUrl, {...data}, config)
         .then(({ data }) => data);
 }
+
+async function Patch(url, data, org = '', cookie) {
+    const config = getHeaders(cookie);
+    let pathUrl = '';
+    if (org) {
+        pathUrl = `${process.env.API_BASE_URL}${url}${constractURLQueryStr(org)}`;
+    } else {
+        pathUrl = `${process.env.API_BASE_URL}${url}`;
+    }
+    return await axios.patch(pathUrl, {...data}, config)
+        .then(({ data }) => data);
+}
+
 async function Delete(url, cookie) {
     const config = getHeaders(cookie);
     return await axios.delete(url, config)
@@ -63,5 +76,6 @@ async function Delete(url, cookie) {
 export default {
     Get,
     Post,
-    Put
+    Put,
+    Patch
 }

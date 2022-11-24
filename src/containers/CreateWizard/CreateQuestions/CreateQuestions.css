@@ -1,3 +1,14 @@
+    
+    .add-question-btn {
+        margin-top: -1em;
+        white-space: nowrap;
+        margin-left: 5em;
+    }
+
+    .view-questions-list-container {
+        max-height: 18em !important;
+        overflow-y: scroll !important;
+    }
     .create_question__wrapper {
 
         display: flex;

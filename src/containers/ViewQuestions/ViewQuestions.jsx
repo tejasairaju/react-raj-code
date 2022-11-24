@@ -1,31 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import _get from 'lodash/get';
-import queryString from 'query-string';
 import './ViewQuestions.css';
 import Requests from "../../Requests";
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useLocation, useNavigate } from "react-router-dom";
-import Fields from '../../Components/Common/Fields/Fields.jsx';
-import QuestionHeader from "../../Components/QuestionHeader/QuestionHeader.jsx";
-import QuestionsTable from "../../Components/QuestionsTable/QuestionsTable.jsx";
-import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
-const { RadioButton } = Fields;
+import CreateQuestions from "../CreateWizard/CreateQuestions/CreateQuestions.jsx";
+import { getErrorMessage } from "../../utils/utils";;
 
 const ViewQuestions = () => {
-    const isEditable = false;
+    const navigate = useNavigate();
     const location = useLocation();
     const state = _get(location, 'state', {});
-    const { code = "4343", name = "GRI", framework_id = '01cb61ea-5197-4461-9448-dffa702b46b3',
-        disclosure_id = '0ee84246-34c8-4d8a-ae44-a09112e00c58' } = state || {};
-    // const { dataType, inputType, unitType } = questions;
+    const {framework_id = '',
+        disclosure_id = '' } = state || {};
     const [frameworkData, setFrameworkData] = useState({});
     const [statusData, setStatusData] = useState({});
-    const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
-    const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
     const [inputList, setInputList] = useState([]);
-    const [isError, setIsError] = useState(false);
-    const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
 
     const getAllQuestions = async () => {
         try {
@@ -35,104 +26,6 @@ const ViewQuestions = () => {
             setInputList([]);
         }
     }
-
-    // handle input change
-    const handleInputChange = (e, index) => {
-
-        const { name, value } = e.target;
-        const list = [...inputList];
-        if (name !== 'field_unit_values') {
-            list[index][name] = value;
-        } else {
-            list[index][name] = [value];
-        }
-        list[index]['order'] = index;
-        setInputList(list);
-        if (['Dropdown', 'Radio button', 'Multiselect'].indexOf(value) > -1) {
-            setFieldOptions({ selectedDropDownVal: value, setFieldIndex: index });
-        }
-
-    };
-
-    // handle click event of the Remove button
-    const handleRemoveClick = index => {
-        const list = [...inputList];
-        list.splice(index, 1);
-        setInputList(list);
-    };
-
-    // handle click event of the Add button
-    const handleAddClick = (index) => {
-        if (!_isEmpty(inputList[index].code) && !_isEmpty(inputList[index].label) && !_isEmpty(inputList[index].type) && !_isEmpty(inputList[index].field_type) && !_isEmpty(inputList[index].field_unit_values)) {
-            setInputList([...inputList, initialRow]);
-            setIsError(false);
-        } else {
-            setIsError(true);
-        }
-        // setInputList([...inputList, initialRow]);
-    };
-
-    const onCreateQuestions = async () => {
-        let list = [...inputList];
-        const newInputList = list.map(({ Dropdown, Multiselect, ...rest }) => {
-            delete rest["Radio button"];
-            return rest;
-        });
-        const payload = {
-            ...location.state,
-            parent: null,
-            children: newInputList
-        }
-
-        let lastInputList = newInputList[newInputList.length - 1];
-        console.log(':::::::lastInputList:::::', lastInputList);
-        if (!_isEmpty(lastInputList.code) && !_isEmpty(lastInputList.label) && !_isEmpty(lastInputList.type) && !_isEmpty(lastInputList.field_type) && !_isEmpty(lastInputList.field_unit_values)) {
-
-            try {
-                const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework}/disclosures/${id}`, payload).then(({ data }) => data);
-                setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
-                setInputList([initialRow]);
-            } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
-            }
-            setIsError(false);
-        } else {
-            setIsError(true)
-        }
-    }
-
-    const onGetQuestionOptions = (e) => {
-        const { value } = e.target;
-        const list = [...inputList];
-        list[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] = value;
-        setInputList(list);
-    }
-
-    const onSetFieldOptions = () => {
-        let list = [...inputList];
-        let optionStringValue = list[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal];
-        if (!_isEmpty(optionStringValue)) {
-            list[fieldOptions.setFieldIndex]['field_choices'] = optionStringValue.split(',');
-            setInputList(list);
-            setFieldOptions(initialFieldOptions);
-        }
-    }
-
-    const listChoices = (i) => {
-        if (['Dropdown', 'Radio button', 'Multiselect'].indexOf((inputList[i].field_type || '')) > -1) {
-            return <>{(inputList[i]['field_choices'] || []).map((choice) => <li>{choice}</li>)}</>;
-        }
-        return null;
-
-    }
-
-
-    const closePopupModal = () => {
-        setFieldOptions(initialFieldOptions);
-    }
-
-    const tableHeaders = ['Code', 'Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit'];
-
 
     useEffect(() => {
         const getDisclosures = async () => {
@@ -147,7 +40,6 @@ const ViewQuestions = () => {
         }
         getAllQuestions();
         getframeworkDetails();
-        // getDisclosures();
     }, []);
 
     const getframeworkDetails = async (id = "aa0fda2d-4f43-41b9-a35e-483016b225e1") => {
@@ -160,13 +52,24 @@ const ViewQuestions = () => {
     }
 
     const onCloseHandler = () => {
+        setStatusData({ type: '', message: ''});
+        if(statusData.type === 'success') {
+            navigate(-1);
+        }
     }
-    const radioChangeHandler = (e) => {
-        setCatagoryType(e.target.value);
-    };
 
-    const headers = ['Name', 'Action'];
-    const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
+    const onUpdateQuestions = async (payload, editedQuestionList = []) => {
+        setStatusData({ type: 'loading', message: '' });
+        if ((editedQuestionList || [].length > 0)) {
+            try {
+                const response = await axios.patch(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework_id}/disclosures/${disclosure_id}`, payload).then(({ data }) => data);
+                setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully updated' });
+            } catch (e) {
+                let error = getErrorMessage(e);
+                setStatusData({ ...error });
+            }
+        }
+    }
 
     return (
         <>
@@ -175,7 +78,6 @@ const ViewQuestions = () => {
                     Edit Framework {'->'} List Frameworks {'->'} View Disclosures {'->'} List Disclosures {'->'}  List Questions
                 </h1>
             </div>
-            {/* <div className="disc-framework-details"> */}
             <table className="default-flex-table disc-framework-details">
                 <tr>
                     <td>{frameworkData && <img src={frameworkData.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'} alt="GRI" width={'28px'} height={'28px'} />}</td>
@@ -183,50 +85,9 @@ const ViewQuestions = () => {
                     <td>{frameworkData.description}</td>
                 </tr>
             </table>
-            {/* </div> */}
             <div id="viewQuestions" className="view-questions-container">
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-                {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
-                    <div className='create-options-title'>Please enter the options with comma separated value</div>
-                    <div className='get-textarea-input-container'>
-                        <TextArea rows="6" cols="50" label='' name='optionString' value={inputList[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] || ''} className="create-framework__textarea" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
-                        <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
-                    </div>
-                </Modal>}
-
-                {<QuestionHeader code={code} name={name} />}
-                <QuestionsTable
-                    isEditable={false}
-                    tableData={inputList}
-                    tableHeader={tableHeaders}
-                    handleInputChange={handleInputChange}
-                    handleRemoveClick={handleRemoveClick}
-                    handleAddClick={handleAddClick}
-                    isError={isError} />
-                {/* <table className="default-flex-table">
-                    <thead>
-                        <tr>
-                            {headers.map(header => <th>{header}</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td className="">
-                                
-                                <QuestionsTable
-                                isEditable={false}
-                                    tableData={inputList}
-                                    tableHeader={tableHeaders}
-                                    handleInputChange={handleInputChange}
-                                    handleRemoveClick={handleRemoveClick}
-                                    handleAddClick={handleAddClick}
-                                    isError={isError} />
-                            </td>
-                            
-                        </tr>
-
-                    </tbody>
-                </table> */}
+                {((inputList||[]).length > 0)&&<CreateQuestions createQuestions={false} questionList={inputList} onUpdateQuestions={onUpdateQuestions} />}
             </div>
         </>)
 }
