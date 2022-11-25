@@ -6,7 +6,8 @@ import './AnswerQuestionsTable.css';
 import { listQuestions } from '../../../__mocks__/listQuestions.js';
 import Fields from "../Common/Fields/Fields.jsx";
 import ReAssignDisclosures from "../ReAssignDisclosures/ReAssignDisclosures.jsx";
-const { RadioButton, UploadFile } = Fields
+import Modal from "../Common/Modal/Modal.jsx";
+const { RadioButton, UploadFile, TextArea } = Fields
 const AnswerQuestionsTable = (props) => {
     const [isOpenQAcard, setIsOpenQAcard] = useState(false);
     const [logo, setLogo] = useState(null);
@@ -15,6 +16,7 @@ const AnswerQuestionsTable = (props) => {
     const [questionsList, setQuestionsList] = useState([]);
     const [answer, setAnswer] = useState('');
     const [isOpenReAssign, setIsOpenReAssign] = useState(false);
+    const [isShowDescription, setIsShowDescription] = useState(false);
     // const []
     const { itemDetails = {}, reportId= '', frameworkId = '', disclosureIndex, onClickSaveAnswer = () => { } } = props;
 
@@ -102,6 +104,10 @@ const AnswerQuestionsTable = (props) => {
         }
     }
 
+    const closePopupModal = () => {
+        setIsShowDescription(false);
+    }
+
     const renderAnswerComponent = () => <>{
         (questionsList || []).map((questionItem, questionIndex) => {
 
@@ -138,13 +144,19 @@ const AnswerQuestionsTable = (props) => {
 
 
     return <li className="detalis__item">
+          {isShowDescription && <Modal isShow={!!isShowDescription} isDisclosureDec={true} closeModal={closePopupModal}>
+                <div className='create-options-title'>Description:</div>
+                <div className='get-textarea-input-container'>
+                    <div className="create-framework__textarea disclosure-description-screen">{itemDetails.description|| 'nsmdmsn'}</div>
+                </div>
+            </Modal>}
        {isOpenReAssign&&<ReAssignDisclosures setIsOpenReAssign={setIsOpenReAssign} disclosure={itemDetails} reportId={reportId} />}
         <div className="detalis__top-item" onClick={() => setIsOpenQAcard(!isOpenQAcard)}>
             <div className="details__item-wrapper">
-                <h3 className="detalis__title">
+                <h3 className="detalis__title disclosure-detalis__title">
                     {itemDetails.code} {itemDetails.name}
                 </h3>
-                <img src="../../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />
+                {itemDetails.description || true&&<img onClick={() => setIsShowDescription(true)} src="../../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />}
                 <a onClick={(e) => {setIsOpenReAssign(!isOpenReAssign); e.preventDefault(); e.stopPropagation();} } className="detalis__reassign">
                     Reassign
                     <img src="../../../../assets/icons/assign-icon.svg" alt="question" width={'16px'} height="16px" />

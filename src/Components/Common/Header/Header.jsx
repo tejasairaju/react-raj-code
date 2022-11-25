@@ -57,9 +57,9 @@ const Header = ({userRole = ''}) => {
                 <span className="header__name">
                     {_get(user, 'nickname')}
                 </span>
-                <span className="header__job-title">
+                {/* <span className="header__job-title">
                     {userRole}
-                </span>
+                </span> */}
             </div>
             <img src={_get(user, 'picture', "assets/images/avatar.jpg")} className="header__avatar" alt="avatar" />
         </a>

@@ -27,3 +27,12 @@ overflow: hidden;
 .answer_question-file_upload .create-framework__title {
     margin-top: 1em !important;
 }
+.disclosure-detalis__title {
+    width: 46em;
+}
+
+.disclosure-description-screen {
+padding: 0.5em 1em 1em 0.5em;
+margin-bottom: 1em;
+border: 1px solid lightgray;
+}

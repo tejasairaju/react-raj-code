@@ -108,6 +108,8 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
         roleLabel = 'System Admin';
     } if(userRole === 'client_admin') {
         roleLabel = 'Client Admin';
+    } else {
+        roleLabel = 'Client User';
     }
     return (<>
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}

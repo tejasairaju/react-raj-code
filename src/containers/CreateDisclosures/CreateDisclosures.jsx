@@ -96,7 +96,9 @@ const CreateDisclosures = (props) => {
                 code: inputValue.code,
                 category: getSelectedCategory.name || '',
                 section: 'sample',
-                framework: params.id
+                framework: params.id,
+                description: inputValue.description,
+                guidance: inputValue.guidance
             }
 
             try {

@@ -14,6 +14,10 @@
     visibility: hidden !important;
 }
 
+.align-center {
+    align-items: center;
+} 
+
 .overall-error-container {
 display: flex;
 margin: auto;

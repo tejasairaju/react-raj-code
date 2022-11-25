@@ -5,7 +5,7 @@ import Requests from "../../Requests";
 import axios from 'axios';
 
 const ClientUserAction = (props) => {
-    const {value, index} = props;
+    const {value, index, getClientUsers = () => {}} = props;
 
     const [isOpen, setIsopen] = useState(false);
     const { orgDetails = {} } = useSelector(state => state.signup);
@@ -43,13 +43,23 @@ const ClientUserAction = (props) => {
 
     }
 
+    const deleteUser = async (value) => {
+        try {
+            const response = await Requests.Delete(`/users/${value.id}`, { organization: orgDetails.name });
+            getClientUsers();
+        }catch(e) {
+
+        }
+    }
+
 
     return (<div className="more-action-contianer" onClick={() => setIsopen(false)}>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='../../assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
-            <div><a onClick={() => { navigate(`/client/users/invite`, {state: {userDetails: value}}) }}>Edit</a></div>
+            <div><a onClick={() => { navigate(`/client/users/invite`, {state: {userDetails: value, isEditable: true}}) }}>Edit</a></div>
             <div><a onClick={() => onUpdateUser(value, 1)}>Activate</a></div>
             <div><a onClick={() => onUpdateUser(value, 0)}>Block</a></div>
+            <div><a onClick={() => deleteUser(value, 0)}>Delete</a></div>
         </div>
     </div>)
 }

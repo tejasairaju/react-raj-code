@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _toLower from 'lodash/toLower';
+import _toUpper from 'lodash/toUpper';
 import axios from 'axios';
 import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
@@ -22,72 +23,80 @@ const ClientUsers = () => {
     const [statusData, setStatusData] = useState({});
     const { orgDetails = {} } = useSelector(state => state.signup);
     useEffect(() => {
-        const getClientUsers = async () => {
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await Requests.Get(`/users/`, {organization: orgDetails.name});
-                setStatusData({ type: '', message: '' });
-                setClientData(response);
-            } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
-            }
-        }
-
         getClientUsers();
     }, []);
-   
-    const headers = ['Username',
-    'Location',
-    'Email iD',
-    'Phone Number',
-    'Designation',
-    'Department',
-    'Role',
-    'Status',
-    'Action'];
 
-    return (<> 
- 
-            <div class="main__top-wrapper">
-                <h1 class="main__title">
-                    Manage User
-                </h1>
-                <a type="submit" class="form__btn main__button" onClick={() => { navigate(`/client/users/invite`) }}>
-                    ADD
-                </a>
-            </div>
-            <br/>
+    const getClientUsers = async () => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await Requests.Get(`/users/`, { organization: orgDetails.name });
+            setStatusData({ type: '', message: '' });
+            setClientData(response);
+        } catch (e) {
+            setStatusData({ type: 'error', message: e.message });
+        }
+    }
 
-            <table className="default-flex-table table-scroll">
+    const getProfilePhoto = (val) => {
+        if (!_isEmpty(val.profile_picture)) return <img src={val.profile_picture} width='40px' height={'40px'} alt="" />;
+        else {
+            return <div className="profile-image-icon">{_toUpper((val&&val.first_name).charAt(0))} {_toUpper((val&&val.last_name).charAt(0))}</div>}
 
-                <thead>
-                        <tr>
-                            {headers.map(header => <th>{header}</th>)}
-                        </tr>
-                </thead>
-                <tbody>
-                            {(clientData.results || []).map((val, index) => {
-                                if(_toLower(val.role) !== 'admin') {
-                                return (<tr>
-                                    <td>{val.first_name}</td>
-                                    <td>{val.location}</td>
-                                    <td>{val.email_id}</td>
-                                    <td>{val.phone_number}</td>
-                                    <td>{val.designation}</td>
-                                    <td>{val.department}</td>
-                                    <td>{val.role}</td>
-                                    <td>{val.status}</td>
-                                    <td>
-                                    <ClientUserAction value={val} index={index}/> 
-                                        {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                                    </td>
-                                </tr>)
-                                }
-                            })}
-                </tbody>
-            </table>
-           
- 
+    }
+
+    const headers = ['Photo', 'Username',
+        'Location',
+        'Email iD',
+        'Phone Number',
+        'Designation',
+        'Department',
+        'Role',
+        'Status',
+        'Action'];
+
+    return (<>
+
+        <div class="main__top-wrapper">
+            <h1 class="main__title">
+                Manage User
+            </h1>
+            <a type="submit" class="form__btn main__button" onClick={() => { navigate(`/client/users/invite`) }}>
+                ADD
+            </a>
+        </div>
+        <br />
+
+        <table className="default-flex-table table-scroll client-admin-manage-user">
+
+            <thead>
+                <tr>
+                    {headers.map(header => <th>{header}</th>)}
+                </tr>
+            </thead>
+            <tbody>
+                {(clientData.results || []).map((val, index) => {
+                    if (_toLower(val.role) !== 'admin') {
+                        return (<tr>
+                            <td>{getProfilePhoto(val)}</td>
+                            <td>{val.first_name}</td>
+                            <td>{val.location}</td>
+                            <td>{val.email_id}</td>
+                            <td>{val.phone_number}</td>
+                            <td>{val.designation}</td>
+                            <td>{val.department}</td>
+                            <td>{val.role}</td>
+                            <td>{val.status}</td>
+                            <td>
+                                <ClientUserAction getClientUsers={getClientUsers} value={val} index={index} />
+                                {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                            </td>
+                        </tr>)
+                    }
+                })}
+            </tbody>
+        </table>
+
+
 
     </>)
 }

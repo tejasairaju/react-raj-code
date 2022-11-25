@@ -12,7 +12,7 @@ const { Input, Dropdown, TextArea, Button } = Fields;
 const { dataType, inputType, unitType } = questions;
 
 const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditable: false}, setInputList, inputList, closeModal = () => { }, handleInputChange = () => { } }) => {
-    const initialRow = { order: null, code: '', label: "", desc:"", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
+    const initialRow = { order: null, code: '', label: "", desc:"", type: '', field_type: '', field_unit_values: '', evidence: null, value: null, description: '' };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
     const [inputValue, setInputValue] = useState(initialRow);
     const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
@@ -39,7 +39,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
     }
 
     const onClickAddQuestion = () => {
-        if (((!_isEmpty(inputValue.code)&&!isTemplate) ||(_isEmpty(inputValue.code)&&isTemplate)) && !_isEmpty(inputValue.label) && !_isEmpty(inputValue.type) && !_isEmpty(inputValue.field_type) && !_isEmpty(inputValue.field_unit_values)) {
+        if (((!_isEmpty(inputValue.code)&&!isTemplate) ||(_isEmpty(inputValue.code)&&isTemplate)) && !_isEmpty(inputValue.label) && !_isEmpty(inputValue.type) && !_isEmpty(inputValue.field_type)) {
             if(!editInfo.isEditable) {
             setInputList([...inputList, {...inputValue, order: (inputList||[]).length +1 }]);
             } else {
@@ -99,7 +99,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
             </Modal>}
         <div className='add-ques-modal-popup_inner'>
             <div className='add-ques-modal-popup-block'>
-                <div className='add-ques-modal-popup-header'><span className='add-ques-close-modal-popup'><img onClick={() => closeAddQuesPopupModal()} src="assets/icons/close.svg" width='24px' height='24px' /></span></div>
+                <div className='add-ques-modal-popup-header'><span className='add-ques-close-modal-popup'><img onClick={() => closeAddQuesPopupModal()} src={`${isTemplate ? '../../../../': './../../'}assets/icons/close.svg`} width='24px' height='24px' /></span></div>
                 <div className='add-ques-modal-popup-body'>
                     <div class="add-ques-main__content-wrapper">
                         {/* <h1 class="create-framework__title">
@@ -144,7 +144,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                             {/* <Input label='' type="text" name='code' value={inputValue.code} className="add__file-window create_refs1" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} /> */}
 
                             <textarea name="label" value={inputValue.label} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest1" > </textarea>
-                            <textarea name="desc" value={inputValue.desc} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest2" > </textarea>
+                            <textarea name="description" value={inputValue.description} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest2" > </textarea>
                             <Dropdown className_1={'questions__select create_select1'} className_2={'questions__select-item'} options={dataType} name='type' value={inputValue.type} onChangeHandler={onChangeHandler} />
                             <Dropdown className_1={'questions__select create_select2'} className_2={'questions__select-item'} options={inputType} name='field_type' value={inputValue.field_type} onChangeHandler={onChangeHandler} />
                             {/* <input type="text" class="questions__select create_select3" /> */}

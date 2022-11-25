@@ -222,12 +222,12 @@ export const esg_admin = [{
         isActive: false,
         route: '/sector',
     },
-    {
-        clsName: '',
-        label: "Sub Sector",
-        isActive: false,
-        route: '/subsector',
-    },
+    // {
+    //     clsName: '',
+    //     label: "Sub Sector",
+    //     isActive: false,
+    //     route: '/subsector',
+    // },
 ]
 },
 {

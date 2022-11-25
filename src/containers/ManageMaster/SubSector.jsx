@@ -10,8 +10,11 @@ import _get from 'lodash/get';
 import './ManageMaster.css';
 import AddMoreOption from "../../Components/AddMoreOption/AddMoreOption.jsx";
 import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.jsx";
+import { useLocation } from "react-router-dom";
 
 const SubSector = (props) => {
+    const { state = {} } = useLocation();
+    const { sector = {} } = state || {};
     const [subSectorList, setSubSectorList] = useState({});
     const [sectorList, setSectorList] = useState({});
     const [statusData, setStatusData] = useState({});
@@ -44,7 +47,7 @@ const SubSector = (props) => {
 
     const updateMoreOption = async (option) => {
 
-        let getSector = (sectorList.results || []).find(val => _get(val, 'name', '') === inputValue.sector);
+        let getSector = (sectorList.results || []).find(val => _get(val, 'name', '') === sector.name);
         const payload = {
             sector: _get(getSector, 'id', null),
             name: inputValue.subsector
@@ -79,7 +82,7 @@ const SubSector = (props) => {
                 </h1>
                 <input type="text" name='sector' class="country__text__box"
                     placeholder={'Enter the sector'}
-                    value={inputValue.sector}
+                    value={sector.name}
                     onChange={addMoreoptions}
                 />
             </div>

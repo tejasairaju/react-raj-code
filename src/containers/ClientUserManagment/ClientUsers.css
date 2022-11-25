@@ -268,3 +268,24 @@ margin-left: 7px;
     display: block;
     overflow-y: scroll;
 }
+
+.client-admin-manage-user {
+    overflow: auto;
+    width: 56em  !important;
+}
+
+.client-admin-manage-user table td {
+    padding: 1.6em 6px !important;
+}
+
+.profile-image-icon {
+    width: 45px;
+    height: 28px;
+    /* border-radius: 50%; */
+    background: #a11e32;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 26px;
+
+}
