@@ -17,7 +17,7 @@
 }
 
 .user-wrapper-scroll {
-    height: 12em;
+    height:8em;
     overflow-x: scroll;
     overflow-y: hidden;
 }
@@ -28,4 +28,10 @@
 
 .user__container .user-name {
     font-size: medium;
+}
+
+.user-details-picture {
+    margin-left: 3em;
+    width: 5.56em;
+    height: 2em;
 }

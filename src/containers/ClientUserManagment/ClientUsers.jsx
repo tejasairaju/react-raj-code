@@ -13,6 +13,7 @@ import moment from 'moment';
 import _get from 'lodash/get';
 import Requests from "../../Requests/index.js";
 import './ClientUsers.css';
+import { getProfilePhoto } from "../../utils/utils.js";
 
 const ClientUsers = () => {
 
@@ -37,12 +38,12 @@ const ClientUsers = () => {
         }
     }
 
-    const getProfilePhoto = (val) => {
-        if (!_isEmpty(val.profile_picture)) return <img src={val.profile_picture} width='40px' height={'40px'} alt="" />;
-        else {
-            return <div className="profile-image-icon">{_toUpper((val&&val.first_name).charAt(0))} {_toUpper((val&&val.last_name).charAt(0))}</div>}
+    // const getProfilePhoto = (val) => {
+    //     if (!_isEmpty(val.profile_picture)) return <img src={val.profile_picture} width='40px' height={'40px'} alt="" />;
+    //     else {
+    //         return <div className="profile-image-icon">{_toUpper((val&&val.first_name).charAt(0))} {_toUpper((val&&val.last_name).charAt(0))}</div>}
 
-    }
+    // }
 
     const headers = ['Photo', 'Username',
         'Location',

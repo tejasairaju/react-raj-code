@@ -51,21 +51,7 @@ const AddClientUser = () => {
     }, []);
 
     const onSaveUser = async () => {
-
         try {
-
-            // const response = await Requests.Post(`/users/`, 
-            //     { first_name: inputValue.first_name , 
-            //         last_name: inputValue.last_name ,
-            //     email_id: inputValue.email_id ,
-            //     location: inputValue.location, 
-            //     phone_number: inputValue.phone_number, 
-            //     department: inputValue.department,
-            //     designation: inputValue.designation, 
-            //     profile_picture: '',
-            //     organization_name : orgDetails.name},  {organization:orgDetails.name});        
-            // setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-
             const form = new FormData();
             setStatusData({ type: 'loading', message: '' });
             form.append('first_name', inputValue.first_name);
@@ -105,20 +91,7 @@ const AddClientUser = () => {
             setStatusData({ ...error });
         }
     }
-    // const onUpdateUser = async () => {
-
-    //     try {
-
-    //         const response = await Requests.Put(`/users/` + inputValue.id,
-    //             inputValue, { organization: orgDetails.name });
-    //         navigate('/client/users');
-    //         setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-    //     } catch (e) {
-    //         let error = getErrorMessage(e);
-    //         setStatusData({ ...error });
-    //         // setStatusData({ type: 'error', message: e.message });
-    //     }
-    // }
+    
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
             navigate('/client/users');
@@ -155,11 +128,11 @@ const AddClientUser = () => {
 
         <div class="cli-add-main__content-wrapper content-wrapper">
             <div class="framework__col-wrapper">
-                <div class="Generate_report_head align-center">
+                {/* <div class="Generate_report_head align-center">
                     <UploadFile imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
                     <div class="framework__row"></div>
                     <div class="framework__row"></div>
-                </div>
+                </div> */}
 
                 <div class="Generate_report_head">
                     <div class="GenerateReport-framework__row">

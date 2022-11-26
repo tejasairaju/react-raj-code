@@ -1,5 +1,6 @@
 import _toLower from 'lodash/toLower';
 import _isEmpty from 'lodash/isEmpty';
+import _toUpper from 'lodash/toUpper';
 import _get from 'lodash/get';
 import moment from 'moment';
 export const checkValidation = (inputValue) => {
@@ -41,6 +42,13 @@ export const getTaskCount = (response) => {
     return { ...cloneCount };
 }
 
+export const getProfilePhoto = (val, classVal= {width:'40px', height:'40px'}) => {
+    if (!_isEmpty(val.profile_picture)) return <img src={val.profile_picture} {...classVal} alt="" />;
+    else {
+        return <div className="profile-image-icon">{_toUpper((val&&val.first_name).charAt(0))} {_toUpper((val&&val.last_name).charAt(0))}</div>}
+
+}
+
 export const getDataFormat = (date, formate = 'DD/MM/YYYY') => {
     if (_isEmpty(date)) return moment.format(formate);
     else return moment(date).format(formate);
@@ -55,7 +63,6 @@ export const getColor = (status) => {
 }
 
 export const getErrorMessage = (error) => {
-    console.log('>>>>>>>>>>>>>>>>>>>??????????????/', error);
     let errorObject = { type: 'error' };
     if (_get(error, 'response.status', 400) === 400) {
         const data = _get(error, 'response.data', {});

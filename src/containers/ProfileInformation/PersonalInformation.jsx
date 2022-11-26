@@ -13,18 +13,19 @@ import axios from 'axios';
 import Requests from '../../Requests';
 import EsgImageNavBar from '../../components/EsgImageNavBar/EsgImageNavBar.jsx';
 import Popup from '../../components/Common/Popup/Popup.jsx';
+import { getErrorMessage } from '../../utils/utils';
 
 const { Input, TextArea, Pills, UploadFile, Button, InputBox, Label, Dropdown, TextAreaBox } = Fields;
 
 const PersonalInformation = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const {  appWizard = {} } = useSelector(state => state.appWizard);
+    const { appWizard = {} } = useSelector(state => state.appWizard);
     const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
-    const [inputValue, setInputValue] = useState({ name: orgDetails.name});
+    const [inputValue, setInputValue] = useState({ name: orgDetails.name });
     const [errorValidation, setErrorValidation] = useState(false);
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
@@ -35,7 +36,7 @@ const PersonalInformation = () => {
     //     setIsOpen(false)
     // }
     useEffect(() => {
-       
+
         getUserDetails();
         // setInputValue({...inputValue, sectors: appWizard.sectors, operating_countries: appWizard.countries });
     }, []);
@@ -48,7 +49,7 @@ const PersonalInformation = () => {
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
             ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                setInputValue({...inputValue, operating_countries: countries.results, sectors: sectors.results,  });
+                setInputValue({ ...inputValue, operating_countries: countries.results, sectors: sectors.results, });
             });
         } catch (error) {
             console.log(error);
@@ -57,8 +58,10 @@ const PersonalInformation = () => {
 
     const getUserDetails = async (id = "") => {
         try {
-            const userDetails = await Requests.Get(`/users/${loginDetails.user_id}`, {organization: orgDetails.name});
-            setInputValue({ first_name: userDetails.first_name, last_name: userDetails.last_name, email_id:userDetails.email_id, phone_number:userDetails.phone_number,zipcode:(userDetails.zipcode || ''), country:userDetails.country, organization_name: userDetails.organization_name  });
+            const userDetails = await Requests.Get(`/users/${loginDetails.user_id}`, { organization: orgDetails.name });
+            setLogo(userDetails.profile_picture);
+            !_isEmpty(userDetails.profile_picture) && setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: userDetails.profile_picture });
+            setInputValue({ first_name: userDetails.first_name, last_name: userDetails.last_name, email_id: userDetails.email_id, phone_number: userDetails.phone_number, zipcode: (userDetails.zipcode || ''), country: userDetails.country, organization_name: userDetails.organization_name });
         } catch (e) {
             setInputValue({});
         }
@@ -135,7 +138,7 @@ const PersonalInformation = () => {
             delete cloneObject.groupSubsectors[sectorName];
             setInputValue({ ...cloneObject, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat()] });
         } else {
-            const response = await Requests.Get(`/esgadmin/master/subsectors`, {sector: sectorName});
+            const response = await Requests.Get(`/esgadmin/master/subsectors`, { sector: sectorName });
             setInputValue({
                 ...cloneObject, groupSubsectors: {
                     ...cloneObject['groupSubsectors'],
@@ -194,26 +197,55 @@ const PersonalInformation = () => {
         if (statusData.type === 'success') {
             navigate(`/`);
         }
-       
+
         setStatusData({ type: '', message: '' });
     }
 
     const OrgInputFields = (label = '', labelRequired = false, inputName = '', inputVal = '', labelCls = '') => (
         <div class="framework__row">
             <Label label={label} required={labelRequired} />
-            <InputBox name={inputName} value={inputVal} onChangeHandler={onChangeHandler} disabled={true}/>
+            <InputBox name={inputName} value={inputVal} onChangeHandler={onChangeHandler} disabled={true} />
         </div>
     );
 
-    const onSaveUserDetails = async() => {
+    // const onSaveUserDetails = async() => {
+    //     try {
+    //       const respose = await Requests.Put(`/users/${loginDetails.user_id}`, {...inputValue}, {organization: orgDetails.name});
+    //     //   if(respose) {
+    //         setStatusData({ type: 'success', message: 'Your profile details has been successfully updated' });
+    //     //   }
+    //     } catch(e) {
+    //         setStatusData({ type: 'error', message: e.data.response.message || 'Network error.'});
+
+    //     }
+    // }
+
+    const onSaveUserDetails = async () => {
         try {
-          const respose = await Requests.Put(`/users/${loginDetails.user_id}`, {...inputValue}, {organization: orgDetails.name});
-        //   if(respose) {
+            const form = new FormData();
+            setStatusData({ type: 'loading', message: '' });
+            form.append('first_name', inputValue.first_name);
+            form.append('last_name', inputValue.last_name)
+            form.append('email_id', inputValue.email_id);
+            form.append('location', inputValue.location);
+            form.append('phone_number', inputValue.phone_number);
+            // form.append('department', inputValue.department);
+            // form.append('designation', inputValue.designation);
+            form.append('created_at', moment().format());
+            form.append('updated_at', moment().format());
+            if (!_isEmpty(uploadImage && uploadImage.fileName)&& !_isEmpty(logo)) {
+                form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+            } else if(_isEmpty(logo)) {
+                form.append('profile_picture', '');
+            }
+            form.append('organization_name', orgDetails.name);
+            let response = await axios.put(`${process.env.API_BASE_URL}/users/${loginDetails.user_id}?organization=${orgDetails.name}`, form, {
+                headers: { "Content-Type": "multipart/form-data" }
+            }).then(({ data }) => data);
             setStatusData({ type: 'success', message: 'Your profile details has been successfully updated' });
-        //   }
-        } catch(e) {
-            setStatusData({ type: 'error', message: e.data.response.message || 'Network error.'});
-            
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
         }
     }
 
@@ -227,19 +259,17 @@ const PersonalInformation = () => {
             </div>}
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-      
+
         <div class="profile-info-container">
             <div class="framework__col-wrapper">
-                {/* <div class="framework__row-wrapper bot10 profile-info-fileds">
+                <div class="framework__row-wrapper profile-info-fileds">
                     <div class="framework__row">
-                        <UploadFile imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
-
-
-                        <div class="framework__row"> </div>
-                        <div class="framework__row"> </div>
+                        <UploadFile imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
                     </div>
-                </div> */}
+                    <div class="framework__row">
 
+                    </div>
+                </div>
                 <div class="framework__row-wrapper profile-info-fileds">
                     <div class="framework__row">
                         <Label label={'First Name'} className={`framework__title`} required={true} />
@@ -258,72 +288,22 @@ const PersonalInformation = () => {
                     </div>
                     <div class="framework__row">
                         <Label label={'Mobile'} className={`framework__title right`} required={true} />
-                        <InputBox maxLength={10} text="number" name={'phone_number'} value={inputValue.phone_number} onChangeHandler={onChangeHandler} />
+                        <InputBox maxLength={15} text="number" placeholder="+44235545" name={'phone_number'} value={inputValue.phone_number} onChangeHandler={onChangeHandler} />
 
                     </div>
                 </div>
                 <div class="framework__row-wrapper profile-info-fileds">
                     <div class="framework__row">
-                    <Label label={'Country'} required={true} />
-                    <InputBox name={'country'} value={inputValue.country} onChangeHandler={onChangeHandler} />
+                        <Label label={'Country'} required={true} />
+                        <InputBox name={'country'} value={inputValue.country} onChangeHandler={onChangeHandler} />
                         {/* <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} /> */}
                     </div>
-                  
+
                 </div>
 
             </div>
         </div>
-        {/* <div class="main__top-wrapper">
-            <h1 class="main__title">
-            Profesional Information
-            </h1>
-        </div>
-        <div class="profile-info-container">
-            <div class="framework__col-wrapper">
-                <div class="framework__row-wrapper profile-info-fileds">
-                    <div class="framework__row">
-                        <Label label={'Company'} className={`framework__title`} required={true} />
-                        <InputBox name={'name'} value={inputValue.name} onChangeHandler={onChangeHandler} />
-                    </div>
-                    <div class="framework__row">
-                    <Label label={'Location'} className={`framework__title right`} required={true} />
-                        <InputBox name={'location'} value={inputValue.location} onChangeHandler={onChangeHandler} />
 
-                    </div>
-                </div>
-                <div class="framework__row-wrapper profile-info-fileds">
-                    <div class="framework__row">
-                    <Label label={'Headquarters'} required={true} />
-                                <InputBox name={'headquarters'} value={inputValue.headquarters} onChangeHandler={onChangeHandler} />
-                    </div>
-                    <div class="framework__row">
-                    <Label label={'Address'} className={"framework__title right address_title"} required={true} />
-                        <TextAreaBox label='' name='address' value={inputValue.address} className="framework__input" placeholder="" required={true} onChangeHandler={(e) => onChangeHandler(e)} />
-                    </div>
-                </div>
-                <div class="framework__row-wrapper profile-info-fileds">
-                    <div class="framework__row">
-                        <Label label={'Department'} className={`framework__title`} required={true} />
-                        <InputBox name={'department'} value={inputValue.department} onChangeHandler={onChangeHandler} />
-                    </div>
-                    <div class="framework__row">
-                        <Label label={'Designation'} className={`framework__title right`} required={true} />
-                        <InputBox name={'designation'} value={inputValue.designation} onChangeHandler={onChangeHandler} />
-
-                    </div>
-                </div>
-                <div class="framework__row-wrapper profile-info-fileds">
-                    <div class="framework__row">
-                        <Label label={'Sector'} className={`framework__title`} required={true} />
-                        <Pills label='' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
-                    </div>
-                    <div class="framework__row">
-                        <Label label={'SubSector'} className={`framework__title right`} required={true} />
-                        <Pills label='' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={false} />
-                    </div>
-                </div>
-            </div>
-        </div> */}
 
         <button onClick={() => onSaveUserDetails()} class="main__button">
             SAVE

@@ -90,7 +90,7 @@ const CreateFramework = (props) => {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('description', inputValue.description)
-            if (!_isEmpty(uploadImage.fileName)&&(isEdit == false)) {
+            if (!_isEmpty(uploadImage&&uploadImage.fileName)&&(isEdit == false)) {
                 form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
             } else if(params.isEdit&&logo){
                 let blob = new Blob([logo], {
@@ -235,7 +235,7 @@ const CreateFramework = (props) => {
         </div>
         <div id="createFramework" className="main__content-wrapper">
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
-            <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
+            <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
             <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={true} />
             <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
