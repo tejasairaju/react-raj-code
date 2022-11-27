@@ -1,4 +1,14 @@
 
+    .client-info-list-container {
+        overflow-y: scroll !important;
+        max-height: 100% !important;
+    }
+   
+    .word-text-break {
+        width: 10em;
+        word-break: break-all;
+    }
+
 /* .main {
     display: flex;
     flex-direction: column;

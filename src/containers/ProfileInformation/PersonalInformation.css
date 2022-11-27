@@ -122,9 +122,9 @@
         width: 100%;
     }
 
-    .aside-framework .list-item__wrapper a {
+    /* .aside-framework .list-item__wrapper a {
         padding: 12px 0;
-    }
+    } */
 
     .nav__list-item .list-item__wrapper a {
         font-size: 18px;
@@ -241,9 +241,9 @@
         width: 100%;
     }
 
-    .aside-framework .list-item__wrapper a {
+    /* .aside-framework .list-item__wrapper a {
         padding: 8px 0;
-    }
+    } */
 
     .nav__list-item .list-item__wrapper a {
         font-size: 14px;

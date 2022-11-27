@@ -83,7 +83,7 @@ const CreateBespokeQuestions = (props) => {
 
     const onCloseHandler = () => {
         if (statusData.type === 'success' && createQuestions) {
-            navigate('/template');
+            navigate('/view/template');
         }
         setStatusData({});
 

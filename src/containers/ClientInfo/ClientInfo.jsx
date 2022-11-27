@@ -8,7 +8,7 @@ import Axios from 'axios';
 import MoreAction from "./MoreAction.jsx";
 import moment from 'moment';
 import _get from 'lodash/get';
- 
+
 
 
 import './ClientInfo.css';
@@ -37,56 +37,58 @@ const ClientInfo = (props) => {
 
 
     const headers = ['Logo',
-    'Organisation',
-    'Location',
-    'Client admin',
-    'Package',
-    'License',
-    'Users',
-    'Status',
-    'Action'];
+        'Organisation',
+        'Location',
+        'Client admin',
+        'Package',
+        'License',
+        'Users',
+        'Status',
+        'Action'];
 
     return (<>
 
-            <div class="main__top-wrapper">
-                <h1 class="main__title">
-                    Client Info
-                </h1>
-                <button class="main__button" onClick={() => { navigate(`/customeronboardbyadmin`) }}>
-                    ADD
-                </button>
-            </div>
-            <br/>
+        <div class="main__top-wrapper">
+            <h1 class="main__title">
+                Client Info
+            </h1>
+            <button class="main__button" onClick={() => { navigate(`/customeronboardbyadmin`) }}>
+                ADD
+            </button>
+        </div>
+        <br />
+        <div className="client-info-list-container">
             <table className="default-flex-table">
 
                 <thead>
-                        <tr>
-                            {headers.map(header => <th>{header}</th>)}
-                        </tr>
+                    <tr>
+                        {headers.map(header => <th>{header}</th>)}
+                    </tr>
                 </thead>
                 <tbody>
-                        {(clientData.results || []).map((val, index) => {
-                            return (<tr>
-                                <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td>
-                                <td>{val.name}</td>
- 
-                                <td>{val.headquarters}</td>
+                    {(clientData.results || []).map((val, index) => {
+                        return (<tr>
+                            <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td>
+                            <td><div className="word-text-break">{val.name}</div></td>
 
-                                <td>{val.name}</td>
-                                <td>Silver</td>
-                                <td> </td>
-                                <td>5</td>
-                                <td>{val.status}</td>
-                                <td>
-                                <MoreAction value={val} index={index}/>
-                                    {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                                </td>
-                            </tr>)
-                        })}
-                    </tbody>
+                            <td>{val.headquarters}</td>
+
+                            <td><div className="word-text-break">{val.name}</div></td>
+                            <td>Silver</td>
+                            <td> </td>
+                            <td>5</td>
+                            <td>{val.status}</td>
+                            <td>
+                                <MoreAction value={val} index={index} />
+                                {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                            </td>
+                        </tr>)
+                    })}
+                </tbody>
             </table>
-             
-            
+        </div>
+
+
 
     </>)
 }

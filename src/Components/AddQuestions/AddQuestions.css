@@ -51,12 +51,12 @@
 }
 
 .wrapper {
-    overflow: visible;
+    /* overflow: visible;
     display: flex;
     max-width: 1920px;
     min-height: 100%;
     padding: 5px;
-    margin: 0 auto;
+    margin: 0 auto; */
 }
 
 
@@ -120,11 +120,11 @@
     border-bottom: 1px solid #000;
 }
 
-.aside-framework {
+/* .aside-framework {
     max-width: 386px;
     background: #EFF5F9;
     box-shadow: inset -20px 0px 30px rgba(0, 0, 0, 0.07);
-}
+} */
 
 .aside-framework__logo-container {
     padding: 44px 85px 0 79px;
@@ -132,44 +132,44 @@
     text-align: center;
 }
 
-.aside-framework .nav__list {
+/* .aside-framework .nav__list {
     display: flex;
     flex-direction: column;
-}
+} */
 
-.aside-framework .list-item__wrapper {
+/* .aside-framework .list-item__wrapper {
     padding: 0 10px 0 37px;
     border-right: 6px solid transparent;
-}
+} */
 
-.aside-framework .sublist-item .list-item__wrapper {
+/* .aside-framework .sublist-item .list-item__wrapper {
     padding: 0 10px 0 7px;
-}
+} */
 
-.aside-framework .list-item__wrapper:hover {
+/* .aside-framework .list-item__wrapper:hover {
     background: rgba(32, 136, 189, 0.1);
     border-right: 6px solid #2088BD20;
-}
+} */
 
-.aside-framework .nav__list-item.active>.list-item__wrapper {
+/* .aside-framework .nav__list-item.active>.list-item__wrapper {
     background: rgba(32, 136, 189, 0.3);
     border-right: 6px solid #2088BD;
-}
+} */
 
-.aside-framework .list-item__wrapper a {
+/* .aside-framework .list-item__wrapper a {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     padding: 18px 0;
     color: #585E62;
     font-size: 22px;
-}
+} */
 
-.aside-framework .list-item__minus {
+/* .aside-framework .list-item__minus {
     display: none;
-}
+} */
 
-.aside-framework .nav__list-item.active>.list-item__wrapper a {
+/* .aside-framework .nav__list-item.active>.list-item__wrapper a {
     color: #2088BD;
 }
 
@@ -179,9 +179,9 @@
 
 .aside-framework .nav__list-item.active .list-item__minus {
     display: block;
-}
+} */
 
-.aside-framework .nav__list-item.active>.list-item__wrapper a svg rect,
+/* .aside-framework .nav__list-item.active>.list-item__wrapper a svg rect,
 .aside-framework .nav__list-item.active>.list-item__wrapper a svg path {
     fill: #2088BD;
 }
@@ -202,12 +202,12 @@
 
 .aside-framework .sublist-item {
     list-style: disc;
-}
+} */
 
-.aside-framework .sublist-item.active {
+/* .aside-framework .sublist-item.active {
     background: rgba(32, 136, 189, 0.3);
     border-right: 6px solid #2088BD;
-}
+} */
 
 /* -----Aside Sublist lines End--------- */
 .sublist.active {
@@ -354,7 +354,7 @@
     position: relative;
     background: #FAFCFE;
     box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    width: 80%;
     padding: 12% 4% 3%;
 }
 
@@ -431,9 +431,9 @@
         width: 100%;
     }
 
-    .aside-framework .list-item__wrapper a {
+    /* .aside-framework .list-item__wrapper a {
         padding: 14px 0;
-    }
+    } */
 
     .nav__list-item .list-item__wrapper a {
         font-size: 18px;
@@ -588,9 +588,9 @@
         width: 100%;
     }
 
-    .aside-framework .list-item__wrapper a {
+    /* .aside-framework .list-item__wrapper a {
         padding: 10px 0;
-    }
+    } */
 
     .nav__list-item .list-item__wrapper a {
         font-size: 14px;

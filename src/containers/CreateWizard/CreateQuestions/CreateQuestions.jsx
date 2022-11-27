@@ -72,7 +72,7 @@ const CreateQuestions = (props) => {
 
     const onCloseHandler = () => {
         if (statusData.type === 'success' && createQuestions) {
-            navigate('/createframe');
+            navigate('/manageframework');
         }
         setStatusData({});
 

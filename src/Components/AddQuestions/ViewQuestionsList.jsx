@@ -26,8 +26,8 @@ const ViewQuestionsList = ({ isTemplate = false, code = "", name = "", createQue
                         required disabled></input></>
                 }
                 <h1 className="create-framework__title disclosure">
-                    Disclosure
-                    <img src='../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />
+                    Disclosure :
+                    {!isTemplate&&<img src='../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
                 </h1>
                 <input type="text" className="create-framework__input"
                     value={name} required disabled></input>
