@@ -21,7 +21,8 @@ export const Login = ({loginHandler}) => {
     }
 
     const onClickloginHandler = () => {
-        if(email){
+        const re = /\S+@\S+\.\S+/;
+        if(re.test(email)){
             loginHandler(email);
         } else {
             setError('Please Provide vaild Email id');

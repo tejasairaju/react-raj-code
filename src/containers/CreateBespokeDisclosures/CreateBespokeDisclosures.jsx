@@ -124,7 +124,7 @@ const CreateBespokeDisclosures = () => {
                 <div class="framework__col-wrapper">
                     <div class="GenerateReport-framework__row Generate_report_head">
                         <h2 class="Generate_h1_label1"> Name:</h2>
-                        <InputBox className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} />
+                        <InputBox className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} maxLength={50}/>
                     </div>
                     <div class="GenerateReport-framework__row Generate_report_head">
                         <h2 class="Generate_h1_label1">Category:</h2>

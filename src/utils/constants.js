@@ -47,8 +47,8 @@ export const mapCatagory_2 = [
 export const questions = {
     dataType: [
         {
-            label: 'N/A',
-            value: 'N/A',
+            label: 'Select',
+            value: 'Select',
         },{
         label: 'Varchar',
         value: 'Varchar',
@@ -73,8 +73,8 @@ export const questions = {
     }],
     inputType: [
         {
-            label: 'N/A',
-            value: 'N/A',
+            label: 'Select',
+            value: 'Select',
             selected: 'selected'
         },{
         label: 'Input',
@@ -99,8 +99,8 @@ export const questions = {
         field_choices: []
     }],
     unitType: [{
-        label: 'N/A',
-        value: 'N/A'
+        label: 'Select',
+        value: 'Select'
     },
     {
         label: 'Text',

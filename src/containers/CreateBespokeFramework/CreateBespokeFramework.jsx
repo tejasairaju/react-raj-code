@@ -81,7 +81,7 @@ const CreateBespokeFramework = () => {
                 <div class="framework__col-wrapper">
                     <div class="GenerateReport-framework__row Generate_report_head">
                         <h2 class="Generate_h1_label1">Template Name:</h2>
-                        <InputBox className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} />
+                        <InputBox className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} maxLength={50}/>
                         {/* <InputBox className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} /> */}
                     </div>
                     <div class="Generate_report_button_row create-report-btn">

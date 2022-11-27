@@ -60,9 +60,9 @@ const PackageSummary = () => {
                 </div>
             </div>
             <div className="package-summary-page-next-btn">
-            <button onClick={() => navigate('/', { state: { price: _get(item, 'price', 0) + 100 } })} className="m-l-1 main-btn ">
+            {/* <button onClick={() => navigate('/', { state: { price: _get(item, 'price', 0) + 100 } })} className="m-l-1 main-btn ">
                 NEXT
-            </button>
+            </button> */}
             </div>
         </div></>);
 }

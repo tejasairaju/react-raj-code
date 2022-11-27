@@ -165,7 +165,7 @@ const CreateReport = () => {
                         <div class="GenerateReport_row">
                             <h1 class="Generate_h1_label">From :</h1>
                             <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
-                            <input type="date" name={'start_date'} min="2000-01-01" value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                            <input type="date" name={'start_date'} min="2000-01-01" max="2100-01-01" value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
@@ -174,7 +174,7 @@ const CreateReport = () => {
                         <div class="GenerateReport_row">
                             <h1 class="Generate_h1_label">To :</h1>
                             <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
-                            <input type="date" name={'end_date'} max="2100-01-01" value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                            <input type="date" name={'end_date'} min="2000-01-01" max="2100-01-01" value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
