@@ -103,9 +103,6 @@ export const questions = {
         value: 'Select'
     },
     {
-        label: 'Text',
-        value: 'Text'
-    }, {
         label: 'Numbers',
         value: 'Numbers'
     },

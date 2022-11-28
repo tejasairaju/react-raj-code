@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import _toLower from 'lodash/toLower'
+import { useEffect } from "react";
 
 
 const AddMoreOption = (props) => {
-    const { placeholder = '', label = '', value = '', updateMoreOption = () => { } } = props;
+    const { placeholder = '', label = '', value = '', status= '', updateMoreOption = () => { } } = props;
     const [inputValue, setInputValue] = useState(value);
 
     const addMoreoptions = async (e) => {
         const { value } = e.target;
         setInputValue(value)
     }
+
+    useEffect(() => {
+if(status === 'success') {
+    setInputValue('');
+}
+    }, [status])
     return (<div class="main__top-wrapper">
         <div class="user_input_text flex flex-column">
             <h1 class="main__title">

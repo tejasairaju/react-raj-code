@@ -296,7 +296,7 @@ const PersonalInformation = () => {
                     <div class="framework__row">
                         <Label label={'Country'} required={true} />
                         <InputBox name={'country'} value={inputValue.country} onChangeHandler={onChangeHandler} />
-                        {/* <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} /> */}
+                        {/* <Pills label='' data={inputValue.country} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'country')} required={true} /> */}
                     </div>
 
                 </div>

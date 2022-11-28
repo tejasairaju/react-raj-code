@@ -10,6 +10,7 @@ import CountryAction from "./CountryAction.jsx";
 import Popup from "../../components/Common/Popup/Popup.jsx";
 import moment from 'moment';
 import _get from 'lodash/get';
+import { getErrorMessage } from "../../utils/utils";
 import AddMoreOption from "../../Components/AddMoreOption/AddMoreOption.jsx";
 import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.jsx";
 
@@ -40,7 +41,8 @@ const ManageCountry = (props) => {
             getCountryList();
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
-            setStatusData({ type: 'error', message: e.message });
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
         }
     }
 
@@ -53,7 +55,7 @@ const ManageCountry = (props) => {
 
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <AddMoreOption label={'Country'} placeholder={"Enter the Country"} value={''} updateMoreOption={updateMoreOption} />
+        <AddMoreOption label={'Country'} placeholder={"Enter the Country"} status={statusData.type} updateMoreOption={updateMoreOption} />
         <br />
         <div id="viewCountry" className="view-diclosuer-container">
             <MoreOptionTable headers={headers} tableData={countryData.results} />
