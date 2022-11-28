@@ -14,7 +14,7 @@ const MoreAction = (props) => {
     return (<div onClick={() => setIsopen(false)}>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
-            <div onClick={() => { }}><a>Edit</a></div>
+            <div onClick={() => {navigate(`/customeronboardbyadmin`, {state: {clientDetails: value, isEditable: true}})}}><a>Edit</a></div>
             <div><a onClick={() => { }}>Create</a></div>
             <div><a onClick={() => { }}>View</a></div>
         </div>
