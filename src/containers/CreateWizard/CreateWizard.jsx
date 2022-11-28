@@ -24,14 +24,18 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
     const dispatch = useDispatch();
     const [sideMenu, updateSideMenu] = useState([]);
     const [statusData, setStatusData] = useState({});
+    const [userRoleText, setUserRole] = useState('');
 
     useEffect(() => {
         if (userRole === 'esg_admin') {
             updateSideMenu(esg_admin);
+            setUserRole('System Admin');
         } else if (userRole === 'client_admin') {
             updateSideMenu(client_admin);
+            setUserRole('Client Admin');
         } else {
             updateSideMenu(client_user);
+            setUserRole('Client User');
         }
         getUserAdminInfo(1);
     }, []);
@@ -102,15 +106,6 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
         </li>)}</>
         return render;
     };
-
-    let roleLabel = ''; 
-    if(userRole === 'esg_admin') {
-        roleLabel = 'System Admin';
-    } if(userRole === 'client_admin') {
-        roleLabel = 'Client Admin';
-    } else {
-        roleLabel = 'Client User';
-    }
     return (<>
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
                 <aside className="aside-framework">
@@ -119,7 +114,7 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
                             <img src="../../../../assets/icons/esg_logo.png" alt="logo" className="aside-framework__logo" />
                         </a>
 
-                        <div className='user-role-label'>{roleLabel}</div>
+                        <div className='user-role-label'>{userRoleText}</div>
                     </div>
                     <nav className="aside-framework__nav">
                         <ul className="nav__list">
