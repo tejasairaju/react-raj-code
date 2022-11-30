@@ -68,7 +68,7 @@ const ViewBespokeDisclosures = () => {
                                 <td>{val.category}</td>
                                 <td>{val.section}</td>
                                 <td>
-                                    <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} state={getState(val)} value={{ ...val, template_id }} index={index} state={{ ...val }} />
+                                    <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} state={getState(val)} value={{ ...val, template_id }} index={index} />
                                 </td>
                             </tr>)
                         })}
