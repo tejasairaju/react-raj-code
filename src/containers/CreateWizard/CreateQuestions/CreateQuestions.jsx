@@ -17,7 +17,7 @@ const CreateQuestions = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const state = _get(location, 'state', {});
-    const { id = '', name = '', code = "", framework = '', description='' } = state || {};
+    const { id = '', name = '', code = "", framework = '', description='', guidance="" } = state || {};
     const [statusData, setStatusData] = useState({});
     const [inputList, setInputList] = useState([]);
     const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
@@ -51,7 +51,7 @@ const CreateQuestions = (props) => {
             children: newInputList
         }
         // setStatusData({ type: 'loading', message: '' });
-        if (createQuestions) {
+        if (createQuestions&&(newInputList|| []).length > 0) {
 
             try {
                 setStatusData({ type: 'loading', message: '' });
@@ -95,7 +95,6 @@ const CreateQuestions = (props) => {
     }
 
     let tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
-
     return (<>
         {isOpenAddQuestion && <AddQuestions isTemplate={false} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
         <div className="main__top-wrapper">
@@ -106,7 +105,7 @@ const CreateQuestions = (props) => {
         <div id="createQuestions" className={`create_question__wrapper ${!createQuestions ? 'view-questions-list-container' : null}`}>
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
 
-            <ViewQuestionsList isTemplate={isTemplate} code={code} name={name} createQuestions={createQuestions} tableHeaders={tableHeaders} inputList={inputList} isError={isError}
+            <ViewQuestionsList isTemplate={isTemplate} guidance={guidance} code={code} name={name} createQuestions={createQuestions} tableHeaders={tableHeaders} inputList={inputList} isError={isError}
                  onClickAddQuestion={onClickAddQuestion} handleEditClick={handleEditClick} handleRemoveClick={handleRemoveClick} />
         </div>
         <div className='create-question-main-btn'>

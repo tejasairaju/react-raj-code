@@ -1,13 +1,14 @@
-import react from 'react';
+import react, {useState} from 'react';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { questions } from '../../utils/constants.js';
+import Modal from '../Common/Modal/Modal.jsx';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 const { dataType, inputType, unitType } = questions;
 
-const ViewQuestionsList = ({ isTemplate = false, code = "", name = "", createQuestions = true, tableHeaders = [], inputList = [], isError = false,
+const ViewQuestionsList = ({ isTemplate = false,guidance = '', code = "", name = "", createQuestions = true, tableHeaders = [], inputList = [], isError = false,
     handleInputChange = () => { }, onClickAddQuestion = () => { }, handleEditClick = () => { }, handleRemoveClick = () => { } }) => {
-
+        const [isShowGuidance, setIsShowGuidance] = useState(false);
     const listChoices = (i) => {
         if (['Dropdown', 'Radio button', 'Multiselect'].indexOf((inputList[i].field_type || '')) > -1) {
             return <>{(inputList[i]['field_choices'] || []).map((choice) => <li>{choice}</li>)}</>;
@@ -18,8 +19,14 @@ const ViewQuestionsList = ({ isTemplate = false, code = "", name = "", createQue
 
     return (<>
         <div>
+        {isShowGuidance && <Modal isShow={!!isShowGuidance} isDisclosureDec={true} closeModal={() =>setIsShowGuidance(false) }>
+            <div className='create-options-title'>Description:</div>
+            <div className='get-textarea-input-container'>
+                <div className="create-framework__textarea disclosure-description-screen">{guidance}</div>
+            </div>
+        </Modal>}
             <div className="create-framework__row-wrapper">
-                {code && <><h1 className="create-framework__title">
+                {<><h1 className="create-framework__title">
                     Ref No
                 </h1>
                     <input type="text" min="" step="" className="refno_create_question" value={code}
@@ -27,7 +34,7 @@ const ViewQuestionsList = ({ isTemplate = false, code = "", name = "", createQue
                 }
                 <h1 className="create-framework__title disclosure">
                     Disclosure :
-                    {!isTemplate&&<img src='../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
+                    {<img onClick={() => setIsShowGuidance(true)} src='../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
                 </h1>
                 <input type="text" className="create-framework__input"
                     value={name} required disabled></input>

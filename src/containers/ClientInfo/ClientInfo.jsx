@@ -39,6 +39,7 @@ const ClientInfo = (props) => {
     const headers = ['Logo',
         'Organisation',
         'Location',
+        "HeadQuarters",
         'Client admin',
         'Package',
         'License',
@@ -70,7 +71,8 @@ const ClientInfo = (props) => {
                         return (<tr>
                             <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td>
                             <td><div className="word-text-break">{val.name}</div></td>
-
+                            
+                            <td>{val.location}</td>
                             <td>{val.headquarters}</td>
 
                             <td><div className="word-text-break">{val.name}</div></td>

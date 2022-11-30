@@ -123,6 +123,7 @@ const CustomerOnboardByAdmin = (props) => {
                     </h1>
                     <label for="create-framework__date-from" class="create-framework__label">
                         <input type="date" class="create-framework__input"   name='from' value={inputValue.from}
+                         min="2000-01-01" max="2100-01-01"
                         id="create-framework__date-from" required=""
                         onChangeHandler={onChangeHandler}
                         />
@@ -133,6 +134,7 @@ const CustomerOnboardByAdmin = (props) => {
                     </h1>
                     <label for="create-framework__date-to" class="create-framework__label">
                         <input type="date" class="create-framework__input"   name='to' value={inputValue.to}
+                         min="2000-01-01" max="2100-01-01"
                         id="create-framework__date-to" required=""
                         onChangeHandler={onChangeHandler}
                         />

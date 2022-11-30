@@ -2,10 +2,11 @@
     .client-info-list-container {
         overflow-y: scroll !important;
         max-height: 100% !important;
+        overflow-x: hidden;
     }
    
     .word-text-break {
-        width: 10em;
+        width: 9em;
         word-break: break-all;
     }
 

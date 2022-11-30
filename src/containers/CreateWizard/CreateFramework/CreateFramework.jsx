@@ -30,6 +30,7 @@ const CreateFramework = (props) => {
     const [statusData, setStatusData] = useState({});
     const [apiData, setApiData] = useState({});
     const [currentFrame, setCurrentFrame] = useState('');
+    const appWizard = useSelector(state => state.appWizard);
     const validation = {};
     // accordion 
     // const toke = getAccessTokenSilently(const accessToken = await getAccessTokenSilently({
@@ -42,10 +43,11 @@ const CreateFramework = (props) => {
             getframeworkDetails(params.id);
         } else {
             getUserAdminInfo(1);
+            // setInputValue({ countries: appWizard.countries, sectors: appWizard.sectors, categories: appWizard.categories });
         }
 
     }, []);
-
+    
     const getUserAdminInfo = async () => {
         try {
             await Axios.all([
@@ -85,8 +87,11 @@ const CreateFramework = (props) => {
     }
 
     const onNextHandler = async () => {
-        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && (inputValue.countries || []).length
-            && (inputValue.categories || []).length && (inputValue.sectors || []).length) {
+        console.log('>>>>>>>>', inputValue);
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) 
+        /*&& (inputValue.countries || []).length > 0
+            && (inputValue.categories || []).lengthv> 0 && (inputValue.sectors || []).length > 0 */
+            ) {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('description', inputValue.description)
@@ -209,23 +214,6 @@ const CreateFramework = (props) => {
         setStatusData({ type: '', message: '' });
     }
 
-    const frameTracker = () => (<div className="create-framework__steps">
-        <div className="step__wrapper">
-            <div onClick={() => setCurrentFrame('createframe')} className={`create-framework__step-position ${currentFrame === 'createframe' ? 'active' : null}`}>1</div>
-            <h1 className="active">Create Framework</h1>
-        </div>
-        <div className="create-framework__step-line"></div>
-        <div className="step__wrapper">
-            <div onClick={() => setCurrentFrame('createdisclosures')} className={`create-framework__step-position ${currentFrame === 'createdisclosures' ? 'active' : null}`}>2</div>
-            <h1>Create Disclosure</h1>
-        </div>
-        <div className="create-framework__step-line"></div>
-        <div className="step__wrapper">
-            <div className={`create-framework__step-position ${currentFrame === 'createquestions' ? 'active' : null}`}>3</div>
-            <h1>Create Questions</h1>
-        </div>
-    </div>);
-
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
@@ -237,10 +225,10 @@ const CreateFramework = (props) => {
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
             <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={true} />
-            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
+            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={false} />
+            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={false} />
             <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={false} />
-            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={true} />
+            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={false} />
         </div>
         {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
         <Button label={isEdit ? 'UPDATE':'NEXT'} onClickHandler={onNextHandler} className='main__button' />

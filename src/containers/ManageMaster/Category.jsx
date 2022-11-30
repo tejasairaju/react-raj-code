@@ -60,6 +60,7 @@ const Category = (props) => {
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Category'} placeholder={"Enter the Category"} value={''} status={statusData.type} updateMoreOption={updateMoreOption} />
+        <>Error</>
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             <MoreOptionTable headers={headers} tableData={categoryData.results}/>

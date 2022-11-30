@@ -109,7 +109,6 @@ const CreateDisclosures = (props) => {
                     response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`, data).then(({ data }) => data);
                 }
                 setApiData(response);
-                setInputValue({});
                 setStatusData({ type: 'success', message: `Disclosure ${isEditable? 'updated': 'created'} successfully` });
             } catch (e) {
                 let error = getErrorMessage(e);
@@ -157,7 +156,7 @@ const CreateDisclosures = (props) => {
 
     const onCloseHandler = () => {
         if (statusData.type === 'success' && !isEditable) {
-            navigate('/createquestions', { state: { description: inputValue.description, section: apiData.section, category: apiData.category, id: apiData.id, framework: apiData.framework, code: apiData.code, name: apiData.name } });
+            navigate('/createquestions', { state: { guidance: inputValue.guidance, description: inputValue.description, section: apiData.section, category: apiData.category, id: apiData.id, framework: apiData.framework, code: apiData.code, name: apiData.name } });
         } else if (statusData.type === 'success' && isEditable) {
             navigate(-1)
         }
