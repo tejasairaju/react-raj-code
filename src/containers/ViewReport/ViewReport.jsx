@@ -34,7 +34,8 @@ const ViewReport = (props) => {
             const response = await axios.get(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`).then(({ data }) => data);
 
             setStatusData({ type: '', message: '' });
-            setReportList(response.results)
+            const sortResult = response&&response.results.reverse();
+            setReportList(sortResult);
             console.log(reportList)
             // return response.disclosures || [];
             // return listDisclosures.results || [];

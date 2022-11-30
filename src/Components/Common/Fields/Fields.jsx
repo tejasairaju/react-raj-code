@@ -11,6 +11,7 @@ const Input = (props) => (
                 type={props.type}
                 name={props.name}
                 value={props.value}
+                maxLength={props.maxLength}
                 onChange={props.onChangeHandler}
                 className={props.className}
                 placeholder={props.placeholder}

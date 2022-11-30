@@ -17,7 +17,7 @@ const CreateQuestions = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const state = _get(location, 'state', {});
-    const { id = '', name = '', code = "", framework = '' } = state || {};
+    const { id = '', name = '', code = "", framework = '', description='' } = state || {};
     const [statusData, setStatusData] = useState({});
     const [inputList, setInputList] = useState([]);
     const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
@@ -94,7 +94,7 @@ const CreateQuestions = (props) => {
         });
     }
 
-    let tableHeaders = ['Code', 'Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+    let tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
 
     return (<>
         {isOpenAddQuestion && <AddQuestions isTemplate={false} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}

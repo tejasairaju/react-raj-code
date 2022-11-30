@@ -22,7 +22,7 @@ const ViewQuestionsList = ({ isTemplate = false, code = "", name = "", createQue
                 {code && <><h1 className="create-framework__title">
                     Ref No
                 </h1>
-                    <input type="text" min="0" step=".1" className="refno_create_question" value={code}
+                    <input type="text" min="" step="" className="refno_create_question" value={code}
                         required disabled></input></>
                 }
                 <h1 className="create-framework__title disclosure">

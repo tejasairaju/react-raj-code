@@ -122,10 +122,10 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                                 Code
                             </h5>
                             <h5 class="create_questions__title">
-                                Question Title
+                                Question
                             </h5>
                             <h5 class="create_questions__title">
-                                Description
+                                Guidance Notes
                             </h5>
                             <h5 class="create_questions__title">
                                 Data Type

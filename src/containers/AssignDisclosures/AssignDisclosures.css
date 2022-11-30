@@ -734,6 +734,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     gap: 5px;
     color: #2088BD;
+    margin-left: 12em;
 }
 .detalis__information {
     display: flex;

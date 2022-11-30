@@ -60,6 +60,7 @@ const ViewMyTaskDisclosuresList = (props) => {
             <h1 class={`main__title`}>Report Name: <b>{name}</b></h1>
         </div>
         <br />
+        <div className="scrollable">
         <table className="default-flex-table">
             <thead>
                 <tr>
@@ -78,6 +79,7 @@ const ViewMyTaskDisclosuresList = (props) => {
                 })}
             </tbody>
         </table>
+        </div>
         <div className='create-question-main-btn'>
             <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
                 Back

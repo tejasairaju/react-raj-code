@@ -33,7 +33,7 @@ const CreateBespokeQuestions = (props) => {
     const [isError, setIsError] = useState(false);
     const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
 
-    const tableHeaders = ['Question Title', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+    const tableHeaders = ['Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
     useEffect(() => {
         setInputList([...questionList]);
     }, []);

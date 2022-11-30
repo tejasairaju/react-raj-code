@@ -49,6 +49,7 @@ const ViewMyTaskList = (props) => {
                 </h1>
             </div>
             <br/>
+            <div className="scrollable">
             <table className="default-flex-table">
                 <thead>
                         <tr>
@@ -69,6 +70,7 @@ const ViewMyTaskList = (props) => {
                         })}
                     </tbody>
             </table>
+            </div>
     </>)
 }
 export default ViewMyTaskList;

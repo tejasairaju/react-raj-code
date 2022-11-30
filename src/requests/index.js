@@ -8,7 +8,7 @@ const getHeaders = () => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Content-length': 434343,
-            'Host': '13.40.76.135'
+            'Host': '3.11.40.159 '
         }
     }
 }
