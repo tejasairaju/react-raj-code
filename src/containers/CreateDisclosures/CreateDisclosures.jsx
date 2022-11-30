@@ -14,14 +14,12 @@ import axios from 'axios';
 const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 
 const CreateDisclosures = (props) => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({ code: '' });
     const [validation, setValidation] = useState({});
     const [statusData, setStatusData] = useState({});
     const [frameworkDetails, setFrameworkdetails] = useState({});
     const [apiData, setApiData] = useState({});
-    const [currentFrame, setCurrentFrame] = useState(''); // 
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
     const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
@@ -98,7 +96,7 @@ const CreateDisclosures = (props) => {
                 section: 'sample',
                 framework: params.id,
                 description: inputValue.description,
-                guidance: inputValue.guidance
+                metaData: [inputValue.guidance]
             }
 
             try {
@@ -112,7 +110,7 @@ const CreateDisclosures = (props) => {
                 }
                 setApiData(response);
                 setInputValue({});
-                setStatusData({ type: 'success', message: `Thanks! Your Disclosure ${isEditable ? 'updated' : 'created'} successfully` });
+                setStatusData({ type: 'success', message: `Disclosure ${isEditable? 'updated': 'created'} successfully` });
             } catch (e) {
                 let error = getErrorMessage(e);
                 setStatusData({ ...error });
@@ -159,29 +157,12 @@ const CreateDisclosures = (props) => {
 
     const onCloseHandler = () => {
         if (statusData.type === 'success' && !isEditable) {
-            navigate('/createquestions', { state: { section: apiData.section, category: apiData.category, id: apiData.id, framework: apiData.framework, code: apiData.code, name: apiData.name } });
+            navigate('/createquestions', { state: { description: inputValue.description, section: apiData.section, category: apiData.category, id: apiData.id, framework: apiData.framework, code: apiData.code, name: apiData.name } });
         } else if (statusData.type === 'success' && isEditable) {
             navigate(-1)
         }
         setStatusData({ type: '', message: '' });
     }
-
-    const frameTracker = () => (<div className="create-framework__steps">
-        <div className="step__wrapper">
-            <div onClick={() => setCurrentFrame('createframe')} className={`create-framework__step-position ${currentFrame === 'createframe' ? 'active' : null}`}>1</div>
-            <h1 className="active">Create Framework</h1>
-        </div>
-        <div className="create-framework__step-line"></div>
-        <div className="step__wrapper">
-            <div onClick={() => setCurrentFrame('createdisclosures')} className={`create-framework__step-position ${currentFrame === 'createdisclosures' ? 'active' : null}`}>2</div>
-            <h1>Create Disclosure</h1>
-        </div>
-        <div className="create-framework__step-line"></div>
-        <div className="step__wrapper">
-            <div className={`create-framework__step-position ${currentFrame === 'createquestions' ? 'active' : null}`}>3</div>
-            <h1>Create Questions</h1>
-        </div>
-    </div>);
 
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
@@ -202,7 +183,7 @@ const CreateDisclosures = (props) => {
                 Ref No
             </h1>
             <div class="create-framework__row-wrapper create__disclosure_ref ref__no">
-                <input type="text" name='code' value={inputValue.code || ''} onChange={onChangeHandler} min="0" step=".1" className="create-framework__input" required />
+                <input type="text" name='code' value={inputValue.code || ''} onChange={onChangeHandler} min="" step="" className="create-framework__input" />
                 <div className='create__disclosure_container'>
                     <h1 className="create-framework__title">Disclosures<span className="color-red P-4">*</span></h1>
                     <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
