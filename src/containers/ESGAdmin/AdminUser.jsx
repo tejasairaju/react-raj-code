@@ -8,7 +8,7 @@ import Axios from 'axios';
 import AdminAction from "./AdminAction.jsx";
 import moment from 'moment';
 import _get from 'lodash/get';
- 
+
 
 const ESGAdmin = (props) => {
     const navigate = useNavigate();
@@ -33,50 +33,74 @@ const ESGAdmin = (props) => {
 
 
 
-    const headers = ['First Name',
-    'Last Name',
-    'Contact Number',
-    'Email Id',
-    'Action'];
+    const headers = [
+        'Image',
+        'First Name',
+        'Last Name',
+        'Contact Number',
+        'Email Id',
+        'Action'];
+    // const headers = [
+    //     "Image",
+    //     'User Name',
+    //     'Location',
+    //     'Email id',
+    //     'Phone Number',
+    //     'Designation',
+    //     'Role',
+    //     'Status',
+    //     'Action'
+    // ];
 
     return (<>
 
-            <div class="main__top-wrapper">
-                <h1 class="main__title">
-                    ESG Admin User Info
-                </h1>
-                <button class="main__button" onClick={() => { navigate(`/adminuser/create`) }}>
-                    ADD
-                </button>
-            </div>
-            <br/>
-            <table className="default-flex-table">
+        <div class="main__top-wrapper">
+            <h1 class="main__title">
+                ESG Admin User Info
+            </h1>
+            <button class="main__button" onClick={() => { navigate(`/adminuser/create`) }}>
+                ADD
+            </button>
+        </div>
+        <br />
+        <table className="default-flex-table">
 
-                <thead>
-                        <tr>
-                            {headers.map(header => <th>{header}</th>)}
-                        </tr>
-                </thead>
-                <tbody>
-                        {(clientData.results || []).map((val, index) => {
-                            return (<tr>
-                        
-                                <td>{val.first_name}</td>
- 
-                                <td>{val.last_name}</td>
+            <thead>
+                <tr>
+                    {headers.map(header => <th>{header}</th>)}
+                </tr>
+            </thead>
+            <tbody>
+                {(clientData.results || []).map((val, index) => {
+                    return (<tr>
+                        {/* <td><img src={val.profile_picture} alt="logo" width='28px' height='28px' /></td>
+                        <td>{val.first_name}</td>
 
-                                <td>{val.phone_number}</td>
-                                <td>{val.email_id}</td>
-                                <td>
-                                <AdminAction value={val} index={index}/>
-                                    {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                                </td>
-                            </tr>)
-                        })}
-                    </tbody>
-            </table>
-             
-            
+                        <td>{val.location}</td>
+                        <td>{val.email_id}</td>
+                        <td>{val.phone_number}</td>
+                        <td>{val.email_id}</td>
+                        <td>{val.designation}</td>
+                        <td>{val.role}</td>
+                        <td>{val.status}</td> */}
+                        <td><img src={val.profile_picture} alt="logo" width='28px' height='28px' /></td>
+                        <td>{val.first_name}</td>
+
+                        <td>{val.last_name}</td>
+
+                        <td>{val.phone_number}</td>
+                        <td>{val.email_id}</td>
+
+                        <td>
+                            <AdminAction value={val} index={index} />
+                            {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                        </td>
+                    </tr>)
+                })}
+            </tbody>
+        </table>
+
+
 
     </>)
 }

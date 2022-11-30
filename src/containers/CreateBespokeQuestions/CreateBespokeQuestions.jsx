@@ -106,7 +106,7 @@ const CreateBespokeQuestions = (props) => {
     }
 
     return (<>
-    {isOpenAddQuestion && <AddQuestions isTemplate={true} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
+    {isOpenAddQuestion && <AddQuestions isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
         <div className="main__top-wrapper">
             <h1 className="main__title">
                 {`Welcome to Create Bespoke Questions`}
@@ -121,7 +121,7 @@ const CreateBespokeQuestions = (props) => {
                     <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
                 </div>
             </Modal>} */}
-            <ViewQuestionsList isTemplate={true} name={state.name} createQuestions={createQuestions} tableHeaders={tableHeaders} inputList={inputList} isError={isError}
+            <ViewQuestionsList code={state.code} name={state.name} description={state.description} createQuestions={createQuestions} tableHeaders={tableHeaders} inputList={inputList} isError={isError}
                 onClickAddQuestion={onClickAddQuestion} handleEditClick={handleEditClick} handleRemoveClick={handleRemoveClick} />
 
             {/* <div>

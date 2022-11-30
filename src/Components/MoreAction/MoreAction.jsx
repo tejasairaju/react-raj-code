@@ -63,7 +63,7 @@ const MoreAction = (props) => {
             }
               {viewBespokeFramework &&
                 <>
-                    <div onClick={() => onRedirectWithState(`/template?isEditable=true`)}><a>Edit Framework</a></div>
+                    <div onClick={() => onRedirectWithState(`/template?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.id}`)}><a>Create Disclosures</a></div>
                     <div onClick={() => onRedirectWithState(`/view/bespoke/${value.id}/disclosures`, value.name)}><a>View Disclosures</a></div>
                     
@@ -72,7 +72,7 @@ const MoreAction = (props) => {
             {
                 viewBespokeDisclosures && 
                 <>
-                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}?isEditable=true`)}><a>Edit Disclosure</a></div>
+                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}?disclosureId=${value.id}&isEditable=true`)}><a>Edit Disclosure</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}`)}><a>Create Questions</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}><a>View Questions</a></div>
                 </>

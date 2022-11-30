@@ -31,6 +31,16 @@ const ViewBespokeDisclosures = () => {
 
     const onCloseHandler = () => {
     }
+    const getState = (value) => ({
+        code: value.code,
+        name: value.name,
+        section: value.section,
+        category: value.category,
+        framework_id: template_id,
+        disclosure_id: value.id,
+        framework: template_id,
+        id: value.id
+    })
 
     const headers = ['Name', 'Created At', 'Category', 'Section', 'Action'];
     const actionIcon = '../../../assets/icons/more-icon.svg';
@@ -58,7 +68,7 @@ const ViewBespokeDisclosures = () => {
                                 <td>{val.category}</td>
                                 <td>{val.section}</td>
                                 <td>
-                                    <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} value={{ ...val, template_id }} index={index} state={{ ...val }} />
+                                    <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} state={getState(val)} value={{ ...val, template_id }} index={index} state={{ ...val }} />
                                 </td>
                             </tr>)
                         })}

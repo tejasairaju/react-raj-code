@@ -118,7 +118,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                     <input type="text" class="create-framework__input width" value="Activities, value chain and other business relationships" required/>
                 </div> */}
                         <div class="create_questions__wrapper">
-                            <h5 class={`create_questions__title ${isTemplate?'visibility-hidden': null}`}>
+                            <h5 class={`create_questions__title`}>
                                 Code
                             </h5>
                             <h5 class="create_questions__title">

@@ -18,6 +18,14 @@ const ViewMyTaskList = (props) => {
     const navigate = useNavigate();
     const { orgDetails = {}, loginDetails={} } = useSelector(state => state.signup);
     const { taskList = null, reportList = null } = useSelector(state => state.mytask);
+
+
+
+    useEffect(() => {
+        dispatch(actions.getDisclosuresList({ userId: loginDetails.user_id, orgName: orgDetails.name }));
+        dispatch(actions.getReportList({ userId: loginDetails.user_id, orgName: orgDetails.name }));
+    }, []);
+
     const headers = [
         'Name',
         'Start Date',
