@@ -162,7 +162,7 @@ const AnswerQuestionsTable = (props) => {
                 <h3 className="detalis__title disclosure-detalis__title">
                     {itemDetails.code} {itemDetails.name}
                 </h3>
-                {itemDetails.description && <img onClick={() => setIsShowDescription(true)} src="../../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />}
+                {itemDetails.description||true && <img onClick={() => setIsShowDescription(true)} src="../../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />}
                 &nbsp;&nbsp; <img src="../../../../assets/icons/downarrow.svg" alt="question" width={'16px'} height="16px" />
                 <a onClick={(e) => { setIsOpenReAssign(!isOpenReAssign); e.preventDefault(); e.stopPropagation(); }} className="detalis__reassign">
                     Reassign
