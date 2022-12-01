@@ -45,11 +45,15 @@ const RegistrationForm = () => {
             errors.last_name = "";
         }
 
+        const phoneCond = /^\+\d+$/;
         if (!inputValues.phone_number.trim()) {
             errors.phone_number = "Phone Number is required";
-        } else if (_get(inputValues, 'phone_number', 0).length !== 10) {
-            errors.phone_number = "Phone Number must at be 10 number";
-        } else {
+        } else if (inputValues.phone_number.length < 8 || inputValues.phone_number.length > 15 ) {
+            errors.phone_number = "Phone Number should be between 8 and 15";
+        } else if (!inputValues.phone_number.match(phoneCond)){
+            errors.phone_number = "Phone Number should have country code"
+        } 
+        else {
             errors.phone_number = "";
         }
         if (!inputValues.organization_name.trim()) {
@@ -155,7 +159,7 @@ const RegistrationForm = () => {
                         </label>
                         <label for="form__phone_number" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Mobile number &nbsp; {validation.phone_number && <span className='error-msg'>({validation.phone_number})</span>}</div>
-                            <input type="text" pattern="[0-9]" ondrop="false"maxLength={10} value={inputValues.phone_number} name="phone_number" id="form__phone_number" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
+                            <input type="text" pattern="\+\d+" ondrop="false" minLength={8} maxLength={15} value={inputValues.phone_number} name="phone_number" id="form__phone_number" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
                     </div>
                     <div className="acc-info__form-item">
