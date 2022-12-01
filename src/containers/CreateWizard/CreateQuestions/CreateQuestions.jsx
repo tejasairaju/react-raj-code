@@ -36,19 +36,19 @@ const CreateQuestions = (props) => {
     };
 
     const onCreateCancelQuestions = () => {
-        setInputList([]);
+     navigate(-1);
     }
 
     const onCreateQuestions = async () => {
         let list = [...inputList];
-        const newInputList = list.map(({ Dropdown, Multiselect, ...rest }) => {
+        const newInputList = (list|| []).map(({ Dropdown, Multiselect, ...rest }) => {
             delete rest["Radio button"];
             return rest;
         });
         const payload = {
             ...location.state,
             parent: null,
-            children: newInputList
+            children: [...newInputList]
         }
         // setStatusData({ type: 'loading', message: '' });
         if (createQuestions&&(newInputList|| []).length > 0) {

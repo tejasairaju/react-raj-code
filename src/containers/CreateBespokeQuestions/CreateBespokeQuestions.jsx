@@ -51,7 +51,7 @@ const CreateBespokeQuestions = (props) => {
 
     const onCreateQuestions = async () => {
         let list = [...inputList];
-        const newInputList = list.map(({ Dropdown, Multiselect, ...rest }) => {
+        const newInputList = (list || []).map(({ Dropdown, Multiselect, ...rest }) => {
             delete rest["Radio button"];
             return rest;
         });

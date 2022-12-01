@@ -6,7 +6,7 @@ import Modal from '../Common/Modal/Modal.jsx';
 const { Button, Input, TextArea, Dropdown } = Fields;
 const { dataType, inputType, unitType } = questions;
 
-const ViewQuestionsList = ({ isTemplate = false,description = '', code = "", name = "", createQuestions = true, tableHeaders = [], inputList = [], isError = false,
+const ViewQuestionsList = ({  description = '', code = "", name = "", createQuestions = true, tableHeaders = [], inputList = [], isError = false,
     handleInputChange = () => { }, onClickAddQuestion = () => { }, handleEditClick = () => { }, handleRemoveClick = () => { } }) => {
         const [isShowGuidance, setIsShowGuidance] = useState(false);
     const listChoices = (i) => {
@@ -49,7 +49,7 @@ const ViewQuestionsList = ({ isTemplate = false,description = '', code = "", nam
                 <thead><tr>{tableHeaders.map((header) => <th>{header}</th>)}</tr></thead>
                 <tbody>
                     {(inputList || []).map((x, i) => <tr>
-                        {!isTemplate && <td>
+                        {<td>
                             <Input isEditable={true} label='' type="text" name='code' value={x.code} className="create-framework__input question-ref-code" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                         </td>
                         }
@@ -85,7 +85,7 @@ const ViewQuestionsList = ({ isTemplate = false,description = '', code = "", nam
 
             </table>
 
-            {isError && <div className='overall-error-container color-red question-disclosure-error'>*Please add atleast one question.</div>}
+            {isError&&(inputList || [].length > 0) && <div className='overall-error-container color-red question-disclosure-error'>*Please add atleast one question.</div>}
         </div>
     </>)
 }

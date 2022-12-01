@@ -112,7 +112,7 @@ const ViewDisclosures = () => {
                     <tbody>
                         {(listData || []).map((val, index) => {
                             return (<tr>
-                                <td>{(index === 0) && <span><b>Disclosures:</b></span>}</td>
+                                <td>{ <span>{val.name}</span>}</td>
                                 <td> {val.code} &nbsp;&nbsp;{val.name}</td>
                                 <td>
                                     <MoreAction viewDisclosures={true} state={getState(val)} index={index} />

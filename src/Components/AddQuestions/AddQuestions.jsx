@@ -12,7 +12,7 @@ const { Input, Dropdown, TextArea, Button } = Fields;
 const { dataType, inputType, unitType } = questions;
 
 const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditable: false}, setInputList, inputList, closeModal = () => { }, handleInputChange = () => { } }) => {
-    const initialRow = { order: null, code: '', label: "", desc:"", type: '', field_type: '', field_unit_values: [], evidence: null, value: null, description: '' };
+    const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: [], evidence: null, value: null, description: '' };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
     const [inputValue, setInputValue] = useState(initialRow);
     const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
@@ -144,7 +144,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                             {/* <Input label='' type="text" name='code' value={inputValue.code} className="add__file-window create_refs1" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} /> */}
 
                             <textarea name="label" value={inputValue.label} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest1" > </textarea>
-                            <textarea name={`${isTemplate ? "description" : 'metaData'}`} value={`${isTemplate ? _get(inputValue, 'description', '') : _get(inputValue, 'metaData', '')}`} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest2" > </textarea>
+                            <textarea name={"description"} value={_get(inputValue, 'description', '')} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest2" > </textarea>
                             <Dropdown className_1={'questions__select create_select1'} className_2={'questions__select-item'} options={dataType} name='type' value={inputValue.type} onChangeHandler={onChangeHandler} />
                             <Dropdown className_1={'questions__select create_select2'} className_2={'questions__select-item'} options={inputType} name='field_type' value={inputValue.field_type} onChangeHandler={onChangeHandler} />
                             {/* <input type="text" class="questions__select create_select3" /> */}
