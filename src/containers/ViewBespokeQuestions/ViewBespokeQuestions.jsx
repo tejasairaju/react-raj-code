@@ -107,7 +107,7 @@ const ViewBespokeQuestions = () => {
             {/* </div> */}
             <div id="viewQuestions" className="view-questions-container">
                 {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-                {((inputList||[]).length > 0)&&<CreateBespokeQuestions title="Edit Questions" isTemplate={true} createQuestions={false} questionList={inputList} onUpdateQuestions={onUpdateQuestions} />}
+                {((inputList||[]).length > 0)&&<CreateBespokeQuestions title="View/Edit Bespoke Questions" isTemplate={true} createQuestions={false} questionList={inputList} onUpdateQuestions={onUpdateQuestions} />}
                
             </div>
             {/* <div className='create-question-main-btn'>

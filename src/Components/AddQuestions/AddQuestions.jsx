@@ -99,7 +99,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
             </Modal>}
         <div className='add-ques-modal-popup_inner'>
             <div className='add-ques-modal-popup-block'>
-                <div className='add-ques-modal-popup-header'><span className='add-ques-close-modal-popup'><img onClick={() => closeAddQuesPopupModal()} src={`${isTemplate ? '../../../../': './../../'}assets/icons/close.svg`} width='24px' height='24px' /></span></div>
+                <div className='add-ques-modal-popup-header'><span className='add-ques-close-modal-popup'><img onClick={() => closeAddQuesPopupModal()} src={`${isTemplate ? '../../../../': '../../../'}assets/icons/close.svg`} width='24px' height='24px' /></span></div>
                 <div className='add-ques-modal-popup-body'>
                     <div class="add-ques-main__content-wrapper">
                         {/* <h1 class="create-framework__title">

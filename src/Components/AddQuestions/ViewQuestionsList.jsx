@@ -34,7 +34,7 @@ const ViewQuestionsList = ({  description = '', code = "", name = "", createQues
                 }
                 <h1 className="create-framework__title disclosure">
                     Disclosure :
-                    {<img onClick={() => setIsShowGuidance(true)} src='../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
+                    {<img onClick={() => setIsShowGuidance(true)} src='../../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
                 </h1>
                 <input type="text" className="create-framework__input"
                     value={name} required disabled></input>

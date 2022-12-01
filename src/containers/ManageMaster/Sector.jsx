@@ -9,13 +9,15 @@ import './ManageMaster.css';
 import AddMoreOption from "../../Components/AddMoreOption/AddMoreOption.jsx";
 import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import CountryAction from "./CountryAction.jsx";
+import { getErrorMessage } from "../../utils/utils";
 
 const Sector = (props) => {
     const navigate = useNavigate();
     const [categoryData, setCategoryData] = useState({});
     const [statusData, setStatusData] = useState({});
-
-    const headers = ['Sector', 'Sub Sector'];
+    const [doEdit, setDoEdit] = useState({});
+    const headers = ['Sector', 'Status', 'Action'];
 
     useEffect(() => {
         getSectorList();
@@ -33,12 +35,18 @@ const Sector = (props) => {
     }
 
     const updateMoreOption = async (option) => {
-        try {
-            const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/sectors`, { name: option }).then(({ data }) => data);
+        try { 
+            let response = {};
+            if (!_isEmpty(doEdit)) {
+            response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/sectors/${doEdit.id}`, { name: option }).then(({ data }) => data);
+            setDoEdit({});
+        } else { response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/sectors`, { name: option }).then(({ data }) => data);
+    }
             getSectorList();
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
-            setStatusData({ type: 'error', message: e.message });
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
         }
     }
 
@@ -46,7 +54,38 @@ const Sector = (props) => {
 
     }
 
-    const MoreOptionTable = (tableData= null) => {
+    const onActive = async (val) => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/sectors/${val.id}`, { ...val, is_active: true });
+            getSectorList();
+            setStatusData({ type: '', message: '' });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+    }
+
+    const onBlock = async (val) => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/sectors/${val.id}`, { ...val, is_active: false });
+            getSectorList();
+            setStatusData({ type: '', message: '' });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+
+    }
+
+
+    const onEdit = (val) => {
+        setDoEdit({ ...val });
+
+    }
+    
+    const MoreOptionTable = (tableData = null) => {
         return (<table className="default-flex-table">
             <thead>
                 <tr>
@@ -56,12 +95,15 @@ const Sector = (props) => {
             <tbody>
                 {(tableData || []).map((val, index) => {
                     return (<tr>
-    
+
                         <td>{val.name}</td>
-    
-                        <td className="detalis__reassign row__item-info action cursor-pointer">
-                            <div onClick={() => {navigate('/subsector', {state: { sector: {...val}}})}}>Add</div>
+                        <td>{val.is_active ? 'Active': 'Disabled'}</td>
+                        <td>
+                            <CountryAction isSector={true} onEdit={() => onEdit(val)} onActive={() => onActive(val)} onBlock={() => onBlock(val)} value={val} index={index} />
                         </td>
+                        {/* <td className="detalis__reassign row__item-info action cursor-pointer">
+                            <div onClick={() => {navigate('/subsector', {state: { sector: {...val}}})}}>Add</div>
+                        </td> */}
                     </tr>)
                 })}
             </tbody>
@@ -70,11 +112,16 @@ const Sector = (props) => {
 
 
     return (<>
+     <div class="main__top-wrapper">
+            <h1 class="main__title">
+                {'Manage Masters -> Sector'}
+            </h1>
+        </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <AddMoreOption label={'Sector'} placeholder={"Enter the sector"} value={''} updateMoreOption={updateMoreOption} />
+        <AddMoreOption label={'Sector'}  isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''}  placeholder={"Enter the sector"}  updateMoreOption={updateMoreOption} />
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
-        {MoreOptionTable(categoryData.results)}
+            {MoreOptionTable(categoryData.results)}
             {/* // <MoreOptionTable headers={headers} tableData={categoryData.results}/> */}
         </div>
         <br />

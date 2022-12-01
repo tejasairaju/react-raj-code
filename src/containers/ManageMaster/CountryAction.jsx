@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import './ManageMaster.css';
 
 const CountryAction = (props) => {
-    const {value, index, onEdit = () => {},onActive=() =>{}, onBlock=() => {} } = props;
+    const {value, index, onEdit = () => {}, onActive=() =>{}, onBlock=() => {}, isSector=false} = props;
     const [isOpen, setIsopen] = useState(false);
     const navigate = useNavigate();
-    const onNavigateHandler = (url) => {
+const onNavigateHandler = (url) => {
         setIsopen(false);
         navigate(url);
         
@@ -18,6 +18,8 @@ const CountryAction = (props) => {
             <div><a onClick={() => onEdit()}>Edit</a></div>
             <div><a onClick={() => onActive()}>Activate</a></div>
             <div><a onClick={() => onBlock()}>Block</a></div>
+            {isSector&&<div><a onClick={() => {navigate('/subsector', {state: { sector: {...value}}})}}>Add Subsector</a></div>}
+            
         </div>
     </div>)
 }

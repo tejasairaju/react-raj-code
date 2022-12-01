@@ -18,7 +18,7 @@ import ViewQuestionsList from '../../Components/AddQuestions/ViewQuestionsList.j
 const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateBespokeQuestions = (props) => {
-    const {isTemplate=true, createQuestions = true, questionList = [], onUpdateQuestions = () => { } } = props;
+    const {isTemplate=true, title = `Welcome to Create Bespoke Questions`,  createQuestions = true, questionList = [], onUpdateQuestions = () => { } } = props;
     const location = useLocation();
     const navigate = useNavigate();
     const { id = '', disclosureId = '' } = useParams();
@@ -33,7 +33,7 @@ const CreateBespokeQuestions = (props) => {
     const [isError, setIsError] = useState(false);
     const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
 
-    const tableHeaders = ['Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+    const tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
     useEffect(() => {
         setInputList([...questionList]);
     }, []);
@@ -109,7 +109,7 @@ const CreateBespokeQuestions = (props) => {
     {isOpenAddQuestion && <AddQuestions isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
         <div className="main__top-wrapper">
             <h1 className="main__title">
-                {`Welcome to Create Bespoke Questions`}
+                {title}
             </h1>
         </div>
         <div id="createQuestions" className="create_question__wrapper">
