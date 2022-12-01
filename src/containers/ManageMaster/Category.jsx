@@ -102,6 +102,11 @@ const Category = (props) => {
         'Action'];
 
     return (<>
+        <div class="main__top-wrapper">
+            <h1 class="main__title">
+                {'Manage Masters -> Category'}
+            </h1>
+        </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Category'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Category"} status={statusData.type} updateMoreOption={updateMoreOption} />
         {error && <div className='category-error color-red'>* Category field may not be blank.</div>}

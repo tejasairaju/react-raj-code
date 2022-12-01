@@ -39,11 +39,11 @@ const ManageCountry = (props) => {
     const updateMoreOption = async (value) => {
         try {
             let response = {};
-            if(!_isEmpty(doEdit)) {
+            if (!_isEmpty(doEdit)) {
                 response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/countries/${doEdit.id}`, { name: value }).then(({ data }) => data);
                 setDoEdit({});
             } else {
-                 response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/countries`, { name: value }).then(({ data }) => data);
+                response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/countries`, { name: value }).then(({ data }) => data);
 
             }
             getCountryList();
@@ -58,34 +58,34 @@ const ManageCountry = (props) => {
 
     }
 
-    const onActive = async(val) => {
+    const onActive = async (val) => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/countries/${val.id}`, {...val, is_active: true} );
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/countries/${val.id}`, { ...val, is_active: true });
             getCountryList();
             setStatusData({ type: '', message: '' });
-        }catch(e) {
+        } catch (e) {
             let error = getErrorMessage(e);
             setStatusData({ ...error });
         }
     }
 
-    const onBlock = async(val) => {
+    const onBlock = async (val) => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/countries/${val.id}`, {...val, is_active: false} );
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/countries/${val.id}`, { ...val, is_active: false });
             getCountryList();
             setStatusData({ type: '', message: '' });
-        }catch(e) {
+        } catch (e) {
             let error = getErrorMessage(e);
             setStatusData({ ...error });
         }
-    
+
     }
-    
-    
+
+
     const onEdit = (val) => {
-        setDoEdit({...val});
+        setDoEdit({ ...val });
 
     }
 
@@ -93,11 +93,16 @@ const ManageCountry = (props) => {
         'Action'];
 
     return (<>
+        <div class="main__top-wrapper">
+            <h1 class="main__title">
+                {'Manage Masters -> Country'}
+            </h1>
+        </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            <AddMoreOption label={'Country'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Country"} status={statusData.type} updateMoreOption={updateMoreOption} />
+        <AddMoreOption label={'Country'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Country"} status={statusData.type} updateMoreOption={updateMoreOption} />
         <br />
         <div id="viewCountry" className="view-diclosuer-container">
-            <MoreOptionTable  onEdit={onEdit} onActive={onActive} onBlock={onBlock} isCountry={true} headers={headers} tableData={countryData.results} />
+            <MoreOptionTable onEdit={onEdit} onActive={onActive} onBlock={onBlock} isCountry={true} headers={headers} tableData={countryData.results} />
         </div>
         <br />
 
