@@ -37,7 +37,7 @@ const Sector = (props) => {
 
     const updateMoreOption = async (option) => {
         if (!_isEmpty(option)) {
-        try { 
+        try {
             let response = {};
             if (!_isEmpty(doEdit)) {
             response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/sectors/${doEdit.id}`, { name: option }).then(({ data }) => data);
@@ -47,6 +47,7 @@ const Sector = (props) => {
             getSectorList();
             setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
         } catch (e) {
+            setDoEdit({});
             let error = getErrorMessage(e);
             setStatusData({ ...error });
         }
@@ -124,7 +125,7 @@ const Sector = (props) => {
             </h1>
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <AddMoreOption label={'Sector'}  isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''}  placeholder={"Enter the sector"}  updateMoreOption={updateMoreOption} />
+        <AddMoreOption label={'Sector'}  status={statusData.type} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''}  placeholder={"Enter the sector"}  updateMoreOption={updateMoreOption} />
         {error && <div className='category-error color-red'>* Sector field may not be blank.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
