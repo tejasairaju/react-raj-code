@@ -74,6 +74,11 @@ const SubSector = (props) => {
         'Action'];
 
     return (<>
+         <div class="main__top-wrapper">
+            <h1 class="main__title">
+                {'Manage Masters -> SubSector'}
+            </h1>
+        </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div class="main__top-wrapper">
             <div class="user_input_text flex flex-column">
@@ -83,6 +88,7 @@ const SubSector = (props) => {
                 <input type="text" name='sector' class="country__text__box"
                     placeholder={'Enter the sector'}
                     value={sector.name}
+                    readOnly={true}
                     onChange={addMoreoptions}
                 />
             </div>
