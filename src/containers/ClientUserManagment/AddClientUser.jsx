@@ -65,7 +65,7 @@ const AddClientUser = () => {
             form.append('updated_at', moment().format());
             if (!_isEmpty(uploadImage && uploadImage.fileName)) {
                 form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-            } else {
+            } else if(uploadImage!=null)  {
                 let blob = new Blob([logo], {
                     type: "application/pdf"
                 });
