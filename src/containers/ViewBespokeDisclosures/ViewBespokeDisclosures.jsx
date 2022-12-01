@@ -36,6 +36,7 @@ const ViewBespokeDisclosures = () => {
         name: value.name,
         section: value.section,
         category: value.category,
+        description: value.description,
         framework_id: template_id,
         disclosure_id: value.id,
         framework: template_id,

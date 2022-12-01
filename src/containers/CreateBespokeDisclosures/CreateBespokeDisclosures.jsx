@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, Link, Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Routes, Route, Link, Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
 import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import Popup from "../../components/Common/Popup/Popup.jsx";
@@ -17,6 +17,8 @@ const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 const CreateBespokeDisclosures = (props) => {
     const { id = '' } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+    const stateVal = _get(location, 'state', {});
     const [inputValue, setInputValue] = useState({ code: '' });
     const [validation, setValidation] = useState({});
     const [statusData, setStatusData] = useState({});
@@ -30,19 +32,21 @@ const CreateBespokeDisclosures = (props) => {
 
     useEffect(() => {
         if (!_isEmpty(id) && _isEmpty(frameworkDetails) && !isEditable) {
-
+            getframeworkDetails(id);
+            getUserAdminInfo(1);
         } else if (isEditable) {
+            getframeworkDetails(id);
             getDisclosures();
         }
-        getframeworkDetails(id);
-        getUserAdminInfo(1);
+        // getframeworkDetails(id);
+        // getUserAdminInfo(1);
     }, []);
 
 
     const getDisclosures = async () => {
         try {
-            const response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, data, { organization: orgDetails.name }); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
-            setInputValue({ ...response, description: response.name, guidance: response.name, categories: [{ name: response.category, isSelect: true }] });
+            const response = await Requests.Get(`/templates/${id}/disclosures/${disclosureId}`, { organization: orgDetails.name }); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
+            setInputValue({ ...response,  categories: [{ name: response.category, isSelect: true }] });
         } catch (error) {
         }
     }
@@ -51,7 +55,7 @@ const CreateBespokeDisclosures = (props) => {
     const getUserAdminInfo = async () => {
         try {
             const response = await Requests.Get(`/esgadmin/master/disclosure-categories`);
-            setInputValue({ categories: response.results });
+            setInputValue({...inputValue, categories: response.results });
         } catch (error) {
             console.log(error);
         }
@@ -60,7 +64,9 @@ const CreateBespokeDisclosures = (props) => {
     const getframeworkDetails = async (id = "") => {
         try {
             const frameDetails = await Requests.Get(`/templates/${id}`, { organization: orgDetails.name });
-            setFrameworkdetails(frameDetails);
+            setFrameworkdetails({...frameDetails, supported_sectors: [{name: frameDetails['supported_sectors'][0], id: '', isSelect: true}], 
+            supported_sub_sectors:[{name: frameDetails['supported_sub_sectors'][0], id: '', isSelect: true}]
+        });
         } catch (e) {
             setFrameworkdetails({});
         }
@@ -109,12 +115,16 @@ const CreateBespokeDisclosures = (props) => {
                 let response = {};
                 if (isEditable) {
                     data['children'] = inputValue.children;
-                    response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, data, { organization: orgDetails.name });
+                    response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, {...data.disclosures[0]}, { organization: orgDetails.name });
                 } else {
                     // response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`, data).then(({ data }) => data);
                     response = await Requests.Post(`/templates/${id}/disclosures`, { ...data }, { organization: orgDetails.name });
                 }
-                setApiData(response.disclosures[0]);
+                if(isEditable) {
+                    setApiData(response);
+                } else {
+                    setApiData(response.disclosures[0]);
+                }        
                 setInputValue({});
                 setStatusData({ type: 'success', message: `Thanks! Your Disclosure ${isEditable ? 'updated' : 'created'} successfully` });
             } catch (e) {

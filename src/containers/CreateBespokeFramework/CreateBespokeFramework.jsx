@@ -75,7 +75,13 @@ const CreateBespokeFramework = (props) => {
         }
     }
 
-    const updateArrayObjects = (array = null, key = 'isSelect', value = true) => (array || []).map(item => { item[key] = value; return item });
+    const updateArrayObjects = (array = null, key = 'isSelect', value = true) => (array || []).map(item => {
+            return {
+                name: item,
+                id: '',
+                isSelect:true
+            }
+    });
 
     const getFilterArrayValue = (data = null) => {
         let filterData = [];
@@ -226,10 +232,10 @@ const CreateBespokeFramework = (props) => {
             <Input maxLength={50} inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
             <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={false} />
-            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={false} />
-            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={false} />
-            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={false} />
+            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'categories')} required={false} />
+            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'sectors')} required={false} />
+            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'subsectors')} required={false} />
+            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'countries')} required={false} />
         </div>
         {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
         <Button label={isEdit ? 'UPDATE':'NEXT'} onClickHandler={onNextHandler} className='main__button' />
