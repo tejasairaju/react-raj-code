@@ -153,7 +153,7 @@ const AnswerQuestionsTable = (props) => {
         {isShowDescription && <Modal isShow={!!isShowDescription} isDisclosureDec={true} closeModal={closePopupModal}>
             <div className='create-options-title'>Description:</div>
             <div className='get-textarea-input-container'>
-                <div className="create-framework__textarea disclosure-description-screen">{itemDetails.metaData[0]&&itemDetails.metaData[0].value}</div>
+                <div className="create-framework__textarea disclosure-description-screen">{itemDetails.description}</div>
             </div>
         </Modal>}
         {isOpenReAssign && <ReAssignDisclosures setIsOpenReAssign={setIsOpenReAssign} disclosure={itemDetails} reportId={reportId} />}
@@ -162,7 +162,7 @@ const AnswerQuestionsTable = (props) => {
                 <h3 className="detalis__title disclosure-detalis__title">
                     {itemDetails.code} {itemDetails.name}
                 </h3>
-                {itemDetails.description||true && <img onClick={() => setIsShowDescription(true)} src="../../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />}
+                {<img onClick={() => setIsShowDescription(true)} src="../../../../assets/icons/question-icon.svg" alt="question" width={'16px'} height="16px" />}
                 &nbsp;&nbsp; <img src="../../../../assets/icons/downarrow.svg" alt="question" width={'16px'} height="16px" />
                 <a onClick={(e) => { setIsOpenReAssign(!isOpenReAssign); e.preventDefault(); e.stopPropagation(); }} className="detalis__reassign">
                     Reassign
