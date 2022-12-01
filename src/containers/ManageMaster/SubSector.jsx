@@ -6,20 +6,23 @@ import _toLower from 'lodash/toLower';
 import Requests from "../../Requests";
 import Popup from "../../components/Common/Popup/Popup.jsx";
 import _get from 'lodash/get';
-
 import './ManageMaster.css';
 import AddMoreOption from "../../Components/AddMoreOption/AddMoreOption.jsx";
 import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.jsx";
 import { useLocation } from "react-router-dom";
+import CountryAction from "./CountryAction.jsx";
+import { getErrorMessage } from "../../utils/utils";
+import AddMoreSubSectorOption from "../../Components/AddMoreOption/AddMoreSubSectorOption.jsx";
 
 const SubSector = (props) => {
     const { state = {} } = useLocation();
-    const { sector = {} } = state || {};
+    const { sector = {}, id="" } = state || {};
     const [error, setError] = useState(false);
     const [subSectorList, setSubSectorList] = useState({});
     const [sectorList, setSectorList] = useState({});
     const [statusData, setStatusData] = useState({});
     const [inputValue, setInputValue] = useState({});
+    const [doEdit, setDoEdit] = useState({});
     useEffect(() => {
         getSubSectorList();
         getSectorList();
@@ -27,9 +30,9 @@ const SubSector = (props) => {
 
     const getSectorList = async () => {
         try {
-          
+
             const response = await Requests.Get(`/esgadmin/master/sectors`);
-            setSectorList({...response});
+            setSectorList({ ...response });
         } catch (e) {
             console.log(e);
         }
@@ -48,23 +51,33 @@ const SubSector = (props) => {
 
     const updateMoreOption = async (option) => {
         if (!_isEmpty(option)) {
-
-        let getSector = (sectorList.results || []).find(val => _get(val, 'name', '') === sector.name);
-        const payload = {
-            sector: _get(getSector, 'id', null),
-            name: inputValue.subsector
+            // let getSector = (sectorList.results || []).find(val => _get(val, 'name', '') === sector.name);
+            const payload = {
+                sector: _get(sector, 'id', null),
+                name: option
+            }
+            try {
+                let response = {};
+                if (!_isEmpty(doEdit)) {
+                    const payload_1 = {
+                        sector: _get(sector, 'id', null),
+                        name: option
+                    }
+                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/subsectors/${doEdit.id}`, { ...payload }).then(({ data }) => data);
+                    setDoEdit({});
+                } else {
+                    response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`, { ...payload }).then(({ data }) => data);
+                }
+                getSubSectorList();
+                setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+            } catch (e) {
+                let error = getErrorMessage(e);
+                setStatusData({ ...error });
+            }
+            setError(false);
+        } else {
+            setError(true);
         }
-        try {
-            const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`, { ...payload }).then(({ data }) => data);
-            getSubSectorList();
-            setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-        } catch (e) {
-            setStatusData({ type: 'error', message: e.message });
-        }
-        setError(false);
-    } else {
-        setError(true);
-    }
     }
 
     const addMoreoptions = async (e) => {
@@ -76,17 +89,59 @@ const SubSector = (props) => {
 
     }
 
-    const headers = ['Sector', 'SubSector',
+    const onActive = async (val) => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const payload = {
+                sector: _get(val, 'sector.id', null),
+                is_active: true,
+                name: val.name
+            }
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/subsectors/${val.id}`, {...payload});
+            getSubSectorList();
+            setStatusData({ type: '', message: '' });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+    }
+
+    const onBlock = async (val) => {
+        console.log('>>>>>>>>>>>>>>subsector', val);
+        try {
+            const payload = {
+                sector: _get(val, 'sector.id', null),
+                is_active: false,
+                name: val.name
+            }
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/subsectors/${val.id}`, { ...payload });
+            getSubSectorList();
+            setStatusData({ type: '', message: '' });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+
+    }
+
+    const onEdit = (val) => {
+        setDoEdit({ ...val });
+
+    }
+
+    const headers = ['Sector', 'SubSector', 'Status',
         'Action'];
 
     return (<>
-         <div class="main__top-wrapper">
+        <div class="main__top-wrapper">
             <h1 class="main__title">
                 {'Manage Masters -> SubSector'}
             </h1>
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <div class="main__top-wrapper">
+        <AddMoreSubSectorOption label={'SubSector'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the subsector"} status={statusData.type} updateMoreOption={updateMoreOption} sectorName={sector.name} />
+        {/* <div class="main__top-wrapper">
             <div class="user_input_text flex flex-column">
                 <h1 class="main__title">
                     {'Sector'} :
@@ -104,14 +159,14 @@ const SubSector = (props) => {
                 </h1>
                 <input type="text" name='subsector' class="country__text__box"
                     placeholder={'Enter the subsector'}
-                    value={inputValue.subsector}
+                    value={doEdit.name}
                     onChange={addMoreoptions}
                 />
             </div>
             <button class="main__button" onClick={() => updateMoreOption(inputValue)}>
                 ADD
             </button>
-        </div>
+        </div> */}
 
         {error && <div className='category-error color-red'>* SubSector field may not be blank.</div>}
         <br />
@@ -128,9 +183,10 @@ const SubSector = (props) => {
 
                             <td>{val.sector.name}</td>
                             <td>{val.name}</td>
+                            <td>{val.is_active ? 'Active' : "Disabled"}</td>
                             <td>
-                                {/* <CountryAction value={val} index={index} /> */}
-                                <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' />
+                                <CountryAction onEdit={() => onEdit(val)} onActive={() => onActive(val)} onBlock={() => onBlock(val)} value={val} index={index} />
+                                {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
                             </td>
                         </tr>)
                     })}
