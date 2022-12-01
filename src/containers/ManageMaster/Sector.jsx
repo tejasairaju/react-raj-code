@@ -14,6 +14,7 @@ import { getErrorMessage } from "../../utils/utils";
 
 const Sector = (props) => {
     const navigate = useNavigate();
+    const [error, setError] = useState(false);
     const [categoryData, setCategoryData] = useState({});
     const [statusData, setStatusData] = useState({});
     const [doEdit, setDoEdit] = useState({});
@@ -35,6 +36,7 @@ const Sector = (props) => {
     }
 
     const updateMoreOption = async (option) => {
+        if (!_isEmpty(option)) {
         try { 
             let response = {};
             if (!_isEmpty(doEdit)) {
@@ -48,6 +50,10 @@ const Sector = (props) => {
             let error = getErrorMessage(e);
             setStatusData({ ...error });
         }
+        setError(false);
+    } else {
+        setError(true);
+    }
     }
 
     const onCloseHandler = () => {
@@ -119,6 +125,7 @@ const Sector = (props) => {
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Sector'}  isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''}  placeholder={"Enter the sector"}  updateMoreOption={updateMoreOption} />
+        {error && <div className='category-error color-red'>* Sector field may not be blank.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             {MoreOptionTable(categoryData.results)}

@@ -18,6 +18,7 @@ import './ManageMaster.css';
 
 const ManageCountry = (props) => {
     const navigate = useNavigate();
+    const [error, setError] = useState(false);
     const [countryData, setCountryData] = useState({});
     const [statusData, setStatusData] = useState({});
     const [doEdit, setDoEdit] = useState({});
@@ -37,6 +38,7 @@ const ManageCountry = (props) => {
     }
 
     const updateMoreOption = async (value) => {
+        if (!_isEmpty(value)) {
         try {
             let response = {};
             if (!_isEmpty(doEdit)) {
@@ -52,6 +54,11 @@ const ManageCountry = (props) => {
             let error = getErrorMessage(e);
             setStatusData({ ...error });
         }
+        setError(false);
+    } else {
+        setError(true);
+    }
+        
     }
 
     const onCloseHandler = () => {
@@ -100,6 +107,7 @@ const ManageCountry = (props) => {
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Country'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Country"} status={statusData.type} updateMoreOption={updateMoreOption} />
+        {error && <div className='category-error color-red'>* Country field may not be blank.</div>}
         <br />
         <div id="viewCountry" className="view-diclosuer-container">
             <MoreOptionTable onEdit={onEdit} onActive={onActive} onBlock={onBlock} isCountry={true} headers={headers} tableData={countryData.results} />
