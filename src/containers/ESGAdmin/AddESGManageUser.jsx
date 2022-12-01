@@ -21,7 +21,7 @@ const AddESGManageUser = () => {
     const navigate = useNavigate();
     const { state = {} } = useLocation();
     const { isEditable = false, isView = false } = state || {};
-    const { id = ""} = _get(state, 'userDetails', {});
+    const { id = "" } = _get(state, 'userDetails', {});
 
     const [statusData, setStatusData] = useState({});
     const [inputValue, setInputValue] = useState({});
@@ -51,33 +51,45 @@ const AddESGManageUser = () => {
 
     }, []);
 
+    const emailValidation = (val) => {
+        return /\S+@\S+\.\S+/.test(val)
+    }
+
     const onSaveUser = async () => {
-        console.log('?>>>>>>>>>>>>>??', inputValue)
-        if(!_isEmpty(inputValue)&&inputValue.first_name) {
-        try {
-            let response = {};
-            if (!isEditable) {
-                response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/administrators`, {...inputValue}, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                }).then(({ data }) => data);
-            } else {
-                response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/administrators/${id}`, {...inputValue}, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                }).then(({ data }) => data);
+        if (!_isEmpty(inputValue) && inputValue.first_name && emailValidation(inputValue.email_id) && inputValue.last_name && inputValue.phone_number) {
+            try {
+                let response = {};
+                if (!isEditable) {
+                    response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/administrators`, { ...inputValue }, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }).then(({ data }) => data);
+                } else {
+                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/administrators/${id}`, { ...inputValue }, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }).then(({ data }) => data);
+                }
+
+                setStatusData({ type: 'success', message: `Thanks! Successfully ${!_isEmpty(state) ? "updated" : 'created'}` });
+
+            } catch (e) {
+                let error = getErrorMessage(e);
+                setStatusData({ ...error });
+            }
+            setError('');
+        } else {
+            if (_isEmpty(inputValue.first_name)) {
+                setError('Please enter first name.');
+            } else if (_isEmpty(inputValue.last_name)) {
+                setError('Please enter last name.');
+            } else if (!emailValidation(inputValue.email_id)) {
+                setError('Please Provide vaild Email id');
+            } else if (_isEmpty(inputValue.phone_number)) {
+                setError('Please enter phone number.');
             }
 
-            setStatusData({ type: 'success', message: `Thanks! Successfully ${!_isEmpty(state) ? "updated": 'created'}` });
-          
-        } catch (e) {
-            let error = getErrorMessage(e);
-            setStatusData({ ...error });
         }
-        setError('');
-    } else {
-        setError('Please enter the value.')
     }
-    }
-    
+
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
             navigate('/adminuser');
@@ -102,7 +114,7 @@ const AddESGManageUser = () => {
     return (<>
         <div class="main__top-wrapper">
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            {state&&isEditable ?
+            {state && isEditable ?
                 <h1 class="main__title">
                     {'Manage Users -> Edit User'}
                 </h1> :
@@ -169,9 +181,10 @@ const AddESGManageUser = () => {
                                 minLength={8}
                                 maxLength={15}
                                 value={inputValue.phone_number}
-                                error={validation['phone_number']} type="text"
+                                error={validation['phone_number']} type="number"
                                 name='phone_number'
                                 readOnly={isView}
+                                
                                 className="GenerateReport-framework__input"
                                 placeholder="+44235545" required={true}
                                 onChange={onChangeHandler} />
@@ -244,19 +257,19 @@ const AddESGManageUser = () => {
             <button class="buttons__panel-button" onClick={() => { navigate(`/adminuser`) }}>
                 CANCEL
             </button>
-            {!isView &&<>
-            {state ?
-                <button class="main__button" onClick={() => onSaveUser()}>
-                    Update
-                </button>
+            {!isView && <>
+                {state ?
+                    <button class="main__button" onClick={() => onSaveUser()}>
+                        Update
+                    </button>
 
-                :
-                <button class="main__button" onClick={() => onSaveUser()}>
-                    Invite
-                </button>
+                    :
+                    <button class="main__button" onClick={() => onSaveUser()}>
+                        Invite
+                    </button>
+                }
+            </>
             }
-</>
-}
         </div>
         {!_isEmpty(error) && <div className='overall-error-container color-red'>* {error}</div>}
 
