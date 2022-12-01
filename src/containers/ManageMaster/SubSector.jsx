@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 const SubSector = (props) => {
     const { state = {} } = useLocation();
     const { sector = {} } = state || {};
+    const [error, setError] = useState(false);
     const [subSectorList, setSubSectorList] = useState({});
     const [sectorList, setSectorList] = useState({});
     const [statusData, setStatusData] = useState({});
@@ -46,6 +47,7 @@ const SubSector = (props) => {
     }
 
     const updateMoreOption = async (option) => {
+        if (!_isEmpty(option)) {
 
         let getSector = (sectorList.results || []).find(val => _get(val, 'name', '') === sector.name);
         const payload = {
@@ -59,6 +61,10 @@ const SubSector = (props) => {
         } catch (e) {
             setStatusData({ type: 'error', message: e.message });
         }
+        setError(false);
+    } else {
+        setError(true);
+    }
     }
 
     const addMoreoptions = async (e) => {
@@ -106,6 +112,8 @@ const SubSector = (props) => {
                 ADD
             </button>
         </div>
+
+        {error && <div className='category-error color-red'>* SubSector field may not be blank.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             <table className="default-flex-table">
