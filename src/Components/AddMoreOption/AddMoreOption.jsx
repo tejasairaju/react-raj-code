@@ -4,15 +4,19 @@ import { useEffect } from "react";
 
 
 const AddMoreOption = (props) => {
-    const { placeholder = '', label = '', value = '', status= '', updateMoreOption = () => { } } = props;
-    const [inputValue, setInputValue] = useState(value);
+    const { isEdit = false, placeholder = '', label = '', value = '', status= '', updateMoreOption = () => { } } = props;
+    const [inputValue, setInputValue] = useState('');
 
     const addMoreoptions = async (e) => {
         const { value } = e.target;
         setInputValue(value)
     }
+    useEffect(() => {
+        setInputValue(value)
+    }, [value]);
 
     useEffect(() => {
+
 if(status === 'success') {
     setInputValue('');
 }
@@ -29,7 +33,7 @@ if(status === 'success') {
             />
         </div>
         <button class="main__button" onClick={() => updateMoreOption(inputValue)}>
-            ADD
+            {isEdit ? "EDIT" : "ADD" }
         </button>
     </div>)
 }

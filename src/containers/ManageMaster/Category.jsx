@@ -18,10 +18,11 @@ import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.js
 const Category = (props) => {
     const navigate = useNavigate();
 
-
+    const [error, setError] = useState(false);
     const [categoryData, setCategoryData] = useState({});
     const [statusData, setStatusData] = useState({});
     const [inputValue, setInputValue] = useState({});
+    const [doEdit, setDoEdit] = useState({});
     useEffect(() => {
         getCategoryList();
     }, []);
@@ -38,15 +39,27 @@ const Category = (props) => {
     }
 
     const updateMoreOption = async (option) => {
-        try {
-            setStatusData({ type: 'loading', message: ""});
-            const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`, { name: option }).then(({ data }) => data);
-            getCategoryList();
-            setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-        } catch (e) {
-            let error = getErrorMessage(e);
-            setStatusData({ ...error });
-            // setStatusData({ type: 'error', message: e.message });
+        if (!_isEmpty(option)) {
+            try {
+                setStatusData({ type: 'loading', message: "" });
+                console.log();
+                let response = {};
+                if (!_isEmpty(doEdit)) {
+                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories/${doEdit.id}`, { name: option }).then(({ data }) => data);
+                    setDoEdit({});
+                } else {
+                    response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`, { name: option }).then(({ data }) => data);
+                }
+                getCategoryList();
+                setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+            } catch (e) {
+                let error = getErrorMessage(e);
+                setStatusData({ ...error });
+                // setStatusData({ type: 'error', message: e.message });
+            }
+            setError(false)
+        } else {
+            setError(true);
         }
     }
 
@@ -54,16 +67,47 @@ const Category = (props) => {
 
     }
 
-    const headers = ['Category',
+    const onActive = async (val) => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories/${val.id}`, { ...val, is_active: true });
+            getCategoryList();
+            setStatusData({ type: '', message: '' });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+    }
+
+    const onBlock = async (val) => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories/${val.id}`, { ...val, is_active: false });
+            getCategoryList();
+            setStatusData({ type: '', message: '' });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+
+    }
+
+
+    const onEdit = (val) => {
+        setDoEdit({ ...val });
+
+    }
+
+    const headers = ['Category', 'Status',
         'Action'];
 
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <AddMoreOption label={'Category'} placeholder={"Enter the Category"} value={''} status={statusData.type} updateMoreOption={updateMoreOption} />
-        {errorStatus && <div className='overall-error-container color-red'>* Category field may not be blank.</div>}
+        <AddMoreOption label={'Category'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Category"} status={statusData.type} updateMoreOption={updateMoreOption} />
+        {error && <div className='category-error color-red'>* Category field may not be blank.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
-            <MoreOptionTable headers={headers} tableData={categoryData.results}/>
+            <MoreOptionTable onEdit={onEdit} onActive={onActive} onBlock={onBlock} isCategory={true} headers={headers} tableData={categoryData.results} />
         </div>
         <br />
 
