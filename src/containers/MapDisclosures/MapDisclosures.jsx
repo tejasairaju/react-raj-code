@@ -8,6 +8,7 @@ import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { mapCatagory_1, mapCatagory_2 } from "../../utils/constants.js";
+import { getErrorMessage } from "../../utils/utils";
 import { useSelector } from "react-redux";
 const { RadioButton, Button, Pills } = Fields;
 
@@ -180,7 +181,8 @@ const MapDisclosures = () => {
             console.log('>>>>>>>>>>>>', response);
             getMappingDisclosures(Object.keys(sourceFrameworkId).length > 0 ? sourceFrameworkId : val, Object.keys(destinationFrameworkId).length > 0 ? destinationFrameworkId : val)
         } catch (e) {
-            setStatusData({ type: 'error', message: e.message });
+            let error = getErrorMessage(e);
+                setStatusData({ ...error });
         }
     }
 
