@@ -63,6 +63,8 @@ import ESGKpiDashboard from "../containers/ESGKpiDashboard/ESGKpiDashboard.jsx";
 import ViewBespokeFramework from "../containers/ViewBespokeFramework/ViewBespokeFramework.jsx";
 import ViewBespokeDisclosures from "../containers/ViewBespokeDisclosures/ViewBespokeDisclosures.jsx";
 import ViewBespokeQuestions from "../containers/ViewBespokeQuestions/ViewBespokeQuestions.jsx";
+import ESGManageUser from "../containers/ESGAdmin/ESGManageUser.jsx";
+import AddESGManageUser from "../containers/ESGAdmin/AddESGManageUser.jsx";
 
 const RootRouter = () => {
   const navigate = useNavigate();
@@ -153,8 +155,9 @@ const RootRouter = () => {
         <Route path="/sector" element={<Sector />} />
         <Route path="/subsector" element={<SubSector />} />
         <Route path="/customeronboardbyadmin" element={<CustomerOnboardByAdmin />} />
-        <Route path="/adminuser" element={<ESGAdmin />} />
+        <Route path="/adminuser" element={<ESGManageUser />} />
         <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
+        <Route path="/esg/users/invite" element={<AddESGManageUser />} />
         <Route path="/systemsettings" element={<ManageFrameWork component='Welcome to System Settings' />} />
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
       </Route>
