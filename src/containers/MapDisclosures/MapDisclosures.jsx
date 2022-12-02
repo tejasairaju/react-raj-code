@@ -338,12 +338,12 @@ const MapDisclosures = () => {
     const headers = ['Name', 'Description', 'Action'];
     const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
 
-    const renderFrameworkLogo = (type) => (<div class="frameworks__choose">
+    const renderFrameworkLogo = (type) => (<div className="map-disclosure-framework-scroll"><div class="frameworks__choose over-write-frameworks__choose">
         {(type === "child" ? childFrameworksData : frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.isSelect ? 'active' : null} ${val.isSource ? ' hide' : null}`}>
             <img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
         </div>))
         }
-    </div>);
+    </div></div>);
     const onSelectSingleOption = (index, mode) => {
 
         let cloneListCatagory = (mode == "left") ? [...listCatagory_1] : [...listCatagory_2];
