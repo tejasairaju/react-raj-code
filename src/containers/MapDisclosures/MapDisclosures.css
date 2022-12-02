@@ -138,3 +138,8 @@
 .disable-cursor{
     cursor: not-allowed;
 }
+
+.over-write-frameworks__choose {
+    margin-bottom: 20px !important;
+    padding-top: 10px !important;
+}
