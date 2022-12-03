@@ -40,7 +40,7 @@ const CreateDisclosures = (props) => {
     const getDisclosures = async () => {
         try {
             const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${id}/disclosures/${disclosureId}`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
-            setInputValue({ ...response, description: response.name, guidance: response.name, categories: [{ name: response.category, isSelect: true }] });
+            setInputValue({ ...response, description: response.description, guidance: response.description, categories: [{ name: response.category, isSelect: true }] });
         } catch (error) {
         }
     }
@@ -81,7 +81,7 @@ const CreateDisclosures = (props) => {
         if (!_get(cloneInputValue, 'guidance', '').trim()) {
             errors['guidance'] = "Guidance is required";
         } else if(!_isEmpty(category)) {
-            errors['category'] = "Guidance is required";
+            errors['category'] = "Category is required";
         }
         setValidation(errors);
     }
@@ -95,8 +95,8 @@ const CreateDisclosures = (props) => {
                 category: getSelectedCategory.name || '',
                 section: 'sample',
                 framework: params.id,
-                description: inputValue.description,
-                metaData: [inputValue.guidance]
+                description: inputValue.guidance,
+                metaData: [inputValue.description]
             }
 
             try {

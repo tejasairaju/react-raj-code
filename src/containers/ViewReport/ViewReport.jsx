@@ -34,7 +34,7 @@ const ViewReport = (props) => {
             const response = await axios.get(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`).then(({ data }) => data);
 
             setStatusData({ type: '', message: '' });
-            const sortResult = response&&response.results.reverse();
+            const sortResult = response&&response.results;
             setReportList(sortResult);
             console.log(reportList)
             // return response.disclosures || [];
@@ -84,7 +84,7 @@ const ViewReport = (props) => {
                                 <td>{report.name}</td>
                                 <td>{report.start_date}</td>
                                 <td>{report.end_date}</td>
-                                <td>{report.status}</td>
+                                <td>{(report.status == "Custom")? "Bespoke":report.status}</td>
                                 <td>
                                 <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} />
                                     </td>

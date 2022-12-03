@@ -58,6 +58,7 @@ const AddClientUser = () => {
             form.append('last_name', inputValue.last_name)
             form.append('email_id', inputValue.email_id);
             form.append('location', inputValue.location);
+            form.append('country', inputValue.country);
             form.append('phone_number', inputValue.phone_number);
             form.append('department', inputValue.department);
             form.append('designation', inputValue.designation);

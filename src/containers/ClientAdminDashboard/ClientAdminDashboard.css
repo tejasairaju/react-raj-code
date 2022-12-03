@@ -1,67 +1,124 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-.admindashboard__framework__col-wrapper .framework__input {
+.welcome__task__container3 {
     display: flex;
-    flex-basis: 100%;
+    justify-content: space-around;
+    margin-top: 20px;
 }
 
-.admindashboard__content-wrapper {
-    overflow: auto;
+.welcome__task__container2 {
+    display: flex;
+    justify-content: center;
+    /* margin-top: 20px; */
+    width: 55em;
+    margin: auto;
 }
 
-.admin__box {
-    margin: 16px;
-    width: 100%;
-    height: 150px;
+.welcome__task__right__heading {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
-.adminimg__box {
+.welcome__task__container {
 
-    width: 100%;
-    height: 120px;
+    display: flex;
+    justify-content: center;
+    margin: 1%;
 }
 
-.client-main__content-wrapper {
+.welcome__taskbox {
+    background-color: white;
+    display: flex;
+    height: 85px;
+    width: 95px;
+    padding: -19px;
+    margin-left: 50px;
+    /* box-shadow: rgb(0 0 0 / 8%) 0px 0px 50px 10px; */
+}
+
+.welcome__taskbox.active {
+    background-color: lightblue;
+}
+
+.welcome__task__logo1 {
+    vertical-align: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 67px;
+    margin-left: 13px;
+    margin-top: 11px;
+}
+
+.welcome__task__logo3 {
+    vertical-align: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 67px;
+    margin-left: 15px;
+    margin-top: 27px;
+}
+
+.welcome__task__heading {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.welcome__task__top_line {
+    display: flex;
+    margin-left: 20px;
+}
+
+.welcome__task__box2 {
+    background-color: white;
+    margin-left: 8%;
+    height: 7em;
+    width: 12em;
+    font-size: x-large;
+    box-shadow: 0px 0px 50px 10px #b8b5b5;
+    /* box-shadow: rgb(0 0 0 / 8%) 0px 0px 50px 10px; */
+}
+
+.welcome__task__numbers {
+    display: flex;
+    justify-content: center;
     margin-top: 30px;
-    background: #FFFFFF;
-    box-shadow: 0px 0px 50px 10px rgba(0, 0, 0, 0.08);
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    padding-bottom: 2.1%;
-    overflow: auto;
 }
 
-/* .aside-framework__logo-container {
-    padding: 44px 85px 0 79px;
-    margin-bottom: 30px;
-} */
+h4.welcome__task__bottom_content {
+    display: flex;
+    justify-content: center;
+}
 
+h1.welcome__task__box_content {
+    font-size: xxx-large;
+}
 
-/* @media screen and (max-width: 1439.8px) {
+.welcome__task__box2.color_blue {
+    color: #2387ab;
+}
 
-    .framework__title {
-        font-size: 12px;
-    }
+.welcome__task__box2.color_red {
+    color: rgb(139, 0, 0);
+}
 
-    .main__content-wrapper {
-        padding: 10px;
-        margin-top: 0px;
-    }
+.welcome__task__box2.color_green {
+    color: rgb(0, 128, 0);
+}
 
-    .add__logo-logo img {
-        width: 70%;
-    }
+h4.welcome__task__content_bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    color: #e9e92e;
+    font-size: large;
+}
 
-    .framework__input,
-    .add__logo-form,
-    .browse__btn {
-        font-size: 12px;
-    }
-
-    .browse__btn {
-        padding: 6px 20px;
-    }
-
-} */
+.welcome__task__logo4 {
+    vertical-align: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    margin-left: 42px;
+}

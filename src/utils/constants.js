@@ -50,8 +50,8 @@ export const questions = {
             label: 'Select',
             value: 'Select',
         },{
-        label: 'Varchar',
-        value: 'Varchar',
+        label: 'Alphanumeric',
+        value: 'Alphanumeric',
         selected: ''
     },
     {

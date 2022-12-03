@@ -89,7 +89,7 @@ const CreateBespokeDisclosures = (props) => {
         if (!_get(cloneInputValue, 'guidance', '').trim()) {
             errors['guidance'] = "Guidance is required";
         } else if(!_isEmpty(category)) {
-            errors['category'] = "Guidance is required";
+            errors['category'] = "Category is required";
         }
         setValidation(errors);
     }

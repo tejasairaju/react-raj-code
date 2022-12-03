@@ -105,10 +105,16 @@ const CreateBespokeFramework = (props) => {
          if (!_isEmpty(uploadImage&&uploadImage.fileName)&&(isEdit == false)) {
                 form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
             } else if(params.isEdit&&logo){
-                let blob = new Blob([logo], {
-                    type: "application/pdf"
-                });
-                form.append('logo', blob, uploadImage.fileName);
+                console.log("gph")
+                if(typeof(uploadImage.imageUrl) == 'object'){
+                    form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                    //form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                }
+
+                // let blob = new Blob([logo], {
+                //     type: "application/pdf"
+                // });
+                // form.append('logo', blob, uploadImage.fileName);
             }
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());

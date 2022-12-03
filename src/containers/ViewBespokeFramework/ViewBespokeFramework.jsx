@@ -55,7 +55,7 @@ const ViewBespokeFramework = () => {
                             return (<tr>
                                 <td>{val.name}</td>
                                 <td>{getDataFormat(val.created_at)}</td>
-                                <td>{val.template_type}</td>
+                                <td>{(val.template_type=="Custom")?"Bespoke":val.template_type}</td>
                                 <td>{val.status}</td>
                                 <td>
                                 <MoreAction viewBespokeFramework={true} value={val} index={index} state={{...val}}/>

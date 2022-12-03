@@ -57,6 +57,7 @@ const UpdateClientUser = () => {
                     last_name: inputValue.last_name ,
                 email_id: inputValue.email_id ,
                 location: inputValue.location, 
+                country: inputValue.country,
                 phone_number: inputValue.phone_number, 
                 department: inputValue.department,
                 designation: inputValue.designation, 
