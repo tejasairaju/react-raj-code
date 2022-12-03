@@ -88,28 +88,14 @@ const CreateFramework = (props) => {
 
     const onNextHandler = async () => {
         // console.log('>>>>>>>>', inputValue);
+
         if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) 
-        /*&& (inputValue.countries || []).length > 0
-            && (inputValue.categories || []).lengthv> 0 && (inputValue.sectors || []).length > 0 */
+        // && (inputValue.countries || []).length > 0
+        //     && (inputValue.categories || []).lengthv> 0 && (inputValue.sectors || []).length > 0
             ) {
             const form = new FormData();
-            form.append('name', inputValue.name);
-            form.append('description', inputValue.description)
-            if (!_isEmpty(uploadImage&&uploadImage.fileName)&&(isEdit == false)) {
-                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-            } else if(params.isEdit&&logo){
-                if(typeof(uploadImage.imageUrl) == 'object'){
-                    form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-                    //form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-                }
 
-                // let blob = new Blob([logo], {
-                //     type: "application/pdf"
-                // });
-                // form.append('logo', blob, uploadImage.fileName);
-            }
-            form.append('created_at', moment().format());
-            form.append('updated_at', moment().format());
+
             const getMultiCategories = getFilterArrayValue(inputValue.categories);
             for (const a of getMultiCategories) {
                 if(!_isEmpty(a)) {
@@ -136,6 +122,31 @@ const CreateFramework = (props) => {
                 form.append("supported_countries", a);
                 }
             }
+
+
+            if(form.getAll("supported_countries").length > 0 && form.getAll("supported_sectors").length > 0
+            &&  form.getAll("supported_category").length > 0
+            )
+            {
+
+                form.append('name', inputValue.name);
+            form.append('description', inputValue.description)
+            if (!_isEmpty(uploadImage&&uploadImage.fileName)&&(isEdit == false)) {
+                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+            } else if(params.isEdit&&logo){
+                if(typeof(uploadImage.imageUrl) == 'object'){
+                    form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                    //form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                }
+
+                // let blob = new Blob([logo], {
+                //     type: "application/pdf"
+                // });
+                // form.append('logo', blob, uploadImage.fileName);
+            }
+            form.append('created_at', moment().format());
+            form.append('updated_at', moment().format());
+
             try {
                 let response = {};
                 if(isEdit) {
@@ -157,6 +168,12 @@ const CreateFramework = (props) => {
                 setStatusData({...error});
                 // setStatusData({ type: 'error', message: e.message });
             }
+
+            }else{
+                setErrorValidation(true);
+            }
+
+            
         } else {
             setErrorValidation(true);
         }
@@ -230,10 +247,10 @@ const CreateFramework = (props) => {
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
             <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={false} />
-            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={false} />
-            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={false} />
-            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={false} />
+            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'categories')} required={true} />
+            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
+            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')}  />
+            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'countries')} required={true} />
         </div>
         {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
         <Button label={isEdit ? 'UPDATE':'NEXT'} onClickHandler={onNextHandler} className='main__button' />

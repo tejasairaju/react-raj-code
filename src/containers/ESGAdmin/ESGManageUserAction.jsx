@@ -60,7 +60,7 @@ const ESGManageUserAction = (props) => {
             <div><a onClick={() => { navigate(`/esg/users/invite`, {state: {userDetails: value, isEditable: true}}) }}>Edit</a></div>
             <div><a onClick={() => onUpdateUser(value, 1)}>Activate</a></div>
             <div><a onClick={() => onUpdateUser(value, 0)}>Block</a></div>
-            {/* <div><a onClick={() => deleteUser(value, 0)}>Delete</a></div> */}
+            {/* <div><a onClick={() => deleteUser(value, 0)}>Delete</a></div>  */}
         </div>
     </div>)
 }

@@ -56,6 +56,7 @@ const AddESGManageUser = () => {
     }
 
     const onSaveUser = async () => {
+        console.log(inputValue);
         if (!_isEmpty(inputValue) && inputValue.first_name && emailValidation(inputValue.email_id) && inputValue.last_name && inputValue.phone_number) {
             try {
                 let response = {};
@@ -181,7 +182,7 @@ const AddESGManageUser = () => {
                                 minLength={8}
                                 maxLength={15}
                                 value={inputValue.phone_number}
-                                error={validation['phone_number']} type="number"
+                                error={validation['phone_number']} type="phone"
                                 name='phone_number'
                                 readOnly={isView}
                                 

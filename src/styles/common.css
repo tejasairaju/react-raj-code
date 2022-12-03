@@ -539,8 +539,8 @@ body {
         gap: 12px;
     }
     .frameworks__choose-item {
-        width: 85px;
-        height: 70px;
+        width: 150px;
+        height: 100px;
     }
     .frameworks__choose-item img {
         width: 50%;
