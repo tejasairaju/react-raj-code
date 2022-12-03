@@ -293,7 +293,7 @@ const OrganisationInfo = () => {
 
 
     const renderOrganisationmainContainer = () => {
-        return (<><div class="client-main__content-wrapper content-wrapper">
+        return (<><div class="client-main__content-wrapper content-wrapper scrollable">
             <div class="framework__row-wrapper bot1">
                 <UploadFile imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
                 <div class="framework__row"></div>
