@@ -37,24 +37,35 @@ const ManageCountry = (props) => {
         }
     }
 
+    const onlyString= (option) =>  {
+        let v =  /^[a-zA-Z]+$/.test(option);
+        let len_check = (option.length <3 || option.length > 30) ? false : true
+        return v && len_check;
+      }
+
     const updateMoreOption = async (value) => {
         if (!_isEmpty(value)) {
-        try {
-            let response = {};
-            if (!_isEmpty(doEdit)) {
-                response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/countries/${doEdit.id}`, { name: value }).then(({ data }) => data);
-                setDoEdit({});
-            } else {
-                response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/countries`, { name: value }).then(({ data }) => data);
+            if(onlyString(value)){
+                try {
+                    let response = {};
+                    if (!_isEmpty(doEdit)) {
+                        response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/countries/${doEdit.id}`, { name: value }).then(({ data }) => data);
+                        setDoEdit({});
+                    } else {
+                        response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/countries`, { name: value }).then(({ data }) => data);
+        
+                    }
+                    getCountryList();
+                    setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+                } catch (e) {
+                    let error = getErrorMessage(e);
+                    setStatusData({ ...error });
+                }
+                setError(false);
 
             }
-            getCountryList();
-            setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-        } catch (e) {
-            let error = getErrorMessage(e);
-            setStatusData({ ...error });
-        }
-        setError(false);
+            else{setError(true);}
+      
     } else {
         setError(true);
     }
@@ -107,7 +118,7 @@ const ManageCountry = (props) => {
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Country'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Country"} status={statusData.type} updateMoreOption={updateMoreOption} />
-        {error && <div className='category-error color-red'>* Country field may not be blank.</div>}
+        {error && <div className='category-error color-red'>* Country field may not be blank or contains invalid char or should be between 3 and 30 character.</div>}
         <br />
         <div id="viewCountry" className="view-diclosuer-container">
             <MoreOptionTable onEdit={onEdit} onActive={onActive} onBlock={onBlock} isCountry={true} headers={headers} tableData={countryData.results} />

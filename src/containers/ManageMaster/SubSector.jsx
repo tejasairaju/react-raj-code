@@ -49,32 +49,41 @@ const SubSector = (props) => {
         }
     }
 
+    const onlyString= (option) =>  {
+        let v =  /^[a-zA-Z,&]+$/.test(option);
+        let len_check = (option.length <3 || option.length > 30) ? false : true
+        return v && len_check;
+      }
+
     const updateMoreOption = async (option) => {
         if (!_isEmpty(option)) {
-            // let getSector = (sectorList.results || []).find(val => _get(val, 'name', '') === sector.name);
-            const payload = {
-                sector: _get(sector, 'id', null),
-                name: option
-            }
-            try {
-                let response = {};
-                if (!_isEmpty(doEdit)) {
-                    const payload_1 = {
-                        sector: _get(sector, 'id', null),
-                        name: option
-                    }
-                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/subsectors/${doEdit.id}`, { ...payload }).then(({ data }) => data);
-                    setDoEdit({});
-                } else {
-                    response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`, { ...payload }).then(({ data }) => data);
+            if(onlyString(option)){            
+                    const payload = {
+                    sector: _get(sector, 'id', null),
+                    name: option
                 }
-                getSubSectorList();
-                setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-            } catch (e) {
-                let error = getErrorMessage(e);
-                setStatusData({ ...error });
+                try {
+                    let response = {};
+                    if (!_isEmpty(doEdit)) {
+                        const payload_1 = {
+                            sector: _get(sector, 'id', null),
+                            name: option
+                        }
+                        response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/subsectors/${doEdit.id}`, { ...payload }).then(({ data }) => data);
+                        setDoEdit({});
+                    } else {
+                        response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`, { ...payload }).then(({ data }) => data);
+                    }
+                    getSubSectorList();
+                    setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+                } catch (e) {
+                    let error = getErrorMessage(e);
+                    setStatusData({ ...error });
+                }
+                setError(false);
+            }else{
+                setError(true);
             }
-            setError(false);
         } else {
             setError(true);
         }
@@ -168,7 +177,7 @@ const SubSector = (props) => {
             </button>
         </div> */}
 
-        {error && <div className='category-error color-red'>* SubSector field may not be blank.</div>}
+        {error && <div className='category-error color-red'>* SubSector field may not be blank or contains invalid char or should be between 3 and 30 character.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             <table className="default-flex-table">
