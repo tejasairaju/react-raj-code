@@ -138,3 +138,37 @@
 .disable-cursor{
     cursor: not-allowed;
 }
+
+
+.cards-wrapper {
+    grid-column: center-start / -1;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 1rem;
+    overflow: auto;
+    padding-bottom: 1rem;
+    max-width: 54em;
+    padding-right: var(--page-margin);
+}
+
+.frameworks__choose {
+    display: flex;
+    gap: 25px;
+    width: fit-content;
+}
+.frameworks__choose-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 105px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 50px 10px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    cursor: pointer;
+}
