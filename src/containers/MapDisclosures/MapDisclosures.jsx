@@ -11,6 +11,8 @@ import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { mapCatagory_1, mapCatagory_2 } from "../../utils/constants.js";
 import { getErrorMessage } from "../../utils/utils";
 import { useSelector } from "react-redux";
+import ReactToolTip from "../../Components/Common/ReactToolTip/ReactToolTip.jsx";
+
 const { RadioButton, Button, Pills } = Fields;
 
 const MapDisclosures = () => {
@@ -383,9 +385,11 @@ const MapDisclosures = () => {
     const headers = ['Name', 'Description', 'Action'];
     const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
 
-    const renderFrameworkLogo = (type) => (<div className="map-disclosure-framework-scroll"><div class="frameworks__choose over-write-frameworks__choose"> 
+    const renderFrameworkLogo = (type) => (<div className="map-disclosure-framework-scroll"><div class="frameworks__choose over-write-frameworks__choose">
         {(type === "child" ? childFrameworksData : frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.isSelect ? 'active' : null} ${val.isSource ? ' hide' : null}`}>
-            <img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
+        <ReactToolTip  hoverText={val.name}><img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
+            </ReactToolTip>
+       
         </div> ))
         }
     </div></div>);

@@ -75,7 +75,7 @@ const OverlappingDisclosures = (props) => {
 
     {isLoading?<Animation /> :
 <>
-        <main class="main">
+        <main class="">
             <div class="main__top-wrapper">
                 <h1 class="main__title_intelligent">
                     <b>Intelligent Mapping</b>
@@ -84,7 +84,7 @@ const OverlappingDisclosures = (props) => {
             <hr />
             <br/>
             <div class="intelligent-framework">
-                <div class="system_admin_container_intelligent intelligent_main">
+                <div class="system_admin_container_intelligent intelligent_main align-center">
                     <div class="framework__col-wrapper">
                         <div class="intelligent_boxvalue">
                             <div>

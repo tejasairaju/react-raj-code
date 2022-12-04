@@ -5,6 +5,7 @@ import _isEmpty from 'lodash/isEmpty';
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Requests from "../../Requests/index.js";
+import ReactToolTip from "../Common/ReactToolTip/ReactToolTip.jsx";
 
 const ListFramework = (props) => {
     const { onClickFrameworkHandler = () => { }, label = 'Framework', setIsCustomeFramework = () => {}, isCustomeFramework } = props;
@@ -92,7 +93,7 @@ const ListFramework = (props) => {
         <div className="cards-wrapper">
             {(frameworkData || []).map((item, i) => {
                 return (<div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>
-                    <img src={item.logo} alt="GRI" />
+                    <ReactToolTip hoverText={item.name}><img src={item.logo} alt="GRI" /></ReactToolTip>
                 </div>)
             })
             }

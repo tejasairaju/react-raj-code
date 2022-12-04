@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import OverlappingDisclosures from "../OverlappingDisclosures/OverlappingDisclosures.jsx";
 import { useSelector } from "react-redux";
 import Requests from "../../Requests";
+import ReactToolTip from "../../Components/Common/ReactToolTip/ReactToolTip.jsx";
 
 const ClientAdminFrameworkList = (props) => {
     const navigate = useNavigate();
@@ -81,7 +82,7 @@ const ClientAdminFrameworkList = (props) => {
             <div className="frameworks__choose cli-admin-frame-list">
                 {(((type === 'left') ? frameworkData : rightFrameworkData) || []).map((item, i) => {
                     return (<div key={i} onClick={() => onClickLogoHandler(item, i, type)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)} ${item.isSource ? ' hide-framework' : null}`}>
-                        <div className="m-p-6"><img className="client-framework-logo" src={item.logo} alt={item.name}/></div>
+                        <div className="m-p-6"><ReactToolTip  hoverText={item.name}><img className="client-framework-logo" src={item.logo} alt={item.name}/> </ReactToolTip></div>
                         <div className="m-p-6">{item.name}</div>
                     </div>)
                 }
