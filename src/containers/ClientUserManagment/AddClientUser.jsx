@@ -84,8 +84,13 @@ const AddClientUser = () => {
                     headers: { "Content-Type": "multipart/form-data" }
                 }).then(({ data }) => data);
             }
-
-            setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+        
+            if(isEditable){
+                setStatusData({ type: 'success', message: 'Thanks! Successfully updated ' });
+            }
+            else{
+                setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+            }
 
         } catch (e) {
             let error = getErrorMessage(e);
