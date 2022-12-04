@@ -106,9 +106,10 @@ const AnswerQuestions = () => {
         }
     }
 
-    const onClickSaveAnswer = async (answer, disclosureIndex, questionIndex) => {
+    const onClickSaveAnswer = async (answer, disclosureIndex, questionIndex, key="value") => {
         let cloneApiData = { ...apiData };
-        apiData.listData[disclosureIndex].children[questionIndex].value = answer;
+        //apiData.listData[disclosureIndex].children[questionIndex].value = answer;
+        apiData.listData[disclosureIndex].children[questionIndex][key] = answer;
         setApiData({
             ...cloneApiData,
         });

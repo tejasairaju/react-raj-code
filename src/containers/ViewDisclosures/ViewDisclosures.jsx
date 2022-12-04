@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
 import { listDisclosures } from '../../../__mocks__/listDisclosures.js'
+import _isEmpty from 'lodash/isEmpty';
+
 const { RadioButton } = Fields;
 
 const { Get } = Request;
@@ -63,7 +65,10 @@ const ViewDisclosures = () => {
     };
 
     const getState = (value) => ({
+        
         code: value.code,
+        description: value.description,
+        guidance: _isEmpty(value.metaData)?value.description:value.metaData[0].value,
         name: value.name,
         section: value.section,
         category: value.category,
@@ -71,6 +76,7 @@ const ViewDisclosures = () => {
         disclosure_id: value.id,
         framework: frameworkData.id,
         id: value.id
+
     })
 
     const headers = ['Name','Description', 'Action'];

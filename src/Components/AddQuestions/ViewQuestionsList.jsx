@@ -2,6 +2,7 @@ import react, {useState} from 'react';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { questions } from '../../utils/constants.js';
 import Modal from '../Common/Modal/Modal.jsx';
+import _isEmpty from 'lodash/isEmpty';
 
 const { Button, Input, TextArea, Dropdown } = Fields;
 const { dataType, inputType, unitType } = questions;
@@ -22,7 +23,7 @@ const ViewQuestionsList = ({ guidance='', description = '', code = "", name = ""
         {isShowGuidance && <Modal isShow={!!isShowGuidance} isDisclosureDec={true} closeModal={() =>setIsShowGuidance(false) }>
             <div className='create-options-title'>Guidance:</div>
             <div className='get-textarea-input-container'>
-                <div className="create-framework__textarea disclosure-description-screen">{guidance}</div>
+                <div className="create-framework__textarea disclosure-description-screen">{ _isEmpty(guidance) ? description : guidance }</div>
             </div>
         </Modal>}
             <div className="create-framework__row-wrapper">

@@ -53,6 +53,7 @@ const AnswerQuestionsTable = (props) => {
             return question;
         });
         setQuestionsList([...cloneQuestionList]);
+        //setLogo(null);
     }
 
     const onChangeRemoveFile = () => {
@@ -96,9 +97,10 @@ const AnswerQuestionsTable = (props) => {
         else return <input type="text" className="assign__categories" value={typeof questionItem.value == "object" ? questionItem.value.value : questionItem.value} onChange={(e) => onChangeAnswerHandler(e, disclosureIndex, questionIndex)} />
     }
 
-    const onChangeFile = (event) => {
+    const onChangeFile = (event, disclosureIndex, questionIndex) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
+        onClickSaveAnswer(URL.createObjectURL(imageUrl), disclosureIndex, questionIndex,"image_url")
         setLogo(URL.createObjectURL(imageUrl));
         if (imageUrl) {
             // setUploadImage({ fileName, imageUrl });
@@ -117,12 +119,12 @@ const AnswerQuestionsTable = (props) => {
                     <h5 className="detalis__information-title">
                         <b>{questionItem.label} ?</b>
                     </h5>
-                    {!_isEmpty(_get(itemDetails, 'metaData[0].value', '')) && <><p className="detalis__information-title">
+                    {/* {!_isEmpty(_get(itemDetails, 'metaData[0].value', '')) && <><p className="detalis__information-title">
                         Guidance Notes
                     </p>
                         <input type="text" className="assign__categories" value={_get(itemDetails, 'metaData[0].value', '')} disabled />
                     </>
-                    }
+                    } */}
                     <p className="detalis__information-title">
                         Answer :
                     </p>
@@ -136,7 +138,7 @@ const AnswerQuestionsTable = (props) => {
                     }
                     <br />
                     <div class="framework__row-wrapper bot1 answer_question-file_upload">
-                        <UploadFile imgcls={'org-image-size'} label='Document Upload' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
+                        <UploadFile imgcls={'org-image-size'} label='Document Upload' imageUrl={questionItem.image_url} onChangeFile={(e)=>onChangeFile(e,disclosureIndex, questionIndex)} onChangeRemoveFile={onChangeRemoveFile} required={false}/>
                         <div class="framework__row"></div>
                     </div>
                     {/* <div>
@@ -153,7 +155,7 @@ const AnswerQuestionsTable = (props) => {
         {isShowDescription && <Modal isShow={!!isShowDescription} isDisclosureDec={true} closeModal={closePopupModal}>
             <div className='create-options-title'>Guidance:</div>
             <div className='get-textarea-input-container'>
-                <div className="create-framework__textarea disclosure-description-screen">{itemDetails.description}</div>
+                <div className="create-framework__textarea disclosure-description-screen">{(_isEmpty(_get(itemDetails, 'metaData[0].value', '')))?itemDetails.description:_get(itemDetails, 'metaData[0].value', '')}</div>
             </div>
         </Modal>}
         {isOpenReAssign && <ReAssignDisclosures setIsOpenReAssign={setIsOpenReAssign} disclosure={itemDetails} reportId={reportId} />}

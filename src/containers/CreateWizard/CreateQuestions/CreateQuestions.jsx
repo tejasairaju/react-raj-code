@@ -95,6 +95,8 @@ const CreateQuestions = (props) => {
     }
 
     let tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+    console.log(state)
+
     return (<>
         {isOpenAddQuestion && <AddQuestions isTemplate={false} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
         <div className="main__top-wrapper">
