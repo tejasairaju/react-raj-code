@@ -6,10 +6,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import MoreAction from "../ClientInfo/MoreAction.jsx";
+import Popup from '../../components/Common/Popup/Popup.jsx';
 import moment from 'moment';
 import _get from 'lodash/get';
 import { getErrorMessage } from "../../utils/utils";
-
+import Fields from '../../Components/Common/Fields/Fields.jsx';
+const { RadioButton, Button, Pills } = Fields;
 
 import './SystemSettings.css';
 
@@ -28,6 +30,15 @@ const SystemSettings = (props) => {
         setInputValue({ ...inputValue,  [name]: value });
     }
 
+    const navigateHome = () => {
+      
+        navigate('/');
+      };
+
+    const onCloseHandler = () => {
+
+        setStatusData({ type: '', message: '' });
+    }
     
     useEffect(() => {
         const getSystemSettings = async () => {
@@ -67,16 +78,20 @@ const SystemSettings = (props) => {
                 id: response.id
             };
             setInputValue({...constractInputVal1});
-            setStatusData({ type: 'success', message: 'Thanks! System Settings has been successfully created' });
+            setStatusData({ type: 'success', message: 'Thanks! System Settings has been successfully created/updated' });
         } catch (e) {
             let error = getErrorMessage(e);
-            setStatusData({ ...error });
+            setStatusData({ type: 'error', message: 'Please provide valid inputs' });
         }
     }
 
 
 
     return (<>
+
+            {!!statusData.type && <Popup isShow={!!statusData.type} 
+            data={statusData} onCloseHandler={onCloseHandler} />}
+
             <div class="main__top-wrapper">
                 <h1 class="main__title">
                     System Settings
@@ -85,13 +100,13 @@ const SystemSettings = (props) => {
 
             <div class="client-main__content-wrapper content-wrapper scrollable">
 
-                <div class="framework__row-wrapper bot20">
+                {/* <div class="framework__row-wrapper bot20">
                     <div class="GenerateReport_row">
                         <h1 class="Generate_h1_label"><b>Date format</b></h1>
                         <input type="text" class="framework__input"  name='date_format' required defaultValue={inputValue.date_format} onChange={onChangeHandler} />
                         <span class="Generate_h1_label_span"></span>
                     </div>
-                </div>
+                </div> */}
 
                 <div class="framework__row-wrapper bot20">
                     <div class="GenerateReport_row">
@@ -118,10 +133,18 @@ const SystemSettings = (props) => {
                 </div>
 
             </div>
-            
-            <button class="main__button" onClick={() => onSaveHandler()}>
-                SAVE
-            </button>
+
+            <Button label='SAVE' onClickHandler={onSaveHandler} className='main__button map-disc-main-btn' />
+           
+            {/* <div class="buttons__panel">
+
+ <Button label='BACK' onClickHandler={navigateHome} className='buttons__panel-button' />  
+
+ 
+
+
+<Button label='SAVE' onClickHandler={onSaveHandler} className='main__button map-disc-main-btn' />
+</div> */}
     </>)
 }
 export default SystemSettings;
