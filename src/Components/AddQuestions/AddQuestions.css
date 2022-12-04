@@ -102,7 +102,7 @@
     background: #FAFCFE;
     box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 0 20px 20px 0;
-    -webkit-border-radius: 0 20px 20px 0;
+    -webkit-border-radius: 0 0px 0px 0;
     -moz-border-radius: 0 20px 20px 0;
     -ms-border-radius: 0 20px 20px 0;
     -o-border-radius: 0 20px 20px 0;

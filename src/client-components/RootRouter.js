@@ -156,6 +156,7 @@ const RootRouter = () => {
         <Route path="/sector" element={<Sector />} />
         <Route path="/subsector" element={<SubSector />} />
         <Route path="/customeronboardbyadmin" element={<CustomerOnboardByAdmin />} />
+        <Route path="/client/onboard" element={<RegistrationForm  isClientOnBoard={true} />} />
         <Route path="/adminuser" element={<ESGManageUser />} />
         <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
         <Route path="/esg/users/invite" element={<AddESGManageUser />} />

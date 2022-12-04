@@ -52,7 +52,7 @@ const ClientInfo = (props) => {
             <h1 class="main__title">
                 Client Info
             </h1>
-            <button class="main__button" onClick={() => { navigate(`/customeronboardbyadmin`) }}>
+            <button class="main__button" onClick={() => { navigate(`/client/onboard`) }}>
                 ADD
             </button>
         </div>

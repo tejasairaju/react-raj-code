@@ -11,7 +11,7 @@ const onNavigateHandler = (url) => {
         navigate(url);
         
     }
-    return (<div onClick={() => setIsopen(false)}>
+    return (<div onClick={() => setIsopen(false)} className='more-action-contianer'>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
             {/* <div onClick={() => { }}><a>View</a></div> */}

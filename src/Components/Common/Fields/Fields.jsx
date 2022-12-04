@@ -17,6 +17,7 @@ const Input = (props) => (
                 placeholder={props.placeholder}
                 required={props.required}
                 disabled={props.isEditable}
+                readOnly={props.readOnly}
             />
             {!_isEmpty(props.error) ? <div className='error-msg'>{props.error}</div> : null}
         </div>

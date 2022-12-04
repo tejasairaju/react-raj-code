@@ -11,12 +11,12 @@ const MoreAction = (props) => {
         navigate(url);
         
     }
-    return (<div onClick={() => setIsopen(false)}>
+    return (<div onClick={() => setIsopen(false)} className='more-action-contianer'>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
-            <div onClick={() => {navigate(`/customeronboardbyadmin`, {state: {clientDetails: value, isEditable: true}})}}><a>Edit</a></div>
-            <div><a onClick={() => { }}>Create</a></div>
-            <div><a onClick={() => { }}>View</a></div>
+            <div onClick={() => {navigate(`/customeronboardbyadmin`, {state: {clientDetails: value, isEditable: true, isView: false}})}}><a>Edit</a></div>
+            {/* <div><a onClick={() => { }}>Create</a></div> */}
+            <div><a onClick={() =>navigate(`/customeronboardbyadmin`, {state: {clientDetails: value,isEditable: false, isView: true}}) }>View</a></div>
         </div>
     </div>)
 }
