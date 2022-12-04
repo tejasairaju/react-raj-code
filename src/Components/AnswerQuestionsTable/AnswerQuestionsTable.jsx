@@ -151,7 +151,7 @@ const AnswerQuestionsTable = (props) => {
 
     return <li className="detalis__item">
         {isShowDescription && <Modal isShow={!!isShowDescription} isDisclosureDec={true} closeModal={closePopupModal}>
-            <div className='create-options-title'>Description:</div>
+            <div className='create-options-title'>Guidance:</div>
             <div className='get-textarea-input-container'>
                 <div className="create-framework__textarea disclosure-description-screen">{itemDetails.description}</div>
             </div>

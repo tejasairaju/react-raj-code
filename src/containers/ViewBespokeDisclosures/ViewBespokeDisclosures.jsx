@@ -67,7 +67,7 @@ const ViewBespokeDisclosures = () => {
                                 <td>{val.name}</td>
                                 <td>{getDataFormat(val.created_at)}</td>
                                 <td>{val.category}</td>
-                                <td>{val.section}</td>
+                                <td>{(val.section =="Custom")? "Bespoke":val.section}</td>
                                 <td>
                                     <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} state={getState(val)} value={{ ...val, template_id }} index={index} />
                                 </td>

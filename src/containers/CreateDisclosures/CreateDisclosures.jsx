@@ -95,8 +95,8 @@ const CreateDisclosures = (props) => {
                 category: getSelectedCategory.name || '',
                 section: 'sample',
                 framework: params.id,
-                description: inputValue.guidance,
-                metaData: [inputValue.description]
+                description: inputValue.description ,
+                metaData: [{"key":"Guidance", "value":inputValue.guidance}]
             }
 
             try {
@@ -155,6 +155,9 @@ const CreateDisclosures = (props) => {
     }
 
     const onCloseHandler = () => {
+
+        console.log(inputValue);
+
         if (statusData.type === 'success' && !isEditable) {
             navigate('/createquestions', { state: { guidance: inputValue.guidance, description: inputValue.description, section: apiData.section, category: apiData.category, id: apiData.id, framework: apiData.framework, code: apiData.code, name: apiData.name } });
         } else if (statusData.type === 'success' && isEditable) {
@@ -177,6 +180,7 @@ const CreateDisclosures = (props) => {
                 <td>{frameworkDetails.description}</td>
             </tr>
         </table></>
+        {console.log(inputValue)}
         <div className="main__content-wrapper">
             <h1 class="create-framework__title">
                 Ref No

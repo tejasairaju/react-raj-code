@@ -6,7 +6,7 @@ import Modal from '../Common/Modal/Modal.jsx';
 const { Button, Input, TextArea, Dropdown } = Fields;
 const { dataType, inputType, unitType } = questions;
 
-const ViewQuestionsList = ({  description = '', code = "", name = "", createQuestions = true, tableHeaders = [], inputList = [], isError = false,
+const ViewQuestionsList = ({ guidance='', description = '', code = "", name = "", createQuestions = true, tableHeaders = [], inputList = [], isError = false,
     handleInputChange = () => { }, onClickAddQuestion = () => { }, handleEditClick = () => { }, handleRemoveClick = () => { } }) => {
         const [isShowGuidance, setIsShowGuidance] = useState(false);
     const listChoices = (i) => {
@@ -20,9 +20,9 @@ const ViewQuestionsList = ({  description = '', code = "", name = "", createQues
     return (<>
         <div>
         {isShowGuidance && <Modal isShow={!!isShowGuidance} isDisclosureDec={true} closeModal={() =>setIsShowGuidance(false) }>
-            <div className='create-options-title'>Description:</div>
+            <div className='create-options-title'>Guidance:</div>
             <div className='get-textarea-input-container'>
-                <div className="create-framework__textarea disclosure-description-screen">{description}</div>
+                <div className="create-framework__textarea disclosure-description-screen">{guidance}</div>
             </div>
         </Modal>}
             <div className="create-framework__row-wrapper">

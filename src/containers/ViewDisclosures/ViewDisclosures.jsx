@@ -73,7 +73,7 @@ const ViewDisclosures = () => {
         id: value.id
     })
 
-    const headers = ['Name','Guidance', 'Action'];
+    const headers = ['Name','Description', 'Action'];
     const radioButton = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
 
     return (
