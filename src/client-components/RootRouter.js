@@ -12,6 +12,7 @@ import Login from "../containers/login/Login.jsx";
 import CreateWizard from "../containers/CreateWizard/CreateWizard.jsx";
 import Profile from "./Profile.js";
 import ClientInfo from "../containers/ClientInfo/ClientInfo.jsx";
+import SystemSettings from "../containers/SystemSettings/SystemSettings.jsx";
 import ManageCountry from "../containers/ManageMaster/Country.jsx";
 import ManageCategory from "../containers/ManageMaster/Category.jsx";
 import CreateFramework from "../containers/CreateWizard/CreateFramework/CreateFramework.jsx";
@@ -158,7 +159,7 @@ const RootRouter = () => {
         <Route path="/adminuser" element={<ESGManageUser />} />
         <Route path="/adminuser/create" element={<ESGAdminUserOnboard />} />
         <Route path="/esg/users/invite" element={<AddESGManageUser />} />
-        <Route path="/systemsettings" element={<ManageFrameWork component='Welcome to System Settings' />} />
+        <Route path="/systemsettings" element={<SystemSettings component='Welcome to System Settings' />} />
         <Route path="/managemasters" element={<ManageFrameWork component='Manage Masters Page' />} />
       </Route>
     </Routes>)
