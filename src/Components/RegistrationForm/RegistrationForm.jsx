@@ -228,9 +228,11 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
                         Account Information
                     </h1>
                     {renderForm()}
-                    <a type="submit" className="next-btn form-btn" onClick={checkOnSubmit}>
-                        Next
+                    <div className='flex'>
+                    <a type="submit" className="next-btn form-btn next-btn-width" onClick={checkOnSubmit}>
+                        Sign Up
                     </a>
+                    </div>
                     {/* <form action="#" method="get" className="acc-info__form">
                     <div className="acc-info__form-item">
                         <label for="form__name" className="acc-info__form-label">
@@ -295,7 +297,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
                             CANCEL
                         </button>
                         <button class="main__button" onClick={() => checkOnSubmit()}>
-                        NEXT
+                        SAVE
                         </button>
                     </div>
                     {/* <a type="submit" className="next-btn form-btn" onClick={checkOnSubmit}>

@@ -51,6 +51,10 @@
     -ms-transition: all .3s;
     -o-transition: all .3s;
 }
+
+.next-btn-width { 
+    max-width: 175px;
+}
 .next-btn:hover {
     background: #3c8137;
 }
