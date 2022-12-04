@@ -16,6 +16,7 @@ import _get from 'lodash/get';
 import Requests from "../../Requests/index.js";
 // import './ClientUsers.css';
 import { getProfilePhoto } from "../../utils/utils.js";
+import './ESGAdminUserOnboard.css';
 
 const ESGManageUser = () => {
 
@@ -80,14 +81,23 @@ const ESGManageUser = () => {
                 {(clientData.results || []).map((val, index) => {
                     if (_toLower(val.role) !== 'admin') {
                         return (<tr>
-                            <td>{getProfilePhoto(val)}</td>
+                            {/* <td>{getProfilePhoto(val)}</td> */}
+                            <td><div class="row__item-img">
+                                <div class="client__edit">
+                                    {getProfilePhoto(val)}
+                                </div>
+                                <a  class="edit__avatar" onClick={() => { navigate(`/esg/users/invite`, {state: {userDetails: val, isEditable: true}}) }}>
+                                 
+                                    EDIT
+                                </a>
+                            </div></td>
                             <td>{val.first_name}</td>
                             <td>{val.location}</td>
                             <td>{val.email_id}</td>
                             <td>{val.phone_number}</td>
                             <td>{val.designation}</td>
                             {/* <td>{val.department}</td> */}
-                            <td>{val.role}</td>
+                            <td>{(val.role=="Administrator")?"Admin":val.role}</td>
                             <td>{val.status}</td>
                             <td>
                             <ESGManageUserAction getClientUsers={getClientUsers} value={val} index={index}/>

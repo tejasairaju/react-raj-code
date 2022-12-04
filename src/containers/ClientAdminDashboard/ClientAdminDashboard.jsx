@@ -1,76 +1,91 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import _toLower from 'lodash/toLower';
+import Requests from "../../Requests";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getColor } from "../../utils/utils.js";
+import actions from '../../actions/MyTaskDashboardAction.js'
 import './ClientAdminDashboard.css';
 
 const ClientAdminDashboard = () => {
-const  navigate =useNavigate();
-    return (
-        <>
-            <div class="main__top-wrapper">
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // const { userId = 'fc16d19f-0bbd-4890-b62a-d514381f1c40' } = useParams();
+    const [myReportCount, setReportCount] = useState({});
+    const { orgDetails = {}, loginDetails ={} } = useSelector(state => state.signup);
+    //const mytask = useSelector(state => state.mytask);
+    useEffect(() => {
+        getOrganisation();
+        // dispatch(actions.getDisclosuresList({ userId: loginDetails.user_id, orgName: orgDetails.name }));
+        // dispatch(actions.getReportList({ userId: loginDetails.user_id, orgName: orgDetails.name }));
+        
+    }, []);
+
+    const getOrganisation = async (id = "") => {
+        try {
+            const orgInfo = await Requests.Get(`/organizations/${orgDetails.name}`);
+            const resp = {
+
+                "reports": orgInfo.stats.reports,
+                "completed" : orgInfo.stats.tasks.completed,
+                "pending":orgInfo.stats.tasks.pending
+            }
+            setReportCount(resp);
+        }catch (e) {
+            // setFrameworkdetails({});
+        }
+    }
+
+    const renderCard = (status, count) => (<div onClick={() => {
+        if (status === 'Frameworks') {
+            navigate(`/task/reports`)
+        }
+    }
+    } class={`welcome__task__box2 ${getColor(status)}`}>
+        <div class="welcome__task__numbers">
+            <h1 class={`welcome__task__box_content ${status === 'Reports' ? 'cursor-pointer': null}`}>{count || 0}</h1>
+        </div>
+        <div>
+            <h4 class="welcome__task__bottom_content">{status}</h4>
+        </div>
+    </div>);
+
+    return (<>
+        <div class="main__top-wrapper">
+            <div class="leftheading">
                 <h1 class="main__title">
-                    Welcome to client admin
+                    <b>Welcome to client admin</b>
                 </h1>
-                <div class="framework__row right font12 ">
-                    <a onClick={() => navigate('/')} class="right rightlink__color cursor-pointer"><u>ESG KPIs</u></a>
-                    <a onClick={() => navigate('/clientadmin')} class="right">| Admin Dasboard |</a> 
-                    <a onClick={() => navigate('/task')} class="right rightlink__color cursor-pointer"><u>My Tasks</u></a>
-                </div>
             </div>
-            <div class="client-main__content-wrapper admindashboard__content-wrapper">
 
-                <div class="framework__row-wrapper ">
-
-                    <div class="framework__row  ">
-                        <div class="framework__col-wrapper content-wrapper blue admin__box">
-
-                            <div class="number">
-                                8
-                            </div>
-                            <div class="text">
-                                tasks
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="framework__row ">
-                        <div class="framework__col-wrapper content-wrapper green admin__box">
-                            <div class="number">
-                                23
-                            </div>
-                            <div class="text">
-                                user issues
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="framework__row">
-                        <div class="framework__col-wrapper content-wrapper brown admin__box">
-                            <div class="number">
-                                33
-                            </div>
-                            <div class="text">
-                                frameworks
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="framework__row-wrapper ">
-                    <div class="framework__row content-wrapper admin__box adminimg__box ">
-                        <img src="assets/images/splinechart1.png" width="100%" />
-                    </div>
-                    <div class="framework__row content-wrapper admin__box adminimg__box">
-                        <img src="assets/images/splinechart1.png" width="100%" />
-                    </div>
-                </div>
-                <div class="framework__row-wrapper">
-                    <div class="content-wrapper box adminimg__box">
-                        <img src="assets/images/splinechart2.png" width="100%" />
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+            {(loginDetails.user_role === 'client_admin') &&<div class="welcome__task__right__heading">
+                <h1 class="welcome__task__heading">
+                    <a className="rightlink__color cursor-pointer" onClick={() => navigate('/')}><u>ESG KPIs</u></a>
+                </h1>
+                <span class="welcome__task__top_line">|</span>
+                <h1 class="welcome__task__heading">
+                
+                    <b>Admin Dashboard</b>
+                </h1>
+                <span class="welcome__task__top_line">|</span>
+                <h1 class="welcome__task__heading">
+                <a className="rightlink__color cursor-pointer" onClick={() => navigate('/task')}><u>My Tasks</u></a>
+                    
+                </h1>
+            </div>}
+        </div>
+        <div class="welcome__task__container2">
+            {console.log(myReportCount)}
+        {renderCard('Frameworks', myReportCount.reports)}
+        {renderCard('Total Task', (myReportCount.completed+myReportCount.pending))}
+        {renderCard('Completed', myReportCount.completed)}
+        {renderCard('Pending', myReportCount.pending)} 
+        {/* {renderCard('Completed', myReportCount.tasks.completed)}
+        {renderCard('Pending', myReportCount.tasks.pending)}   */}
+             
+            
+        </div>
+    </>)
 }
 
 export default ClientAdminDashboard;

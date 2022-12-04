@@ -227,14 +227,19 @@ const PersonalInformation = () => {
             form.append('first_name', inputValue.first_name);
             form.append('last_name', inputValue.last_name)
             form.append('email_id', inputValue.email_id);
-            form.append('location', inputValue.location);
+            form.append('country', inputValue.country);
             form.append('phone_number', inputValue.phone_number);
             // form.append('department', inputValue.department);
             // form.append('designation', inputValue.designation);
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());
             if (!_isEmpty(uploadImage && uploadImage.fileName)&& !_isEmpty(logo)) {
-                form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                if(typeof(uploadImage.imageUrl) == 'object'){
+                    
+                    form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                    //form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                }
+
             } else if(_isEmpty(logo)) {
                 form.append('profile_picture', '');
             }

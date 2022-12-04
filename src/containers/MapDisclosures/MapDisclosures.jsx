@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import _toLower from 'lodash/toLower';
 import _get from 'lodash/get';
+import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import './MapDisclosures.css';
 import Popup from '../../components/Common/Popup/Popup.jsx';
@@ -36,8 +37,11 @@ const MapDisclosures = () => {
     const [childFrameworksData, setChildFrameworksData] = useState([])
     const [existingMapping, setExistingMapping] = useState([])
     const [statusData, setStatusData] = useState({});
+    const [SuccessstatusData, setSuccessstatusData] = useState({});
+    
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
+    const [errorMapDisclosureValidation, setMapDisclosureErrorValidation] = useState(false);
 
 
     useEffect(() => {
@@ -163,9 +167,34 @@ const MapDisclosures = () => {
         setChildKPI([])
         setSourceFrameworkId({})
         setDestinationFrameworkId({})
+
+        let cloneFrameworksData = [...frameworksData];
+        cloneFrameworksData = (cloneFrameworksData || []).map((item, i) => {
+            item['isSelect'] = false;
+            return item;
+        });
+        setFrameworksData([...cloneFrameworksData]);
+
+        let clonechildFrameworksData = [...childFrameworksData];
+        clonechildFrameworksData = (clonechildFrameworksData || []).map((item, i) => {
+            item['isSelect'] = false;
+            return item;
+        });
+        setChildFrameworksData([...clonechildFrameworksData]);
+        
+
+        setListCatagory_1([...JSON.parse(JSON.stringify(categories))]);
+        setListCatagory_2([...JSON.parse(JSON.stringify(categories))]);
+         
+        // setFrameworksData([])
     }
 
     const onNextHandler = async () => {
+
+        if(!_isEmpty(sourceFrameworkId) && !_isEmpty(destinationFrameworkId)
+            && !_isEmpty(radioDCType) && !_isEmpty(radioDPType)
+            && !_isEmpty(radioKPType) && !_isEmpty(radioKCType)
+        ){
         try {
             setStatusData({ type: 'loading', message: '' });
             const response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/disclosure-mappings`, {
@@ -177,13 +206,21 @@ const MapDisclosures = () => {
                 "target_disclosure_kpi": radioKCType,
                 "name": radioKPType + "___" + radioKCType
             }).then(({ data }) => data);
-            setStatusData({ type: 'success', message: 'Thanks! Successfully Mapped' });
+            setStatusData({ type: '', message: '' });
+            setSuccessstatusData({ type: 'success', message: 'Thanks! Successfully Mapped' });
+            
             console.log('>>>>>>>>>>>>', response);
             getMappingDisclosures(Object.keys(sourceFrameworkId).length > 0 ? sourceFrameworkId : val, Object.keys(destinationFrameworkId).length > 0 ? destinationFrameworkId : val)
         } catch (e) {
             let error = getErrorMessage(e);
-                setStatusData({ ...error });
+            setStatusData({ ...error });
+            //setStatusData({ type: 'error', message: "Select All Required Fields" });
+                //setStatusData({ ...error });
         }
+    }else{
+        setStatusData({ type: 'error', message: "Select All Required Fields" });
+        //setMapDisclosureErrorValidation(true);
+    }
     }
 
     const getDisclosures = async (framework_id = "", type = "") => {
@@ -191,6 +228,7 @@ const MapDisclosures = () => {
             setStatusData({ type: 'loading', message: '' });
             const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework_id}/disclosures`).then(({ data }) => data);
             setStatusData({ type: '', message: '' });
+           
             console.log('>>>>>>>>>>>>', response.results);
             if (type === "parent") {
                 setParentDisclosureData(response.results)
@@ -211,7 +249,7 @@ const MapDisclosures = () => {
             setStatusData({ type: 'loading', message: '' });
             const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/disclosure-mappings?source_framework=${source.name}&target_framework=${target.name}`).then(({ data }) => data);
             setStatusData({ type: '', message: '' });
-            console.log('>>>>>>>>>>>>', response.results);
+            // console.log('>>>>>>>>>>>>', response.results);
             // if (type === "parent") {
             //     setParentDisclosureData(response.results)
             //     // setSourceFrameworkId(framework_id)
@@ -333,15 +371,22 @@ const MapDisclosures = () => {
     }
 
     const onCloseHandler = () => {
+
+        setStatusData({ type: '', message: '' });
+    }
+
+    const onSuccessDataCloseHandler = () => {
+
+        setSuccessstatusData({ type: '', message: '' });
     }
 
     const headers = ['Name', 'Description', 'Action'];
     const radioButton = ['Environmental', 'Social', 'Goverance', 'General'];
 
-    const renderFrameworkLogo = (type) => (<div className="map-disclosure-framework-scroll"><div class="frameworks__choose over-write-frameworks__choose">
+    const renderFrameworkLogo = (type) => (<div className="map-disclosure-framework-scroll"><div class="frameworks__choose over-write-frameworks__choose"> 
         {(type === "child" ? childFrameworksData : frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.isSelect ? 'active' : null} ${val.isSource ? ' hide' : null}`}>
             <img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
-        </div>))
+        </div> ))
         }
     </div></div>);
     const onSelectSingleOption = (index, mode) => {
@@ -371,6 +416,7 @@ const MapDisclosures = () => {
 
     return (
         <>
+            {!!SuccessstatusData.type && <Popup isShow={!!SuccessstatusData.type} data={SuccessstatusData} onCloseHandler={onSuccessDataCloseHandler} />}
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             <div class="main__top-wrapper">
                 <h1 class="main__title">
@@ -405,7 +451,7 @@ const MapDisclosures = () => {
                                             label={""}
                                             value={val}
                                         />
-                                        {<div class={`fake__checkbox${radioDPType == val.id ? ' box-checked' : '-inactive'}`}>{(radioDPType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
+                                        {<div class={`fake__checkbox${radioDPType == val.id ? ' box-checked' : '-inactive'}`}>{(radioDPType === val.id) ? <img src="../../assets/icons/single_tick_checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             }
@@ -435,7 +481,7 @@ const MapDisclosures = () => {
                                         />
                                         {isAlreadyMapped(val.id)?
                                         <div class="fake__checkbox-active"></div>:
-                                        <div class={`fake__checkbox${radioKPType == val.id ? ' box-checked' : '-inactive'}`}>{(radioKPType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
+                                        <div class={`fake__checkbox${radioKPType == val.id ? ' box-checked' : '-inactive'}`}>{(radioKPType === val.id) ? <img src="../../assets/icons/single_tick_checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             )}
@@ -470,7 +516,7 @@ const MapDisclosures = () => {
                                             label={""}
                                             value={val}
                                         />
-                                        {<div class={`fake__checkbox${radioDCType == val.id ? ' box-checked' : '-inactive'}`}>{(radioDCType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
+                                        {<div class={`fake__checkbox${radioDCType == val.id ? ' box-checked' : '-inactive'}`}>{(radioDCType === val.id) ? <img src="../../assets/icons/single_tick_checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             }
@@ -500,7 +546,7 @@ const MapDisclosures = () => {
                                         />
                                         {isAlreadyMapped(val.id)?
                                         <div class="fake__checkbox-active"></div>:
-                                        <div class={`fake__checkbox${radioKCType == val.id ? ' box-checked' : '-inactive'}`}>{(radioKCType === val.id) ? <img src="../../assets/icons/Arrows__checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
+                                        <div class={`fake__checkbox${radioKCType == val.id ? ' box-checked' : '-inactive'}`}>{(radioKCType === val.id) ? <img src="../../assets/icons/single_tick_checkbox.svg" width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}</div>}
                                     </label>
                                 </div>)
                             )}
@@ -511,6 +557,10 @@ const MapDisclosures = () => {
             <div class="buttons__panel">
 
                 <Button label='CANCEL' onClickHandler={onCanceltHandler} className='buttons__panel-button' />
+                
+                {/* {errorMapDisclosureValidation && <div className='overall-error-container color-red'>Please fill all the fields.</div>} */}
+
+                
                 <Button label='MAP QUESTION' onClickHandler={onNextHandler} className='main__button map-disc-main-btn' />
             </div>
         </>)

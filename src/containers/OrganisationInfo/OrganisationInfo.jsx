@@ -70,9 +70,14 @@ const OrganisationInfo = () => {
         try {
             const orgInfo = await Requests.Get(`/organizations/${orgDetails.name}`);
             setLogo(orgInfo.logo);
+            setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: orgInfo.logo });
             !_isEmpty(orgInfo.logo) && setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: orgInfo.logo });
             const constractInputVal = {
-                ...inputValue, ...orgInfo, employees_count: orgInfo.employees_count, headquarters: orgInfo.headquarters,
+                ...inputValue, ...orgInfo, employees_count: orgInfo.employees_count,
+                mobile: orgInfo.mobile_number,
+                location: orgInfo.location,
+                headquarters: orgInfo.headquarters,
+                zipcode :  orgInfo.zip_code,
                 operating_countries: updateArrayObjects(orgInfo.supported_countries), sectors: updateArrayObjects(appWizard.sectors,
                     orgInfo.sectors) /*, subsectors: getSelectedSubSector(appWizard.sectors, orgInfo.sectors, orgInfo.supported_sub_sectors)*/
             };
@@ -149,8 +154,15 @@ const OrganisationInfo = () => {
             form.append('address', inputValue.address);
             form.append('status', 'Active');
             form.append('employees_count', inputValue.employees_count);
+            
+            form.append('location', inputValue.location);
+ 
+
+
             if (!_isEmpty(uploadImage && uploadImage.fileName )) {
-                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                if(typeof(uploadImage.imageUrl) == 'object'){
+                    form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                }
             } else {
                 let blob = new Blob([logo], {
                     type: "application/pdf"
@@ -281,7 +293,7 @@ const OrganisationInfo = () => {
 
 
     const renderOrganisationmainContainer = () => {
-        return (<><div class="client-main__content-wrapper content-wrapper">
+        return (<><div class="client-main__content-wrapper content-wrapper scrollable">
             <div class="framework__row-wrapper bot1">
                 <UploadFile imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
                 <div class="framework__row"></div>
@@ -332,21 +344,23 @@ const OrganisationInfo = () => {
 
                 <div class="framework__row">
                     <Label className="framework__title right" label={'Mobile'} required={true} />
-                    <InputBox maxLength={10} text="number" name={'mobile'} value={inputValue.mobile} onChangeHandler={onChangeHandler} />
+                    <InputBox maxLength={15} text="number" name={'mobile'} value={inputValue.mobile} onChangeHandler={onChangeHandler} />
                 </div>
             </div>
 
             <div class="framework__row-wrapper bot40">
                 <div class="framework__row">
-                    <Label label={'Country'} required={false} />
-                    <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} />
-                </div>
-
-                <div class="framework__row">
-                    <Label label={'Zip/PostalCode'} className="framework__title right" required={true} />
+                    <Label label={'Zip/PostalCode'} className="framework__title" required={true} />
                     <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue.zipcode} onChangeHandler={onChangeHandler} />
 
+                    {/* <Label label={'Country'} required={false} />
+                    <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} /> */}
                 </div>
+
+                {/* <div class="framework__row">
+                  
+
+                </div> */}
                
             </div>
             {error ? <div className='common-error-msg'>* All mandatory filed is required.</div> : null}

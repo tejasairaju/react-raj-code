@@ -50,7 +50,7 @@ const ClientUsers = () => {
         'Email iD',
         'Phone Number',
         'Designation',
-        'Department',
+   
         'Role',
         'Status',
         'Action'];
@@ -84,7 +84,7 @@ const ClientUsers = () => {
                             <td>{val.email_id}</td>
                             <td>{val.phone_number}</td>
                             <td>{val.designation}</td>
-                            <td>{val.department}</td>
+                            {/* <td>{val.department}</td> */}
                             <td>{val.role}</td>
                             <td>{val.status}</td>
                             <td>

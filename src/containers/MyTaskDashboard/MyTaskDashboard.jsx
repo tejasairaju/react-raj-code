@@ -28,7 +28,7 @@ const MyTaskDashboard = () => {
     // }
 
     const renderCard = (status, count) => (<div onClick={() => {
-        if (status === 'Reports') {
+        if (status === 'Frameworks') {
             navigate(`/task/reports`)
         }
     }
@@ -64,7 +64,7 @@ const MyTaskDashboard = () => {
             </div>}
         </div>
         <div class="welcome__task__container2">
-            {renderCard('Reports', mytask.reportCount)}
+            {renderCard('Frameworks', mytask.reportCount)}
             {renderCard('Disclosures', mytask.disclosures)}
             {renderCard('Completed', mytask.completed)}
             {renderCard('Pending', mytask.pending)}

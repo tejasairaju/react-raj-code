@@ -49,6 +49,13 @@ export const getProfilePhoto = (val, classVal= {width:'40px', height:'40px'}) =>
 
 }
 
+export const getLogo = (val, classVal= {width:'40px', height:'40px'}) => {
+    if (!_isEmpty(val.logo)) return <img src={val.logo} {...classVal} alt="" />;
+    else {
+        return <div  className="profile-image-icon">{_toUpper((val&&val.name).charAt(0))} {_toUpper((val&&val.name).charAt(1))}</div>}
+
+}
+
 export const getDataFormat = (date, formate = 'DD/MM/YYYY') => {
     if (_isEmpty(date)) return moment.format(formate);
     else return moment(date).format(formate);

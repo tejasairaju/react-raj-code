@@ -73,7 +73,7 @@ const ViewDisclosures = () => {
         id: value.id
     })
 
-    const headers = ['Name', 'Description', 'Action'];
+    const headers = ['Name','Guidance', 'Action'];
     const radioButton = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
 
     return (
@@ -113,7 +113,7 @@ const ViewDisclosures = () => {
                         {(listData || []).map((val, index) => {
                             return (<tr>
                                 <td>{ <span>{val.name}</span>}</td>
-                                <td> {val.code} &nbsp;&nbsp;{val.name}</td>
+                                <td> {val.code} &nbsp;&nbsp;{val.description}</td>
                                 <td>
                                     <MoreAction viewDisclosures={true} state={getState(val)} index={index} />
                                 </td>

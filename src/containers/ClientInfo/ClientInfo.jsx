@@ -8,7 +8,7 @@ import Axios from 'axios';
 import MoreAction from "./MoreAction.jsx";
 import moment from 'moment';
 import _get from 'lodash/get';
-
+import { getLogo } from "../../utils/utils.js";
 
 
 import './ClientInfo.css';
@@ -38,12 +38,11 @@ const ClientInfo = (props) => {
 
     const headers = ['Logo',
         'Organisation',
-        'Location',
-        "HeadQuarters",
-        'Client admin',
+        'Location / HeadQuarters',
+        'Admin Email',
         'Package',
-        'License',
-        'Users',
+        'Users Limit',
+        'License From',
         'Status',
         'Action'];
 
@@ -69,16 +68,17 @@ const ClientInfo = (props) => {
                 <tbody>
                     {(clientData.results || []).map((val, index) => {
                         return (<tr>
-                            <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td>
+                            {/* <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td> */}
+                            <td>{getLogo(val)}</td>
                             <td><div className="word-text-break">{val.name}</div></td>
                             
-                            <td>{val.location}</td>
-                            <td>{val.headquarters}</td>
+                            <td> {(!_isEmpty(val.location) && !_isEmpty(val.headquarters) ) ? val.location+"/" +val.headquarters : (!_isEmpty(val.location)?val.location : val.headquarters)}  </td>
+                             
 
-                            <td><div className="word-text-break">{val.name}</div></td>
-                            <td>Silver</td>
-                            <td> </td>
-                            <td>5</td>
+                            <td><div className="word-text-break">{val.email}</div></td>
+                            <td>{val.subscription.name}</td>
+                            <td>{val.subscription.max_users}</td>
+                            <td>{val.subscription.start_date}</td>
                             <td>{val.status}</td>
                             <td>
                                 <MoreAction value={val} index={index} />

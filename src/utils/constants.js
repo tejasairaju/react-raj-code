@@ -50,8 +50,8 @@ export const questions = {
             label: 'Select',
             value: 'Select',
         },{
-        label: 'Varchar',
-        value: 'Varchar',
+        label: 'Alphanumeric',
+        value: 'Alphanumeric',
         selected: ''
     },
     {
@@ -230,7 +230,7 @@ export const esg_admin = [{
 {
     clsName: '',
     role: 'client',
-    label: "System Settings",
+    label: "Settings",
     isActive: false,
     icon1: 'settings-icon.svg',
     // icon2: 'plus-icon.svg',

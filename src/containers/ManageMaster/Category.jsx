@@ -38,26 +38,36 @@ const Category = (props) => {
         }
     }
 
+    const onlyString= (option) =>  {
+        let v =  /^[a-zA-Z,&]+$/.test(option);
+        let len_check = (option.length <3 || option.length > 30) ? false : true
+        return v && len_check;
+      }
+
     const updateMoreOption = async (option) => {
         if (!_isEmpty(option)) {
-            try {
-                setStatusData({ type: 'loading', message: "" });
-                console.log();
-                let response = {};
-                if (!_isEmpty(doEdit)) {
-                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories/${doEdit.id}`, { name: option }).then(({ data }) => data);
-                    setDoEdit({});
-                } else {
-                    response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`, { name: option }).then(({ data }) => data);
+            if(onlyString(option)){
+                try {
+                    setStatusData({ type: 'loading', message: "" });
+                    console.log();
+                    let response = {};
+                    if (!_isEmpty(doEdit)) {
+                        response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories/${doEdit.id}`, { name: option }).then(({ data }) => data);
+                        setDoEdit({});
+                    } else {
+                        response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`, { name: option }).then(({ data }) => data);
+                    }
+                    getCategoryList();
+                    setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+                } catch (e) {
+                    let error = getErrorMessage(e);
+                    setStatusData({ ...error });
+                    // setStatusData({ type: 'error', message: e.message });
                 }
-                getCategoryList();
-                setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-            } catch (e) {
-                let error = getErrorMessage(e);
-                setStatusData({ ...error });
-                // setStatusData({ type: 'error', message: e.message });
+                setError(false)
+            }else{
+                setError(true);
             }
-            setError(false)
         } else {
             setError(true);
         }
@@ -109,7 +119,7 @@ const Category = (props) => {
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Category'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Category"} status={statusData.type} updateMoreOption={updateMoreOption} />
-        {error && <div className='category-error color-red'>* Category field may not be blank.</div>}
+        {error && <div className='category-error color-red'>* Category field may not be blank or contains invalid char or should be between 3 and 30 character.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             <MoreOptionTable onEdit={onEdit} onActive={onActive} onBlock={onBlock} isCategory={true} headers={headers} tableData={categoryData.results} />

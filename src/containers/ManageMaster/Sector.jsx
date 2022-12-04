@@ -35,23 +35,33 @@ const Sector = (props) => {
         }
     }
 
+    const onlyString= (option) =>  {
+        let v =  /^[a-zA-Z,&]+$/.test(option);
+        let len_check = (option.length <3 || option.length > 30) ? false : true
+        return v && len_check;
+      }
+
     const updateMoreOption = async (option) => {
         if (!_isEmpty(option)) {
-        try {
-            let response = {};
-            if (!_isEmpty(doEdit)) {
-            response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/sectors/${doEdit.id}`, { name: option }).then(({ data }) => data);
-            setDoEdit({});
-        } else { response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/sectors`, { name: option }).then(({ data }) => data);
-    }
-            getSectorList();
-            setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
-        } catch (e) {
-            setDoEdit({});
-            let error = getErrorMessage(e);
-            setStatusData({ ...error });
-        }
-        setError(false);
+            if(onlyString(option)){
+                try {
+                    let response = {};
+                    if (!_isEmpty(doEdit)) {
+                    response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/sectors/${doEdit.id}`, { name: option }).then(({ data }) => data);
+                    setDoEdit({});
+                } else { response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/sectors`, { name: option }).then(({ data }) => data);
+                }
+                    getSectorList();
+                    setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
+                } catch (e) {
+                    setDoEdit({});
+                    let error = getErrorMessage(e);
+                    setStatusData({ ...error });
+                }
+                setError(false);
+            }
+            else{setError(true);}
+        
     } else {
         setError(true);
     }
@@ -126,7 +136,7 @@ const Sector = (props) => {
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Sector'}  status={statusData.type} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''}  placeholder={"Enter the sector"}  updateMoreOption={updateMoreOption} />
-        {error && <div className='category-error color-red'>* Sector field may not be blank.</div>}
+        {error && <div className='category-error color-red'>* Sector field may not be blank or contains invalid char or should be between 3 and 30 character.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             {MoreOptionTable(categoryData.results)}
