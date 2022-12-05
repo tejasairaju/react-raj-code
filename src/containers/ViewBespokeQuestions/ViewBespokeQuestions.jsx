@@ -79,7 +79,7 @@ const ViewBespokeQuestions = () => {
         setStatusData({ type: 'loading', message: '' });
         if ((editedQuestionList || [].length > 0)) {
             try {
-                const response = await Requests.Patch(`/templates/${template_id}/disclosures/${disclosure_id}`, payload, { organization: orgDetails.name});
+                const response = await Requests.Put(`/templates/${template_id}/disclosures/${disclosure_id}`, payload, { organization: orgDetails.name});
                 // axios.put(`/templates/${template_id}/disclosures/${disclosure_id}`, payload, { organization: orgDetails.name}).then(({ data }) => data);
                 setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully updated' });
             } catch (e) {
