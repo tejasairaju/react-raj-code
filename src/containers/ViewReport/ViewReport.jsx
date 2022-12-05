@@ -86,7 +86,7 @@ const ViewReport = (props) => {
                                 <td>{report.end_date}</td>
                                 <td>{(report.status == "Custom")? "Bespoke":report.status}</td>
                                 <td>
-                                <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} />
+                                <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} callback={() => getDisclosures()}/>
                                     </td>
                             </tr>);
                             // }

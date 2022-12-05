@@ -11,7 +11,7 @@ const { Input, Dropdown, TextArea, Button } = Fields;
 
 const { dataType, inputType, unitType } = questions;
 
-const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditable: false}, setInputList, inputList, closeModal = () => { }, handleInputChange = () => { } }) => {
+const AddQuestions = ({ isTemplate = false, isShow = false, editInfo = { isEditable: false }, setInputList, inputList, closeModal = () => { }, handleInputChange = () => { } }) => {
     const initialRow = { order: null, code: '', label: "", type: '', field_type: '', field_unit_values: [], evidence: null, value: null, description: '' };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
     const [inputValue, setInputValue] = useState(initialRow);
@@ -21,17 +21,17 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
 
 
     useEffect(() => {
-        if(editInfo.isEditable&&(inputList|| []). length) {
-            setInputValue({ ...inputList[editInfo.editRowIndex]});
+        if (editInfo.isEditable && (inputList || []).length) {
+            setInputValue({ ...inputList[editInfo.editRowIndex] });
         }
     }, []);
 
     const onChangeHandler = (e) => {
         const { value = "", name = "" } = e.target;
         if (name == 'field_unit_values') {
-            setInputValue({...inputValue, [name]: [value]});
+            setInputValue({ ...inputValue, [name]: [value] });
         } else {
-            setInputValue({...inputValue, [name]: value});
+            setInputValue({ ...inputValue, [name]: value });
         }
         if (['Dropdown', 'Radio button', 'Multiselect'].indexOf(value) > -1) {
             setFieldOptions({ selectedDropDownVal: value, setFieldIndex: 0 });
@@ -39,12 +39,12 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
     }
 
     const onClickAddQuestion = () => {
-        if (((!_isEmpty(inputValue.code)&&!isTemplate) ||(_isEmpty(inputValue.code)&&isTemplate)) && !_isEmpty(inputValue.label) && !_isEmpty(inputValue.type) && !_isEmpty(inputValue.field_type)) {
-            if(!editInfo.isEditable) {
-            setInputList([...inputList, {...inputValue, order: (inputList||[]).length +1 }]);
+        if (((!_isEmpty(inputValue.code) && !isTemplate) || (_isEmpty(inputValue.code) && isTemplate)) && !_isEmpty(inputValue.label) && !_isEmpty(inputValue.type) && !_isEmpty(inputValue.field_type)) {
+            if (!editInfo.isEditable) {
+                setInputList([...inputList, { ...inputValue, order: (inputList || []).length + 1 }]);
             } else {
                 let cloneInputList = [...inputList];
-                cloneInputList[editInfo.editRowIndex] = {...inputValue};
+                cloneInputList[editInfo.editRowIndex] = { ...inputValue };
                 setInputList(cloneInputList);
             }
             // setIsOpen(false);
@@ -53,12 +53,12 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
         } else {
             setIsError(true);
         }
-     
+
     }
 
     const onGetQuestionOptions = (e) => {
         const { value } = e.target;
-        setInputValue({...inputValue, [fieldOptions.selectedDropDownVal]: value});
+        setInputValue({ ...inputValue, [fieldOptions.selectedDropDownVal]: value });
     }
 
     const onSetFieldOptions = () => {
@@ -66,7 +66,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
         let optionStringValue = inputValue[fieldOptions.selectedDropDownVal];
         if (!_isEmpty(optionStringValue)) {
             const optionList = optionStringValue.split(',');
-            setInputValue({...inputValue, ['field_choices']: [...optionList] });
+            setInputValue({ ...inputValue, ['field_choices']: [...optionList] });
             setFieldOptions(initialFieldOptions);
         }
     }
@@ -88,21 +88,21 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
         closeModal();
     }
 
-    return (<>{isOpen&&
-    <div className='add-ques-modal-popup-container'>
-        {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
+    return (<>{isOpen &&
+        <div className='add-ques-modal-popup-container'>
+            {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
                 <div className='create-options-title'>Please enter the options with comma separated value</div>
                 <div className='get-textarea-input-container'>
                     <TextArea rows="6" cols="50" label='' name='optionString' value={inputValue[fieldOptions.selectedDropDownVal] || ''} className="create-framework__textarea create-option-textarea" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
                     <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
                 </div>
             </Modal>}
-        <div className='add-ques-modal-popup_inner'>
-            <div className='add-ques-modal-popup-block'>
-                <div className='add-ques-modal-popup-header'><span className='add-ques-close-modal-popup'><img onClick={() => closeAddQuesPopupModal()} src={`${isTemplate ? '../../../../': '../../../'}assets/icons/close.svg`} width='24px' height='24px' /></span></div>
-                <div className='add-ques-modal-popup-body'>
-                    <div class="add-ques-main__content-wrapper">
-                        {/* <h1 class="create-framework__title">
+            <div className='add-ques-modal-popup_inner'>
+                <div className='add-ques-modal-popup-block'>
+                    <div className='add-ques-modal-popup-header'><span className='add-ques-close-modal-popup'><img onClick={() => closeAddQuesPopupModal()} src={`${isTemplate ? '../../../../' : '../../../'}assets/icons/close.svg`} width='24px' height='24px' /></span></div>
+                    <div className='add-ques-modal-popup-body'>
+                        <div style={{ height: "550px" }} class="add-ques-main__content-wrapper">
+                            {/* <h1 class="create-framework__title">
                     Ref No
                 </h1>
                 <div class="create-framework__row-wrapper ref__no">
@@ -117,49 +117,49 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                     </h1>
                     <input type="text" class="create-framework__input width" value="Activities, value chain and other business relationships" required/>
                 </div> */}
-                        <div class="create_questions__wrapper">
-                            <h5 class={`create_questions__title`}>
-                                Code
-                            </h5>
-                            <h5 class="create_questions__title">
-                                Question
-                            </h5>
-                            <h5 class="create_questions__title">
-                                Guidance Notes
-                            </h5>
-                            <h5 class="create_questions__title">
-                                Data Type
-                            </h5>
-                            <h5 class="create_questions__title">
-                                Input Type
-                            </h5>
-                            <h5 class="create_questions__title">
-                                Choices
-                            </h5>
-                            <h5 class="create_questions__title">
-                                Unit
-                            </h5>
+                            <div class="create_questions__wrapper">
+                                <h5 style={{ marginTop: "-80px", marginLeft: "60px" }} class={`create_questions__title`}>
+                                    Code
+                                </h5>
+                                <h5 class="create_questions__title">
+                                    Question
+                                </h5>
+                                <h5 class="create_questions__title">
+                                    Guidance Notes
+                                </h5>
+                                <h5 class="create_questions__title">
+                                    Data Type
+                                </h5>
+                                <h5 class="create_questions__title">
+                                    Input Type
+                                </h5>
+                                <h5 class="create_questions__title">
+                                    Choices
+                                </h5>
+                                <h5 class="create_questions__title">
+                                    Unit
+                                </h5>
 
-                            <input type="text"  name='code' value={inputValue.code} onChange={onChangeHandler} class={`add__file-window create_refs1 ${isTemplate?'visibility-hidden': null}`}/>
-                            {/* <Input label='' type="text" name='code' value={inputValue.code} className="add__file-window create_refs1" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} /> */}
+                                <input type="text" name='code' value={inputValue.code} onChange={onChangeHandler} style={{ marginTop: "-90px", marginLeft: "60px", minWidth: "150px" }} class={`add__file-window create_refs1 ${isTemplate ? 'visibility-hidden' : null}`} />
+                                {/* <Input label='' type="text" name='code' value={inputValue.code} className="add__file-window create_refs1" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} /> */}
 
-                            <textarea name="label" value={inputValue.label} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest1" > </textarea>
-                            <textarea name={"description"} value={_get(inputValue, 'description', '')} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest2" > </textarea>
-                            <Dropdown className_1={'questions__select create_select1'} className_2={'questions__select-item'} options={dataType} name='type' value={inputValue.type} onChangeHandler={onChangeHandler} />
-                            <Dropdown className_1={'questions__select create_select2'} className_2={'questions__select-item'} options={inputType} name='field_type' value={inputValue.field_type} onChangeHandler={onChangeHandler} />
-                            {/* <input type="text" class="questions__select create_select3" /> */}
-                            <div className='questions__select create_select3 add-questions-choices'>
-                                        {listChoices()}
-                                    </div>
-                            <Dropdown className_1={'questions__select create_select4'} className_2={'questions__select-item'} options={unitType} name='field_unit_values' value={inputValue.field_unit_values} onChangeHandler={onChangeHandler} />
-                           
-                            <div class="addbtn create_select5">
-                                <button onClick={() => onClickAddQuestion()} class="createques__button">
-                                    {editInfo.isEditable ? 'UPDATE': 'ADD'}
-                                </button>
-                            </div>
+                                <textarea name="label" value={inputValue.label} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest1" > </textarea>
+                                <textarea name={"description"} value={_get(inputValue, 'description', '')} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest2" > </textarea>
+                                <Dropdown className_1={'questions__select create_select1'} className_2={'questions__select-item'} options={dataType} name='type' value={inputValue.type} onChangeHandler={onChangeHandler} />
+                                <Dropdown className_1={'questions__select create_select2'} className_2={'questions__select-item'} options={inputType} name='field_type' value={inputValue.field_type} onChangeHandler={onChangeHandler} />
+                                {/* <input type="text" class="questions__select create_select3" /> */}
+                                <div className='questions__select create_select3 add-questions-choices'>
+                                    {listChoices()}
+                                </div>
+                                <Dropdown className_1={'questions__select create_select4'} className_2={'questions__select-item'} options={unitType} name='field_unit_values' value={inputValue.field_unit_values} onChangeHandler={onChangeHandler} />
 
-                            {/* <select name="data-type" id="" class="questions__select create_select1">
+                                <div class="addbtn create_select5">
+                                    <button onClick={() => onClickAddQuestion()} class="createques__button">
+                                        {editInfo.isEditable ? 'UPDATE' : 'ADD'}
+                                    </button>
+                                </div>
+
+                                {/* <select name="data-type" id="" class="questions__select create_select1">
                                 <option value="" class="questions__select-item">
                                     Varchar
                                 </option>
@@ -176,7 +176,7 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                                     Datetime
                                 </option>
                             </select> */}
-                            {/* <select name="data-type" id="" class="questions__select create_select2">
+                                {/* <select name="data-type" id="" class="questions__select create_select2">
                                 <option value="" class="questions__select-item">
                                     Input
                                 </option>
@@ -193,9 +193,9 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                                     Multiselect
                                 </option>
                             </select> */}
-                            {/* <input type="text" class="questions__select create_select3" /> */}
+                                {/* <input type="text" class="questions__select create_select3" /> */}
 
-                            {/* <select name="data-type" id="" class="questions__select create_select4">
+                                {/* <select name="data-type" id="" class="questions__select create_select4">
                                 <option value="" class="questions__select-item">
                                     N/A
                                 </option>
@@ -212,21 +212,21 @@ const AddQuestions = ({ isTemplate=false, isShow = false, editInfo = { isEditabl
                                     liters
                                 </option>
                             </select> */}
-                            {/* <div class="addbtn create_select5">
+                                {/* <div class="addbtn create_select5">
                                 <button class="createques__button">
                                     ADD
                                 </button>
                             </div> */}
 
+                            </div>
+
                         </div>
-                        
+                        {isError && <div className='overall-error-container color-red question-disclosure-error'>*Please fill all the columns</div>}
                     </div>
-                    { isError&& <div className='overall-error-container color-red question-disclosure-error'>*Please fill all the columns</div>}
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
     </>);
 }
 

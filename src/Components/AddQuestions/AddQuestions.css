@@ -891,7 +891,7 @@ button.reassignbutton2 {
         margin-top: 30px;
     }
     .create_questions__wrapper {
-        grid-column-gap: 0px;
+        grid-column-gap: 0px;    
     }
     .create_questions__title:nth-child(1) {
         grid-area: 1 / 1 / 2 / 2;

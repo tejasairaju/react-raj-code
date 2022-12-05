@@ -51,15 +51,15 @@ const SystemAdminDashboard = (props) => {
                 options: {},
             };
 
-            chartLine = new Chart(
-                document.getElementById("chartLine"),
-                configLineChart
-            );
+            // chartLine = new Chart(
+            //     document.getElementById("chartLine"),
+            //     configLineChart
+            // );
 
-            chartBar = new Chart(
-                document.getElementById("chartBar"),
-                configBarChart
-            );
+            // chartBar = new Chart(
+            //     document.getElementById("chartBar"),
+            //     configBarChart
+            // );
         }
 
         const getFramework = async () => {
@@ -98,7 +98,7 @@ const SystemAdminDashboard = (props) => {
     return (<>
 
         {isDbReady &&
-            <div class="container mx-auto">
+            <div style={{margin:"auto"}} class="container">
 
                 <div id="main" class="grid grid-cols-3 gap-6 justify-evenly">
 
@@ -172,7 +172,7 @@ const SystemAdminDashboard = (props) => {
                 <br />
                 <br />
 
-                <div id="main1" class="grid grid-cols-2 gap-6 justify-evenly">
+                {/* <div id="main1" class="grid grid-cols-2 gap-6 justify-evenly">
 
                     <div class="shadow-lg rounded-lg overflow-hidden">
                         <div class="py-3 px-5 bg-gray-50 text-center">Subscription</div>
@@ -184,7 +184,7 @@ const SystemAdminDashboard = (props) => {
                         <canvas class="p-10" id="chartLine"></canvas>
                     </div>
 
-                </div>
+                </div> */}
 
 
             </div>

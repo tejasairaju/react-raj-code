@@ -4,10 +4,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import './MoreAction.css';
 import axios from "axios";
+import Requests from "../../Requests";
 
 const MoreAction = (props) => {
     const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false, isAssignDisClosure = false,
-        viewBespokeDisclosures=false,viewReport=false, actionIcon = '../../assets/icons/more-icon.svg',  ...rest } = props;
+        viewBespokeDisclosures=false,viewReport=false, actionIcon = '../../assets/icons/more-icon.svg', callback=() => {},  ...rest } = props;
     const [isOpen, setIsopen] = useState(false);
     const { orgDetails = {} } = useSelector(state => state.signup);
     const { loginDetails = {} } = useSelector(state => state.signup);
@@ -32,6 +33,15 @@ const MoreAction = (props) => {
                 link.click();
               })
             
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const deleteReport = async (id , name) => {
+        try {
+           const res = await Requests.Delete(
+            `/reports/${id}`, { organization: orgDetails.name });
+            callback();
         } catch (e) {
             console.log(e)
         }
@@ -81,7 +91,13 @@ const MoreAction = (props) => {
                 viewReport && 
                 <>
                     {isAssignDisClosure ?<div onClick={() => onRedirectWithState(`/report/${value.id}/disclosures`)}><a>Assign Disclosures</a></div>
-                    :<div onClick={() => generateReport(value.id, value.name)}><a>Generate Reports</a></div>}
+                    :
+                    <>
+                    <div onClick={() => generateReport(value.id, value.name)}><a>Generate Reports</a></div>
+                    <div onClick={() => deleteReport(value.id, value.name)}><a>Delete Reports</a></div>
+                    </>
+                    }
+                    
                 </>
             }
         </div>
