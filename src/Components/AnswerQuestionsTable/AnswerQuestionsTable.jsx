@@ -119,12 +119,12 @@ const AnswerQuestionsTable = (props) => {
                     <h5 className="detalis__information-title">
                         <b>{questionItem.label} ?</b>
                     </h5>
-                    {/* {!_isEmpty(_get(itemDetails, 'metaData[0].value', '')) && <><p className="detalis__information-title">
+                    {!_isEmpty(_get(questionItem, 'description', '')) && <><p className="detalis__information-title">
                         Guidance Notes
                     </p>
-                        <input type="text" className="assign__categories" value={_get(itemDetails, 'metaData[0].value', '')} disabled />
+                        <TextArea   rows={5} type="text" className="assign__categories" value={_get(questionItem, 'description', '')} disabled />
                     </>
-                    } */}
+                    }
                     <p className="detalis__information-title">
                         Answer :
                     </p>

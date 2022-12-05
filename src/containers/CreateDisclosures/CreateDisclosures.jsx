@@ -95,18 +95,20 @@ const CreateDisclosures = (props) => {
     }
 
     const onNextHandler = async () => {
+        console.log(inputValue)
+
         let getSelectedCategory = (inputValue.categories || []).find(value => value.isSelect === true);
         if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && !_isEmpty(inputValue.guidance && getSelectedCategory)) {
             const data = {
                 name: inputValue.name,
                 code: inputValue.code,
                 category: getSelectedCategory.name || '',
-                section: 'sample',
+                section: 'Standard',
                 framework: params.id,
                 description: inputValue.description ,
                 metaData: [{"key":"Guidance", "value":inputValue.guidance}]
             }
-
+            console.log(data);
             try {
                 setStatusData({ type: 'loading', message: ''});
                 let response = {};
@@ -188,7 +190,7 @@ const CreateDisclosures = (props) => {
                 <td>{frameworkDetails.description}</td>
             </tr>
         </table></>
-        {console.log(inputValue)}
+        {/* {console.log(inputValue)} */}
         <div className="main__content-wrapper">
             <h1 class="create-framework__title">
                 Ref No

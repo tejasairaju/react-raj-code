@@ -52,7 +52,8 @@ const Header = ({userRole = ''}) => {
                 3
             </span>
         </a> */}
-        <a onClick={() => { (userRole === 'client_admin')&&navigate(`/personalinfo`) }}  className="header__name-avatar">
+        {/* <a onClick={() => { (userRole === 'client_admin')&&navigate(`/personalinfo`) }}  className="header__name-avatar"> */}
+        <a onClick={() => { ((userRole === 'client_admin') || (userRole === 'client_user')) &&navigate(`/personalinfo`) }}  className="header__name-avatar">
             <div className="avatar__info">
                 <span className="header__name">
                     {_get(user, 'nickname')}

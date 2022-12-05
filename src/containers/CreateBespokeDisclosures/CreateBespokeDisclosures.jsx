@@ -104,7 +104,7 @@ const CreateBespokeDisclosures = (props) => {
                 name: inputValue.name,
                 code: inputValue.code,
                 category: getSelectedCategory.name || '',
-                section: 'Custom',
+                section: 'Bespoke',
                 framework: id,
                 children: [],
                 description: inputValue.description
