@@ -103,14 +103,14 @@ const ClientAdminFrameworkList = (props) => {
     return (<>
     {!isOpenOverlappingDislosures?
     <>
-    <h1 className="assign__title">
+    <h1 className="assign__title m-b-1">
                 Select Any one framework from source and target
             </h1>
         <div className="cli-framework-list-container">
             <div>{renderFrameworkLogo('Source Framework', 'left')}</div>
             <div>{renderFrameworkLogo('Target Framework', 'right')}</div>
         </div>
-        <a type="submit" className="next-btn form-btn" onClick={() => onClickNextHandler()}>Next</a>
+        <a type="submit" className="next-btn form-btn m-t-4" onClick={() => onClickNextHandler()}>Next</a>
         </>
         :<OverlappingDisclosures selectedFramework={selectedFramework} setIsOpenOverlappingDislosures={setIsOpenOverlappingDislosures}/> }
         </>);

@@ -54,7 +54,7 @@ const ClientAdminDashboard = () => {
         <div class="main__top-wrapper">
             <div class="leftheading">
                 <h1 class="main__title">
-                    <b>Welcome to client admin</b>
+                    <b>Admin Dashboard</b>
                 </h1>
             </div>
 

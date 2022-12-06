@@ -12,6 +12,7 @@ import moment from 'moment';
 import _get from 'lodash/get';
 import './ViewReport.css';
 import { useDispatch, useSelector } from "react-redux";
+import { getDataFormat } from "../../utils/utils.js";
 
 const ViewReport = (props) => {
     const { status  = '' } = useParams();
@@ -82,8 +83,8 @@ const ViewReport = (props) => {
                             // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
                             return (<tr key={index}>
                                 <td>{report.name}</td>
-                                <td>{report.start_date}</td>
-                                <td>{report.end_date}</td>
+                                <td>{getDataFormat(report.start_date)}</td>
+                                <td>{getDataFormat(report.end_date)}</td>
                                 <td>{(report.status == "Custom")? "Bespoke":report.status}</td>
                                 <td>
                                 <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} callback={() => getDisclosures()}/>

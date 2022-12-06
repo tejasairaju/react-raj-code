@@ -33,7 +33,7 @@ const ViewBespokeFramework = () => {
     const onCloseHandler = () => {
     }
 
-    const headers = ['Name','Created At', 'Template Type', 'Status', 'Action'];
+    const headers = ['Name','Created On', 'Template Type', 'Status', 'Action'];
 
     return (
         <>

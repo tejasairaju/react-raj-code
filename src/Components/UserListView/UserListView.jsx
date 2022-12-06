@@ -44,12 +44,14 @@ const UserListView = (props) => {
             {(userList || []).map((user, i) => <div key={i} onClick={() => onClickHandler(i, user)} class={`user__container ${user.isSelected ? 'active': null}`}>
                 {/* <img src='../../assets/images/user-avatar.svg' width={'30px'} height={'30px'} alt="avatar" /> */}
                 <span className="user-details-picture">{getProfilePhoto(user)}</span>
+                <div>
                 <p class="user-name">
                     <span><b>Name:</b></span>{user.first_name}&nbsp;{user.last_name}
                 </p>
                 <p class="job-title">
                 <span><b>Role:</b></span>{user.role}
                 </p>
+                </div>
             </div>)
             }
             <div class="right__arrow"></div>

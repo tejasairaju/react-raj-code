@@ -11,6 +11,7 @@ import moment from 'moment';
 import _get from 'lodash/get';
 import './ViewMyTaskList.css';
 import actions from '../../actions/MyTaskDashboardAction.js';
+import { getDataFormat } from "../../utils/utils.js";
 
 const ViewMyTaskList = (props) => {
     const { status  = '' } = useParams();
@@ -69,8 +70,8 @@ const ViewMyTaskList = (props) => {
                             // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
                             return (<tr key={index}>
                                 <td>{report.name}</td>
-                                <td>{report.start_date}</td>
-                                <td>{report.end_date}</td>
+                                <td>{getDataFormat(report.start_date)}</td>
+                                <td>{getDataFormat(report.end_date)}</td>
                                 <td>{(report.status=="Custom")?"Bespoke":report.status}</td>
                                 <td><a onClick={() => redirectToViewDisclosures(report)} className={`answer-redirect-link`}>View Disclosures</a></td>
                             </tr>);

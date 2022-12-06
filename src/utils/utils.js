@@ -56,7 +56,7 @@ export const getLogo = (val, classVal= {width:'40px', height:'40px'}) => {
 
 }
 
-export const getDataFormat = (date, formate = 'DD/MM/YYYY') => {
+export const getDataFormat = (date, formate = 'Do MMM YYYY') => {
     if (_isEmpty(date)) return moment.format(formate);
     else return moment(date).format(formate);
 }

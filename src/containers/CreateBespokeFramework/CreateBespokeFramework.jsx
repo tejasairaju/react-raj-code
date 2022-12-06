@@ -68,7 +68,6 @@ const CreateBespokeFramework = (props) => {
             const frameDetails = await axios.get(`${process.env.API_BASE_URL}/templates/${params.id}?organization=${orgDetails.name}`).then(({ data }) => data);
             setLogo(frameDetails.logo);
             !_isEmpty(frameDetails.logo) && setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
-            console.log('>>>>>>>>>>>>>>>>>>', frameDetails);
             setInputValue({inputValue, ...frameDetails, categories:updateArrayObjects(frameDetails.supported_category), countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
         } catch (e) {
             // setFrameworkdetails({});
@@ -243,7 +242,7 @@ const CreateBespokeFramework = (props) => {
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
             <h1 className="main__title">
-                {`Welcome to ${isEdit? 'Update' : 'Create'} Bespoke Framework Wizard`}
+                {`${isEdit? 'Update' : 'Create'} Bespoke Framework Wizard`}
             </h1>
         </div>
         <div id="createFramework" className="main__content-wrapper">

@@ -45,7 +45,7 @@ const ClientUsers = () => {
 
     // }
 
-    const headers = ['Photo', 'Username',
+    const headers = ['Photo', 'User Name',
         'Location',
         'Email iD',
         'Phone Number',
@@ -59,7 +59,7 @@ const ClientUsers = () => {
 
         <div class="main__top-wrapper">
             <h1 class="main__title">
-                Manage User
+                Manage Users
             </h1>
             <a type="submit" class="form__btn main__button" onClick={() => { navigate(`/client/users/invite`) }}>
                 ADD

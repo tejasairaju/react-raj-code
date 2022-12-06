@@ -127,7 +127,7 @@ const CreateReport = () => {
             <div class="framework__col-wrapper">
 
                 {/* <div class="GenerateReport-framework__row"> */}
-                <ListFramework isCustomeFramework={isCustomeFramework} setIsCustomeFramework={setIsCustomeFramework} label={null} onClickFrameworkHandler={onClickFrameworkHandler} onChangeToggle={onChangeToggle} />
+                <ListFramework clsName="report-list-framework" isCustomeFramework={isCustomeFramework} setIsCustomeFramework={setIsCustomeFramework} label={null} onClickFrameworkHandler={onClickFrameworkHandler} onChangeToggle={onChangeToggle} />
                 {/* </div> */}
 
                 <div class="Generate_Report GenerateReport1-framework__row">

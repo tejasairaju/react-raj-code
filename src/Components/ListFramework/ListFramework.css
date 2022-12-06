@@ -156,7 +156,7 @@
     /* border: 1px solid lightblue; */
     background: white;
     box-shadow: 6px 5px 8px #adb0b2;
-    padding: 4px 6px;
+    padding: 10px 6px;
 }
 
 .cards-wrapper {
@@ -185,4 +185,8 @@
 
     .framework-toggle-btn.active {
         background: #90d0f1
+    }
+
+    .report-list-framework {
+margin: auto;
     }

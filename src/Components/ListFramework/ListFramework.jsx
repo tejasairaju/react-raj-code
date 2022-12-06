@@ -8,7 +8,7 @@ import Requests from "../../Requests/index.js";
 import ReactToolTip from "../Common/ReactToolTip/ReactToolTip.jsx";
 
 const ListFramework = (props) => {
-    const { onClickFrameworkHandler = () => { }, label = 'Framework', setIsCustomeFramework = () => {}, isCustomeFramework } = props;
+    const { onClickFrameworkHandler = () => { }, label = 'Framework', setIsCustomeFramework = () => {}, isCustomeFramework, clsName='' } = props;
     const [frameworkData, setFrameworkData] = useState([]);
     const [bespokeFrameworkData, setBespokeFrameworkData] = useState([]);
   
@@ -93,7 +93,7 @@ const ListFramework = (props) => {
         <div className="cards-wrapper">
             {(frameworkData || []).map((item, i) => {
                 return (<div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>
-                    <ReactToolTip hoverText={item.name}><img src={item.logo} alt="GRI" /></ReactToolTip>
+                    <ReactToolTip hoverText={item.name}><img className={clsName} src={item.logo} alt="GRI" /></ReactToolTip>
                 </div>)
             })
             }
