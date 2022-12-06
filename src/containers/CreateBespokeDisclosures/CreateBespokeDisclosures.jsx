@@ -23,6 +23,7 @@ const CreateBespokeDisclosures = (props) => {
     const [validation, setValidation] = useState({});
     const [statusData, setStatusData] = useState({});
     const [frameworkDetails, setFrameworkdetails] = useState({});
+    const [FrameData, setFrameData] = useState({});
     const [apiData, setApiData] = useState({});
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
@@ -64,8 +65,10 @@ const CreateBespokeDisclosures = (props) => {
     const getframeworkDetails = async (id = "") => {
         try {
             const frameDetails = await Requests.Get(`/templates/${id}`, { organization: orgDetails.name });
-            setFrameworkdetails({...frameDetails, supported_sectors: [{name: frameDetails['supported_sectors'][0], id: '', isSelect: true}], 
+            setFrameData({...frameDetails});
+            setFrameworkdetails({...frameDetails, frameLogo: frameDetails['logo'], frameDec : frameDetails['description'], frameName: frameDetails['name'],  supported_sectors: [{name: frameDetails['supported_sectors'][0], id: '', isSelect: true}], 
             supported_sub_sectors:[{name: frameDetails['supported_sub_sectors'][0], id: '', isSelect: true}]
+
         });
         } catch (e) {
             setFrameworkdetails({});
@@ -191,9 +194,10 @@ const CreateBespokeDisclosures = (props) => {
         </div>
         <>  <table className="default-flex-table create-disc-framework-details">
             <tr>
-                <td>{frameworkDetails && <img src={frameworkDetails.logo} alt="GRI" width={'28px'} height={'28px'} />}</td>
-                <td>{frameworkDetails.name}</td>
-                <td>{frameworkDetails.description}</td>
+                {console.log('>>>>>>>>>>>>>', FrameData)}
+                <td>{FrameData && <img src={FrameData.logo} alt="GRI" width={'28px'} height={'28px'} />}</td>
+                <td>{FrameData.name|| ''}</td>
+                <td>{FrameData.description || ''}</td>
             </tr>
         </table></>
         <div className="main__content-wrapper">

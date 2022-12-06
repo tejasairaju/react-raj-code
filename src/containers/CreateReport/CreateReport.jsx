@@ -110,7 +110,7 @@ const CreateReport = () => {
         } else {
             handleErrorMessage();
         }
-    }
+    };
 
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}

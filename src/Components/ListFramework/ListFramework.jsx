@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Requests from "../../Requests/index.js";
 import ReactToolTip from "../Common/ReactToolTip/ReactToolTip.jsx";
+import { getProfileImage } from "../../utils/utils.js";
 
 const ListFramework = (props) => {
     const { onClickFrameworkHandler = () => { }, label = 'Framework', setIsCustomeFramework = () => {}, isCustomeFramework, clsName='' } = props;
@@ -93,15 +94,19 @@ const ListFramework = (props) => {
         <div className="cards-wrapper">
             {(frameworkData || []).map((item, i) => {
                 return (<div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>
-                    <ReactToolTip hoverText={item.name}><img className={clsName} src={item.logo} alt="GRI" /></ReactToolTip>
+                    <ReactToolTip hoverText={item.name}>
+                        {!_isEmpty(item.logo) ? <img className={clsName} src={item.logo} alt="GRI" /> : <>{getProfileImage( item.name,'', 'profile-image-icon_image')}</>
+                 }</ReactToolTip>
                 </div>)
             })
             }
         </div> :
             <div class="cards-wrapper">
                  {(bespokeFrameworkData || []).map((item, i) => {
-                return (<div onClick={() => onClickLogoHandler(item.id, i)} className={`frame-card ${isSelectedFramework(item.isSelected)}`}>
-                    {item.name}
+                return (<div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>
+                    <ReactToolTip hoverText={item.name}>
+                        {!_isEmpty(item.logo) ? <img className={clsName} src={item.logo} alt="GRI" /> : <>{getProfileImage( item.name,'', 'profile-image-icon_image')}</>
+                 }</ReactToolTip>
                 </div>)
             })
             }

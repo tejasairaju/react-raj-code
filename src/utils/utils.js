@@ -49,6 +49,10 @@ export const getProfilePhoto = (val, classVal= {width:'40px', height:'40px'}) =>
 
 }
 
+export const getProfileImage = (name_1 = '', nmae_2 = '', clsName = "profile-image-icon_image") => {
+        return <div class={clsName}>{_toUpper((name_1).charAt(0))} {_toUpper((nmae_2).charAt(0))}</div>
+}
+
 export const getLogo = (val, classVal= {width:'40px', height:'40px'}) => {
     if (!_isEmpty(val.logo)) return <img src={val.logo} {...classVal} alt="" />;
     else {

@@ -936,6 +936,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .assign-disclosure-container-block {
+    display: contents;
     width: 60em;
     height: 12em;
 }

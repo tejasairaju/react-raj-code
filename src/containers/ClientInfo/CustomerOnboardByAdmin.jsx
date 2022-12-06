@@ -183,7 +183,7 @@ const CustomerOnboardByAdmin = (props) => {
                     readOnly={isView}
                     placeholder="London" required={true} onChangeHandler={onChangeHandler} />
 
-                <Input inputblockcls={`user_input_block ${_get(validation, 'firstname', false) ? 'user_input_error' : null}`}
+                {/* <Input inputblockcls={`user_input_block ${_get(validation, 'firstname', false) ? 'user_input_error' : null}`}
                     error={validation['firstname']} label={'First Name'} type="text" name='firstname' value={inputValue.firstname}
                     className="create-framework__input"
                     placeholder="John" required={true}
@@ -196,7 +196,7 @@ const CustomerOnboardByAdmin = (props) => {
                     className="create-framework__input"
                     placeholder="Victor" required={true}
                     readOnly={isView}
-                    onChangeHandler={onChangeHandler} />
+                    onChangeHandler={onChangeHandler} /> */}
 
                 <h1 class="create-framework__title">
                     No of users
