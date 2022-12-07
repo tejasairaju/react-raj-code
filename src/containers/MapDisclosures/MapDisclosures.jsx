@@ -297,8 +297,11 @@ const MapDisclosures = () => {
     const getframeworks = async (id = "") => {
         try {
             const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks`).then(({ data }) => data);
-            setFrameworksData(frameDetails.results.slice(0, 5));
-            setChildFrameworksData(JSON.parse(JSON.stringify(frameDetails.results.slice(0, 5))));
+            // setFrameworksData(frameDetails.results.slice(0, 5));
+            // setChildFrameworksData(JSON.parse(JSON.stringify(frameDetails.results.slice(0, 5))));
+
+            setFrameworksData(frameDetails.results);
+            setChildFrameworksData(JSON.parse(JSON.stringify(frameDetails.results)));
         } catch (e) {
             setFrameworksData({});
         }
@@ -387,7 +390,7 @@ const MapDisclosures = () => {
 
     const renderFrameworkLogo = (type) => (<div className="map-disclosure-framework-scroll"><div class="frameworks__choose over-write-frameworks__choose">
         {(type === "child" ? childFrameworksData : frameworksData || []).map((val, index) => (<div class={`frameworks__choose-item ${val.isSelect ? 'active' : null} ${val.isSource ? ' hide' : null}`}>
-        <ReactToolTip  hoverText={val.name}><img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="GRI" onClick={() => onFrameworkSelect(val, type, index)} />
+        <ReactToolTip  hoverText={val.name}><img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt="LOGO" onClick={() => onFrameworkSelect(val, type, index)} />
             </ReactToolTip>
        
         </div> ))
