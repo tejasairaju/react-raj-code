@@ -62,9 +62,6 @@ const ListFramework = (props) => {
         } else {
             setBespokeFrameworkData([...cloneFrameWork]);
         }
-
-     
-
     }
 
     const onChangeToggleHangler = (flag) => {

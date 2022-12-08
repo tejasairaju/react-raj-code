@@ -15,22 +15,22 @@ import './styles/common.css';
 import './index.css';
 
 const onRedirectCallback = appState => {
-    history.push(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname
-    );
-  };
+  history.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+};
 
 ReactDOM.render(
-    <Auth0Provider
-      domain="dev-gpe39j8f.us.auth0.com"
-      client_id="B16jNVEsFGNRkPqYYK5Ia2wf0zjxuuQ2"
-      redirect_uri={window.location.origin}
-       audience="https://esg.xlicon.com" 
-      onRedirectCallback={onRedirectCallback}
-    >
-      <App />
-    </Auth0Provider>,
-    document.getElementById("root")
-  );
+  <Auth0Provider
+    domain={process.env.REACT_AUTH0_DOMAIN}
+    client_id={process.env.REACT_AUTH0_CLIENT_ID}
+    redirect_uri={window.location.origin}
+    audience={process.env.AUTH0_AUDIENCE}
+    onRedirectCallback={onRedirectCallback}
+  >
+    <App />
+  </Auth0Provider>,
+  document.getElementById("root")
+);
