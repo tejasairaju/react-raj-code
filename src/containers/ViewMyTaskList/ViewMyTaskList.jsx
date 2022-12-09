@@ -73,7 +73,7 @@ const ViewMyTaskList = (props) => {
                                 <td>{getDataFormat(report.start_date)}</td>
                                 <td>{getDataFormat(report.end_date)}</td>
                                 <td>{(report.status=="Custom")?"Bespoke":report.status}</td>
-                                <td><a onClick={() => redirectToViewDisclosures(report)} className={`answer-redirect-link`}>View Disclosures</a></td>
+                                <td><a onClick={() => redirectToViewDisclosures(report)} className={`answer-redirect-link cursor-pointer`}>View Disclosures</a></td>
                             </tr>);
                             // }
                         })}
