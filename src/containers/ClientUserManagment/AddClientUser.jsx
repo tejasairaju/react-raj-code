@@ -123,10 +123,10 @@ const AddClientUser = () => {
         <div class="main__top-wrapper">
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             {state ?
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     Update User
                 </h1> :
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     On-board User
                 </h1>
             }

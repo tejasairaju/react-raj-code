@@ -66,7 +66,7 @@ const ViewReport = (props) => {
     return (<>
 
         <div class="main__top-wrapper view-task-list-contianer">
-            <h1 class={`main__title ${getColor(status)}`}>
+            <h1 class={`main__title custom-title`}>
                 {isAssignDisClosure ? 'Assign Disclosures' : 'Publish Reports'}
             </h1>
         </div>

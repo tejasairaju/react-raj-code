@@ -49,7 +49,7 @@ const ViewBespokeFramework = () => {
     return (
         <>
             <div className="main__top-wrapper">
-                <h1 className="main__title">
+                <h1 className="main__title custom-title">
                     Edit Framework
                 </h1>
             </div>

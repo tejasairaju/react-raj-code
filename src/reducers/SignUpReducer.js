@@ -22,7 +22,7 @@ const CounterReducer = (state = { ...initialState }, action) => {
         ...state,
         orgDetails: {
           ...state.orgDetails,
-          is_db_created: flag
+          is_db_created: true
         }
       }
     }

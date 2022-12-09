@@ -44,7 +44,7 @@ const ViewFrameWork = () => {
     return (
         <>
             <div className="main__top-wrapper">
-                <h1 className="main__title">
+                <h1 className="main__title custom-title">
                     Edit Framework {'->'} List Frameworks
                 </h1>
             </div>

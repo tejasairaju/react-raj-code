@@ -135,7 +135,7 @@ const AssignDisclosures = () => {
     return (<div className="assign-disclosure-container-block">
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper assign-disclosure-title">
-            <h1 className="main__title">
+            <h1 className="main__title custom-title">
                 <b>Assign Disclosures</b>
             </h1>
         </div>

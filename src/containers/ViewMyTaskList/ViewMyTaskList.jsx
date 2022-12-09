@@ -53,7 +53,7 @@ const ViewMyTaskList = (props) => {
     return (<>
 
             <div class="main__top-wrapper view-task-list-contianer">
-                <h1 class={`main__title ${getColor(status)}`}>
+                <h1 class={`main__title ${getColor(status)} custom-title`}>
                 View Disclosure and Answer Questions
                 </h1>
             </div>

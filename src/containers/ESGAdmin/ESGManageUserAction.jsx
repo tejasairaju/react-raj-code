@@ -56,10 +56,10 @@ const ESGManageUserAction = (props) => {
     return (<div className="more-action-contianer" onClick={() => setIsopen(false)}>
         <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='../../assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
-        <div><a onClick={() => { navigate(`/esg/users/invite`, {state: {userDetails: value, isView: true}}) }}>View</a></div>
-            <div><a onClick={() => { navigate(`/esg/users/invite`, {state: {userDetails: value, isEditable: true}}) }}>Edit</a></div>
-            <div><a onClick={() => onUpdateUser(value, 1)}>Activate</a></div>
-            <div><a onClick={() => onUpdateUser(value, 0)}>Block</a></div>
+        <div className="lh1-5"><a onClick={() => { navigate(`/esg/users/invite`, {state: {userDetails: value, isView: true}}) }}>View</a></div>
+            <div className="lh1-5"><a onClick={() => { navigate(`/esg/users/invite`, {state: {userDetails: value, isEditable: true}}) }}>Edit</a></div>
+            <div className="lh1-5"><a onClick={() => onUpdateUser(value, 1)}>Activate</a></div>
+            <div className="lh1-5"><a onClick={() => onUpdateUser(value, 0)}>Block</a></div>
             {/* <div><a onClick={() => deleteUser(value, 0)}>Delete</a></div>  */}
         </div>
     </div>)

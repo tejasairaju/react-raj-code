@@ -60,45 +60,45 @@ const MoreAction = (props) => {
         <div tabindex={index} className={`frametoggler`} onClick={(e) => { setIsopen(!isOpen); e.stopPropagation(); }}><img src={actionIcon} alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active" : "inactive"}`}>
             {viewListFramework && <>
-                <div onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
-                <div><a onClick={() => { navigate(`/createdisclosures?id=${value.id}`) }}>Create Disclosures</a></div>
-                <div><a onClick={() => { navigate(`/viewdisclosures?id=${value.id}`) }}>View Disclosures</a></div>
-                <div><a onClick={() => deleteCallback()}>Delete Framework</a></div>
+                <div className="lh1-5" onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
+                <div className="lh1-5"><a onClick={() => { navigate(`/createdisclosures?id=${value.id}`) }}>Create Disclosures</a></div>
+                <div className="lh1-5"><a onClick={() => { navigate(`/viewdisclosures?id=${value.id}`) }}>View Disclosures</a></div>
+                <div className="lh1-5"><a onClick={() => deleteCallback()}>Delete Framework</a></div>
             </>}
             {viewDisclosures &&
                 <>
-                    <div onClick={() => onRedirectWithState(`/createdisclosures?id=${_get(props, 'state.framework', '')}&disclosureId=${_get(props, 'state.id', '')}&isEditable=true`)}><a>Edit Disclosure</a></div>
-                    <div onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
-                    <div><a onClick={() => { onRedirectWithState(`/viewQuestions`) }}>View Questions</a></div>
-                    <div><a onClick={() => deleteCallback()}>Delete Disclosure</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/createdisclosures?id=${_get(props, 'state.framework', '')}&disclosureId=${_get(props, 'state.id', '')}&isEditable=true`)}><a>Edit Disclosure</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
+                    <div className="lh1-5"><a onClick={() => { onRedirectWithState(`/viewQuestions`) }}>View Questions</a></div>
+                    <div className="lh1-5"><a onClick={() => deleteCallback()}>Delete Disclosure</a></div>
                 </>
             }
               {viewBespokeFramework &&
                 <>
-                    <div onClick={() => onRedirectWithState(`/template?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
-                    <div onClick={() => onRedirectWithState(`/template/${value.id}`)}><a>Create Disclosures</a></div>
-                    <div onClick={() => onRedirectWithState(`/view/bespoke/${value.id}/disclosures`, value.name)}><a>View Disclosures</a></div>
-                    <div><a onClick={() => deleteCallback()}>Delete Framework</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/template?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/template/${value.id}`)}><a>Create Disclosures</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/view/bespoke/${value.id}/disclosures`, value.name)}><a>View Disclosures</a></div>
+                    <div className="lh1-5"><a onClick={() => deleteCallback()}>Delete Framework</a></div>
                     
                 </>
             }
             {
                 viewBespokeDisclosures && 
                 <>
-                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}?disclosureId=${value.id}&isEditable=true`)}><a>Edit Disclosure</a></div>
-                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}`)}><a>Create Questions</a></div>
-                    <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}><a>View Questions</a></div>
-                    <div><a onClick={() => deleteCallback()}>Delete Disclosure</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/template/${value.template_id}?disclosureId=${value.id}&isEditable=true`)}><a>Edit Disclosure</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}`)}><a>Create Questions</a></div>
+                    <div className="lh1-5" onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}><a>View Questions</a></div>
+                    <div className="lh1-5"><a onClick={() => deleteCallback()}>Delete Disclosure</a></div>
                 </>
             }
             {
                 viewReport && 
                 <>
-                    {isAssignDisClosure ?<div onClick={() => onRedirectWithState(`/report/${value.id}/disclosures`)}><a>Assign Disclosures</a></div>
+                    {isAssignDisClosure ?<div className="lh1-5" onClick={() => onRedirectWithState(`/report/${value.id}/disclosures`)}><a>Assign Disclosures</a></div>
                     :
                     <>
-                    <div onClick={() => generateReport(value.id, value.name)}><a>Generate Reports</a></div>
-                    <div onClick={() => deleteCallback()}><a>Delete Reports</a></div>
+                    <div className="lh1-5" onClick={() => generateReport(value.id, value.name)}><a>Generate Reports</a></div>
+                    <div className="lh1-5" onClick={() => deleteCallback()}><a>Delete Reports</a></div>
                     </>
                     }
                     

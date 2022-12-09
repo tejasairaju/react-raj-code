@@ -115,7 +115,7 @@ const CreateReport = () => {
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper assign-disclosure-title">
-            <h2>
+            <h2 className="custom-title">
                 <b>Framework</b>
             </h2>
         </div>

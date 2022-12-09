@@ -198,3 +198,12 @@ input[type=number]::-webkit-outer-spin-button {
     line-height: 41px;
 
 }
+
+.custom-title {
+    font-size: 1.1em !important;
+    color: #2288bc !important;
+}
+
+.lh1-5 {
+    line-height: 1.5;
+}

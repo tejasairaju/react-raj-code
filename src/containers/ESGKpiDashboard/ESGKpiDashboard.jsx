@@ -7,7 +7,7 @@ const ESGKpiDashboard = () => {
 
     return (<>
      <div class="main__top-wrapper">
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     ESG KPI
                  </h1>
                 <div class="framework__row right font12 ">

@@ -74,7 +74,7 @@ const ViewQuestions = () => {
     return (
         <>
             <div className="main__top-wrapper">
-                <h1 className="main__title">
+                <h1 className="main__title custom-title">
                     Edit Framework {'->'} List Frameworks {'->'} View Disclosures {'->'} List Disclosures {'->'}  List Questions
                 </h1>
             </div>

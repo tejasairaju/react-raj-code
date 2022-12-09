@@ -44,7 +44,7 @@ const MyTaskDashboard = () => {
     return (<>
         <div class="main__top-wrapper">
             <div class="leftheading">
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     <b>My Tasks</b>
                 </h1>
             </div>

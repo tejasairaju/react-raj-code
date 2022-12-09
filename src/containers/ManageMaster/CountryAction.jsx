@@ -15,10 +15,10 @@ const onNavigateHandler = (url) => {
         <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
             {/* <div onClick={() => { }}><a>View</a></div> */}
-            <div><a onClick={() => onEdit()}>Edit</a></div>
-            <div><a onClick={() => onActive()}>Activate</a></div>
-            <div><a onClick={() => onBlock()}>Block</a></div>
-            {isSector&&<div><a onClick={() => {navigate('/subsector', {state: { sector: {...value}}})}}>Add Subsector</a></div>}
+            <div className="lh1-5"><a onClick={() => onEdit()}>Edit</a></div>
+            <div className="lh1-5"><a onClick={() => onActive()}>Activate</a></div>
+            <div className="lh1-5"><a onClick={() => onBlock()}>Block</a></div>
+            {isSector&&<div className="lh1-5"><a onClick={() => {navigate('/subsector', {state: { sector: {...value}}})}}>Add Subsector</a></div>}
             
         </div>
     </div>)
