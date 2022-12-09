@@ -8,7 +8,7 @@ import Requests from "../../Requests";
 
 const MoreAction = (props) => {
     const { value, index, viewListFramework = false, viewDisclosures = false, viewBespokeFramework=false, isAssignDisClosure = false,
-        viewBespokeDisclosures=false,viewReport=false, actionIcon = '../../assets/icons/more-icon.svg', callback=() => {},  ...rest } = props;
+        viewBespokeDisclosures=false,viewReport=false, actionIcon = '../../assets/icons/more-icon.svg', deleteCallback=() => {},  ...rest } = props;
     const [isOpen, setIsopen] = useState(false);
     const { orgDetails = {} } = useSelector(state => state.signup);
     const { loginDetails = {} } = useSelector(state => state.signup);
@@ -37,15 +37,15 @@ const MoreAction = (props) => {
             console.log(e)
         }
     }
-    const deleteReport = async (id , name) => {
-        try {
-           const res = await Requests.Delete(
-            `/reports/${id}`, { organization: orgDetails.name });
-            callback();
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // const deleteReport = async (id ) => {
+    //     try {
+    //        const res = await Requests.Delete(
+    //         `/reports/${id}`, { organization: orgDetails.name });
+    //         callback();
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
     const onRedirectWithState = (url) => {
         navigate(url, {
@@ -63,12 +63,14 @@ const MoreAction = (props) => {
                 <div onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
                 <div><a onClick={() => { navigate(`/createdisclosures?id=${value.id}`) }}>Create Disclosures</a></div>
                 <div><a onClick={() => { navigate(`/viewdisclosures?id=${value.id}`) }}>View Disclosures</a></div>
+                <div><a onClick={() => deleteCallback()}>Delete Framework</a></div>
             </>}
             {viewDisclosures &&
                 <>
                     <div onClick={() => onRedirectWithState(`/createdisclosures?id=${_get(props, 'state.framework', '')}&disclosureId=${_get(props, 'state.id', '')}&isEditable=true`)}><a>Edit Disclosure</a></div>
                     <div onClick={() => onRedirectWithState(`/createquestions`)}><a>Create Questions</a></div>
                     <div><a onClick={() => { onRedirectWithState(`/viewQuestions`) }}>View Questions</a></div>
+                    <div><a onClick={() => deleteCallback()}>Delete Disclosure</a></div>
                 </>
             }
               {viewBespokeFramework &&
@@ -76,6 +78,7 @@ const MoreAction = (props) => {
                     <div onClick={() => onRedirectWithState(`/template?id=${value.id}&isEdit=${true}`)}><a>Edit Framework</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.id}`)}><a>Create Disclosures</a></div>
                     <div onClick={() => onRedirectWithState(`/view/bespoke/${value.id}/disclosures`, value.name)}><a>View Disclosures</a></div>
+                    <div><a onClick={() => deleteCallback()}>Delete Framework</a></div>
                     
                 </>
             }
@@ -85,6 +88,7 @@ const MoreAction = (props) => {
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}?disclosureId=${value.id}&isEditable=true`)}><a>Edit Disclosure</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}`)}><a>Create Questions</a></div>
                     <div onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}><a>View Questions</a></div>
+                    <div><a onClick={() => deleteCallback()}>Delete Disclosure</a></div>
                 </>
             }
             {
@@ -94,7 +98,7 @@ const MoreAction = (props) => {
                     :
                     <>
                     <div onClick={() => generateReport(value.id, value.name)}><a>Generate Reports</a></div>
-                    <div onClick={() => deleteReport(value.id, value.name)}><a>Delete Reports</a></div>
+                    <div onClick={() => deleteCallback()}><a>Delete Reports</a></div>
                     </>
                     }
                     

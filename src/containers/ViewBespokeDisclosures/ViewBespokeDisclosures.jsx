@@ -15,19 +15,20 @@ const ViewBespokeDisclosures = () => {
     const [apiData, setApiData] = useState({});
     const [statusData, setStatusData] = useState({});
     useEffect(() => {
-        const getDisclosures = async () => {
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await Requests.Get(`/templates/${template_id}/disclosures`, { organization: orgDetails.name });
-                setStatusData({ type: '', message: '' });
-                setApiData({ ...response });
-            } catch (e) {
-                let error = getErrorMessage(e);
-                setStatusData({ ...error });
-            }
-        }
         getDisclosures();
     }, []);
+
+    const getDisclosures = async () => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await Requests.Get(`/templates/${template_id}/disclosures`, { organization: orgDetails.name });
+            setStatusData({ type: '', message: '' });
+            setApiData({ ...response });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+    }
 
     const onCloseHandler = () => {
     }
@@ -41,7 +42,17 @@ const ViewBespokeDisclosures = () => {
         disclosure_id: value.id,
         framework: template_id,
         id: value.id
-    })
+    });
+
+    const deleteDisclosuresHandler = async ({ id = '' }) => {
+        try {
+            const res = await Requests.Delete(
+                `/templates/${template_id}/disclosures/${id}`, { organization: orgDetails.name });
+                getDisclosures();
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     const headers = ['Name', 'Created At', 'Category', 'Section', 'Action'];
     const actionIcon = '../../../assets/icons/more-icon.svg';
@@ -69,7 +80,7 @@ const ViewBespokeDisclosures = () => {
                                 <td>{val.category}</td>
                                 <td>{(val.section =="Custom")? "Bespoke":val.section}</td>
                                 <td>
-                                    <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} state={getState(val)} value={{ ...val, template_id }} index={index} />
+                                    <MoreAction actionIcon={actionIcon} viewBespokeDisclosures={true} state={getState(val)} value={{ ...val, template_id }} index={index} deleteCallback={() => deleteDisclosuresHandler(val)}  />
                                 </td>
                             </tr>)
                         })}

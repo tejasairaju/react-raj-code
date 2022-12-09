@@ -4,6 +4,7 @@ import './ViewFrameWork.css';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
 import { useNavigate } from "react-router-dom";
+import Requests from "../../Requests";
 
 const { Get } = Request;
 
@@ -12,27 +13,34 @@ const ViewFrameWork = () => {
     const [frameworkData, setFrameworkData] = useState({});
     const [statusData, setStatusData] = useState({});
     useEffect(() => {
-        const getFramework = async () => {
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks`).then(({ data }) => data);
-                setStatusData({ type: '', message: '' });
-                setFrameworkData(response);
-            } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
-            }
-        }
-
         getFramework();
     }, []);
+
+    const getFramework = async () => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks`).then(({ data }) => data);
+            setStatusData({ type: '', message: '' });
+            setFrameworkData(response);
+        } catch (e) {
+            setStatusData({ type: 'error', message: e.message });
+        }
+    }
 
     const onCloseHandler = () => {
     }
 
     const headers = ['Logo', 'Name', 'Description', 'Action'];
 
-    
-
+    const deleteFrameworkHandler = async({ id = '' }) => {
+        try {
+            const res = await Requests.Delete(
+                `/esgadmin/frameworks/${id}`);
+                getFramework();
+        } catch (e) {
+            console.log(e)
+        }
+    }
     return (
         <>
             <div className="main__top-wrapper">
@@ -55,7 +63,7 @@ const ViewFrameWork = () => {
                                 <td>{val.name}</td>
                                 <td>{val.description}</td>
                                 <td>
-                                <MoreAction viewListFramework={true} value={val} index={index}/>
+                                    <MoreAction viewListFramework={true} value={val} index={index} deleteCallback={() => deleteFrameworkHandler(val)} />
                                     {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
                                 </td>
                             </tr>)

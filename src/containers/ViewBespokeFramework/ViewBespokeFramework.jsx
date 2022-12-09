@@ -16,24 +16,35 @@ const ViewBespokeFramework = () => {
     const [apiData, setApiData] = useState({});
     const [statusData, setStatusData] = useState({});
     useEffect(() => {
-        const getFramework = async () => {
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await Requests.Get(`/templates/`, {template_type: 'Custom', organization: orgDetails.name});
-                setStatusData({ type: '', message: '' });
-                setApiData({...response});
-            } catch (e) {
-                let error = getErrorMessage(e);
-                setStatusData({...error});
-            }
-        }
         getFramework();
     }, []);
+
+    const getFramework = async () => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await Requests.Get(`/templates/`, { template_type: 'Custom', organization: orgDetails.name });
+            setStatusData({ type: '', message: '' });
+            setApiData({ ...response });
+        } catch (e) {
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
+        }
+    }
 
     const onCloseHandler = () => {
     }
 
-    const headers = ['Name','Created On', 'Template Type', 'Status', 'Action'];
+    const deleteFrameworkHandler = async ({ id = '' }) => {
+        try {
+            const res = await Requests.Delete(
+                `/templates/${id}`, { template_type: 'Custom', organization: orgDetails.name });
+            getFramework();
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const headers = ['Name', 'Created On', 'Template Type', 'Status', 'Action'];
 
     return (
         <>
@@ -55,10 +66,10 @@ const ViewBespokeFramework = () => {
                             return (<tr>
                                 <td>{val.name}</td>
                                 <td>{getDataFormat(val.created_at)}</td>
-                                <td>{(val.template_type=="Custom")?"Bespoke":val.template_type}</td>
+                                <td>{(val.template_type == "Custom") ? "Bespoke" : val.template_type}</td>
                                 <td>{val.status}</td>
                                 <td>
-                                <MoreAction viewBespokeFramework={true} value={val} index={index} state={{...val}}/>
+                                    <MoreAction viewBespokeFramework={true} value={val} index={index} state={{ ...val }} deleteCallback={() => deleteFrameworkHandler(val)} />
                                 </td>
                             </tr>)
                         })}

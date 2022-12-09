@@ -15,13 +15,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDataFormat } from "../../utils/utils.js";
 
 const ViewReport = (props) => {
-    const { status  = '' } = useParams();
+    const { status = '' } = useParams();
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');
-      const queryValue = queryString.parse(search);
-  const {isAssignDisClosure = false} = queryValue;
-    const { orgDetails = {}, loginDetails={} } = useSelector(state => state.signup);
-    const [ reportList , setReportList ] = useState([]);
+    const queryValue = queryString.parse(search);
+    const { isAssignDisClosure = false } = queryValue;
+    const { orgDetails = {}, loginDetails = {} } = useSelector(state => state.signup);
+    const [reportList, setReportList] = useState([]);
     const [statusData, setStatusData] = useState({});
 
     const mytask = useSelector(state => state.mytask);
@@ -35,7 +35,7 @@ const ViewReport = (props) => {
             const response = await axios.get(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`).then(({ data }) => data);
 
             setStatusData({ type: '', message: '' });
-            const sortResult = response&&response.results;
+            const sortResult = response && response.results;
             setReportList(sortResult);
             console.log(reportList)
             // return response.disclosures || [];
@@ -52,10 +52,10 @@ const ViewReport = (props) => {
         'End Date',
         'Status',
         'Action'
-       ];
+    ];
 
-    if(status ==='completed') {
-        headers.pop(); 
+    if (status === 'completed') {
+        headers.pop();
     }
 
     const redirectToViewDisclosures = (report) => {
@@ -65,36 +65,44 @@ const ViewReport = (props) => {
 
     return (<>
 
-            <div class="main__top-wrapper view-task-list-contianer">
-                <h1 class={`main__title ${getColor(status)}`}>
-                {isAssignDisClosure? 'Assign Disclosures' : 'Publish Reports'}
-                </h1>
-            </div>
-            <br/>
-            <div class="scrollable">
+        <div class="main__top-wrapper view-task-list-contianer">
+            <h1 class={`main__title ${getColor(status)}`}>
+                {isAssignDisClosure ? 'Assign Disclosures' : 'Publish Reports'}
+            </h1>
+        </div>
+        <br />
+        <div class="scrollable">
             <table className="default-flex-table">
                 <thead>
-                        <tr>
-                            {headers.map(header => <th>{header}</th>)}
-                        </tr>
+                    <tr>
+                        {headers.map(header => <th>{header}</th>)}
+                    </tr>
                 </thead>
                 <tbody>
-                        {(reportList || []).map((report, index) => {
-                            // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
-                            return (<tr key={index}>
-                                <td>{report.name}</td>
-                                <td>{getDataFormat(report.start_date)}</td>
-                                <td>{getDataFormat(report.end_date)}</td>
-                                <td>{(report.status == "Custom")? "Bespoke":report.status}</td>
-                                <td>
-                                <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} callback={() => getDisclosures()}/>
-                                    </td>
-                            </tr>);
-                            // }
-                        })}
-                    </tbody>
+                    {(reportList || []).map((report, index) => {
+                        // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
+                        return (<tr key={index}>
+                            <td>{report.name}</td>
+                            <td>{getDataFormat(report.start_date)}</td>
+                            <td>{getDataFormat(report.end_date)}</td>
+                            <td>{(report.status == "Custom") ? "Bespoke" : report.status}</td>
+                            <td>
+                                <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} deleteCallback={async() => {
+                                    try {
+                                        const res = await Requests.Delete(
+                                            `/reports/${report.id}`, { organization: orgDetails.name });
+                                    } catch (e) {
+                                        console.log(e)
+                                    }
+                                    getDisclosures()
+                                }} />
+                            </td>
+                        </tr>);
+                        // }
+                    })}
+                </tbody>
             </table>
-            </div>
+        </div>
     </>)
 }
 export default ViewReport;

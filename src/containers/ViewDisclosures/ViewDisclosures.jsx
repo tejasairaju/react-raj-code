@@ -8,7 +8,8 @@ import Popup from '../../components/Common/Popup/Popup.jsx';
 import { useNavigate } from "react-router-dom";
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import MoreAction from "../../Components/MoreAction/MoreAction.jsx";
-import { listDisclosures } from '../../../__mocks__/listDisclosures.js'
+import { listDisclosures } from '../../../__mocks__/listDisclosures.js';
+import Requests from "../../Requests";
 import _isEmpty from 'lodash/isEmpty';
 
 const { RadioButton } = Fields;
@@ -28,20 +29,22 @@ const ViewDisclosures = () => {
 
 
     useEffect(() => {
-        const getDisclosures = async () => {
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`).then(({ data }) => data);
-                setStatusData({ type: '', message: '' });
-                setListData(response.results);
-                setApiData(response);
-            } catch (e) {
-                setStatusData({ type: 'error', message: e.message });
-            }
-        }
+        
         getframeworkDetails();
         getDisclosures();
     }, []);
+
+    const getDisclosures = async () => {
+        try {
+            setStatusData({ type: 'loading', message: '' });
+            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`).then(({ data }) => data);
+            setStatusData({ type: '', message: '' });
+            setListData(response.results);
+            setApiData(response);
+        } catch (e) {
+            setStatusData({ type: 'error', message: e.message });
+        }
+    }
 
     const getframeworkDetails = async (id = "") => {
         try {
@@ -82,6 +85,16 @@ const ViewDisclosures = () => {
     const headers = ['Name','Description', 'Action'];
     const radioButton = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
 
+    const deleteDisclosureHandler = async({ id = '' }) => {
+        try {
+            const res = await Requests.Delete(
+                `/esgadmin/frameworks/${params.id}/disclosures/${id}`);
+                getDisclosures();
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
         <>
             <div className="main__top-wrapper">
@@ -121,7 +134,7 @@ const ViewDisclosures = () => {
                                 <td>{ <span>{val.name}</span>}</td>
                                 <td> {val.code} &nbsp;&nbsp;{val.description}</td>
                                 <td>
-                                    <MoreAction viewDisclosures={true} state={getState(val)} index={index} />
+                                    <MoreAction viewDisclosures={true} state={getState(val)} index={index} deleteCallback={() => deleteDisclosureHandler(val)} />
                                 </td>
                             </tr>)
                         })}
