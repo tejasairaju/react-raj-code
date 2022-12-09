@@ -19,7 +19,7 @@ const PageInprogress = (props) => {
 
     const getDBStatus = async () => {
         try {
-            const response = await Requests.Get(`/organizations/${name}`, name).then(({ data }) => data);
+            const response = await Requests.Get(`/organizations/${name}`);
             dispatch(actions.updateDbStatus(response.is_payment_done));
         } catch (error) {
             dispatch(actions.updateDbStatus(false));

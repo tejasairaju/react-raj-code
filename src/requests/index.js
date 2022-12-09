@@ -1,4 +1,5 @@
 import axios from "axios";
+import _isEmpty from 'lodash/isEmpty';
 import { constractURLQueryStr } from '../utils/utils.js';
 
 const getHeaders = () => {
@@ -16,7 +17,7 @@ const getHeaders = () => {
 async function Get(url, org = {}, cookie) {
     const config = getHeaders(cookie);
     let pathUrl = '';
-    if (org) {
+    if (!_isEmpty(org)) {
         pathUrl = `${process.env.API_BASE_URL}${url}${constractURLQueryStr(org)}`;
     } else {
         pathUrl = `${process.env.API_BASE_URL}${url}`;
