@@ -116,10 +116,10 @@ const AddESGManageUser = () => {
         <div class="main__top-wrapper">
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             {state && isEditable ?
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     {'Manage Users -> Edit User'}
                 </h1> :
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     {'Manage Users -> Add User'}
                 </h1>
             }

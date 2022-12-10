@@ -49,7 +49,7 @@ const ClientInfo = (props) => {
     return (<>
 
         <div class="main__top-wrapper">
-            <h1 class="main__title">
+            <h1 class="main__title custom-title">
                 Client Info
             </h1>
             <button class="main__button" onClick={() => { navigate(`/client/onboard`) }}>

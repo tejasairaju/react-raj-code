@@ -100,7 +100,7 @@ const CreateQuestions = (props) => {
     return (<>
         {isOpenAddQuestion && <AddQuestions isTemplate={false} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
         <div className="main__top-wrapper">
-            <h1 className="main__title">
+            <h1 className="main__title custom-title">
                 {title ? title : 'Welcome to Create Questions'}
             </h1>
         </div>

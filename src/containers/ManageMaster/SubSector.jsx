@@ -144,7 +144,7 @@ const SubSector = (props) => {
 
     return (<>
         <div class="main__top-wrapper">
-            <h1 class="main__title">
+            <h1 class="main__title custom-title">
                 {'Manage Masters -> SubSector'}
             </h1>
         </div>

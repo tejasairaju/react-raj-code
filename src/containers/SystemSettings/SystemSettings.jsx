@@ -93,7 +93,7 @@ const SystemSettings = (props) => {
             data={statusData} onCloseHandler={onCloseHandler} />}
 
             <div class="main__top-wrapper">
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     System Settings
                 </h1>
             </div>

@@ -112,7 +112,7 @@ const ManageCountry = (props) => {
 
     return (<>
         <div class="main__top-wrapper">
-            <h1 class="main__title">
+            <h1 class="main__title custom-title">
                 {'Manage Masters -> Country'}
             </h1>
         </div>

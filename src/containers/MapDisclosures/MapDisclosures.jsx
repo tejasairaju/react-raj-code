@@ -426,7 +426,7 @@ const MapDisclosures = () => {
             {!!SuccessstatusData.type && <Popup isShow={!!SuccessstatusData.type} data={SuccessstatusData} onCloseHandler={onSuccessDataCloseHandler} />}
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             <div class="main__top-wrapper">
-                <h1 class="main__title">
+                <h1 class="main__title custom-title">
                     Map Disclosure - Questions
                 </h1>
             </div>

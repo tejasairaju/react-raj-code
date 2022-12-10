@@ -61,7 +61,7 @@ const ESGManageUser = () => {
     return (<>
 
         <div class="main__top-wrapper">
-            <h1 class="main__title">
+            <h1 class="main__title custom-title">
             Manage Users
             </h1>
             <a type="submit" class="form__btn main__button" onClick={() => { navigate(`/esg/users/invite`) }}>

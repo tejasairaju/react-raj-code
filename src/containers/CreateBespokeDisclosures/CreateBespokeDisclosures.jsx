@@ -188,7 +188,7 @@ const CreateBespokeDisclosures = (props) => {
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
-            <h1 className="main__title">
+            <h1 className="main__title custom-title">
                 {`Welcome to Create Disclosures Wizard`}
             </h1>
         </div>
