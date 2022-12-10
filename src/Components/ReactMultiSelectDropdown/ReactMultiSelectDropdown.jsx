@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Select from 'react-select';
 
-
-
-const ReactMultiSelectDropdown = ({ data = [], onChangeCallback = () => {}, selectedOptionVal = []}) => {
-    const [selectedOption, setSelectedOption] = useState(null);
+const ReactMultiSelectDropdown = ({ data = [], isEditable=false, onChangeCallback = () => {}, selectedOptionVal = [] }) => {
+    const [selectedOption, setSelectedOption] = useState([]);
     const [options, setOptions] = useState([]);
     useEffect(() => {
         if ((data || []).length > 0) {
              let filterData = constractArrayValue([...data]);
             setOptions([...filterData]);
+            // setSelectedOption([{'label': "INDIA", "value": "INDIA"}]);
+            // setSelectedOption(selectedOptionVal);
         }
     
         // if(selectedOptionVal.length > 0) {
@@ -17,14 +17,22 @@ const ReactMultiSelectDropdown = ({ data = [], onChangeCallback = () => {}, sele
         //     console.log('>>>>>>>>>>>>>>>dom_3', filterData_1);
         //     setSelectedOption([...filterData_1 ]);
         // }
-    }, []);
+    }, [data]);
 
-    useMemo(() => {
-        if(selectedOptionVal.length > 0) {
-            console.log('>>>use>>', selectedOption);
-            setSelectedOption(selectedOptionVal);
-        }
+    useEffect(() => {
+        if(isEditable) {
+            let filterData_1 = constractArrayValue([...selectedOptionVal]);
+            setSelectedOption(filterData_1);
+        } 
     }, [selectedOptionVal]);
+
+    // useEffect(() => {
+    //     console.log('>>>>11');
+    //     if(selectedOptionVal.length > 0) {
+    //         console.log('>>>>11');
+    //         setSelectedOption(selectedOptionVal);
+    //     }
+    // }, [selectedOptionVal]);
 
 
     const constractArrayValue = (val) => {
@@ -38,15 +46,22 @@ const ReactMultiSelectDropdown = ({ data = [], onChangeCallback = () => {}, sele
     }
 
     const onHandleChange = (value) => {
+        setSelectedOption(value)
         onChangeCallback(value);
     }
-console.log('>>>>>', selectedOption);
+
+    const onremove = (val) => {
+        console.log('>>11>val>>', val);
+
+    }
     return (
     
         <div className="App">
             {((options ||[]).length || (selectedOption|| []).length) && <Select
-                defaultValue={selectedOption}
+                value={selectedOption}
+                // defaultInputValue={selectedOption}
                 onChange={onHandleChange}
+                onMenuClose={onremove}
                 options={options}
                 isMulti={true}
             />
