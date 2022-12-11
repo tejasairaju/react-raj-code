@@ -45,10 +45,11 @@ const CreateWizard = ({ userRole, logoutHandler = () => { } }) => {
             await Axios.all([
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`),
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`),
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
                 Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
-            ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                dispatch(actions.updateWizardData({ countries: countries.results, sectors: sectors.results, categories: categories.results }));
+            ]).then(([{ data: countries }, { data: sectors }, { data: subsectors}, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
+                dispatch(actions.updateWizardData({ countries: countries.results, sectors: sectors.results, subsectors: subsectors.results, categories: categories.results }));
             });
         } catch (error) {
             console.log(error);
