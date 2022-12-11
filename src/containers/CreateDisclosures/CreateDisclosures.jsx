@@ -10,6 +10,9 @@ import Popup from "../../components/Common/Popup/Popup.jsx";
 import { getErrorMessage } from '../../utils/utils.js';
 // import '../CreateWizard.css';
 import axios from 'axios';
+// import ReactTextBoxEditor from '../../Components/ReactTextBoxEditor/ReactTextBoxEditor.jsx';
+// import MyStatefulEditor from '../../Components/ReactTextBoxEditor/ReactTextBoxEditor.jsx';
+import ReactTextBoxEditor from '../../Components/ReactTextBoxEditor/ReactTextBoxEditor.jsx';
 
 const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 
@@ -42,12 +45,12 @@ const CreateDisclosures = (props) => {
             const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${id}/disclosures/${disclosureId}`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
             console.log(response)
             let myguidance = ""
-            if(!_isEmpty(response.metaData)){
-                 myguidance = response.metaData[0].value
-            }else{
-                 myguidance = response.description
+            if (!_isEmpty(response.metaData)) {
+                myguidance = response.metaData[0].value
+            } else {
+                myguidance = response.description
             }
-            
+
             setInputValue({ ...response, description: response.description, guidance: myguidance, categories: [{ name: response.category, isSelect: true }] });
         } catch (error) {
         }
@@ -72,7 +75,7 @@ const CreateDisclosures = (props) => {
         }
     }
 
-    const checkValidation = (category= {}) => {
+    const checkValidation = (category = {}) => {
         let cloneInputValue = { ...inputValue };
         let errors = {};
         if (!(_get(cloneInputValue, 'name', '')).trim()) {
@@ -88,7 +91,7 @@ const CreateDisclosures = (props) => {
         }
         if (!_get(cloneInputValue, 'guidance', '').trim()) {
             errors['guidance'] = "Guidance is required";
-        } else if(!_isEmpty(category)) {
+        } else if (!_isEmpty(category)) {
             errors['category'] = "Category is required";
         }
         setValidation(errors);
@@ -105,12 +108,12 @@ const CreateDisclosures = (props) => {
                 category: getSelectedCategory.name || '',
                 section: 'Standard',
                 framework: params.id,
-                description: inputValue.description ,
-                metaData: [{"key":"Guidance", "value":inputValue.guidance}]
+                description: inputValue.description,
+                metaData: [{ "key": "Guidance", "value": inputValue.guidance }]
             }
             console.log(data);
             try {
-                setStatusData({ type: 'loading', message: ''});
+                setStatusData({ type: 'loading', message: '' });
                 let response = {};
                 if (isEditable) {
                     data['children'] = inputValue.children;
@@ -119,7 +122,7 @@ const CreateDisclosures = (props) => {
                     response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`, data).then(({ data }) => data);
                 }
                 setApiData(response);
-                setStatusData({ type: 'success', message: `Disclosure ${isEditable? 'updated': 'created'} successfully` });
+                setStatusData({ type: 'success', message: `Disclosure ${isEditable ? 'updated' : 'created'} successfully` });
             } catch (e) {
                 let error = getErrorMessage(e);
                 setStatusData({ ...error });
@@ -176,6 +179,11 @@ const CreateDisclosures = (props) => {
         setStatusData({ type: '', message: '' });
     }
 
+    const onChangeGuidance = (value) => {
+        setInputValue({ ...inputValue, ['guidance']: value });
+    }
+
+    console.log('>>>>>>>>>>>>>>>', inputValue);
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
@@ -203,10 +211,17 @@ const CreateDisclosures = (props) => {
                 </div>
             </div>
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <TextArea inputblockcls={`user_input_block ${_get(validation, 'guidance', false) ? 'user_input_error' : null}`} error={validation['guidance']} label='Guidance' name='guidance' value={inputValue.guidance || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} required={true}/>
+            {/* <TextArea inputblockcls={`user_input_block ${_get(validation, 'guidance', false) ? 'user_input_error' : null}`} error={validation['guidance']} label='Guidance' name='guidance' value={inputValue.guidance || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} /> */}
+            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} required={true} />
             <Pills label='Sectors' data={frameworkDetails['supported_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
             <Pills label='Sub Sectors' data={frameworkDetails['supported_sub_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
+            <div className='create__disclosure_container'>
+                <h1 className="create-framework__title">Guidance<span className="color-red P-4">*</span></h1>
+                <div className="guidance-user_input_block">
+                    <ReactTextBoxEditor value={inputValue} onChangeGuidance={onChangeGuidance} />;
+                </div>
+                {/* <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} /> */}
+            </div>
         </div>
         <Button label={isEditable ? 'UPDATE' : 'NEXT'} onClickHandler={onNextHandler} className='main__button' />
     </>)
