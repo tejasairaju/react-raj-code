@@ -28,6 +28,7 @@ const CreateBespokeQuestions = (props) => {
     const initialRow = { order: null, /*code: '',*/ label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
     const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
     const [inputList, setInputList] = useState([]);
+    const [inputListPayload, setInputListPayload] = useState([]);
     const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
     const [editInfo, setEditInfo] = useState({ isEditable: false, editRowIndex: null });
     const [isError, setIsError] = useState(false);
@@ -40,8 +41,9 @@ const CreateBespokeQuestions = (props) => {
 
     // handle click event of the Remove button
     const handleRemoveClick = (index) => {
-        const list = [...inputList];
-        list.splice(index, 1);
+        let list = [...inputList];
+        list[index]['active']=false
+        // list.splice(index, 1);
         setInputList(list);
     };
 

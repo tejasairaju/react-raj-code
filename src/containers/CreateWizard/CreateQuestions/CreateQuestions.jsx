@@ -30,8 +30,9 @@ const CreateQuestions = (props) => {
 
     // handle click event of the Remove button
     const handleRemoveClick = (index) => {
-        const list = [...inputList];
-        list.splice(index, 1);
+        let list = [...inputList];
+        list[index]['active']=false;
+        // list.splice(index, 1);
         setInputList(list);
     };
 
