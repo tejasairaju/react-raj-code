@@ -209,7 +209,7 @@ const CustomerOnboardByAdmin = (props) => {
                         name='employees_count'
                         value={inputValue.employees_count}
                         className="create-framework__input"
-                        placeholder="Victor" required={true}
+                        placeholder="50" required={true}
                         readOnly={isView}
                         onChange={onChangeHandler} />
 

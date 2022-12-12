@@ -15,7 +15,7 @@ const Header = ({userRole = ''}) => {
 
     return (<header className="header">
     <form action="#" className="header__search">
-        <button className="search__button">
+        <button className="search__button" onClick={() => {  navigate(`/manageframework`) }}>
             <svg width="45" height="45" viewBox="0 0 46 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_265_604)">
                     <path d="M45.2356 41.7768L32.3244 28.8564C34.8697 25.8039 36.4006 21.9028 36.4006 17.6422C36.4006 7.92191 28.4234 0.0184326 18.6109 0.0184326C8.79843 0.0184326 0.802734 7.93113 0.802734 17.6514C0.802734 27.3716 8.77998 35.2751 18.5925 35.2751C22.7609 35.2751 26.5974 33.8457 29.6407 31.4571L42.598 44.4144C43.3542 45.1706 44.4793 45.1706 45.2356 44.4144C45.9918 43.6582 45.9918 42.533 45.2356 41.7768ZM4.58386 17.6514C4.58386 10.0154 10.8734 3.80878 18.5925 3.80878C26.3115 3.80878 32.6011 10.0154 32.6011 17.6514C32.6011 25.2874 26.3115 31.494 18.5925 31.494C10.8734 31.494 4.58386 25.2782 4.58386 17.6514Z" fill="#585E62" />
@@ -27,7 +27,7 @@ const Header = ({userRole = ''}) => {
                 </defs>
             </svg>
         </button>
-        <input type="search" className="search__input" required />
+        <input type="search" className="search__input" required hidden="true"/>
     </form>
     <div className="header__options">
         {/* <a href="#" className="header__notification">

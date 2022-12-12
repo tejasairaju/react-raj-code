@@ -52,10 +52,10 @@ const CreateFramework = (props) => {
     const getUserAdminInfo = async () => {
         try {
             await Axios.all([
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`),
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`),
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries?is_active=active`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors?is_active=active`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories?is_active=active`),
+                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries?is_active=active`),
             ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
                 setInputValue({ countries: countries.results, sectors: sectors.results, categories: categories.results });
             });
