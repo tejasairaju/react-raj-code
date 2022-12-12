@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import _toLower from 'lodash/toLower'
 import { useEffect } from "react";
-
+import {  useNavigate } from 'react-router-dom';
 
 const AddMoreSubSectorOption = (props) => {
     const { sectorName ="", isEdit = false, placeholder = '', label = '', value = '', status = '', updateMoreOption = () => { } } = props;
     const [inputValue, setInputValue] = useState('');
-
+    const navigate = useNavigate();
+    
     const addMoreoptions = async (e) => {
         const { value } = e.target;
         setInputValue(value)
@@ -45,9 +46,19 @@ const AddMoreSubSectorOption = (props) => {
                     onChange={addMoreoptions}
                 />
             </div>
-            <button class="main__button" onClick={() => updateMoreOption(inputValue)}>
+
+            <div class="user_input_text flex flex-column">
+                <button class="buttons__panel-button" onClick={() => { navigate(-1) }}>
+                    BACK
+                </button>
+                <button class="main__button" onClick={() => updateMoreOption(inputValue)}>
                 {isEdit ? "EDIT" : "ADD"}
             </button>
+
+            </div>
+        
+
+
         </div>
     )
 }

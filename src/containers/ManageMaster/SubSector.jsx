@@ -50,14 +50,23 @@ const SubSector = (props) => {
     }
 
     const onlyString= (option) =>  {
-        let v =  /^[a-zA-Z,&]+$/.test(option);
+        let v =  /^[a-zA-Z,&-\s]+$/.test(option);
         let len_check = (option.length <3 || option.length > 30) ? false : true
         return v && len_check;
       }
 
+      const check_already_exists= (value) => {
+      
+        const found = subSectorList.results.some(el => el.name.toLowerCase() === value.toLowerCase());
+        // if(found){
+        //     setStatusData({ type: 'error', message: value+' Already exists' });
+        // }
+        return (found)? true : false;
+    }
+
     const updateMoreOption = async (option) => {
         if (!_isEmpty(option)) {
-            if(onlyString(option)){            
+            if(onlyString(option) && !check_already_exists(option)){            
                     const payload = {
                     sector: _get(sector, 'id', null),
                     name: option
@@ -177,7 +186,7 @@ const SubSector = (props) => {
             </button>
         </div> */}
 
-        {error && <div className='category-error color-red'>* SubSector field may not be blank or contains invalid char or should be between 3 and 30 character.</div>}
+        {error && <div className='category-error color-red'>* SubSector field may not be blank or contains invalid char or should be between 3 and 30 character and allowed special character "&,-"  or already exists.</div>}
         <br />
         <div id="viewCategory" className="view-diclosuer-container">
             <table className="default-flex-table">

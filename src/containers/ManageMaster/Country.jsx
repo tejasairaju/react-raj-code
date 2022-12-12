@@ -38,14 +38,23 @@ const ManageCountry = (props) => {
     }
 
     const onlyString= (option) =>  {
-        let v =  /^[a-zA-Z]+$/.test(option);
+        let v =  /^[a-zA-Z\s]+$/.test(option);
         let len_check = (option.length <3 || option.length > 30) ? false : true
         return v && len_check;
       }
+    
+    const check_already_exists= (value) => {
+      
+        const found = countryData.results.some(el => el.name.toLowerCase() === value.toLowerCase());
+        // if(found){
+        //     setStatusData({ type: 'error', message: value+' Already exists' });
+        // }
+        return (found)? true : false;
+    }
 
     const updateMoreOption = async (value) => {
         if (!_isEmpty(value)) {
-            if(onlyString(value)){
+            if(onlyString(value) &&  !check_already_exists(value)){
                 try {
                     let response = {};
                     if (!_isEmpty(doEdit)) {
@@ -118,7 +127,7 @@ const ManageCountry = (props) => {
         </div>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <AddMoreOption label={'Country'} isEdit={!_isEmpty(doEdit)} value={doEdit.name || ''} placeholder={"Enter the Country"} status={statusData.type} updateMoreOption={updateMoreOption} />
-        {error && <div className='category-error color-red'>* Country field may not be blank or contains invalid char or should be between 3 and 30 character.</div>}
+        {error && <div className='category-error color-red'>* Country field may not be blank or contains invalid char or should be between 3 and 30 character or already Exists.</div>}
         <br />
         <div id="viewCountry" className="view-diclosuer-container">
             <MoreOptionTable onEdit={onEdit} onActive={onActive} onBlock={onBlock} isCountry={true} headers={headers} tableData={countryData.results} />
