@@ -45,9 +45,9 @@ const ReactMultiSelectDropdown = ({ data = [], isEditable=false, onChangeCallbac
         return cloneData;
     }
 
-    const onHandleChange = (value) => {
+    const onHandleChange = (value, event) => {
         setSelectedOption(value)
-        onChangeCallback(value);
+        onChangeCallback(value, event);
     }
 
     const onremove = (val) => {

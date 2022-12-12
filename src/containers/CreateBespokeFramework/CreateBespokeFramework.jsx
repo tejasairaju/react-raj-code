@@ -13,11 +13,13 @@ import { useState } from 'react';
 // import CreateframeworkForm from '../createFrameworkForm/createFrameWorkForm.jsx';
 import axios from 'axios';
 import { getErrorMessage } from '../../utils/utils.js';
+import CustomFetchMaster from '../../Components/Common/CustomFetchMaster/CustomFetchMaster.jsx';
 // import CreateQuestions from '../CreateQuestions/CreateQuestions.jsx';
 
 const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 
 const CreateBespokeFramework = (props) => {
+    const [masterUser, masterUserError] = CustomFetchMaster();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');

@@ -17,6 +17,7 @@ import MoreOptionTable from "../../Components/MoreOptionTable/MoreOptionTable.js
 import './ManageMaster.css';
 
 const ManageCountry = (props) => {
+    console.log('>>>>>>>>>>props', props);;
     const navigate = useNavigate();
     const [error, setError] = useState(false);
     const [countryData, setCountryData] = useState({});
