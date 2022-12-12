@@ -183,7 +183,6 @@ const CreateDisclosures = (props) => {
         setInputValue({ ...inputValue, ['guidance']: value });
     }
 
-    console.log('>>>>>>>>>>>>>>>', inputValue);
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
@@ -218,7 +217,7 @@ const CreateDisclosures = (props) => {
             <div className='create__disclosure_container'>
                 <h1 className="create-framework__title">Guidance<span className="color-red P-4">*</span></h1>
                 <div className="guidance-user_input_block">
-                    <ReactTextBoxEditor value={inputValue} onChangeGuidance={onChangeGuidance} />;
+                    <ReactTextBoxEditor markup={inputValue.guidance} onChangeGuidance={onChangeGuidance} />
                 </div>
                 {/* <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} /> */}
             </div>

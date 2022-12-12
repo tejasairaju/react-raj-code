@@ -1,10 +1,16 @@
 import React, { Component } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import RichTextEditor from "react-rte";
 
 const ReactTextBoxEditor = ({ markup = '', onChangeGuidance = () => { } }) => {
     let value_lib = RichTextEditor.createValueFromString(markup, "html");
     const [value, setValue] = useState(value_lib);
+
+    useEffect(() => {
+        let value_lib = RichTextEditor.createValueFromString(markup, "html");
+        setValue(value_lib)
+    }, [markup])
 
     const onChange = (value_1) => {
         setValue(value_1);
