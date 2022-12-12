@@ -49,7 +49,7 @@ const ViewQuestionsList = ({ guidance='', description = '', code = "", name = ""
             <table className="default-table">
                 <thead><tr>{tableHeaders.map((header) => <th>{header}</th>)}</tr></thead>
                 <tbody>
-                    {(inputList || []).map((x, i) => <tr>
+                    {(inputList || []).filter( i => {return i.active ===true}).map((x, i) => <tr>
                         {<td>
                             <Input isEditable={true} label='' type="text" name='code' value={x.code} className="create-framework__input question-ref-code" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} />
                         </td>
