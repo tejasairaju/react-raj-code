@@ -11,6 +11,7 @@ import { getErrorMessage } from '../../utils/utils.js';
 import Requests from '../../Requests/index.js';
 // import '../CreateWizard.css';
 import axios from 'axios';
+import MyStatefulEditor from '../../Components/MyStatefulEditor/MyStatefulEditor.jsx';
 
 const { Input, TextArea, Pills, UploadFile, Button } = Fields;
 
@@ -185,6 +186,10 @@ const CreateBespokeDisclosures = (props) => {
         setStatusData({ type: '', message: '' });
     }
 
+    const onChangeGuidance = (value) => {
+        setInputValue({ ...inputValue, ['description']: value });
+    }
+
     return (<>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
@@ -211,11 +216,19 @@ const CreateBespokeDisclosures = (props) => {
                     <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} />
                 </div>
             </div>
-            <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Guidance' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
+            {/* <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Guidance' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} /> */}
             {/* <TextArea inputblockcls={`user_input_block ${_get(validation, 'guidance', false) ? 'user_input_error' : null}`} error={validation['guidance']} label='Guidance' name='guidance' value={inputValue.guidance || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} /> */}
             <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'categories')} required={true}/>
             <Pills label='Sectors' data={frameworkDetails['supported_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
             <Pills label='Sub Sectors' data={frameworkDetails['supported_sub_sectors']} allSelect={true} onSelectMultipleOption={(i) => { }} />
+            <div className='create__disclosure_container'>
+                <h1 className="create-framework__title">Guidance<span className="color-red P-4">*</span></h1>
+                <div className="guidance-user_input_block">
+                    {(isEditable && inputValue.description)&& <MyStatefulEditor markup={inputValue.description} onChange={onChangeGuidance} />}
+                    {!isEditable&& <MyStatefulEditor markup={''} onChange={onChangeGuidance} />}
+                </div>
+                {/* <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} /> */}
+            </div>
         </div>
         <Button label={isEditable ? 'UPDATE' : 'NEXT'} onClickHandler={onNextHandler} className='main__button' />
     </>)
