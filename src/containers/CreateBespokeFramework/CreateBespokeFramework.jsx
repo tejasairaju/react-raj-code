@@ -1,215 +1,197 @@
 import React, { useEffect } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
+import _lower from 'lodash/lowerCase';
 import { useSelector, useDispatch } from 'react-redux';
-import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
-import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import _get from 'lodash/get';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import Popup from "../../components/Common/Popup/Popup.jsx";
-// import '../CreateWizard.css';
+// import '../CreateBespokeFramework.css';
 import { useState } from 'react';
-// import CreateframeworkForm from '../createFrameworkForm/createFrameWorkForm.jsx';
 import axios from 'axios';
 import { getErrorMessage } from '../../utils/utils.js';
+import ReactMultiSelectDropdown from '../../Components/ReactMultiSelectDropdown/ReactMultiSelectDropdown.jsx';
 import CustomFetchMaster from '../../Components/Common/CustomFetchMaster/CustomFetchMaster.jsx';
-// import CreateQuestions from '../CreateQuestions/CreateQuestions.jsx';
 
-const { Input, TextArea, Pills, UploadFile, Button } = Fields;
+const { Input, TextArea, UploadFile, Button } = Fields;
 
 const CreateBespokeFramework = (props) => {
-    const [masterUser, masterUserError] = CustomFetchMaster();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [masterUser, masterUserError] = CustomFetchMaster();
     const { search } = _get(window, 'location', '?');
     const params = queryString.parse(search);
-    const { isEdit = false} = params;
-    const [inputValue, setInputValue] = useState({});
+    const { isEdit = false } = params;
+    const [inputValue, setInputValue] = useState({ countries: '' });
     const [errorValidation, setErrorValidation] = useState(false);
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [statusData, setStatusData] = useState({});
     const [apiData, setApiData] = useState({});
+    const [filterSubSectors, setFilterSubSectors] = useState([]);
     const { orgDetails = {} } = useSelector(state => state.signup);
-    const [currentFrame, setCurrentFrame] = useState('');
     const appWizard = useSelector(state => state.appWizard);
+    const [selectetSector, setSelectedSector] = useState([]);
     const validation = {};
-    // accordion 
-    // const toke = getAccessTokenSilently(const accessToken = await getAccessTokenSilently({
-    //     audience: `https://${domain}/api/v2/`,
-    //     scope: "read:current_user",
-    //   }););
+
 
     useEffect(() => {
         if (params.isEdit) {
             getframeworkDetails(params.id);
         } else {
-            getUserAdminInfo(1);
-            // setInputValue({ countries: appWizard.countries, sectors: appWizard.sectors, categories: appWizard.categories });
-        }
 
-    }, []);
-    const getUserAdminInfo = async () => {
-        try {
-            await Axios.all([
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries?is_active=active`),
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors?is_active=active`),
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories?is_active=active`),
-                Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries?is_active=active`),
-            ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
-                setInputValue({...inputValue, countries: countries.results, sectors: sectors.results, categories: categories.results });
-            });
-        } catch (error) {
-            console.log(error);
         }
-    };
+    }, []);
 
     const getframeworkDetails = async (id = "") => {
         try {
             const frameDetails = await axios.get(`${process.env.API_BASE_URL}/templates/${params.id}?organization=${orgDetails.name}`).then(({ data }) => data);
-            setLogo(frameDetails.logo);
+            console.log('>>>>>>>>>>>>>>', frameDetails);
             !_isEmpty(frameDetails.logo) && setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
-            setInputValue({inputValue, ...frameDetails, categories:updateArrayObjects(frameDetails.supported_category), countries: updateArrayObjects(frameDetails.supported_countries), sectors: updateArrayObjects(frameDetails.supported_sectors), subsectors: updateArrayObjects(frameDetails.supported_sub_sectors) });
+            updateSubSectorList(frameDetails.supported_sectors);
+            setInputValue({
+                ...frameDetails,
+                categories: updateArrayObjects(frameDetails.supported_category),
+                countries: updateArrayObjects(frameDetails.supported_countries),
+                sectors: updateArrayObjects(frameDetails.supported_sectors),
+                subsectors: updateArrayObjects(frameDetails.supported_sub_sectors)
+            });
+            setLogo(frameDetails.logo);
         } catch (e) {
-            // setFrameworkdetails({});
         }
     }
-
     const updateArrayObjects = (array = null, key = 'isSelect', value = true) => (array || []).map(item => {
-            return {
-                name: item,
-                id: '',
-                isSelect:true
-            }
+        return {
+            name: item,
+            id: item,
+        }
     });
 
-    const getFilterArrayValue = (data = null) => {
+    const updateSubSectorList = (sector = []) => {
+        let cloneSector = [...sector];
+        let cloneSubsectors = [..._get(appWizard, 'subsectors', [])];
+        let sectorNameList = cloneSector.map(sector => sector.name);
+        cloneSubsectors = cloneSubsectors.filter((value) => (sectorNameList).indexOf(_get(value, 'sector.name', '')) > -1);
+        setFilterSubSectors(cloneSubsectors);
+        setSelectedSector(sectorNameList);
+    }
+
+    const groupFilterArrayValue = (data = null) => {
         let filterData = [];
         (data || []).forEach((subItem) => {
-            if (subItem.isSelect === true) {
-                filterData = [...filterData, subItem.name];
-            }
+            filterData = [...filterData, subItem.name];
         });
         return filterData;
     }
 
-    const onNextHandler = async () => {
-        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) 
-        // && (inputValue.countries || []).length
-        //    && (inputValue.categories || []).length && (inputValue.sectors || []).length
-           )
-        {
-            const form = new FormData();
-            form.append('name', inputValue.name);
-            form.append('template_type', "Custom");
-            form.append('description', inputValue.description)
-         if (!_isEmpty(uploadImage&&uploadImage.fileName)&&(isEdit == false)) {
-                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-            } else if(params.isEdit&&logo){
-                 
-                if(typeof(uploadImage.imageUrl) == 'object'){
-                    form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-                    //form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-                }
+    const onSelectMultipleSelect = (field, selectedArray, event) => {
+        let cloneInputValue = { ...inputValue };
+        if (field === 'sectors') {
+            let sectorList = [];
+            if (event.action === 'select-option') {
+                sectorList = [...selectetSector, _get(event, 'option.label', '')];
+            } else {
+                sectorList = [...selectetSector];
+                let removeItem = _get(event, 'removedValue.label', '');
+                let index = (sectorList || []).indexOf(removeItem);
+                sectorList.splice(index, 1);
 
-                // let blob = new Blob([logo], {
-                //     type: "application/pdf"
-                // });
-                // form.append('logo', blob, uploadImage.fileName);
+                // remove already Selected subsector while remove sector
+                let alreadySlectedSubSector = [..._get(cloneInputValue, 'subsectors', [])];
+
+                alreadySlectedSubSector = alreadySlectedSubSector.filter(subSector => _lower(_get(subSector, 'sector.name', '')) != _lower(removeItem));
+                cloneInputValue['subsectors'] = alreadySlectedSubSector;
             }
-            form.append('created_at', moment().format());
-            form.append('updated_at', moment().format());
+            let cloneSubsectors = [..._get(appWizard, 'subsectors', [])];
+            cloneSubsectors = cloneSubsectors.filter((value) => (sectorList).indexOf(_get(value, 'sector.name', '')) > -1);
+            setFilterSubSectors(cloneSubsectors);
+            setSelectedSector(sectorList);
+        }
+        setInputValue({ ...cloneInputValue, [field]: selectedArray });
+    }
 
-            const getMultiCategories = getFilterArrayValue(inputValue.categories);
+
+    const onNextHandler = async () => {
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description)
+            // && (inputValue.countries || []).length > 0
+            //     && (inputValue.categories || []).lengthv> 0 && (inputValue.sectors || []).length > 0
+        ) {
+            const form = new FormData();
+
+
+            const getMultiCategories = groupFilterArrayValue(inputValue.categories);
             for (const a of getMultiCategories) {
-                if(!_isEmpty(a)) {
+                if (!_isEmpty(a)) {
                     form.append("supported_category", a);
                 }
             }
 
-            const getMultisector = getFilterArrayValue(inputValue.sectors);
+            const getMultisector = groupFilterArrayValue(inputValue.sectors);
             for (const a of getMultisector) {
-                if(!_isEmpty(a)) {
+                if (!_isEmpty(a)) {
                     form.append("supported_sectors", a);
                 }
-                
+
             }
-            const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
+            const getMultisubsector = groupFilterArrayValue(inputValue.subsectors);
             for (const a of getMultisubsector) {
-                if(!_isEmpty(a)) {
-                form.append("supported_sub_sectors", a);
+                if (!_isEmpty(a)) {
+                    form.append("supported_sub_sectors", a);
                 }
             }
-            const getMultisubcountries = getFilterArrayValue(inputValue.countries);
+            const getMultisubcountries = groupFilterArrayValue(inputValue.countries);
             for (const a of getMultisubcountries) {
-                if(!_isEmpty(a)) {
-                form.append("supported_countries", a);
+                if (!_isEmpty(a)) {
+                    form.append("supported_countries", a);
                 }
             }
 
-            if(form.getAll("supported_countries").length > 0 && form.getAll("supported_sectors").length > 0
-            &&  form.getAll("supported_category").length > 0
-            )
-            {
+
+            if (form.getAll("supported_countries").length > 0 && form.getAll("supported_sectors").length > 0
+                && form.getAll("supported_category").length > 0
+            ) {
+
+                form.append('name', inputValue.name);
+                form.append('template_type', 'Custom');
+
+                form.append('description', inputValue.description)
+                if (!_isEmpty(uploadImage && uploadImage.fileName) && (isEdit == false)) {
+                    form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                } else if (params.isEdit && logo) {
+                    if (typeof (uploadImage.imageUrl) == 'object') {
+                        form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                    }
+                }
+                form.append('created_at', moment().format());
+                form.append('updated_at', moment().format());
+
                 try {
                     let response = {};
-                    if(isEdit) {
+                    if (isEdit) {
                         response = await axios.put(`${process.env.API_BASE_URL}/templates/${params.id}?organization=${orgDetails.name}`, form, {
                             headers: { "Content-Type": "multipart/form-data" }
                         }).then(({ data }) => data);
                     } else {
-                         response = await axios.post(`${process.env.API_BASE_URL}/templates/?organization=${orgDetails.name}`, form, {
+                        response = await axios.post(`${process.env.API_BASE_URL}/templates/?organization=${orgDetails.name}`, form, {
                             headers: { "Content-Type": "multipart/form-data" }
                         }).then(({ data }) => data);
                     }
-                   
+
                     setApiData(response);
-                    setStatusData({ type: 'success', message: `Thanks! Your framework has been successfully ${isEdit? 'updated': 'created'}` });
+                    setStatusData({ type: 'success', message: `Thanks! Your framework has been successfully ${isEdit ? 'updated' : 'created'}` });
                     setInputValue({});
                     setLogo(null);
                 } catch (e) {
                     let error = getErrorMessage(e);
-                    setStatusData({...error});
-                    // setStatusData({ type: 'error', message: e.message });
+                    setStatusData({ ...error });
                 }
 
-            }else{
+            } else {
                 setErrorValidation(true);
             }
-            
         } else {
             setErrorValidation(true);
-        }
-    }
-
-    const fetchSubSector = async (index, cloneObject) => {
-        const sectorName = inputValue.sectors[index].name;
-        if ((((Object.keys(cloneObject.groupSubsectors || [])).indexOf(sectorName)) > -1)) {
-            delete cloneObject.groupSubsectors[sectorName];
-            setInputValue({ ...cloneObject, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat()] });
-        } else {
-            const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/subsectors?sector=${sectorName}`).then(res => res.data);
-            setInputValue({
-                ...cloneObject, groupSubsectors: {
-                    ...cloneObject['groupSubsectors'],
-                    [sectorName]: response.results || [],
-                }, subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat(), ...response.results]
-            });
-        }
-    }
-
-    const onSelectMultipleOption = async (index, field) => {
-        let cloneInputVal = { ...inputValue }
-        if (cloneInputVal[field][index].isSelect === undefined) {
-            cloneInputVal[field][index].isSelect = true;
-        } else {
-            cloneInputVal[field][index].isSelect = !cloneInputVal[field][index].isSelect
-        }
-        if (field === 'sectors') {
-            fetchSubSector(index, cloneInputVal);
-        } else {
-            setInputValue({ ...cloneInputVal });
         }
     }
 
@@ -232,9 +214,9 @@ const CreateBespokeFramework = (props) => {
     }
 
     const onCloseHandler = () => {
-        if (statusData.type === 'success'&&!isEdit) {
-            navigate(`/template/${apiData.id}`);  //     navigate(`/template/${apiData.id}`);
-        } else if(statusData.type === 'success'&&isEdit) {
+        if (statusData.type === 'success' && !isEdit) {
+            navigate(`/template/${apiData.id}`);
+        } else if (statusData.type === 'success' && isEdit) {
             navigate(-1);
         }
         setStatusData({ type: '', message: '' });
@@ -244,20 +226,24 @@ const CreateBespokeFramework = (props) => {
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <div className="main__top-wrapper">
             <h1 className="main__title custom-title">
-                {`${isEdit? 'Update' : 'Create'} Bespoke Framework Wizard`}
+                {`${isEdit ? 'Update' : 'Create'} Bespoke Framework Wizard`}
             </h1>
         </div>
         <div id="createFramework" className="main__content-wrapper">
             <Input maxLength={50} inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
             <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
-            <Pills label='Categories' data={inputValue.categories} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'categories')} required={true} />
-            <Pills label='Sectors' data={inputValue.sectors} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'sectors')} required={true} />
-            <Pills label='Sub Sectors' data={inputValue.subsectors} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'subsectors')}   />
-            <Pills label='Location' data={inputValue.countries} onSelectMultipleOption={(i) => !isEdit&&onSelectMultipleOption(i, 'countries')} required={true} />
+            <h1 className={'create-framework__title'}>Categories:</h1>
+            <ReactMultiSelectDropdown data={_get(appWizard, 'categories', [])} isEditable={isEdit} selectedOptionVal={inputValue.categories} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("categories", selectedArray, event)} />
+            <h1 className={'create-framework__title'}>Sectors:</h1>
+            <ReactMultiSelectDropdown data={_get(appWizard, 'sectors', [])} isEditable={isEdit} selectedOptionVal={inputValue.sectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("sectors", selectedArray, event)} />
+            <h1 className={'create-framework__title'}>Sub Sectors:</h1>
+            <ReactMultiSelectDropdown data={filterSubSectors.length ? filterSubSectors : [{ label: '', value: '' }]} isEditable={isEdit} selectedOptionVal={inputValue.subsectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("subsectors", selectedArray, event)} />
+            <h1 className={'create-framework__title'}>Location:</h1>
+            <ReactMultiSelectDropdown data={_get(appWizard, 'countries', [])} isEditable={isEdit} selectedOptionVal={inputValue.countries} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("countries", selectedArray, event)} />
         </div>
         {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
-        <Button label={isEdit ? 'UPDATE':'NEXT'} onClickHandler={onNextHandler} className='main__button' />
+        <Button label={isEdit ? 'UPDATE' : 'NEXT'} onClickHandler={onNextHandler} className='main__button' />
     </>)
 }
 

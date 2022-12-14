@@ -34,7 +34,6 @@ const CreateFramework = (props) => {
     const [selectetSector, setSelectedSector] = useState([]);
     const validation = {};
    
-
     useEffect(() => {
         if (params.isEdit) {
             getframeworkDetails(params.id);
@@ -90,7 +89,7 @@ const CreateFramework = (props) => {
                 sectorList.splice(index, 1);
 
                 // remove already Selected subsector while remove sector
-                let alreadySlectedSubSector = [...cloneInputValue.subsectors];
+                let alreadySlectedSubSector = [..._get(cloneInputValue, 'subsectors', [])];
                 alreadySlectedSubSector = alreadySlectedSubSector.filter(subSector => _lower(subSector.name) != _lower(removeItem));
                 cloneInputValue['subsectors'] = alreadySlectedSubSector;
             }
