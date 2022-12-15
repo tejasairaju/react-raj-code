@@ -8,11 +8,13 @@ import { listQuestions } from '../../../__mocks__/listQuestions.js';
 import Fields from "../Common/Fields/Fields.jsx";
 import ReAssignDisclosures from "../ReAssignDisclosures/ReAssignDisclosures.jsx";
 import Modal from "../Common/Modal/Modal.jsx";
-const { RadioButton, UploadFile, TextArea } = Fields
+import UploadEvidence from './UploadEvidence.jsx';
+
+const { RadioButton, UploadFile, TextArea } = Fields;
+
 const AnswerQuestionsTable = (props) => {
     const [isOpenQAcard, setIsOpenQAcard] = useState(false);
     const [logo, setLogo] = useState(null);
-
     const [statusData, setStatusData] = useState({});
     const [questionsList, setQuestionsList] = useState([]);
     const [answer, setAnswer] = useState('');
@@ -137,10 +139,12 @@ const AnswerQuestionsTable = (props) => {
                     </>
                     }
                     <br />
-                    <div class="framework__row-wrapper bot1 answer_question-file_upload">
+                    <><UploadEvidence getDisclosures={() => props.getDisclosures()} question={questionItem} reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id} imageUrl={questionItem.imageUrl} /></>
+                    {/* <UploadEvidence reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id}/> */}
+                    {/* <div class="framework__row-wrapper bot1 answer_question-file_upload">
                         <UploadFile imgcls={'org-image-size'} label='Document Upload' imageUrl={questionItem.image_url} onChangeFile={(e)=>onChangeFile(e,disclosureIndex, questionIndex)} onChangeRemoveFile={onChangeRemoveFile} required={false}/>
                         <div class="framework__row"></div>
-                    </div>
+                    </div> */}
                     {/* <div>
                         <div className="question-save-btn-container"><button onClick={() => onClickSaveAnswer(answer, disclosureIndex, questionIndex)} className="question-save-btn">Save</button></div>
                     </div> */}

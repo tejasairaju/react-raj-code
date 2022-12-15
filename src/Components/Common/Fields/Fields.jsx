@@ -25,15 +25,15 @@ const Input = (props) => (
 
 const TextArea = (props) => {
     return (
-    <>
-        {props.label && <h1 className="create-framework__title">{props.label}{props.required && <span className="color-red P-4">*</span>}</h1>}
-        <div className={props.inputblockcls}>
-        <TextAreaBox {...props}/>
-            {!_isEmpty(props.error) ? <div className='error-msg'>{props.error}</div> : null}
-        </div>
-    </>
-)
-    }
+        <>
+            {props.label && <h1 className="create-framework__title">{props.label}{props.required && <span className="color-red P-4">*</span>}</h1>}
+            <div className={props.inputblockcls}>
+                <TextAreaBox {...props} />
+                {!_isEmpty(props.error) ? <div className='error-msg'>{props.error}</div> : null}
+            </div>
+        </>
+    )
+}
 
 const Pills = (props) => (
     <>
@@ -52,7 +52,7 @@ const UploadFile = (props) => (
         <h1 className="create-framework__title">{props.label}{props.required && <span className="color-red P-4">*</span>}</h1>
         <form className="add__logo-form">
             <div className="add__logo-logo">
-                {props.imageUrl ? <img src={props.imageUrl} alt="" className={props.imgcls}/> : null}
+                {props.imageUrl ? <img src={props.imageUrl} alt="" className={props.imgcls} /> : null}
             </div>
             <label for="add__logo" className="add__logo-label"><span>Upload
             </span>
@@ -61,7 +61,27 @@ const UploadFile = (props) => (
             <span>|</span>
             <label className="remove__logo-label"><span onClick={props.onChangeRemoveFile}>Remove</span>
             </label>
-        </form></>)
+        </form></>);
+
+const DocumentUpload = (props) => (
+    <>
+        <h1 className="create-framework__title">{props.label}{props.required && <span className="color-red P-4">*</span>}</h1>
+        <form className="add__logo-form document-upload-container">
+            <div className="add__logo-logo">
+                {props.imageUrl ? <img src={props.imageUrl} alt="" className={props.imgcls} /> : null}
+            </div>
+            <label for="add__logo" className="add__logo-label"><span>Choose File
+            </span>
+            </label>
+            <input type="file" onChange={props.onChangeFile} name="logo" className="add__logo-input" id="add__logo" accept=".jpg, .jpeg, .png" />
+            <span>|</span>
+            <label className="remove__logo-label"><span onClick={props.onChangeRemoveFile}>Remove</span>
+            </label>
+            <div> <button type="button" onClick={() => props.fileUploadHandler()} className="document-upload">
+                Upload
+            </button></div>
+        </form></>);
+
 
 const Button = (props) => (<button onClick={props.onClickHandler} className={props.className}>
     {props.label}
@@ -118,7 +138,7 @@ const TextAreaBox = (props) => (<textarea
 </textarea>)
 
 const Label = (props) => {
- const {label = '', className="framework__title", required=false, requireCls='P-4'} = props;
+    const { label = '', className = "framework__title", required = false, requireCls = 'P-4' } = props;
     return (<h1 className={className}>{label}{required && <span className={`color-red ${requireCls}`}>*</span>}</h1>)
 }
 
@@ -132,5 +152,6 @@ export default {
     RadioButton,
     InputBox,
     Label,
-    TextAreaBox
+    TextAreaBox,
+    DocumentUpload
 };

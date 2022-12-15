@@ -21,7 +21,7 @@ overflow: hidden;
 .answer_question-file_upload {
     align-items: center;
     justify-content: flex-start;
-    display: flex;
+    display: block;
 }
 
 .answer_question-file_upload .create-framework__title {
@@ -38,5 +38,38 @@ border: 1px solid lightgray;
 }
 
 .detalis__reassign {
-    margin-left: 12em;
+    margin-left: 7em;
+}
+
+.document-upload-container {
+width: 100% !important;
+}
+
+.multi-file-list {
+    margin: 1em 0em;
+}
+
+.multi-file-scroll {
+    display: flex;
+    overflow: scroll;
+    max-width: 53em;
+}
+
+.multi-file-block {
+    width: 55px !important;
+    padding: 0em 0.5em !important;
+}
+.file-close-block {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 4px !important;
+}
+.file-close-block-img {
+    border: 1px solid !important;
+    border-radius: 50% !important;
+}
+
+.multi-file-image {
+width: 40px;
+height: 40px;
 }

@@ -726,7 +726,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-items: center;
     gap: 5px;
     color: #2088BD;
-    margin-left: 10em !important;
+    margin-left: 5em !important;
 }
 .detalis__information {
     display: flex;
@@ -917,5 +917,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     white-space: nowrap !important;
     padding: 0.5em 6em !important;
     margin-left: 1em !important;
+}
+
+.document-upload {
+    margin: 0em 2em;
+    padding: 6px;
+    border-radius: 4px;
+    color: white;
+    background: green;
 }
 
