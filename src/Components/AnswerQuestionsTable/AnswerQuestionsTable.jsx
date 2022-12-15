@@ -47,7 +47,7 @@ const AnswerQuestionsTable = (props) => {
         let cloneQuestionList = [...questionsList];
         cloneQuestionList = (cloneQuestionList || []).map((question, i) => {
             if (i === index) {
-                question['isSelected'] = true;
+                question['isSelected'] = !question['isSelected'];
 
             } else {
                 question['isSelected'] = false;
@@ -139,7 +139,7 @@ const AnswerQuestionsTable = (props) => {
                     </>
                     }
                     <br />
-                    <><UploadEvidence getDisclosures={() => props.getDisclosures()} question={questionItem} reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id} imageUrl={questionItem.imageUrl} /></>
+                    <><UploadEvidence disclosureIndex={disclosureIndex} questionIndex={questionIndex}  getDisclosures={() => {props.getDisclosures(); onClickQuestions(questionIndex)}} question={questionItem} reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id} imageUrl={questionItem.imageUrl} /></>
                     {/* <UploadEvidence reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id}/> */}
                     {/* <div class="framework__row-wrapper bot1 answer_question-file_upload">
                         <UploadFile imgcls={'org-image-size'} label='Document Upload' imageUrl={questionItem.image_url} onChangeFile={(e)=>onChangeFile(e,disclosureIndex, questionIndex)} onChangeRemoveFile={onChangeRemoveFile} required={false}/>
