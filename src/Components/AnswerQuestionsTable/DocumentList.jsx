@@ -17,7 +17,7 @@ const DocumentList = ({ documentList = [], onCloseDocument= () => {} }) => {
                 <div>
                     <div className="multi-file-block">
                         {doc.file ? <img className='multi-file-image' src={doc.file} alt="" width={'40px'} height={'40px'} /> : null}
-                        <div className='file-close-block'>
+                        <div className='file-close-block cursor-pointer'>
                             <img className='file-close-block-img ' onClick={() => onCloseDocument(doc.id)} src="../../../../assets/icons/close.svg" width='20px' height='20px' />
                         </div>
                         <></>
