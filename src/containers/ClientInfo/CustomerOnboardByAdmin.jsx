@@ -22,8 +22,9 @@ const CustomerOnboardByAdmin = (props) => {
     const { state = {} } = useLocation();
     const { isView = false, clientDetails = {}, isEditable = false } = state || {};
     const [logoSizeError, setLogoSizeError] = useState(false);
+
     const [logo, setLogo] = useState(null);
-    // const [errorValidation, setErrorValidation] = useState(false);
+    const [errorValidation, setErrorValidation] = useState(false);
     const [statusData, setStatusData] = useState({});
     const [apiData, setApiData] = useState({});
     const [uploadImage, setUploadImage] = useState(null);
@@ -47,6 +48,7 @@ const CustomerOnboardByAdmin = (props) => {
     }, []);
     const validation = {};
     const onChangeFile = (event) => {
+        if (setErrorValidation) setErrorValidation(false);
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
         const fileSize = event.target.files[0].size / 1024 / 1024;
@@ -63,6 +65,7 @@ const CustomerOnboardByAdmin = (props) => {
 
 
     const onChangeHandler = (e) => {
+        if (setErrorValidation) setErrorValidation(false);
         console.log(e.target);
         const { name, value } = e.target;
         setInputValue({ ...inputValue, [name]: value });
@@ -70,10 +73,11 @@ const CustomerOnboardByAdmin = (props) => {
 
     const onChangeRemoveFile = () => {
         setLogo(null);
+        setUploadImage({});
     }
 
     const onSaveCustomer = async () => {
-        if (!_isEmpty(inputValue.name)) {
+        if (!_isEmpty(inputValue.name && inputValue.location && inputValue.headquarters)) {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('headquarters', inputValue.headquarters)
@@ -92,15 +96,31 @@ const CustomerOnboardByAdmin = (props) => {
             if (!_isEmpty(uploadImage && uploadImage.fileName)) {
                 if (typeof (uploadImage.imageUrl) == 'object') {
                     form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                } else {
+                    let blob = new Blob([logo], {
+                        type: "application/pdf"
+                    });
+                    form.append('logo', blob, uploadImage.fileName);
+                }
+                form.append('created_at', moment().format());
+                form.append('updated_at', moment().format());
+                try {
+                    setStatusData({ type: 'loading', message: '' });
+                    const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${clientDetails.name}`, form, {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }).then(({ data }) => data);
+                    setApiData(response);
+                    setStatusData({ type: 'success', message: 'Client information has been updated successfully' });
+                    setInputValue({});
+                    setLogo(null);
+                } catch (e) {
+                    let error = getErrorMessage(e);
+                    setStatusData({ ...error });
                 }
             } else {
-                let blob = new Blob([logo], {
-                    type: "application/pdf"
-                });
-                form.append('logo', blob, uploadImage.fileName);
+                setErrorValidation(true);
             }
-            form.append('created_at', moment().format());
-            form.append('updated_at', moment().format());
+
 
             // const getMultisector = getFilterArrayValue(inputValue.sectors);
             // for (const a of getMultisector) {
@@ -121,22 +141,9 @@ const CustomerOnboardByAdmin = (props) => {
             //         form.append("supported_countries", a);
             //     }
             // }
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${clientDetails.name}`, form, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                }).then(({ data }) => data);
-                setApiData(response);
-                setStatusData({ type: 'success', message: 'Client information has been updated successfully' });
-                setInputValue({});
-                setLogo(null);
-            } catch (e) {
-                let error = getErrorMessage(e);
-                setStatusData({ ...error });
-            }
             // setError(false);
         } else {
-            // setError(true);
+            setErrorValidation(true);
         }
     }
 
@@ -236,7 +243,7 @@ const CustomerOnboardByAdmin = (props) => {
                     </h1>
                     <label for="create-framework__date-to" class="create-framework__label">
                         <input type="date" class="create-framework__input" name='to' value={inputValue.to}
-                            min="2000-01-01" max="2100-01-01"
+                            min={inputValue.from} max="2100-01-01"
                             id="create-framework__date-to" required=""
                             onChange={onChangeHandler}
                             readOnly={isView}
@@ -292,6 +299,7 @@ const CustomerOnboardByAdmin = (props) => {
                 <button class="buttons__panel-button" onClick={() => { navigate(-1) }}>
                     CANCEL
                 </button>
+                {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
                 {!isView && <button class="main__button" onClick={() => onSaveCustomer()}>
                     SAVE
                 </button>}
