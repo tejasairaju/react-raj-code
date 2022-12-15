@@ -32,6 +32,7 @@ const OrganisationInfo = () => {
     const [statusData, setStatusData] = useState({});
     const [apiData, setApiData] = useState({});
     const [currentFrame, setCurrentFrame] = useState('');
+    const [logoSizeError, setLogoSizeError] = useState(false);
 
     const validation = {};
     // accordion 
@@ -77,7 +78,7 @@ const OrganisationInfo = () => {
                 mobile: orgInfo.mobile_number,
                 location: orgInfo.location,
                 headquarters: orgInfo.headquarters,
-                zipcode :  orgInfo.zip_code,
+                zipcode: orgInfo.zip_code,
                 operating_countries: updateArrayObjects(orgInfo.supported_countries), sectors: updateArrayObjects(appWizard.sectors,
                     orgInfo.sectors) /*, subsectors: getSelectedSubSector(appWizard.sectors, orgInfo.sectors, orgInfo.supported_sub_sectors)*/
             };
@@ -142,7 +143,7 @@ const OrganisationInfo = () => {
     }
 
     const onSaveHandler = async () => {
-        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email)&&!_isEmpty(uploadImage.fileName)&&!_isEmpty(logo)
+        if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email) && !_isEmpty(uploadImage.fileName) && !_isEmpty(logo)
             && (inputValue.sectors || []).length && inputValue.employees_count && inputValue.headquarters && inputValue.mobile
             && inputValue.address) {
             const form = new FormData();
@@ -154,13 +155,13 @@ const OrganisationInfo = () => {
             form.append('address', inputValue.address);
             form.append('status', 'Active');
             form.append('employees_count', inputValue.employees_count);
-            
+
             form.append('location', inputValue.location);
- 
 
 
-            if (!_isEmpty(uploadImage && uploadImage.fileName )) {
-                if(typeof(uploadImage.imageUrl) == 'object'){
+
+            if (!_isEmpty(uploadImage && uploadImage.fileName)) {
+                if (typeof (uploadImage.imageUrl) == 'object') {
                     form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
                 }
             } else {
@@ -264,9 +265,15 @@ const OrganisationInfo = () => {
     const onChangeFile = (event) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
-        setLogo(URL.createObjectURL(imageUrl));
-        if (imageUrl) {
-            setUploadImage({ fileName, imageUrl });
+        const fileSize = event.target.files[0].size / 1024 / 1024;
+        if (fileSize < 1) {
+            setLogo(URL.createObjectURL(imageUrl));
+            if (imageUrl) {
+                setUploadImage({ fileName, imageUrl });
+            }
+            setLogoSizeError(false);
+        } else {
+            setLogoSizeError(true);
         }
     }
 
@@ -294,8 +301,10 @@ const OrganisationInfo = () => {
 
     const renderOrganisationmainContainer = () => {
         return (<><div class="client-main__content-wrapper content-wrapper scrollable">
+              
             <div class="framework__row-wrapper bot1">
-                <UploadFile imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
+                
+                <UploadFile logoSizeError={logoSizeError} imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
                 <div class="framework__row"></div>
                 <div class="framework__row"></div>
             </div>
@@ -361,7 +370,7 @@ const OrganisationInfo = () => {
                   
 
                 </div> */}
-               
+
             </div>
             {error ? <div className='common-error-msg'>* All mandatory filed is required.</div> : null}
         </div>
@@ -388,8 +397,8 @@ const OrganisationInfo = () => {
                     </section>
                 </> :
                 <>
-                {renderTitle()}
-                {renderOrganisationmainContainer()}
+                    {renderTitle()}
+                    {renderOrganisationmainContainer()}
                 </>
             }
         </>

@@ -21,13 +21,14 @@ const AddClientUser = () => {
     const navigate = useNavigate();
     const { state = {} } = useLocation();
     const { isEditable = false } = state || {};
-    const { id = ""} = _get(state, 'userDetails', {});
+    const { id = "" } = _get(state, 'userDetails', {});
 
     const [statusData, setStatusData] = useState({});
     const [inputValue, setInputValue] = useState({});
     const { orgDetails = {} } = useSelector(state => state.signup);
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
+    const [logoSizeError, setLogoSizeError] = useState(false);
     const validation = {};
 
     const onChangeHandler = (e) => {
@@ -66,7 +67,7 @@ const AddClientUser = () => {
             form.append('updated_at', moment().format());
             if (!_isEmpty(uploadImage && uploadImage.fileName)) {
                 form.append('profile_picture', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-            } else if(uploadImage!=null)  {
+            } else if (uploadImage != null) {
                 let blob = new Blob([logo], {
                     type: "application/pdf"
                 });
@@ -84,11 +85,11 @@ const AddClientUser = () => {
                     headers: { "Content-Type": "multipart/form-data" }
                 }).then(({ data }) => data);
             }
-        
-            if(isEditable){
+
+            if (isEditable) {
                 setStatusData({ type: 'success', message: 'Thanks! Successfully updated ' });
             }
-            else{
+            else {
                 setStatusData({ type: 'success', message: 'Thanks! Successfully created' });
             }
 
@@ -97,7 +98,7 @@ const AddClientUser = () => {
             setStatusData({ ...error });
         }
     }
-    
+
     const onCloseHandler = () => {
         if (statusData.type === 'success') {
             navigate('/client/users');
@@ -109,9 +110,15 @@ const AddClientUser = () => {
     const onChangeFile = (event) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
-        setLogo(URL.createObjectURL(imageUrl));
-        if (imageUrl) {
-            setUploadImage({ fileName, imageUrl });
+        const fileSize = event.target.files[0].size / 1024 / 1024;
+        if (fileSize < 1) {
+            setLogo(URL.createObjectURL(imageUrl));
+            if (imageUrl) {
+                setUploadImage({ fileName, imageUrl });
+            }
+            setLogoSizeError(false);
+        } else {
+            setLogoSizeError(true);
         }
     }
 
@@ -135,7 +142,7 @@ const AddClientUser = () => {
         <div class="cli-add-main__content-wrapper content-wrapper">
             <div class="framework__col-wrapper">
                 {/* <div class="Generate_report_head align-center">
-                    <UploadFile imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
+                    <UploadFile logoSizeError={logoSizeError} onChangeFile={onChangeFile} imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
                     <div class="framework__row"></div>
                     <div class="framework__row"></div>
                 </div> */}

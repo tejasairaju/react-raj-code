@@ -32,11 +32,11 @@ const PersonalInformation = () => {
     const [statusData, setStatusData] = useState({});
     const [apiData, setApiData] = useState({});
     const [currentFrame, setCurrentFrame] = useState('');
+    const [logoSizeError, setLogoSizeError] = useState(false);
     // const onCloseHandler = () => {
     //     setIsOpen(false)
     // }
     useEffect(() => {
-
         getUserDetails();
         // setInputValue({...inputValue, sectors: appWizard.sectors, operating_countries: appWizard.countries });
     }, []);
@@ -184,9 +184,15 @@ const PersonalInformation = () => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
         setLogo(URL.createObjectURL(imageUrl));
+        const fileSize = event.target.files[0].size / 1024 / 1024;
+        if (fileSize < 1) {
         if (imageUrl) {
             setUploadImage({ fileName, imageUrl });
         }
+        setLogoSizeError(false);
+    } else {
+        setLogoSizeError(true);
+    }
     }
 
     const onChangeRemoveFile = () => {
@@ -269,7 +275,7 @@ const PersonalInformation = () => {
             <div class="framework__col-wrapper">
                 <div class="framework__row-wrapper profile-info-fileds">
                     <div class="framework__row">
-                        <UploadFile imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
+                        <UploadFile logoSizeError={logoSizeError} imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
                     </div>
                     <div class="framework__row">
 

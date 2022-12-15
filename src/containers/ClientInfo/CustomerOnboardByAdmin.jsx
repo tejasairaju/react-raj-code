@@ -21,8 +21,7 @@ const CustomerOnboardByAdmin = (props) => {
     const navigate = useNavigate();
     const { state = {} } = useLocation();
     const { isView = false, clientDetails = {}, isEditable = false } = state || {};
-
-    console.log('>>>>>>>>>>clientDetails>>>>>>>>', clientDetails);
+    const [logoSizeError, setLogoSizeError] = useState(false);
     const [logo, setLogo] = useState(null);
     // const [errorValidation, setErrorValidation] = useState(false);
     const [statusData, setStatusData] = useState({});
@@ -50,9 +49,15 @@ const CustomerOnboardByAdmin = (props) => {
     const onChangeFile = (event) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
-        setLogo(URL.createObjectURL(imageUrl));
-        if (imageUrl) {
-            setUploadImage({ fileName, imageUrl });
+        const fileSize = event.target.files[0].size / 1024 / 1024;
+        if (fileSize < 1) {
+            setLogo(URL.createObjectURL(imageUrl));
+            if (imageUrl) {
+                setUploadImage({ fileName, imageUrl });
+            }
+            setLogoSizeError(false);
+        } else {
+            setLogoSizeError(true);
         }
     }
 
@@ -69,70 +74,71 @@ const CustomerOnboardByAdmin = (props) => {
 
     const onSaveCustomer = async () => {
         if (!_isEmpty(inputValue.name)) {
-        const form = new FormData();
-        form.append('name', inputValue.name);
-        form.append('headquarters', inputValue.headquarters)
-        form.append('mobile_number', inputValue.mobile || '');
-        // form.append('zip_code', inputValue.zipcode);
-        // form.append('email', inputValue.email);
-        // form.append('address', inputValue.address);
-        form.append('status', 'Active');
-        form.append('employees_count', inputValue.employees_count);
-        form.append('location', inputValue.location);
-        form.append('package', inputValue.radio__package);
-        form.append('is_payment_done', true);
-        
+            const form = new FormData();
+            form.append('name', inputValue.name);
+            form.append('headquarters', inputValue.headquarters)
+            form.append('mobile_number', inputValue.mobile || '');
+            // form.append('zip_code', inputValue.zipcode);
+            // form.append('email', inputValue.email);
+            // form.append('address', inputValue.address);
+            form.append('status', 'Active');
+            form.append('employees_count', inputValue.employees_count);
+            form.append('location', inputValue.location);
+            form.append('package', inputValue.radio__package);
+            form.append('is_payment_done', true);
 
 
-        if (!_isEmpty(uploadImage && uploadImage.fileName )) {
-            if(typeof(uploadImage.imageUrl) == 'object'){
-                form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+
+            if (!_isEmpty(uploadImage && uploadImage.fileName)) {
+                if (typeof (uploadImage.imageUrl) == 'object') {
+                    form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
+                }
+            } else {
+                let blob = new Blob([logo], {
+                    type: "application/pdf"
+                });
+                form.append('logo', blob, uploadImage.fileName);
             }
+            form.append('created_at', moment().format());
+            form.append('updated_at', moment().format());
+
+            // const getMultisector = getFilterArrayValue(inputValue.sectors);
+            // for (const a of getMultisector) {
+            //     if (!_isEmpty(a)) {
+            //         form.append("sectors", a);
+            //     }
+
+            // }
+            // const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
+            // for (const a of getMultisubsector) {
+            //     if (!_isEmpty(a)) {
+            //         form.append("sub_sectors", a);
+            //     }
+            // }
+            // const getMultisubcountries = getFilterArrayValue(inputValue.operating_countries);
+            // for (const a of getMultisubcountries) {
+            //     if (!_isEmpty(a)) {
+            //         form.append("supported_countries", a);
+            //     }
+            // }
+            try {
+                setStatusData({ type: 'loading', message: '' });
+                const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${clientDetails.name}`, form, {
+                    headers: { "Content-Type": "multipart/form-data" }
+                }).then(({ data }) => data);
+                setApiData(response);
+                setStatusData({ type: 'success', message: 'Client information has been updated successfully' });
+                setInputValue({});
+                setLogo(null);
+            } catch (e) {
+                let error = getErrorMessage(e);
+                setStatusData({ ...error });
+            }
+            // setError(false);
         } else {
-            let blob = new Blob([logo], {
-                type: "application/pdf"
-            });
-            form.append('logo', blob, uploadImage.fileName);
+            // setError(true);
         }
-        form.append('created_at', moment().format());
-        form.append('updated_at', moment().format());
-
-        // const getMultisector = getFilterArrayValue(inputValue.sectors);
-        // for (const a of getMultisector) {
-        //     if (!_isEmpty(a)) {
-        //         form.append("sectors", a);
-        //     }
-
-        // }
-        // const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
-        // for (const a of getMultisubsector) {
-        //     if (!_isEmpty(a)) {
-        //         form.append("sub_sectors", a);
-        //     }
-        // }
-        // const getMultisubcountries = getFilterArrayValue(inputValue.operating_countries);
-        // for (const a of getMultisubcountries) {
-        //     if (!_isEmpty(a)) {
-        //         form.append("supported_countries", a);
-        //     }
-        // }
-        try {
-            setStatusData({ type: 'loading', message: '' });
-            const response = await axios.put(`${process.env.API_BASE_URL}/organizations/${clientDetails.name}`, form, {
-                headers: { "Content-Type": "multipart/form-data" }
-            }).then(({ data }) => data);
-            setApiData(response);
-            setStatusData({ type: 'success', message: 'Client information has been updated successfully' });
-            setInputValue({});
-            setLogo(null);
-        } catch (e) {
-            let error = getErrorMessage(e);
-            setStatusData({ ...error });
-        }
-        // setError(false);
-    } else {
-        // setError(true);
-    }    }
+    }
 
     const onChangeRadioHandler = (value) => {
         setInputValue({ ...inputValue, ['radio__package']: value });
@@ -151,7 +157,7 @@ const CustomerOnboardByAdmin = (props) => {
 
     return (
         <>
-          {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
+            {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             <div className="main__top-wrapper">
                 {isEditable && <h1 className="main__title custom-title">
                     Manage Clients {'->'} Edit Client
@@ -164,7 +170,7 @@ const CustomerOnboardByAdmin = (props) => {
 
             <div className="main__content-wrapper">
 
-                <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
+                <UploadFile label='Logo' logoSizeError={logoSizeError} imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
                 <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`}
                     error={validation['organization']} label={'Organisation'} type="text" name='name' value={inputValue.name}
                     className="create-framework__input"
@@ -244,7 +250,7 @@ const CustomerOnboardByAdmin = (props) => {
                 </h1>
                 <form class="create-framework__row-wrapper radios">
                     <label for="bronze" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Bronze')} class="create-framework__input" id="bronze" readOnly={isView}/>
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Bronze')} class="create-framework__input" id="bronze" readOnly={isView} />
                         {/* <div class="fake__radio">
                             <div class="fake__radio-active"></div>
                         </div> */}
@@ -253,7 +259,7 @@ const CustomerOnboardByAdmin = (props) => {
                         </h1>
                     </label>
                     <label for="silver" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Silver')} class="create-framework__input" id="silver" readOnly={isView}/>
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Silver')} class="create-framework__input" id="silver" readOnly={isView} />
                         {/* <div class="fake__radio">
                             <div class="fake__radio-active"></div>
                         </div> */}
@@ -262,7 +268,7 @@ const CustomerOnboardByAdmin = (props) => {
                         </h1>
                     </label>
                     <label for="gold" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Gold')} class="create-framework__input" id="gold" readOnly={isView}/>
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Gold')} class="create-framework__input" id="gold" readOnly={isView} />
                         {/* <div class="fake__radio">
                             <div class="fake__radio-active"></div>
                         </div> */}
@@ -271,7 +277,7 @@ const CustomerOnboardByAdmin = (props) => {
                         </h1>
                     </label>
                     <label for="custom" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Custom')} class="create-framework__input" id="custom" readOnly={isView}/>
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Custom')} class="create-framework__input" id="custom" readOnly={isView} />
                         {/* <div class="fake__radio">
                             <div class="fake__radio-active"></div>
                         </div> */}
@@ -286,7 +292,7 @@ const CustomerOnboardByAdmin = (props) => {
                 <button class="buttons__panel-button" onClick={() => { navigate(-1) }}>
                     CANCEL
                 </button>
-                {!isView&&<button class="main__button" onClick={() => onSaveCustomer()}>
+                {!isView && <button class="main__button" onClick={() => onSaveCustomer()}>
                     SAVE
                 </button>}
             </div>

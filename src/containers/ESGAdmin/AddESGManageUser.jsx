@@ -29,6 +29,7 @@ const AddESGManageUser = () => {
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [error, setError] = useState('');
+    const [logoSizeError, setLogoSizeError] = useState(false);
     const validation = {};
 
     const onChangeHandler = (e) => {
@@ -102,9 +103,15 @@ const AddESGManageUser = () => {
     const onChangeFile = (event) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
-        setLogo(URL.createObjectURL(imageUrl));
-        if (imageUrl) {
-            setUploadImage({ fileName, imageUrl });
+        const fileSize = event.target.files[0].size / 1024 / 1024;
+        if (fileSize < 1) {
+            setLogo(URL.createObjectURL(imageUrl));
+            if (imageUrl) {
+                setUploadImage({ fileName, imageUrl });
+            }
+            setLogoSizeError(false);
+        } else {
+            setLogoSizeError(true);
         }
     }
 
@@ -128,7 +135,7 @@ const AddESGManageUser = () => {
         <div class="cli-add-main__content-wrapper content-wrapper">
             <div class="framework__col-wrapper">
                 {/* <div class="Generate_report_head align-center">
-                    <UploadFile imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
+                    <UploadFile logoSizeError={logoSizeError} imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
                     <div class="framework__row"></div>
                     <div class="framework__row"></div>
                 </div> */}
@@ -185,7 +192,7 @@ const AddESGManageUser = () => {
                                 error={validation['phone_number']} type="phone"
                                 name='phone_number'
                                 readOnly={isView}
-                                
+
                                 className="GenerateReport-framework__input"
                                 placeholder="+44235545" required={true}
                                 onChange={onChangeHandler} />

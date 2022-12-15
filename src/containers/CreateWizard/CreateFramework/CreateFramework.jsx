@@ -32,13 +32,14 @@ const CreateFramework = (props) => {
     const [filterSubSectors, setFilterSubSectors] = useState([]);
     const appWizard = useSelector(state => state.appWizard);
     const [selectetSector, setSelectedSector] = useState([]);
+    const [logoSizeError, setLogoSizeError] = useState(false);
     const validation = {};
-   
+
     useEffect(() => {
         if (params.isEdit) {
             getframeworkDetails(params.id);
         } else {
-            
+
         }
     }, []);
 
@@ -191,9 +192,15 @@ const CreateFramework = (props) => {
     const onChangeFile = (event) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
-        setLogo(URL.createObjectURL(imageUrl));
-        if (imageUrl) {
-            setUploadImage({ fileName, imageUrl });
+        const fileSize = event.target.files[0].size / 1024 / 1024;
+        if (fileSize < 1) {
+            setLogo(URL.createObjectURL(imageUrl));
+            if (imageUrl) {
+                setUploadImage({ fileName, imageUrl });
+            }
+            setLogoSizeError(false);
+        } else {
+            setLogoSizeError(true);
         }
     }
 
@@ -219,7 +226,7 @@ const CreateFramework = (props) => {
         </div>
         <div id="createFramework" className="main__content-wrapper">
             <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label={'Name'} type="text" name='name' value={inputValue.name || ''} className="create-framework__input" placeholder="GRI" required={true} onChangeHandler={onChangeHandler} />
-            <UploadFile label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
+            <UploadFile logoSizeError={logoSizeError} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
             <TextArea inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`} error={validation['description']} label='Description' name='description' value={inputValue.description || ''} className="create-framework__input create-framework__textarea" placeholder="" required={true} onChangeHandler={onChangeHandler} />
             <h1 className={'create-framework__title'}>Categories:</h1>
             <ReactMultiSelectDropdown data={_get(appWizard, 'categories', [])} isEditable={isEdit} selectedOptionVal={inputValue.categories} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("categories", selectedArray, event)} />

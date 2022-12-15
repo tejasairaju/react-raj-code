@@ -17,6 +17,7 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
     const [uploadImage, setUploadImage] = useState(null);
     const [isEdit, setIsEdit] = useState(false);
     const [multiFile, setMultiFile] = useState([]);
+    const [logoSizeError, setLogoSizeError] = useState(false);
 
     useEffect(() => {
         // if (!_isEmpty(_get(question, "evidence[0].file", ''))) {
@@ -44,9 +45,15 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
     const onChangeFile = (event) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
-        setLogo(URL.createObjectURL(imageUrl));
-        if (imageUrl) {
-            setUploadImage({ fileName, imageUrl });
+        const fileSize = event.target.files[0].size / 1024 / 1024;
+        if (fileSize < 5) {
+            setLogo(URL.createObjectURL(imageUrl));
+            if (imageUrl) {
+                setUploadImage({ fileName, imageUrl });
+            }
+            setLogoSizeError(false);
+        } else {
+            setLogoSizeError(true);
         }
     }
 
@@ -80,14 +87,14 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
     }
 
     const onCloseDocument = async (docId) => {
-            try {
-                const response = await axios.delete(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/${disclosureId}/evidence/${docId}?organization=${orgDetails.name}`);
-                getDisclosures();
-            } catch (e) {
-                console.log('>>>>>>>>>>Error', e);
-            }
+        try {
+            const response = await axios.delete(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/${disclosureId}/evidence/${docId}?organization=${orgDetails.name}`);
+            getDisclosures();
+        } catch (e) {
+            console.log('>>>>>>>>>>Error', e);
         }
-    
+    }
+
 
     // const onCloseDocument =() => {
 
@@ -98,7 +105,7 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
     }
     return (<>
         <div class="framework__row-wrapper bot1 answer_question-file_upload">
-            <DocumentUpload
+            <div> <DocumentUpload
                 imgcls={'org-image-size'}
                 fileUploadHandler={() => onSaveUploadFile()}
                 label=''
@@ -106,9 +113,15 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
                 onChangeFile={(e) => onChangeFile(e)}
                 onChangeRemoveFile={onChangeRemoveFile}
                 required={false} />
+            </div>
+            {logoSizeError && <div className="logo-size-error doc-size-error"><span>* File size should not more than 5mb.</span>
+            </div>}
         </div>
+
         <div>
-            <DocumentList documentList={question.evidence} onCloseDocument={(docId) => onCloseDocument(docId)} />
+
+            <DocumentList logoSizeError={logoSizeError} documentList={question.evidence} onCloseDocument={(docId) => onCloseDocument(docId)} />
+
             {/* <div className="scrollable multi-file-scroll">
 
                 {(question.evidence || []).map((doc, index) => (
