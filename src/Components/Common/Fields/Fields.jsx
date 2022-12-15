@@ -61,7 +61,7 @@ const UploadFile = (props) => (
             <span>|</span>
             <label className="remove__logo-label"><span onClick={props.onChangeRemoveFile}>Remove</span>
             </label>
-            {props.logoSizeError&&<label className="logo-size-error"><span>* File size should not more than 1mb.</span>
+            {props.logoSizeError&&<label className="logo-size-error"><span>* File size should not exceed 1mb.</span>
             </label>}
         </form></>);
 

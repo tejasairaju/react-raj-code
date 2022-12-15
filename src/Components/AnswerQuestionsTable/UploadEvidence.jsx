@@ -114,7 +114,7 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
                 onChangeRemoveFile={onChangeRemoveFile}
                 required={false} />
             </div>
-            {logoSizeError && <div className="logo-size-error doc-size-error"><span>* File size should not more than 5mb.</span>
+            {logoSizeError && <div className="logo-size-error doc-size-error"><span>* File size should not exceed 5mb.</span>
             </div>}
         </div>
 
