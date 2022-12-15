@@ -27,16 +27,16 @@ const ViewQuestionsList = ({ guidance='', description = '', code = "", name = ""
             </div>
         </Modal>}
             <div className="create-framework__row-wrapper">
-                {<><h1 className="create-framework__title">
+                {<><div className="fz-14 fw-700">
                     Ref No
-                </h1>
+                </div>
                     <input type="text" min="" step="" className="refno_create_question" value={code}
                         required disabled></input></>
                 }
-                <h1 className="create-framework__title disclosure">
+                <div className="fz-14 fw-700 disclosure">
                     Disclosure :
                     {<img onClick={() => setIsShowGuidance(true)} src='../../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
-                </h1>
+                </div>
                 <input type="text" className="create-framework__input"
                     value={name} required disabled></input>
                 <div class="add-question-btn">
