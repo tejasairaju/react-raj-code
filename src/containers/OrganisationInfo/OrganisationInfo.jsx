@@ -148,7 +148,7 @@ const OrganisationInfo = () => {
         (data || []).forEach((subItem) => {
             filterData = [...filterData, subItem.id];
         });
-        return filterData;
+        return [...new Set(filterData)];;
     }
 
     const onSelectMultipleSelect = (field, selectedArray, event) => {
