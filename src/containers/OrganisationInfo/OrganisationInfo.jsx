@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './OrganisationInfo.css';
 import _isEmpty from 'lodash/isEmpty';
+import _lower from 'lodash/lowerCase';
 import queryString from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,7 @@ import { getErrorMessage } from '../../utils/utils.js'
 import axios from 'axios';
 import Requests from '../../Requests';
 import EsgImageNavBar from '../../components/EsgImageNavBar/EsgImageNavBar.jsx';
+import ReactMultiSelectDropdown from '../../Components/ReactMultiSelectDropdown/ReactMultiSelectDropdown.jsx';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 
 const { Input, TextArea, Pills, UploadFile, Button, InputBox, Label, Dropdown, TextAreaBox } = Fields;
@@ -23,12 +25,14 @@ const OrganisationInfo = () => {
     const navigate = useNavigate();
     const { search } = _get(window, 'location', '?');
     const { isEditable = false } = queryString.parse(search);
-    const [inputValue, setInputValue] = useState({ name: orgDetails.name, sectors: [...appWizard.sectors], subsectors: [] });
+    const [inputValue, setInputValue] = useState({ name: orgDetails.name });
     const [organizationInfo, setOrganizationInfo] = useState({});
     // const [errorValidation, setErrorValidation] = useState(false);
     const [error, setError] = useState(false);
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
+    const [filterSubSectors, setFilterSubSectors] = useState([]);
+    const [selectetSector, setSelectedSector] = useState([]);
     const [statusData, setStatusData] = useState({});
     const [apiData, setApiData] = useState({});
     const [currentFrame, setCurrentFrame] = useState('');
@@ -79,15 +83,25 @@ const OrganisationInfo = () => {
                 location: orgInfo.location,
                 headquarters: orgInfo.headquarters,
                 zipcode: orgInfo.zip_code,
-                operating_countries: updateArrayObjects(orgInfo.supported_countries), sectors: updateArrayObjects(appWizard.sectors,
-                    orgInfo.sectors) /*, subsectors: getSelectedSubSector(appWizard.sectors, orgInfo.sectors, orgInfo.supported_sub_sectors)*/
+                subsectors: constractArrayValue(orgInfo.sub_sectors, appWizard.subsectors),
+                sectors: constractArrayValue(orgInfo.sectors, appWizard.sectors) /*, subsectors: getSelectedSubSector(appWizard.sectors, orgInfo.sectors, orgInfo.supported_sub_sectors)*/
             };
-            getSelectedSubSector(orgInfo.sectors, orgInfo.subsectors, constractInputVal);
+            setInputValue(constractInputVal);
         } catch (e) {
             // setFrameworkdetails({});
         }
     }
 
+    const constractArrayValue = (selectedArray = [], listArray = []) => {
+        let cloneListArray = [...listArray];
+        let cloneSelectedArray = [...selectedArray];
+        cloneListArray = (cloneListArray || []).filter(item => {
+            if ((cloneSelectedArray || []).indexOf(item.id) > -1) {
+                return item;
+            }
+        });
+        return cloneListArray
+    }
 
     // The below function will execute while edit this page
     const getSelectedSubSector = async (selectedSectorArray = null, selectedSubSector = [], overallObj) => {
@@ -120,6 +134,47 @@ const OrganisationInfo = () => {
         });
 
     };
+    const updateSubSectorList = (sector = []) => {
+        let cloneSector = [...sector];
+        let cloneSubsectors = [..._get(appWizard, 'subsectors', [])];
+        let sectorNameList = cloneSector.map(sector => sector.name);
+        cloneSubsectors = cloneSubsectors.filter((value) => (sectorNameList).indexOf(_get(value, 'sector.name', '')) > -1);
+        setFilterSubSectors(cloneSubsectors);
+        setSelectedSector(sectorNameList);
+    }
+
+    const groupFilterArrayValue = (data = null) => {
+        let filterData = [];
+        (data || []).forEach((subItem) => {
+            filterData = [...filterData, subItem.id];
+        });
+        return filterData;
+    }
+
+    const onSelectMultipleSelect = (field, selectedArray, event) => {
+        let cloneInputValue = { ...inputValue };
+        if (field === 'sectors') {
+            let sectorList = [];
+            if (event.action === 'select-option') {
+                sectorList = [...selectetSector, _get(event, 'option.label', '')];
+            } else {
+                sectorList = [...selectetSector];
+                let removeItem = _get(event, 'removedValue.label', '');
+                let index = (sectorList || []).indexOf(removeItem);
+                sectorList.splice(index, 1);
+
+                // remove already Selected subsector while remove sector
+                let alreadySlectedSubSector = [..._get(cloneInputValue, 'subsectors', [])];
+                alreadySlectedSubSector = alreadySlectedSubSector.filter(subSector => _lower(subSector.name) != _lower(removeItem));
+                cloneInputValue['subsectors'] = alreadySlectedSubSector;
+            }
+            let cloneSubsectors = [..._get(appWizard, 'subsectors', [])];
+            cloneSubsectors = cloneSubsectors.filter((value) => (sectorList).indexOf(_get(value, 'sector.name', '')) > -1);
+            setFilterSubSectors(cloneSubsectors);
+            setSelectedSector(sectorList);
+        }
+        setInputValue({ ...cloneInputValue, [field]: selectedArray });
+    }
 
     const updateArrayObjects = (parantArray = null, selectedArray = null, key = 'isSelect', value = true, selectedSubSector = []) => {
         parantArray = (parantArray || []).map((item, index) => {
@@ -173,14 +228,14 @@ const OrganisationInfo = () => {
             form.append('created_at', moment().format());
             form.append('updated_at', moment().format());
 
-            const getMultisector = getFilterArrayValue(inputValue.sectors);
+            const getMultisector = groupFilterArrayValue(inputValue.sectors);
             for (const a of getMultisector) {
                 if (!_isEmpty(a)) {
                     form.append("sectors", a);
                 }
 
             }
-            const getMultisubsector = getFilterArrayValue(inputValue.subsectors);
+            const getMultisubsector = groupFilterArrayValue(inputValue.subsectors);
             for (const a of getMultisubsector) {
                 if (!_isEmpty(a)) {
                     form.append("sub_sectors", a);
@@ -301,18 +356,18 @@ const OrganisationInfo = () => {
 
     const renderOrganisationmainContainer = () => {
         return (<><div class="client-main__content-wrapper content-wrapper scrollable">
-              
+
             <div class="framework__row-wrapper bot1">
-                
+
                 <UploadFile logoSizeError={logoSizeError} imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
                 <div class="framework__row"></div>
                 <div class="framework__row"></div>
             </div>
             <div class="framework__row-wrapper bot1">
-                {OrgInputFields('Company', true, 'name', inputValue.name)}
+                {OrgInputFields('Company', true, 'name', inputValue && inputValue.name)}
                 <div class="framework__row">
                     <Label label={'Location'} className={`framework__title right`} required={true} />
-                    <InputBox name={'location'} value={inputValue.location} onChangeHandler={onChangeHandler} />
+                    <InputBox name={'location'} value={inputValue && inputValue.location} onChangeHandler={onChangeHandler} />
                 </div>
             </div>
             <div class="framework__row-wrapper bot1">
@@ -320,47 +375,48 @@ const OrganisationInfo = () => {
                     <div class="framework__col-wrapper">
                         <div class="framework__row bot1">
                             <Label label={'Headquarters'} required={true} />
-                            <InputBox name={'headquarters'} value={inputValue.headquarters} onChangeHandler={onChangeHandler} />
+                            <InputBox name={'headquarters'} value={inputValue && inputValue.headquarters} onChangeHandler={onChangeHandler} />
                         </div>
 
                         <div class="framework__row">
                             <Label label={'Employee'} required={true} />
-                            <Dropdown className_1={'framework__input'} className_2={''} options={empCount} name='employees_count' value={inputValue.employees_count || ''} onChangeHandler={(e) => onChangeHandler(e)} />
+                            <Dropdown className_1={'framework__input'} className_2={''} options={empCount} name='employees_count' value={inputValue && inputValue.employees_count || ''} onChangeHandler={(e) => onChangeHandler(e)} />
                         </div>
                     </div>
                 </div>
 
                 <div class="framework__row">
                     <Label label={'Address'} className={"framework__title right address_title"} required={true} />
-                    <TextAreaBox label='' name='address' value={inputValue.address} className="framework__input" placeholder="" required={true} onChangeHandler={(e) => onChangeHandler(e)} />
+                    <TextAreaBox label='' name='address' value={inputValue && inputValue.address} className="framework__input" placeholder="" required={true} onChangeHandler={(e) => onChangeHandler(e)} />
                 </div>
             </div>
             <div class="framework__row-wrapper bot1">
                 <div class="framework__row">
                     <h1 class="framework__title"><b>Sector</b></h1>
-                    <Pills label='' data={inputValue.sectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'sectors')} required={true} />
+                    <ReactMultiSelectDropdown data={_get(appWizard, 'sectors', [])} isEditable={isEditable} selectedOptionVal={inputValue && inputValue.sectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("sectors", selectedArray, event)} />
                 </div>
                 <div class="framework__row">
                     <h1 class="framework__title right"><b>SubSector</b></h1>
-                    <Pills label='' data={inputValue.subsectors} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'subsectors')} required={isEditable} />
+                    <ReactMultiSelectDropdown data={filterSubSectors.length ? filterSubSectors : [{ label: '', value: '' }]} isEditable={isEditable} selectedOptionVal={inputValue && inputValue.subsectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("subsectors", selectedArray, event)} />
+
                 </div>
             </div>
             <div class="framework__row-wrapper bot1">
                 <div class="framework__row">
                     <Label label={'Email'} required={true} />
-                    <InputBox name={'email'} value={inputValue.email} onChangeHandler={onChangeHandler} />
+                    <InputBox name={'email'} value={inputValue && inputValue.email} onChangeHandler={onChangeHandler} />
                 </div>
 
                 <div class="framework__row">
                     <Label className="framework__title right" label={'Mobile'} required={true} />
-                    <InputBox maxLength={15} text="number" name={'mobile'} value={inputValue.mobile} onChangeHandler={onChangeHandler} />
+                    <InputBox maxLength={15} text="number" name={'mobile'} value={inputValue && inputValue.mobile} onChangeHandler={onChangeHandler} />
                 </div>
             </div>
 
             <div class="framework__row-wrapper bot40">
                 <div class="framework__row">
                     <Label label={'Zip/PostalCode'} className="framework__title" required={true} />
-                    <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue.zipcode} onChangeHandler={onChangeHandler} />
+                    <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue && inputValue.zipcode} onChangeHandler={onChangeHandler} />
 
                     {/* <Label label={'Country'} required={false} />
                     <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} /> */}

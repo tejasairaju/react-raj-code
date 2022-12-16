@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Select from 'react-select';
+import './ReactMultiSelectDropdown.css';
 
 const ReactMultiSelectDropdown = ({ data = [], isEditable=false, onChangeCallback = () => {}, selectedOptionVal = [] }) => {
     const [selectedOption, setSelectedOption] = useState([]);
@@ -20,7 +21,7 @@ const ReactMultiSelectDropdown = ({ data = [], isEditable=false, onChangeCallbac
     }, [data]);
 
     useEffect(() => {
-        if(isEditable) {
+        if(isEditable&&(selectedOptionVal|| []).length) {
             let filterData_1 = constractArrayValue([...selectedOptionVal]);
             setSelectedOption(filterData_1);
         } 
@@ -37,7 +38,7 @@ const ReactMultiSelectDropdown = ({ data = [], isEditable=false, onChangeCallbac
 
     const constractArrayValue = (val) => {
         let cloneData = [...val];
-        cloneData = cloneData.map((item) => {
+        cloneData = (cloneData || []).map((item) => {
             item['label'] = item.name;
             item['value'] = item.id;
             return item;
@@ -56,7 +57,7 @@ const ReactMultiSelectDropdown = ({ data = [], isEditable=false, onChangeCallbac
     }
     return (
     
-        <div className="App">
+        <div className="App multi-select-dropdown">
             {((options ||[]).length || (selectedOption|| []).length) && <Select
                 value={selectedOption}
                 // defaultInputValue={selectedOption}

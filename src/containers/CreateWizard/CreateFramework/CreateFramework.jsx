@@ -92,7 +92,12 @@ const CreateFramework = (props) => {
                 // remove already Selected subsector while remove sector
                 let alreadySlectedSubSector = [..._get(cloneInputValue, 'subsectors', [])];
                 alreadySlectedSubSector = alreadySlectedSubSector.filter(subSector => _lower(subSector.name) != _lower(removeItem));
-                cloneInputValue['subsectors'] = alreadySlectedSubSector;
+                // if(alreadySlectedSubSector|| [].length === 0) {
+                //     cloneInputValue['subsectors'] = null;
+                //     console.log('>>>>>>>>>>>>>iffff');
+                // } else {
+                    cloneInputValue['subsectors'] = alreadySlectedSubSector
+                // }
             }
             let cloneSubsectors = [..._get(appWizard, 'subsectors', [])];
             cloneSubsectors = cloneSubsectors.filter((value) => (sectorList).indexOf(_get(value, 'sector.name', '')) > -1);
