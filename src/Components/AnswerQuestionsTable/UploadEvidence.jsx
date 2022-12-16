@@ -2,35 +2,23 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
-// import Fields from '../Fields/Fields.jsx';
 import Fields from '../../Components/Common/Fields/Fields.jsx';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import Requests from '../../Requests/index.js';
 import DocumentList from './DocumentList.jsx';
+import { getErrorMessage } from '../../utils/utils.js';
 
 const { DocumentUpload } = Fields;
 
-const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, question = {}, reportId = '', disclosureId = '', kpiId = '', imageUrl = '' }) => {
+const UploadEvidence = ({ setStatusData = () => {}, disclosureIndex = '', getDisclosures = () => { }, question = {}, reportId = '', disclosureId = '', kpiId = '', imageUrl = '' }) => {
     const { orgDetails = {} } = useSelector(state => state.signup);
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [isEdit, setIsEdit] = useState(false);
-    const [multiFile, setMultiFile] = useState([]);
+    const [multiFile, setMultiFile] = useState([...question.evidence]);
     const [logoSizeError, setLogoSizeError] = useState(false);
 
-    useEffect(() => {
-        // if (!_isEmpty(_get(question, "evidence[0].file", ''))) {
-        //     setUploadImage({ imageUrl: _get(question, `evidence[${(question.evidence || []).length -1}].file`, ''), fileName: _get(question, `evidence[${(question.evidence || []).length -1}].file_name`, '') });
-        //     // setLogo(_get(question, "evidence[0].file", ''));
-        //     setIsEdit(true);
-        // }
-        setMultiFile([...question.evidence]);
-    }, [question.evidence]);
-
-    // useEffect(() => {
-    //     getDisclosures1();
-    // }, []);
 
     const getDisclosures1 = async () => {
         try {
@@ -60,6 +48,7 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
     const onSaveUploadFile = async () => {
         if (!_isEmpty(logo)) {
             try {
+                setStatusData({ type: 'loading', message: '' });
                 const form = new FormData();
                 if (!_isEmpty(uploadImage && uploadImage.fileName) && (isEdit == false)) {
                     form.append('file', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
@@ -76,29 +65,40 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
                     headers: { "Content-Type": "multipart/form-data" }
                 }).then(({ data }) => data);
                 if (response) {
-                    getDisclosures();
-                    // getDisclosures1();
+                    addedDocumentList(response);
                 }
-
+                setStatusData({ type: '', message: '' });
             } catch (e) {
-                console.log('>>>>>>>>>>Error', e);
+                let error = getErrorMessage(e);
+                setStatusData({ ...error });
             }
         }
     }
 
     const onCloseDocument = async (docId) => {
         try {
+            setStatusData({ type: 'loading', message: '' });
             const response = await axios.delete(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/${disclosureId}/evidence/${docId}?organization=${orgDetails.name}`);
-            getDisclosures();
+            if (response) {
+                removeDeletedDocument(docId);
+            }
+            setStatusData({ type: '', message: '' });
         } catch (e) {
-            console.log('>>>>>>>>>>Error', e);
+            let error = getErrorMessage(e);
+            setStatusData({ ...error });
         }
-    }
+    };
 
+    const addedDocumentList = (response) => {
+        let cloneMultiFile = [...multiFile];
+        setMultiFile([...[response], ...cloneMultiFile]);
+    };
 
-    // const onCloseDocument =() => {
-
-    // }
+    const removeDeletedDocument = (docId) => {
+        let cloneMultiFile = [...multiFile];
+        cloneMultiFile = cloneMultiFile.filter(item => item.id !== docId);
+        setMultiFile(cloneMultiFile);
+    };
 
     const onChangeRemoveFile = () => {
         setLogo(null);
@@ -119,24 +119,7 @@ const UploadEvidence = ({ disclosureIndex = '', getDisclosures = () => { }, ques
         </div>
 
         <div>
-
-            <DocumentList logoSizeError={logoSizeError} documentList={question.evidence} onCloseDocument={(docId) => onCloseDocument(docId)} />
-
-            {/* <div className="scrollable multi-file-scroll">
-
-                {(question.evidence || []).map((doc, index) => (
-                    <div>
-                        <div className="multi-file-block">
-                            {doc.file ? <img className='multi-file-image' src={doc.file} alt="" width={'40px'} height={'40px'} /> : null}
-                            <div className='file-close-block'>
-                                <img className='file-close-block-img ' onClick={() => { }} src="../../../../assets/icons/close.svg" width='20px' height='20px' />
-                            </div>
-                            <></>
-                        </div>
-                    </div>
-                ))}
-
-            </div> */}
+            <DocumentList logoSizeError={logoSizeError} documentList={multiFile} onCloseDocument={(docId) => onCloseDocument(docId)} />
         </div>
     </>);
 }

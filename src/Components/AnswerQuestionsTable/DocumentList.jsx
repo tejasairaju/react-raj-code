@@ -7,13 +7,9 @@ import { useEffect } from 'react';
 
 
 const DocumentList = ({ documentList = [], onCloseDocument= () => {} }) => {
-    const [listData, setListData] = useState([]);
-    useState(() => {
-        setListData(documentList);
-    }, [documentList])
     return (<>
         <div className='scrollable multi-file-scroll'>
-            {(listData || []).map((doc, index) => (
+            {(documentList || []).map((doc, index) => (
                 <div>
                     <div className="multi-file-block">
                         {doc.file ? <img className='multi-file-image' src={doc.file} alt="" width={'40px'} height={'40px'} /> : null}

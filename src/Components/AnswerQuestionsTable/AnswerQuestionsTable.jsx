@@ -20,24 +20,17 @@ const AnswerQuestionsTable = (props) => {
     const [answer, setAnswer] = useState('');
     const [isOpenReAssign, setIsOpenReAssign] = useState(false);
     const [isShowDescription, setIsShowDescription] = useState(false);
-    // const []
     const { itemDetails = {}, reportId = '', frameworkId = '', disclosureIndex, onClickSaveAnswer = () => { } } = props;
 
     useEffect(() => {
-        // getQuestionList();
         setQuestionsList([...itemDetails.children]);
     }, []);
 
     const getQuestionList = async () => {
         try {
             setStatusData({ type: 'loading', message: '' });
-            // const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${frameworkId}/disclosures/${itemDetails.id}`).then(({ data }) => data);
             setStatusData({ type: '', message: '' });
-            // const ListData = response.children;
-            // ListData[0]['isSelected'] = true;
-            // setQuestionsList([...ListData]);
             setQuestionsList([...listQuestions.children]); //Dummy
-            // return response.results || [];
         } catch (e) {
             setStatusData({ type: '', message: '' });
         }
@@ -102,7 +95,7 @@ const AnswerQuestionsTable = (props) => {
     const onChangeFile = (event, disclosureIndex, questionIndex) => {
         const imageUrl = event.target.files[0];
         const fileName = event.target.files[0].name;
-        onClickSaveAnswer(URL.createObjectURL(imageUrl), disclosureIndex, questionIndex,"image_url")
+        onClickSaveAnswer(URL.createObjectURL(imageUrl), disclosureIndex, questionIndex, "image_url")
         setLogo(URL.createObjectURL(imageUrl));
         if (imageUrl) {
             // setUploadImage({ fileName, imageUrl });
@@ -124,7 +117,7 @@ const AnswerQuestionsTable = (props) => {
                     {!_isEmpty(_get(questionItem, 'description', '')) && <><p className="detalis__information-title">
                         Guidance Notes
                     </p>
-                        <TextArea   rows={5} type="text" className="assign__categories" value={_get(questionItem, 'description', '')} disabled />
+                        <TextArea rows={5} type="text" className="assign__categories" value={_get(questionItem, 'description', '')} disabled />
                     </>
                     }
                     <p className="detalis__information-title">
@@ -139,15 +132,7 @@ const AnswerQuestionsTable = (props) => {
                     </>
                     }
                     <br />
-                    <><UploadEvidence disclosureIndex={disclosureIndex} questionIndex={questionIndex}  getDisclosures={() => {props.getDisclosures(); onClickQuestions(questionIndex)}} question={questionItem} reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id} imageUrl={questionItem.imageUrl} /></>
-                    {/* <UploadEvidence reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id}/> */}
-                    {/* <div class="framework__row-wrapper bot1 answer_question-file_upload">
-                        <UploadFile imgcls={'org-image-size'} label='Document Upload' imageUrl={questionItem.image_url} onChangeFile={(e)=>onChangeFile(e,disclosureIndex, questionIndex)} onChangeRemoveFile={onChangeRemoveFile} required={false}/>
-                        <div class="framework__row"></div>
-                    </div> */}
-                    {/* <div>
-                        <div className="question-save-btn-container"><button onClick={() => onClickSaveAnswer(answer, disclosureIndex, questionIndex)} className="question-save-btn">Save</button></div>
-                    </div> */}
+                    <>{((questionItem.evidence || []).length > 0) && <UploadEvidence setStatusData={setStatusData} disclosureIndex={disclosureIndex} questionIndex={questionIndex} getDisclosures={() => { props.getDisclosures(); onClickQuestions(questionIndex) }} question={questionItem} reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id} imageUrl={questionItem.imageUrl} />}</>
                 </>)
             }
         })
@@ -159,7 +144,7 @@ const AnswerQuestionsTable = (props) => {
         {isShowDescription && <Modal isShow={!!isShowDescription} isDisclosureDec={true} closeModal={closePopupModal}>
             <div className='create-options-title'>Guidance:</div>
             <div className='get-textarea-input-container'>
-                <div className="create-framework__textarea disclosure-description-screen">{(_isEmpty(_get(itemDetails, 'metaData[0].value', '')))?itemDetails.description: <p dangerouslySetInnerHTML={{ __html: _get(itemDetails, 'metaData[0].value', '') }}></p>}</div>
+                <div className="create-framework__textarea disclosure-description-screen">{(_isEmpty(_get(itemDetails, 'metaData[0].value', ''))) ? itemDetails.description : <p dangerouslySetInnerHTML={{ __html: _get(itemDetails, 'metaData[0].value', '') }}></p>}</div>
             </div>
         </Modal>}
         {isOpenReAssign && <ReAssignDisclosures setIsOpenReAssign={setIsOpenReAssign} disclosure={itemDetails} reportId={reportId} />}
@@ -179,7 +164,6 @@ const AnswerQuestionsTable = (props) => {
                 <p className="assign__categories-item active">
                     {itemDetails.category}
                 </p>
-                {/* <img src="../../../../assets/icons/downarrow.svg" alt="question" width={'16px'} height="16px" /> */}
             </div>
         </div>
         {isOpenQAcard &&
@@ -191,33 +175,6 @@ const AnswerQuestionsTable = (props) => {
 
                 </ul>
                 <div className="details__line"></div>
-                <>
-                    {/* <div className="details__categories-information name-of-the-legal-entity">
-                <h5 className="detalis__information-title">
-                    Name of the Legal Entity - Enter the legal name of the organisation as registered.
-                </h5>
-                <p className="detalis__information-title">
-                    Guidance Notes
-                </p>
-                <textarea className="assign__categories">If the organisation uses a commonly know trading name or business name that is different from its legal name, it should report this in addittion to its legal name.</textarea>
-                <p className="detalis__information-title">
-                    Answer
-                </p>
-                <input type="text" className="assign__categories" value="Axiata group Berhad, Kuala Lumpur Malaysia" />
-                <form action="#" className="add__logo-form file-form detalis__form">
-                    <p className="detalis__information-title">
-                        File upload
-                    </p>
-                    <div className="add__file-window">
-
-                    </div>
-                    <label for="add__file" className="add__logo-label main__button browse__btn">
-                        BROWSE
-                        <input type="file" name="logo" className="add__logo-input" id="add__file" />
-                    </label>
-                </form>
-            </div> */}
-                </>
                 <div className="details__categories-information size-of-office-space">
                     {renderAnswerComponent()}
                 </div>
