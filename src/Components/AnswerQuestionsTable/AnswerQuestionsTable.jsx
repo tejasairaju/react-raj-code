@@ -132,7 +132,7 @@ const AnswerQuestionsTable = (props) => {
                     </>
                     }
                     <br />
-                    <>{((questionItem.evidence || []).length > 0) && <UploadEvidence setStatusData={setStatusData} disclosureIndex={disclosureIndex} questionIndex={questionIndex} getDisclosures={() => { props.getDisclosures(); onClickQuestions(questionIndex) }} question={questionItem} reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id} imageUrl={questionItem.imageUrl} />}</>
+                    <>{<UploadEvidence setStatusData={setStatusData} disclosureIndex={disclosureIndex} questionIndex={questionIndex} getDisclosures={() => { props.getDisclosures(); onClickQuestions(questionIndex) }} question={questionItem} reportId={reportId} disclosureId={itemDetails.id} kpiId={questionItem.id} imageUrl={questionItem.imageUrl} />}</>
                 </>)
             }
         })
