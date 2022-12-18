@@ -16,7 +16,7 @@ const UploadEvidence = ({ setStatusData = () => {}, disclosureIndex = '', getDis
     const [logo, setLogo] = useState(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [isEdit, setIsEdit] = useState(false);
-    const [multiFile, setMultiFile] = useState([...question.evidence]);
+    const [multiFile, setMultiFile] = useState([...question.evidence || []]);
     const [logoSizeError, setLogoSizeError] = useState(false);
 
 
