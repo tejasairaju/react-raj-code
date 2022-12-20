@@ -210,7 +210,7 @@ const OrganisationInfo = () => {
             form.append('address', inputValue.address);
             form.append('status', 'Active');
             form.append('employees_count', inputValue.employees_count);
-
+            form.append('is_payment_done',inputValue.is_payment_done)
             form.append('location', inputValue.location);
 
 
