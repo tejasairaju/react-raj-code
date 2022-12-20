@@ -98,25 +98,196 @@ export const questions = {
         value: 'Multiselect',
         field_choices: []
     }],
-    unitType: [{
-        label: 'Select',
-        value: 'Select'
-    },
-    {
-        label: 'Numbers',
-        value: 'Numbers'
-    },
-    {
-        label: 'Sq Mt',
-        value: 'Sq Mt'
-    },
-    {
-        label: 'kWh',
-        value: 'kWh'
-    }, {
-        label: 'Liters',
-        value: 'Liters'
-    }]
+    unitType: [
+        {
+            label: 'Select',
+            value: 'Select'
+        },
+        {
+            "label": "AUD",
+            "value": "AUD"
+        },
+        {
+            "label": "Barrels",
+            "value": "Barrels"
+        },
+        {
+            "label": "Celsius",
+            "value": "Celsius"
+        },
+        {
+            "label": "Centimeter",
+            "value": "Centimeter"
+        },
+        {
+            "label": "Cubit Meters",
+            "value": "Cubit Meters"
+        },
+        {
+            "label": "Day",
+            "value": "Day"
+        },
+        {
+            "label": "EURO",
+            "value": "EURO"
+        },
+        {
+            "label": "Fahrenheit",
+            "value": "Fahrenheit"
+        },
+        {
+            "label": "Feet",
+            "value": "Feet"
+        },
+        {
+            "label": "Fluid Ounce",
+            "value": "Fluid Ounce"
+        },
+        {
+            "label": "Gallon",
+            "value": "Gallon"
+        },
+        {
+            "label": "GBP",
+            "value": "GBP"
+        },
+        {
+            "label": "Gram",
+            "value": "Gram"
+        },
+        {
+            "label": "Hour",
+            "value": "Hour"
+        },
+        {
+            "label": "hours",
+            "value": "hours"
+        },
+        {
+            "label": "Inch",
+            "value": "Inch"
+        },
+        {
+            "label": "Kelvin",
+            "value": "Kelvin"
+        },
+        {
+            "label": "Kilogram",
+            "value": "Kilogram"
+        },
+        {
+            "label": "Kilolitre",
+            "value": "Kilolitre"
+        },
+        {
+            "label": "Kilometer",
+            "value": "Kilometer"
+        },
+        {
+            "label": "kWh",
+            "value": "kWh"
+        },
+        {
+            "label": "Litres",
+            "value": "Litres"
+        },
+        {
+            "label": "Meter",
+            "value": "Meter"
+        },
+        {
+            "label": "Metric tones Co2-e",
+            "value": "Metric tones Co2-e"
+        },
+        {
+            "label": "Metric tonnes",
+            "value": "Metric tonnes"
+        },
+        {
+            "label": "Metric tons (t)",
+            "value": "Metric tons (t)"
+        },
+        {
+            "label": "Metric tons CO-e (t)",
+            "value": "Metric tons CO-e (t)"
+        },
+        {
+            "label": "Mile",
+            "value": "Mile"
+        },
+        {
+            "label": "Milligram",
+            "value": "Milligram"
+        },
+        {
+            "label": "Millilitre",
+            "value": "Millilitre"
+        },
+        {
+            "label": "Millimeter",
+            "value": "Millimeter"
+        },
+        {
+            "label": "Million standard cubic feet",
+            "value": "Million standard cubic feet"
+        },
+        {
+            "label": "Million standard cubic feet per day (MMscf/day)",
+            "value": "Million standard cubic feet per day (MMscf/day)"
+        },
+        {
+            "label": "Minute",
+            "value": "Minute"
+        },
+        {
+            "label": "Month",
+            "value": "Month"
+        },
+        {
+            "label": "Numbers",
+            "value": "Numbers"
+        },
+        {
+            "label": "Ounce",
+            "value": "Ounce"
+        },
+        {
+            "label": "Pint",
+            "value": "Pint"
+        },
+        {
+            "label": "Pound",
+            "value": "Pound"
+        },
+        {
+            "label": "Second",
+            "value": "Second"
+        },
+        {
+            "label": "SGD",
+            "value": "SGD"
+        },
+        {
+            "label": "Ton",
+            "value": "Ton"
+        },
+        {
+            "label": "USD",
+            "value": "USD"
+        },
+        {
+            "label": "Week",
+            "value": "Week"
+        },
+        {
+            "label": "Yard",
+            "value": "Yard"
+        },
+        {
+            "label": "Year",
+            "value": "Year"
+        }
+    ]
 }
 
 export const empCount = [
