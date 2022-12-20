@@ -25,16 +25,14 @@ const Header = ({ userRole = '' }) => {
       const userDetails = await Requests.Get(`/users/${loginDetails.user_id}`, {
         organization: orgDetails.name,
       });
-      console.log(userDetails, 'userDetails');
       setLogo(userDetails.profile_picture);
     } catch (e) {
-      setLogo(`avatar${Math.floor(Math.random() * 90 + 10)}.png`);
+      setLogo(null);
     }
   };
   useEffect(() => {
     getUserDetails();
   }, []);
-  console.log(user, logo);
   return (
     <header className='header'>
       <form action='#' className='header__search'>
