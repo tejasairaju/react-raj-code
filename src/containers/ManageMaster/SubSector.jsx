@@ -202,7 +202,7 @@ const SubSector = (props) => {
             </tr>
           </thead>
           <tbody>
-            {subSectorList.results.length > 0 ? (
+            {subSectorList && subSectorList.results && subSectorList.results.length > 0 ? (
               (subSectorList.results || []).map((val, index) => {
                 return (
                   <tr>

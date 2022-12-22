@@ -66,7 +66,7 @@ const ViewMyTaskDisclosuresList = (props) => {
             </tr>
           </thead>
           <tbody>
-            {disclosureData.length > 0 ? (
+            {disclosureData && disclosureData.length > 0 ? (
               (disclosureData || []).map((item, index) => {
                 // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
                 return (

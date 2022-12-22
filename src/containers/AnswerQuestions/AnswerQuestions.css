@@ -477,6 +477,9 @@ textarea {
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
 }
+.assign__categories-item.inactive {
+    padding: 2px 8px;
+}
 .disclosures__wrapper {
     max-height: 40%;
     overflow: auto;

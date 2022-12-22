@@ -59,7 +59,7 @@ const ClientInfo = (props) => {
             </tr>
           </thead>
           <tbody>
-            {clientData.results.length > 0 ? (
+            {clientData && clientData.results && clientData.results.length > 0 ? (
               clientData.results.map((val, index) => {
                 return (
                   <tr>

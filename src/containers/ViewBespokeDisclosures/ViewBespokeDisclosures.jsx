@@ -71,7 +71,7 @@ const ViewBespokeDisclosures = () => {
             </tr>
           </thead>
           <tbody>
-            {apiData.results.length > 0
+            {apiData && apiData.results && apiData.results.length > 0
               ? apiData.results.map((val, index) => {
                   return (
                     <tr>

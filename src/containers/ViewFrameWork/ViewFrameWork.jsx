@@ -56,7 +56,7 @@ const ViewFrameWork = () => {
             </tr>
           </thead>
           <tbody>
-            {frameworkData.results.length > 0 ? (
+            {frameworkData && frameworkData.results && frameworkData.results.length > 0 ? (
               (frameworkData.results || []).map((val, index) => {
                 return (
                   <tr>

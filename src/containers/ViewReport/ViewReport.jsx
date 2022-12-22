@@ -84,7 +84,7 @@ const ViewReport = (props) => {
             </tr>
           </thead>
           <tbody>
-            {reportList.length > 0 ? (
+            {reportList && reportList.length > 0 ? (
               (reportList || []).map((report, index) => {
                 // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
                 return (

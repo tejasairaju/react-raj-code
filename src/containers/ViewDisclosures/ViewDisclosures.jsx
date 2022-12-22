@@ -134,7 +134,7 @@ const ViewDisclosures = () => {
             </tr>
           </thead>
           <tbody>
-            {listData.length > 0 ? (
+            {listData && listData.length > 0 ? (
               (listData || []).map((val, index) => {
                 return (
                   <tr>
