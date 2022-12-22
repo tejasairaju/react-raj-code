@@ -42,7 +42,7 @@ const AssignDisclosures = () => {
     try {
       setStatusData({ type: 'loading', message: '' });
       const response = await Requests.Get(`/reports/${reportId}/disclosures`, {
-        organization: orgDetails.name,
+        organization: orgDetails.name
       });
       setStatusData({ type: '', message: '' });
       setApiData({ ...apiData, listData: [...response.disclosures] });
@@ -62,7 +62,7 @@ const AssignDisclosures = () => {
   const onClickFrameworkHandler = async (indexKey, frameworkId) => {
     const data = await getDisclosures(frameworkId);
     setApiData({
-      listData: [...data],
+      listData: [...data]
     });
   };
 
@@ -72,8 +72,7 @@ const AssignDisclosures = () => {
     if (cloneApiData.listData[disclosureIndex]['isSelected'] == undefined) {
       cloneApiData.listData[disclosureIndex]['isSelected'] = true;
     } else {
-      cloneApiData.listData[disclosureIndex]['isSelected'] =
-        !cloneApiData.listData[disclosureIndex]['isSelected'];
+      cloneApiData.listData[disclosureIndex]['isSelected'] = !cloneApiData.listData[disclosureIndex]['isSelected'];
     }
 
     setApiData({ ...cloneApiData });
@@ -107,15 +106,11 @@ const AssignDisclosures = () => {
         // payload['disclosure_type'] = "Standard";
         // payload['assigned_to'] = selectedUser.id;
         // const response = await axios.post(`${process.env.API_BASE_URL}/reports/${reportId}/disclosures/assign?organization=${orgDetails.name}`, params).then(({ data }) => data);
-        const response = await Requests.Post(
-          `/reports/${reportId}/disclosures/assign`,
-          params,
-          { organization: orgDetails.name }
-        );
+        const response = await Requests.Post(`/reports/${reportId}/disclosures/assign`, params, { organization: orgDetails.name });
 
         setStatusData({
           type: 'success',
-          message: 'Disclosures assigned successfully',
+          message: 'Disclosures assigned successfully'
         });
         setTimeout(() => {
           getDisclosures();
@@ -139,23 +134,10 @@ const AssignDisclosures = () => {
     return false;
   };
 
-  const filterList = [
-    'All',
-    'Environmental',
-    'Social',
-    'Universal',
-    'Goverance',
-    'General',
-  ];
+  const filterList = ['All', 'Environmental', 'Social', 'Universal', 'Goverance', 'General'];
   return (
     <div className='assign-disclosure-container-block'>
-      {!!statusData.type && (
-        <Popup
-          isShow={!!statusData.type}
-          data={statusData}
-          onCloseHandler={onCloseHandler}
-        />
-      )}
+      {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
       <div className='main__top-wrapper assign-disclosure-title'>
         <h1 className='main__title custom-title'>
           <b>Assign Disclosures</b>
@@ -164,32 +146,21 @@ const AssignDisclosures = () => {
       {/* <div class="framework-toggle-container"><button className="framework-btn-toogle toggle-active">Framework</button><button className="framework-btn-toogle">Besopke Framework</button></div> */}
       <div className='ans-main__assign-item'>
         {/* <ListFramework onClickFrameworkHandler={onClickFrameworkHandler} /> */}
-        <CategoryFilter
-          filterList={filterList}
-          filterKey={catagoryType}
-          radioChangeHandler={radioChangeHandler}
-        />
+        <CategoryFilter filterList={filterList} filterKey={catagoryType} radioChangeHandler={radioChangeHandler} />
       </div>
       <div class=''>
         <b>Disclosures:</b>
       </div>
       <div class='disclosures__wrapper list-disclosures-container'>
         {_get(apiData, 'listData', []).map((disclosure, disclosureIndex) => {
-          if (
-            _toLower(disclosure.category) === _toLower(catagoryType) ||
-            _toLower(catagoryType) === 'all'
-          ) {
+          if (_toLower(disclosure.category) === _toLower(catagoryType) || _toLower(catagoryType) === 'all') {
             return (
               <div key={disclosureIndex} class='disclosures__item'>
                 <p class='disclosures__title'>{disclosure.category}</p>
                 <p class='disclosures__detalis'>
                   {disclosure.code} {disclosure.name}
                 </p>
-                <label
-                  for='organisational__checkbox'
-                  class='disclosures__label'
-                  onClick={(e) => onClickSelectHandler(e, disclosureIndex)}
-                >
+                <label for='organisational__checkbox' class='disclosures__label' onClick={(e) => onClickSelectHandler(e, disclosureIndex)}>
                   <input
                     type='checkbox'
                     class='disclosures__checkbox'
@@ -197,20 +168,11 @@ const AssignDisclosures = () => {
                     checked={isAssignedDisclosure(disclosure)}
                     disabled={!_isEmpty(_get(disclosure, 'assigned_to.id', ''))}
                   />
-                  <div
-                    class={`fake__checkbox ${
-                      disclosure.isSelected ? 'box-checked' : null
-                    }`}
-                  >
+                  <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>
                     {!isAssignedDisclosure(disclosure) ? (
                       <>
                         {disclosure.isSelected === true ? (
-                          <img
-                            src='../../assets/icons/single_tick_checkbox.svg'
-                            width={'30px'}
-                            height={'30px'}
-                            style={{ margin: 'auto' }}
-                          />
+                          <img src='../../assets/icons/single_tick_checkbox.svg' width={'30px'} height={'30px'} style={{ margin: 'auto' }} />
                         ) : null}
                       </>
                     ) : null}
