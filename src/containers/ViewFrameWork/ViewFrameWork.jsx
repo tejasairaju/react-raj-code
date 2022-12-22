@@ -19,9 +19,7 @@ const ViewFrameWork = () => {
   const getFramework = async () => {
     try {
       setStatusData({ type: 'loading', message: '' });
-      const response = await axios
-        .get(`${process.env.API_BASE_URL}/esgadmin/frameworks`)
-        .then(({ data }) => data);
+      const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks`).then(({ data }) => data);
       setStatusData({ type: '', message: '' });
       setFrameworkData(response);
     } catch (e) {
@@ -41,22 +39,14 @@ const ViewFrameWork = () => {
       console.log(e);
     }
   };
-  
+
   return (
     <>
       <div className='main__top-wrapper'>
-        <h1 className='main__title custom-title'>
-          Edit Framework {'->'} List Frameworks
-        </h1>
+        <h1 className='main__title custom-title'>Edit Framework {'->'} List Frameworks</h1>
       </div>
       <div id='viewFramework' className='view-framework-container'>
-        {!!statusData.type && (
-          <Popup
-            isShow={!!statusData.type}
-            data={statusData}
-            onCloseHandler={onCloseHandler}
-          />
-        )}
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <table className='default-flex-table'>
           <thead>
             <tr>
@@ -66,26 +56,29 @@ const ViewFrameWork = () => {
             </tr>
           </thead>
           <tbody>
-            {(frameworkData.results || []).map((val, index) => {
-              return (
-                <tr>
-                  <td>
-                    <img src={val.logo} alt='logo' width='28px' height='28px' />
-                  </td>
-                  <td>{val.name}</td>
-                  <td>{val.description}</td>
-                  <td>
-                    <MoreAction
-                      viewListFramework={true}
-                      value={val}
-                      index={index}
-                      deleteCallback={() => deleteFrameworkHandler(val)}
-                    />
-                    {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                  </td>
-                </tr>
-              );
-            })}
+            {frameworkData.results.length > 0 ? (
+              (frameworkData.results || []).map((val, index) => {
+                return (
+                  <tr>
+                    <td>
+                      <img src={val.logo} alt='logo' width='28px' height='28px' />
+                    </td>
+                    <td>{val.name}</td>
+                    <td>{val.description}</td>
+                    <td>
+                      <MoreAction viewListFramework={true} value={val} index={index} deleteCallback={() => deleteFrameworkHandler(val)} />
+                      {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={4}>
+                  <div className='flex justify-center w-full'>No records</div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
