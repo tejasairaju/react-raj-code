@@ -21,10 +21,7 @@ const ViewBespokeDisclosures = () => {
   const getDisclosures = async () => {
     try {
       setStatusData({ type: 'loading', message: '' });
-      const response = await Requests.Get(
-        `/templates/${template_id}/disclosures`,
-        { organization: orgDetails.name }
-      );
+      const response = await Requests.Get(`/templates/${template_id}/disclosures`, { organization: orgDetails.name });
       setStatusData({ type: '', message: '' });
       setApiData({ ...response });
     } catch (e) {
@@ -43,15 +40,12 @@ const ViewBespokeDisclosures = () => {
     framework_id: template_id,
     disclosure_id: value.id,
     framework: template_id,
-    id: value.id,
+    id: value.id
   });
 
   const deleteDisclosuresHandler = async ({ id = '' }) => {
     try {
-      const res = await Requests.Delete(
-        `/templates/${template_id}/disclosures/${id}`,
-        { organization: orgDetails.name }
-      );
+      const res = await Requests.Delete(`/templates/${template_id}/disclosures/${id}`, { organization: orgDetails.name });
       getDisclosures();
     } catch (e) {
       console.log(e);
@@ -67,13 +61,7 @@ const ViewBespokeDisclosures = () => {
         <h1 className='main__title'>Edit Disclosures</h1>
       </div>
       <div id='viewFramework' className='view-framework-container'>
-        {!!statusData.type && (
-          <Popup
-            isShow={!!statusData.type}
-            data={statusData}
-            onCloseHandler={onCloseHandler}
-          />
-        )}
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <table className='default-flex-table'>
           <thead>
             <tr>
@@ -83,34 +71,33 @@ const ViewBespokeDisclosures = () => {
             </tr>
           </thead>
           <tbody>
-            {(apiData.results || []).map((val, index) => {
-              return (
-                <tr>
-                  <td>{val.name}</td>
-                  <td>{getDataFormat(val.created_at)}</td>
-                  <td>{val.category}</td>
-                  <td>{val.section == 'Custom' ? 'Bespoke' : val.section}</td>
-                  <td>
-                    <MoreAction
-                      actionIcon={actionIcon}
-                      viewBespokeDisclosures={true}
-                      state={getState(val)}
-                      value={{ ...val, template_id }}
-                      index={index}
-                      deleteCallback={() => deleteDisclosuresHandler(val)}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
+            {apiData && apiData.results && apiData.results.length > 0
+              ? apiData.results.map((val, index) => {
+                  return (
+                    <tr>
+                      <td>{val.name}</td>
+                      <td>{getDataFormat(val.created_at)}</td>
+                      <td>{val.category}</td>
+                      <td>{val.section == 'Custom' ? 'Bespoke' : val.section}</td>
+                      <td>
+                        <MoreAction
+                          actionIcon={actionIcon}
+                          viewBespokeDisclosures={true}
+                          state={getState(val)}
+                          value={{ ...val, template_id }}
+                          index={index}
+                          deleteCallback={() => deleteDisclosuresHandler(val)}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+              : <tr><td colSpan={5}><div className='flex justify-center w-full'>No records</div></td></tr>}
           </tbody>
         </table>
       </div>
       <div className='create-question-main-btn'>
-        <button
-          onClick={() => navigate(-1)}
-          className='main__button m-l-1 cancel-btn'
-        >
+        <button onClick={() => navigate(-1)} className='main__button m-l-1 cancel-btn'>
           Back
         </button>
       </div>

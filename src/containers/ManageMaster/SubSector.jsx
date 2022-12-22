@@ -202,27 +202,35 @@ const SubSector = (props) => {
             </tr>
           </thead>
           <tbody>
-            {(subSectorList.results || []).map((val, index) => {
-              return (
-                <tr>
-                  <td>{val.sector.name}</td>
-                  <td>{val.name}</td>
-                  <td>{val.is_active ? 'Active' : 'Disabled'}</td>
-                  <td>
-                    <CountryAction
-                      name='subsector'
-                      onEdit={() => onEdit(val)}
-                      onActive={() => onActive(val)}
-                      onBlock={() => onBlock(val)}
-                      value={val}
-                      index={index}
-                      deleteCallback={null}
-                    />
-                    {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                  </td>
-                </tr>
-              );
-            })}
+            {subSectorList && subSectorList.results && subSectorList.results.length > 0 ? (
+              (subSectorList.results || []).map((val, index) => {
+                return (
+                  <tr>
+                    <td>{val.sector.name}</td>
+                    <td>{val.name}</td>
+                    <td>{val.is_active ? 'Active' : 'Disabled'}</td>
+                    <td>
+                      <CountryAction
+                        name='subsector'
+                        onEdit={() => onEdit(val)}
+                        onActive={() => onActive(val)}
+                        onBlock={() => onBlock(val)}
+                        value={val}
+                        index={index}
+                        deleteCallback={null}
+                      />
+                      {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={4}>
+                  <div className='flex justify-center w-full'>No records</div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -15,7 +15,7 @@ const ViewBespokeFramework = () => {
   const { orgDetails = {}, loginDetails = {} } = useSelector((state) => state.signup);
   const [apiData, setApiData] = useState({});
   const [statusData, setStatusData] = useState({});
-  
+
   useEffect(() => {
     getFramework();
   }, []);
@@ -67,19 +67,27 @@ const ViewBespokeFramework = () => {
             </tr>
           </thead>
           <tbody>
-            {(apiData.results || []).map((val, index) => {
-              return (
-                <tr>
-                  <td>{val.name}</td>
-                  <td>{getDataFormat(val.created_at)}</td>
-                  <td>{val.template_type == 'Custom' ? 'Bespoke' : val.template_type}</td>
-                  {/* <td>{val.status}</td> */}
-                  <td>
-                    <MoreAction viewBespokeFramework={true} value={val} index={index} state={{ ...val }} deleteCallback={() => deleteFrameworkHandler(val)} />
-                  </td>
-                </tr>
-              );
-            })}
+            {apiData && apiData.results && apiData.results.length > 0 ? (
+              (apiData.results || []).map((val, index) => {
+                return (
+                  <tr>
+                    <td>{val.name}</td>
+                    <td>{getDataFormat(val.created_at)}</td>
+                    <td>{val.template_type == 'Custom' ? 'Bespoke' : val.template_type}</td>
+                    {/* <td>{val.status}</td> */}
+                    <td>
+                      <MoreAction viewBespokeFramework={true} value={val} index={index} state={{ ...val }} deleteCallback={() => deleteFrameworkHandler(val)} />
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={3}>
+                  <div className='flex justify-center w-full'>No records</div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

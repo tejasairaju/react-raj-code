@@ -24,9 +24,7 @@ const Input = (props) => (
         disabled={props.isEditable}
         readOnly={props.readOnly}
       />
-      {!_isEmpty(props.error) ? (
-        <div className='error-msg'>{props.error}</div>
-      ) : null}
+      {!_isEmpty(props.error) ? <div className='error-msg'>{props.error}</div> : null}
     </div>
   </>
 );
@@ -42,9 +40,7 @@ const TextArea = (props) => {
       )}
       <div className={props.inputblockcls}>
         <TextAreaBox {...props} />
-        {!_isEmpty(props.error) ? (
-          <div className='error-msg'>{props.error}</div>
-        ) : null}
+        {!_isEmpty(props.error) ? <div className='error-msg'>{props.error}</div> : null}
       </div>
     </>
   );
@@ -63,9 +59,7 @@ const Pills = (props) => (
         <li
           key={index}
           onClick={() => props.onSelectMultipleOption(index)}
-          className={`assign__categories-item ${
-            subItem.isSelect === true || props.allSelect ? 'active' : ''
-          }`}
+          className={`assign__categories-item ${subItem.isSelect === true || props.allSelect ? 'active' : 'inactive'}`}
         >
           {subItem.name}
         </li>
@@ -81,22 +75,11 @@ const UploadFile = (props) => (
       {props.required && <span className='color-red P-4'>*</span>}
     </h1>
     <form className='add__logo-form upload-cover'>
-      <div className='add__logo-logo'>
-        {props.imageUrl ? (
-          <img src={props.imageUrl} alt='' className={props.imgcls} />
-        ) : null}
-      </div>
+      <div className='add__logo-logo'>{props.imageUrl ? <img src={props.imageUrl} alt='' className={props.imgcls} /> : null}</div>
       <label for='add__logo' className='add__logo-label'>
         <span>Upload</span>
       </label>
-      <input
-        type='file'
-        onChange={props.onChangeFile}
-        name='logo'
-        className='add__logo-input'
-        id='add__logo'
-        accept='.jpg, .jpeg, .png'
-      />
+      <input type='file' onChange={props.onChangeFile} name='logo' className='add__logo-input' id='add__logo' accept='.jpg, .jpeg, .png' />
       {props.imageUrl && (
         <>
           <span>|</span>
@@ -121,32 +104,17 @@ const DocumentUpload = (props) => (
       {props.required && <span className='color-red P-4'>*</span>}
     </h1>
     <form className='add__logo-form document-upload-container'>
-      <div className='add__logo-logo'>
-        {props.imageUrl ? (
-          <img src={props.imageUrl} alt='' className={props.imgcls} />
-        ) : null}
-      </div>
+      <div className='add__logo-logo'>{props.imageUrl ? <img src={props.imageUrl} alt='' className={props.imgcls} /> : null}</div>
       <label for='add__logo' className='add__logo-label'>
         <span>Choose File</span>
       </label>
-      <input
-        type='file'
-        onChange={props.onChangeFile}
-        name='logo'
-        className='add__logo-input'
-        id='add__logo'
-        accept='.jpg, .jpeg, .png'
-      />
+      <input type='file' onChange={props.onChangeFile} name='logo' className='add__logo-input' id='add__logo' accept='.jpg, .jpeg, .png' />
       <span>|</span>
       <label className='remove__logo-label'>
         <span onClick={props.onChangeRemoveFile}>Remove</span>
       </label>
       <div>
-        <button
-          type='button'
-          onClick={() => props.fileUploadHandler()}
-          className='document-upload'
-        >
+        <button type='button' onClick={() => props.fileUploadHandler()} className='document-upload'>
           Upload
         </button>
         {/* {props.logoSizeError || true &&<label className="logo-size-error"><span>* File size should not more than 1mb.</span>
@@ -164,19 +132,9 @@ const Button = (props) => (
 
 const Dropdown = (props) => {
   return (
-    <select
-      className={props.className_1}
-      disabled={props.isEditable ? 'disabled' : ''}
-      name={props.name || ''}
-      value={props.value}
-      onChange={props.onChangeHandler}
-    >
+    <select className={props.className_1} disabled={props.isEditable ? 'disabled' : ''} name={props.name || ''} value={props.value} onChange={props.onChangeHandler}>
       {(props.options || []).map((option) => (
-        <option
-          className={props.className_2}
-          value={option.value}
-          selected={option.value === props.value ? 'selected' : null}
-        >
+        <option className={props.className_2} value={option.value} selected={option.value === props.value ? 'selected' : null}>
           {option.label}
         </option>
       ))}
@@ -185,22 +143,10 @@ const Dropdown = (props) => {
 };
 
 const RadioButton = (props) => {
-  const {
-    changed = () => {},
-    id = null,
-    isSelected = false,
-    label = 'RadioButton',
-    value = 'RadioButton'
-  } = props;
+  const { changed = () => {}, id = null, isSelected = false, label = 'RadioButton', value = 'RadioButton' } = props;
   return (
     <div className='RadioButton'>
-      <input
-        id={id}
-        onChange={changed}
-        value={value}
-        type='radio'
-        checked={isSelected}
-      />
+      <input id={id} onChange={changed} value={value} type='radio' checked={isSelected} />
       <label htmlFor={id} className='radio-label'>
         {label}
       </label>
@@ -248,12 +194,7 @@ const TextAreaBox = (props) => (
 );
 
 const Label = (props) => {
-  const {
-    label = '',
-    className = 'framework__title',
-    required = false,
-    requireCls = 'P-4'
-  } = props;
+  const { label = '', className = 'framework__title', required = false, requireCls = 'P-4' } = props;
   return (
     <h1 className={className}>
       {label}

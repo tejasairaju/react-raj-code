@@ -35,11 +35,7 @@ const ViewDisclosures = () => {
   const getDisclosures = async () => {
     try {
       setStatusData({ type: 'loading', message: '' });
-      const response = await axios
-        .get(
-          `${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`
-        )
-        .then(({ data }) => data);
+      const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}/disclosures`).then(({ data }) => data);
       setStatusData({ type: '', message: '' });
       setListData(response.results);
       setApiData(response);
@@ -50,9 +46,7 @@ const ViewDisclosures = () => {
 
   const getframeworkDetails = async (id = '') => {
     try {
-      const frameDetails = await axios
-        .get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`)
-        .then(({ data }) => data);
+      const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`).then(({ data }) => data);
       setFrameworkData(frameDetails);
     } catch (e) {
       setFrameworkData({});
@@ -65,9 +59,7 @@ const ViewDisclosures = () => {
     setCatagoryType(e.target.value);
     let cloneApiData = { ...apiData };
     if (value !== 'All') {
-      cloneApiData.results = (cloneApiData.results || []).filter(
-        (item) => _toLower(item.category) == _toLower(value)
-      );
+      cloneApiData.results = (cloneApiData.results || []).filter((item) => _toLower(item.category) == _toLower(value));
     }
     setListData(cloneApiData.results);
   };
@@ -75,32 +67,22 @@ const ViewDisclosures = () => {
   const getState = (value) => ({
     code: value.code,
     description: value.description,
-    guidance: _isEmpty(value.metaData)
-      ? value.description
-      : value.metaData[0].value,
+    guidance: _isEmpty(value.metaData) ? value.description : value.metaData[0].value,
     name: value.name,
     section: value.section,
     category: value.category,
     framework_id: frameworkData.id,
     disclosure_id: value.id,
     framework: frameworkData.id,
-    id: value.id,
+    id: value.id
   });
 
   const headers = ['Name', 'Description', 'Action'];
-  const radioButton = [
-    'All',
-    'Environmental',
-    'Social',
-    'Goverance',
-    'General',
-  ];
+  const radioButton = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
 
   const deleteDisclosureHandler = async ({ id = '' }) => {
     try {
-      const res = await Requests.Delete(
-        `/esgadmin/frameworks/${params.id}/disclosures/${id}`
-      );
+      const res = await Requests.Delete(`/esgadmin/frameworks/${params.id}/disclosures/${id}`);
       getDisclosures();
     } catch (e) {
       console.log(e);
@@ -119,10 +101,7 @@ const ViewDisclosures = () => {
           <td>
             {frameworkData && (
               <img
-                src={
-                  frameworkData.logo ||
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'
-                }
+                src={frameworkData.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'}
                 alt='GRI'
                 width={'28px'}
                 height={'28px'}
@@ -140,27 +119,12 @@ const ViewDisclosures = () => {
         <div className='row-catagory-display'>
           {' '}
           {radioButton.map((radioVal, i) => (
-            <RadioButton
-              changed={radioChangeHandler}
-              id={i}
-              isSelected={catagoryType === radioVal}
-              label={radioVal}
-              value={radioVal}
-            />
+            <RadioButton changed={radioChangeHandler} id={i} isSelected={catagoryType === radioVal} label={radioVal} value={radioVal} />
           ))}
         </div>
       </div>
-      <div
-        id='viewFramework'
-        className='view-framework-container view-disclosure-container'
-      >
-        {!!statusData.type && (
-          <Popup
-            isShow={!!statusData.type}
-            data={statusData}
-            onCloseHandler={onCloseHandler}
-          />
-        )}
+      <div id='viewFramework' className='view-framework-container view-disclosure-container'>
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <table className='default-flex-table'>
           <thead>
             <tr>
@@ -170,24 +134,27 @@ const ViewDisclosures = () => {
             </tr>
           </thead>
           <tbody>
-            {(listData || []).map((val, index) => {
-              return (
-                <tr>
-                  <td>{<span>{val.name}</span>}</td>
-                  <td>
-                    {val.code} &nbsp;&nbsp;{val.description}
-                  </td>
-                  <td>
-                    <MoreAction
-                      viewDisclosures={true}
-                      state={getState(val)}
-                      index={index}
-                      deleteCallback={() => deleteDisclosureHandler(val)}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
+            {listData && listData.length > 0 ? (
+              (listData || []).map((val, index) => {
+                return (
+                  <tr>
+                    <td>{<span>{val.name}</span>}</td>
+                    <td>
+                      {val.code} &nbsp;&nbsp;{val.description}
+                    </td>
+                    <td>
+                      <MoreAction viewDisclosures={true} state={getState(val)} index={index} deleteCallback={() => deleteDisclosureHandler(val)} />
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={3}>
+                  <div className='flex justify-center w-full'>No records</div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

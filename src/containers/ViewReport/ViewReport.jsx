@@ -4,14 +4,7 @@ import _toLower from 'lodash/toLower';
 import _isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { getColor } from '../../utils/utils.js';
-import {
-  Routes,
-  Route,
-  Link,
-  Outlet,
-  useNavigate,
-  useParams
-} from 'react-router-dom';
+import { Routes, Route, Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import Requests from '../../Requests/index.js';
 import MoreAction from '../../Components/MoreAction/MoreAction.jsx';
 import Axios from 'axios';
@@ -27,9 +20,7 @@ const ViewReport = (props) => {
   const { search } = _get(window, 'location', '?');
   const queryValue = queryString.parse(search);
   const { isAssignDisClosure = false } = queryValue;
-  const { orgDetails = {}, loginDetails = {} } = useSelector(
-    (state) => state.signup
-  );
+  const { orgDetails = {}, loginDetails = {} } = useSelector((state) => state.signup);
   const [reportList, setReportList] = useState([]);
   const [statusData, setStatusData] = useState({});
 
@@ -41,11 +32,7 @@ const ViewReport = (props) => {
   const getDisclosures = async () => {
     try {
       setStatusData({ type: 'loading', message: '' });
-      const response = await axios
-        .get(
-          `${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`
-        )
-        .then(({ data }) => data);
+      const response = await axios.get(`${process.env.API_BASE_URL}/reports/?organization=${orgDetails.name}`).then(({ data }) => data);
 
       setStatusData({ type: '', message: '' });
       const sortResult = response && response.results;
@@ -84,9 +71,7 @@ const ViewReport = (props) => {
   return (
     <>
       <div class='main__top-wrapper view-task-list-contianer'>
-        <h1 class={`main__title custom-title`}>
-          {isAssignDisClosure ? 'Assign Disclosures' : 'Publish Reports'}
-        </h1>
+        <h1 class={`main__title custom-title`}>{isAssignDisClosure ? 'Assign Disclosures' : 'Publish Reports'}</h1>
       </div>
       <br />
       <div class='scrollable'>
@@ -99,29 +84,29 @@ const ViewReport = (props) => {
             </tr>
           </thead>
           <tbody>
-            {(reportList || []).map((report, index) => {
-              // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
-              return (
-                <tr key={index}>
-                  <td>{report.name}</td>
-                  <td>{getDataFormat(report.start_date)}</td>
-                  <td>{getDataFormat(report.end_date)}</td>
-                  <td>
-                    {report.status == 'Custom' ? 'Bespoke' : report.status}
-                  </td>
-                  <td>
-                    <MoreAction
-                      viewReport={true}
-                      value={report}
-                      isAssignDisClosure={isAssignDisClosure}
-                      deleteCallback={() => deleteReportHandler(report)}
-                      name={'report'}
-                    />
-                  </td>
-                </tr>
-              );
-              // }
-            })}
+            {reportList && reportList.length > 0 ? (
+              (reportList || []).map((report, index) => {
+                // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
+                return (
+                  <tr key={index}>
+                    <td>{report.name}</td>
+                    <td>{getDataFormat(report.start_date)}</td>
+                    <td>{getDataFormat(report.end_date)}</td>
+                    <td>{report.status == 'Custom' ? 'Bespoke' : report.status}</td>
+                    <td>
+                      <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} deleteCallback={() => deleteReportHandler(report)} name={'report'} />
+                    </td>
+                  </tr>
+                );
+                // }
+              })
+            ) : (
+              <tr>
+                <td colSpan={5}>
+                  <div className='flex justify-center w-full'>No records</div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
