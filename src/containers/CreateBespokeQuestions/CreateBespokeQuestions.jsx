@@ -108,7 +108,7 @@ const CreateBespokeQuestions = (props) => {
     }
 
     return (<>
-    {isOpenAddQuestion && <AddQuestions isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
+    {isOpenAddQuestion && <AddQuestions isTemplate={true} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
         <div className="main__top-wrapper">
             <h1 className="main__title custom-title">
                 {title}
