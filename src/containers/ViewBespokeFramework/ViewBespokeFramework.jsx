@@ -12,11 +12,10 @@ const { Get } = Request;
 
 const ViewBespokeFramework = () => {
   const navigate = useNavigate();
-  const { orgDetails = {}, loginDetails = {} } = useSelector(
-    (state) => state.signup
-  );
+  const { orgDetails = {}, loginDetails = {} } = useSelector((state) => state.signup);
   const [apiData, setApiData] = useState({});
   const [statusData, setStatusData] = useState({});
+  
   useEffect(() => {
     getFramework();
   }, []);
@@ -26,7 +25,7 @@ const ViewBespokeFramework = () => {
       setStatusData({ type: 'loading', message: '' });
       const response = await Requests.Get(`/templates/`, {
         template_type: 'Custom',
-        organization: orgDetails.name,
+        organization: orgDetails.name
       });
       setStatusData({ type: '', message: '' });
       setApiData({ ...response });
@@ -42,7 +41,7 @@ const ViewBespokeFramework = () => {
     try {
       const res = await Requests.Delete(`/templates/${id}`, {
         template_type: 'Custom',
-        organization: orgDetails.name,
+        organization: orgDetails.name
       });
       getFramework();
     } catch (e) {
@@ -50,7 +49,7 @@ const ViewBespokeFramework = () => {
     }
   };
 
-  const headers = ['Name', 'Created On', 'Template Type', 'Status', 'Action'];
+  const headers = ['Name', 'Created On', 'Template Type', 'Action'];
 
   return (
     <>
@@ -58,13 +57,7 @@ const ViewBespokeFramework = () => {
         <h1 className='main__title custom-title'>Edit Framework</h1>
       </div>
       <div id='viewFramework' className='view-framework-container'>
-        {!!statusData.type && (
-          <Popup
-            isShow={!!statusData.type}
-            data={statusData}
-            onCloseHandler={onCloseHandler}
-          />
-        )}
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         <table className='default-flex-table'>
           <thead>
             <tr>
@@ -79,20 +72,10 @@ const ViewBespokeFramework = () => {
                 <tr>
                   <td>{val.name}</td>
                   <td>{getDataFormat(val.created_at)}</td>
+                  <td>{val.template_type == 'Custom' ? 'Bespoke' : val.template_type}</td>
+                  {/* <td>{val.status}</td> */}
                   <td>
-                    {val.template_type == 'Custom'
-                      ? 'Bespoke'
-                      : val.template_type}
-                  </td>
-                  <td>{val.status}</td>
-                  <td>
-                    <MoreAction
-                      viewBespokeFramework={true}
-                      value={val}
-                      index={index}
-                      state={{ ...val }}
-                      deleteCallback={() => deleteFrameworkHandler(val)}
-                    />
+                    <MoreAction viewBespokeFramework={true} value={val} index={index} state={{ ...val }} deleteCallback={() => deleteFrameworkHandler(val)} />
                   </td>
                 </tr>
               );

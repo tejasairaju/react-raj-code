@@ -61,8 +61,12 @@
     margin-top: 2%;
     color: #585E62;
 }
+.add__logo-form.upload-cover{
+    margin-left: 0;
+}
 .add__logo-logo {
-    margin-left: 0px;
+    margin-left: 0;
+    margin-right: 5px;
     justify-content: left;
 }
 
@@ -86,7 +90,7 @@
 }
 
 .add__logo-label {
-    margin-left: 30px;
+    margin-left: 0;
     cursor: pointer;
     display: flex;
     align-items: center;

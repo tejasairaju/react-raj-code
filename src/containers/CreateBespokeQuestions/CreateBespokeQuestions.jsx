@@ -18,115 +18,174 @@ import ViewQuestionsList from '../../Components/AddQuestions/ViewQuestionsList.j
 const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateBespokeQuestions = (props) => {
-    const {isTemplate=true, title = `Welcome to Create Bespoke Questions`,  createQuestions = true, questionList = [], onUpdateQuestions = () => { } } = props;
-    const location = useLocation();
-    const navigate = useNavigate();
-    const { id = '', disclosureId = '' } = useParams();
-    const state = _get(location, 'state', {});
-    const [statusData, setStatusData] = useState({});
-    const { orgDetails = {} } = useSelector(state => state.signup);
-    const initialRow = { order: null, /*code: '',*/ label: "", type: '', field_type: '', field_unit_values: '', evidence: null, value: null };
-    const initialFieldOptions = { selectedDropDownVal: null, setFieldIndex: null }
-    const [inputList, setInputList] = useState([]);
-    const [inputListPayload, setInputListPayload] = useState([]);
-    const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
-    const [editInfo, setEditInfo] = useState({ isEditable: false, editRowIndex: null });
-    const [isError, setIsError] = useState(false);
-    const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
+  const {
+    isTemplate = true,
+    title = `Welcome to Create Bespoke Questions`,
+    createQuestions = true,
+    questionList = [],
+    onUpdateQuestions = () => {}
+  } = props;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { id = '', disclosureId = '' } = useParams();
+  const state = _get(location, 'state', {});
+  const [statusData, setStatusData] = useState({});
+  const { orgDetails = {} } = useSelector((state) => state.signup);
+  const initialRow = {
+    order: null,
+    /*code: '',*/ label: '',
+    type: '',
+    field_type: '',
+    field_unit_values: '',
+    evidence: null,
+    value: null
+  };
+  const initialFieldOptions = {
+    selectedDropDownVal: null,
+    setFieldIndex: null
+  };
+  const [inputList, setInputList] = useState([]);
+  const [inputListPayload, setInputListPayload] = useState([]);
+  const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
+  const [editInfo, setEditInfo] = useState({
+    isEditable: false,
+    editRowIndex: null
+  });
+  const [isError, setIsError] = useState(false);
+  const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
 
-    const tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
-    useEffect(() => {
-        setInputList([...questionList]);
-    }, []);
+  const tableHeaders = [
+    'Code',
+    'Question',
+    'Data Type',
+    'Input Type',
+    'Choices',
+    'Unit',
+    null
+  ];
+  useEffect(() => {
+    setInputList([...questionList]);
+  }, []);
 
-    // handle click event of the Remove button
-    const handleRemoveClick = (index) => {
-        let list = [...inputList];
-        list[index]['active']=false
-        // list.splice(index, 1);
-        setInputList(list);
+  // handle click event of the Remove button
+  const handleRemoveClick = (index) => {
+    let list = [...inputList];
+    list[index]['active'] = false;
+    // list.splice(index, 1);
+    setInputList(list);
+  };
+
+  const onCreateCancelQuestions = () => {
+    setInputList([]);
+  };
+
+  const onCreateQuestions = async () => {
+    let list = [...inputList];
+    const newInputList = (list || []).map(
+      ({ Dropdown, Multiselect, ...rest }) => {
+        delete rest['Radio button'];
+        return rest;
+      }
+    );
+    const payload = {
+      children: newInputList,
+      category: state.category,
+      section: state.section,
+      name: state.name
     };
-
-    const onCreateCancelQuestions = () => {
-        setInputList([]);
-    }
-
-    const onCreateQuestions = async () => {
-        let list = [...inputList];
-        const newInputList = (list || []).map(({ Dropdown, Multiselect, ...rest }) => {
-            delete rest["Radio button"];
-            return rest;
+    // setStatusData({ type: 'loading', message: '' });
+    if (createQuestions) {
+      try {
+        setStatusData({ type: 'loading', message: '' });
+        const response = await Requests.Put(
+          `/templates/${id}/disclosures/${disclosureId}`,
+          payload,
+          { organization: orgDetails.name }
+        );
+        setStatusData({
+          type: 'success',
+          message: 'Thanks! Your questions has been successfully created'
         });
-        const payload = {
-            children: newInputList,
-            category: state.category,
-            section: state.section,
-            name: state.name
-        }
-        // setStatusData({ type: 'loading', message: '' });
-        if (createQuestions) {
-
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, payload, { organization: orgDetails.name});
-                setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
-                // setInputList([initialRow]);
-            } catch (e) {
-                let error = getErrorMessage(e);
-                setStatusData({ ...error });
-            }
-            setIsError(false);
-        } else if (!createQuestions && (list || [].length)) {
-            onUpdateQuestions(payload, [...list]);
-        } else {
-            setIsError(true)
-        }
+        // setInputList([initialRow]);
+      } catch (e) {
+        let error = getErrorMessage(e);
+        setStatusData({ ...error });
+      }
+      setIsError(false);
+    } else if (!createQuestions && (list || [].length)) {
+      onUpdateQuestions(payload, [...list]);
+    } else {
+      setIsError(true);
     }
+  };
 
-    const onCloseHandler = () => {
-        if (statusData.type === 'success' && createQuestions) {
-            navigate('/view/template');
-        }
-        setStatusData({});
-
+  const onCloseHandler = () => {
+    if (statusData.type === 'success' && createQuestions) {
+      navigate('/view/template');
     }
+    setStatusData({});
+  };
 
-    const onClickAddQuestion = () => {
-        setIsOpenAddQuestion(true);
-    }
+  const onClickAddQuestion = () => {
+    setIsOpenAddQuestion(true);
+  };
 
-    const closeAddQuestionModal = () => {
-        setIsOpenAddQuestion(false);
-    }
+  const closeAddQuestionModal = () => {
+    setIsOpenAddQuestion(false);
+  };
 
-    const handleEditClick = (index) => {
-        setIsOpenAddQuestion(true);
-        setEditInfo({
-            isEditable: true,
-            editRowIndex: index
-        });
-    }
+  const handleEditClick = (index) => {
+    setIsOpenAddQuestion(true);
+    setEditInfo({
+      isEditable: true,
+      editRowIndex: index
+    });
+  };
 
-    return (<>
-    {isOpenAddQuestion && <AddQuestions isTemplate={true} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
-        <div className="main__top-wrapper">
-            <h1 className="main__title custom-title">
-                {title}
-            </h1>
-        </div>
-        <div id="createQuestions" className="create_question__wrapper">
-            {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-            {/* {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
+  return (
+    <>
+      {isOpenAddQuestion && (
+        <AddQuestions
+          isTemplate={true}
+          isShow={isOpenAddQuestion}
+          editInfo={editInfo}
+          inputList={inputList}
+          setInputList={setInputList}
+          closeModal={closeAddQuestionModal}
+        />
+      )}
+      <div className='main__top-wrapper'>
+        <h1 className='main__title custom-title'>{title}</h1>
+      </div>
+      <div id='createQuestions' className='create_question__wrapper'>
+        {!!statusData.type && (
+          <Popup
+            isShow={!!statusData.type}
+            data={statusData}
+            onCloseHandler={onCloseHandler}
+          />
+        )}
+        {/* {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
                 <div className='create-options-title'>Please enter the options with comma separated value</div>
                 <div className='get-textarea-input-container'>
                     <TextArea rows="6" cols="50" label='' name='optionString' value={inputList[fieldOptions.setFieldIndex][fieldOptions.selectedDropDownVal] || ''} className="create-framework__textarea" placeholder="" required={true} onChangeHandler={onGetQuestionOptions} />
                     <div className='add-question-option'><Button label="Submit" className='add-btn submit-btn' onClickHandler={() => onSetFieldOptions()} /></div>
                 </div>
             </Modal>} */}
-            <ViewQuestionsList code={state.code} name={state.name} description={state.description} createQuestions={createQuestions} tableHeaders={tableHeaders} inputList={inputList} isError={isError}
-                onClickAddQuestion={onClickAddQuestion} handleEditClick={handleEditClick} handleRemoveClick={handleRemoveClick} />
+        <ViewQuestionsList
+          code={state.code}
+          name={state.name}
+          description={state.description}
+          createQuestions={createQuestions}
+          tableHeaders={tableHeaders}
+          inputList={inputList}
+          isError={isError}
+          onClickAddQuestion={onClickAddQuestion}
+          handleEditClick={handleEditClick}
+          handleRemoveClick={handleRemoveClick}
+        />
 
-            {/* <div>
+        {/* <div>
                 <div className="bespoke-question-container">
                     <h1 className="create-framework__title disclosure">
                         Disclosure
@@ -178,19 +237,23 @@ const CreateBespokeQuestions = (props) => {
                 </table>
                 {isError && <div className='overall-error-container color-red question-disclosure-error'>*Please fill all the columns</div>}
             </div> */}
-
-        </div>
-        <div className='create-question-main-btn'>
-            <button onClick={() => navigate(-1)} className="main__button m-l-1 cancel-btn">
-                Back
-            </button>
-            <button onClick={() => onCreateQuestions()} className="main__button m-l-1">
-                FINISH
-            </button>
-        </div>
-    </>)
-
-}
-
+      </div>
+      <div className='create-question-main-btn'>
+        <button
+          onClick={() => navigate(-1)}
+          className='main__button m-l-1 cancel-btn'
+        >
+          Back
+        </button>
+        <button
+          onClick={() => onCreateQuestions()}
+          className='main__button m-l-1'
+        >
+          FINISH
+        </button>
+      </div>
+    </>
+  );
+};
 
 export default CreateBespokeQuestions;

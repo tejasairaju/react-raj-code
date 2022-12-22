@@ -21,11 +21,13 @@ const MoreAction = (props) => {
     deleteCallback = () => {},
     ...rest
   } = props;
+
   const [isOpen, setIsopen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [currentItem, setCurrentItem] = useState('');
   const { orgDetails = {} } = useSelector((state) => state.signup);
   const { loginDetails = {} } = useSelector((state) => state.signup);
+
   const navigate = useNavigate();
   const onNavigateHandler = (url) => {
     setIsopen(false);
@@ -67,8 +69,8 @@ const MoreAction = (props) => {
   const onRedirectWithState = (url) => {
     navigate(url, {
       state: {
-        ...rest.state,
-      },
+        ...rest.state
+      }
     });
     setIsopen(false);
   };
@@ -85,19 +87,10 @@ const MoreAction = (props) => {
       >
         <img src={actionIcon} alt='more' width='28px' height='28px' />
       </div>
-      <div
-        className={`framedropdown framedropdown-${
-          isOpen ? 'active' : 'inactive'
-        }`}
-      >
+      <div className={`framedropdown framedropdown-${isOpen ? 'active' : 'inactive'}`}>
         {viewListFramework && (
           <>
-            <div
-              className='lh1-5'
-              onClick={() =>
-                onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)
-              }
-            >
+            <div className='lh1-5' onClick={() => onNavigateHandler(`/createframe?id=${value.id}&isEdit=${true}`)}>
               <a>Edit Framework</a>
             </div>
             <div className='lh1-5'>
@@ -134,26 +127,11 @@ const MoreAction = (props) => {
           <>
             <div
               className='lh1-5'
-              onClick={() =>
-                onRedirectWithState(
-                  `/createdisclosures?id=${_get(
-                    props,
-                    'state.framework',
-                    ''
-                  )}&disclosureId=${_get(
-                    props,
-                    'state.id',
-                    ''
-                  )}&isEditable=true`
-                )
-              }
+              onClick={() => onRedirectWithState(`/createdisclosures?id=${_get(props, 'state.framework', '')}&disclosureId=${_get(props, 'state.id', '')}&isEditable=true`)}
             >
               <a>Edit Disclosure</a>
             </div>
-            <div
-              className='lh1-5'
-              onClick={() => onRedirectWithState(`/createquestions`)}
-            >
+            <div className='lh1-5' onClick={() => onRedirectWithState(`/createquestions`)}>
               <a>Create Questions</a>
             </div>
             <div className='lh1-5'>
@@ -179,29 +157,13 @@ const MoreAction = (props) => {
         )}
         {viewBespokeFramework && (
           <>
-            <div
-              className='lh1-5'
-              onClick={() =>
-                onRedirectWithState(`/template?id=${value.id}&isEdit=${true}`)
-              }
-            >
+            <div className='lh1-5' onClick={() => onRedirectWithState(`/template?id=${value.id}&isEdit=${true}`)}>
               <a>Edit Framework</a>
             </div>
-            <div
-              className='lh1-5'
-              onClick={() => onRedirectWithState(`/template/${value.id}`)}
-            >
+            <div className='lh1-5' onClick={() => onRedirectWithState(`/template/${value.id}`)}>
               <a>Create Disclosures</a>
             </div>
-            <div
-              className='lh1-5'
-              onClick={() =>
-                onRedirectWithState(
-                  `/view/bespoke/${value.id}/disclosures`,
-                  value.name
-                )
-              }
-            >
+            <div className='lh1-5' onClick={() => onRedirectWithState(`/view/bespoke/${value.id}/disclosures`, value.name)}>
               <a>View Disclosures</a>
             </div>
             <div className='lh1-5'>
@@ -218,34 +180,13 @@ const MoreAction = (props) => {
         )}
         {viewBespokeDisclosures && (
           <>
-            <div
-              className='lh1-5'
-              onClick={() =>
-                onRedirectWithState(
-                  `/template/${value.template_id}?disclosureId=${value.id}&isEditable=true`
-                )
-              }
-            >
+            <div className='lh1-5' onClick={() => onRedirectWithState(`/template/${value.template_id}?disclosureId=${value.id}&isEditable=true`)}>
               <a>Edit Disclosure</a>
             </div>
-            <div
-              className='lh1-5'
-              onClick={() =>
-                onRedirectWithState(
-                  `/template/${value.template_id}/disclosures/${value.id}`
-                )
-              }
-            >
+            <div className='lh1-5' onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}`)}>
               <a>Create Questions</a>
             </div>
-            <div
-              className='lh1-5'
-              onClick={() =>
-                onRedirectWithState(
-                  `/template/${value.template_id}/disclosures/${value.id}/questions`
-                )
-              }
-            >
+            <div className='lh1-5' onClick={() => onRedirectWithState(`/template/${value.template_id}/disclosures/${value.id}/questions`)}>
               <a>View Questions</a>
             </div>
             <div className='lh1-5'>
@@ -263,20 +204,12 @@ const MoreAction = (props) => {
         {viewReport && (
           <>
             {isAssignDisClosure ? (
-              <div
-                className='lh1-5'
-                onClick={() =>
-                  onRedirectWithState(`/report/${value.id}/disclosures`)
-                }
-              >
+              <div className='lh1-5' onClick={() => onRedirectWithState(`/report/${value.id}/disclosures`)}>
                 <a>Assign Disclosures</a>
               </div>
             ) : (
               <>
-                <div
-                  className='lh1-5'
-                  onClick={() => generateReport(value.id, value.name)}
-                >
+                <div className='lh1-5' onClick={() => generateReport(value.id, value.name)}>
                   <a>Generate Reports</a>
                 </div>
                 <div
@@ -293,15 +226,7 @@ const MoreAction = (props) => {
           </>
         )}
       </div>
-      {isDelete && (
-        <DeletePopup
-          name={currentItem}
-          isShow={isDelete}
-          setIsDelete={setIsDelete}
-          onCloseHandler={onCloseHandler}
-          deleteConfirm={deleteCallback}
-        />
-      )}
+      {isDelete && <DeletePopup name={currentItem} isShow={isDelete} setIsDelete={setIsDelete} deleteConfirm={deleteCallback} />}
     </div>
   );
 };
