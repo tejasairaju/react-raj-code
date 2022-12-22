@@ -100,8 +100,8 @@ export const questions = {
     }],
     unitType: [
         {
-            label: 'Select',
-            value: 'Select'
+            label: 'NA',
+            value: 'NA'
         },
         {
             "label": "AUD",

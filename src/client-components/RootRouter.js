@@ -141,6 +141,7 @@ const RootRouter = () => {
       <Route element={<CreateWizard userRole={loginUserDetails.user_role} logoutHandler={() => logoutHandler} />}>
         <Route index element={<SystemAdminDashboard />} />
         <Route path="/createframe" element={<CreateFramework />} />
+        <Route path="/personalinfo" element={<PersonalInformation />} />
         {/* Duplicate route */}
         <Route path="/createdisclosures" element={<CreateDisclosures />} />
         <Route path="/createquestions" element={<CreateQuestions />} />
