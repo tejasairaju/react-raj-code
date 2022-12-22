@@ -247,7 +247,7 @@ const CreateBespokeFramework = (props) => {
             <h1 className={'create-framework__title'}>Sub Sectors:</h1>
             <ReactMultiSelectDropdown data={filterSubSectors.length ? filterSubSectors : [{ label: '', value: '' }]} isEditable={isEdit} selectedOptionVal={inputValue.subsectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("subsectors", selectedArray, event)} />
             <h1 className={'create-framework__title'}>Location:</h1>
-            {((isEdit&&inputValue.name) || (inputValue.name&&!isEdit))&&<ReactMultiSelectDropdown data={_get(appWizard, 'countries', [])} isEditable={isEdit} selectedOptionVal={inputValue.countries} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("countries", selectedArray, event)} />}
+            <ReactMultiSelectDropdown data={_get(appWizard, 'countries', [])} isEditable={isEdit} selectedOptionVal={inputValue.countries} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("countries", selectedArray, event)} />
         </div>
         {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
         <Button label={isEdit ? 'UPDATE' : 'NEXT'} onClickHandler={onNextHandler} className='main__button' />

@@ -101,7 +101,9 @@ margin-left: 0px;
     margin-top: 2%;
     color: #585E62;
 }
-
+.add__logo-form.upload-cover{
+    margin-left: 0;
+}
 .file-form .main__button {
     align-self: center;
 }

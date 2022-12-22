@@ -140,7 +140,7 @@ const AddQuestions = ({ isTemplate = false, isShow = false, editInfo = { isEdita
                                     Choose Unit
                                 </h5>
 
-                                <input type="text" name='code' value={inputValue.code} onChange={onChangeHandler} style={{ marginTop: "-90px", marginLeft: "60px", minWidth: "150px" }} class={`add__file-window create_refs1 ${isTemplate ? 'visibility-hidden' : null}`} />
+                                <input type="text" name='code' value={inputValue.code} onChange={onChangeHandler} style={{ marginTop: "-90px", marginLeft: "60px", minWidth: "150px" }} class={`add__file-window create_refs1`} />
                                 {/* <Input label='' type="text" name='code' value={inputValue.code} className="add__file-window create_refs1" placeholder="" required={true} onChangeHandler={(e) => handleInputChange(e, i)} /> */}
 
                                 <textarea name="label" value={inputValue.label} onChange={onChangeHandler} class="add__file-window create_add__file-window create_quest1" > </textarea>

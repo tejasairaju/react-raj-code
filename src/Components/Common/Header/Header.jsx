@@ -23,16 +23,33 @@ const Header = ({ userRole = '' }) => {
   const getUserDetails = async (id = '') => {
     try {
       const userDetails = await Requests.Get(`/users/${loginDetails.user_id}`, {
-        organization: orgDetails.name,
+        organization: orgDetails.name
       });
       setLogo(userDetails.profile_picture);
     } catch (e) {
       setLogo(null);
     }
   };
+
+  const getAdminDetails = async (id = '') => {
+    try {
+      const userDetails = await Requests.Get(
+        `/esgadmin/administrators/${loginDetails.user_id}`
+      );
+      setLogo(userDetails.profile_picture);
+    } catch (e) {
+      setLogo(null);
+    }
+  };
+
   useEffect(() => {
-    getUserDetails();
+    if (loginDetails.user_role == 'esg_admin') {
+      getAdminDetails();
+    } else {
+      getUserDetails();
+    }
   }, []);
+  
   return (
     <header className='header'>
       <form action='#' className='header__search'>

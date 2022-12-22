@@ -10,14 +10,9 @@ const DeletePopup = (props) => {
     data,
     name,
     deleteConfirm,
-    setIsDelete,
+    setIsDelete
   } = props;
   const [isOpen, setIsOpen] = useState(isShow);
-  const closePopupModal = () => {
-    setIsOpen(false);
-    actions.closePageLoader();
-    onCloseHandler();
-  };
 
   return (
     <>

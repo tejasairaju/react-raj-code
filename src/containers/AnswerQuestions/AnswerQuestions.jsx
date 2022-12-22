@@ -198,7 +198,7 @@ const AnswerQuestions = () => {
                     To:
                 </h1>
                 <label for="create-framework__date-to" className="create-framework__label">
-                    <input type="date" value={end_date} className="create-framework__input" id="create-framework__date-to" required />
+                    <input type="date" min={start_date} max="2100-01-01" value={end_date} className="create-framework__input" id="create-framework__date-to" required />
                 </label>
             </div>
             {/* <h1 className="assign__title">
