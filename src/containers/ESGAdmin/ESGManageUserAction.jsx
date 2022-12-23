@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Requests from '../../Requests';
 import axios from 'axios';
-import DeletePopup from '../../Components/Common/Popup/DeletePopup.jsx';
+import DeletePopup from '../../Components/Common/DeletePopup/DeletePopup.jsx';
 
 const ESGManageUserAction = (props) => {
   const { value, index, getClientUsers = () => {}, deleteCallback } = props;
@@ -84,9 +84,9 @@ const ESGManageUserAction = (props) => {
         <div className='lh1-5'>
           <a onClick={() => onUpdateUser(value, 0)}>Block</a>
         </div>
-        <div className='lh1-5'>
+        {/* <div className='lh1-5'>
           <a onClick={() => setIsDelete(true)}>Delete</a>
-        </div>
+        </div> */}
       </div>
       {isDelete && <DeletePopup name={'user'} isShow={isDelete} setIsDelete={setIsDelete} deleteConfirm={deleteCallback} />}
     </div>

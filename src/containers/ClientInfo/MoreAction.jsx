@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DeletePopup from '../../Components/Common/Popup/DeletePopup.jsx';
+import DeletePopup from '../../Components/Common/DeletePopup/DeletePopup.jsx';
 import './MoreAction.css';
 
 const MoreAction = (props) => {
@@ -48,9 +48,9 @@ const MoreAction = (props) => {
             View
           </a>
         </div>
-        <div>
+        {/* <div>
           <a onClick={() => {}}>Delete</a>
-        </div>
+        </div> */}
       </div>
       {isDelete && <DeletePopup name={'client'} isShow={isDelete} setIsDelete={setIsDelete} deleteConfirm={deleteCallback} />}
     </div>

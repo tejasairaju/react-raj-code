@@ -15,24 +15,12 @@ import EsgImageNavBar from '../../components/EsgImageNavBar/EsgImageNavBar.jsx';
 import Popup from '../../components/Common/Popup/Popup.jsx';
 import { getErrorMessage } from '../../utils/utils';
 
-const {
-  Input,
-  TextArea,
-  Pills,
-  UploadFile,
-  Button,
-  InputBox,
-  Label,
-  Dropdown,
-  TextAreaBox
-} = Fields;
+const { Input, TextArea, Pills, UploadFile, Button, InputBox, Label, Dropdown, TextAreaBox } = Fields;
 
 const PersonalInformation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { appWizard = {} } = useSelector((state) => state.appWizard);
-  const { orgDetails = {}, loginDetails = {} } = useSelector(
-    (state) => state.signup
-  );
+  const { orgDetails = {}, loginDetails = {} } = useSelector((state) => state.signup);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { search } = _get(window, 'location', '?');
@@ -45,6 +33,7 @@ const PersonalInformation = () => {
   const [apiData, setApiData] = useState({});
   const [currentFrame, setCurrentFrame] = useState('');
   const [logoSizeError, setLogoSizeError] = useState(false);
+  const [errorMessage, setErrorMsg] = useState('');
   // const onCloseHandler = () => {
   //     setIsOpen(false)
   // }
@@ -62,24 +51,15 @@ const PersonalInformation = () => {
       await Axios.all([
         Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/countries`),
         Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/sectors`),
-        Axios.get(
-          `${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`
-        ),
+        Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`),
         Axios.get(`${process.env.API_BASE_URL}/esgadmin/master/industries`)
-      ]).then(
-        ([
-          { data: countries },
-          { data: sectors },
-          { data: categories },
-          { data: industries } /*{ data: subsectors }*/
-        ]) => {
-          setInputValue({
-            ...inputValue,
-            operating_countries: countries.results,
-            sectors: sectors.results
-          });
-        }
-      );
+      ]).then(([{ data: countries }, { data: sectors }, { data: categories }, { data: industries } /*{ data: subsectors }*/]) => {
+        setInputValue({
+          ...inputValue,
+          operating_countries: countries.results,
+          sectors: sectors.results
+        });
+      });
     } catch (error) {
       console.log(error);
     }
@@ -112,9 +92,7 @@ const PersonalInformation = () => {
 
   const getAdminDetails = async (id = '') => {
     try {
-      const userDetails = await Requests.Get(
-        `/esgadmin/administrators/${loginDetails.user_id}`
-      );
+      const userDetails = await Requests.Get(`/esgadmin/administrators/${loginDetails.user_id}`);
       setLogo(userDetails.profile_picture);
       console.log(userDetails);
       !_isEmpty(userDetails.profile_picture) &&
@@ -207,15 +185,11 @@ const PersonalInformation = () => {
 
   const fetchSubSector = async (index, cloneObject) => {
     const sectorName = inputValue.sectors[index].name;
-    if (
-      Object.keys(cloneObject.groupSubsectors || []).indexOf(sectorName) > -1
-    ) {
+    if (Object.keys(cloneObject.groupSubsectors || []).indexOf(sectorName) > -1) {
       delete cloneObject.groupSubsectors[sectorName];
       setInputValue({
         ...cloneObject,
-        subsectors: [
-          ...Object.values(cloneObject['groupSubsectors'] || []).flat()
-        ]
+        subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat()]
       });
     } else {
       const response = await Requests.Get(`/esgadmin/master/subsectors`, {
@@ -227,10 +201,7 @@ const PersonalInformation = () => {
           ...cloneObject['groupSubsectors'],
           [sectorName]: response.results || []
         },
-        subsectors: [
-          ...Object.values(cloneObject['groupSubsectors'] || []).flat(),
-          ...response.results
-        ]
+        subsectors: [...Object.values(cloneObject['groupSubsectors'] || []).flat(), ...response.results]
       });
     }
   };
@@ -240,8 +211,7 @@ const PersonalInformation = () => {
     if (cloneInputVal[field][index].isSelect === undefined) {
       cloneInputVal[field][index].isSelect = true;
     } else {
-      cloneInputVal[field][index].isSelect =
-        !cloneInputVal[field][index].isSelect;
+      cloneInputVal[field][index].isSelect = !cloneInputVal[field][index].isSelect;
     }
     if (field === 'sectors') {
       fetchSubSector(index, cloneInputVal);
@@ -297,21 +267,10 @@ const PersonalInformation = () => {
     setStatusData({ type: '', message: '' });
   };
 
-  const OrgInputFields = (
-    label = '',
-    labelRequired = false,
-    inputName = '',
-    inputVal = '',
-    labelCls = ''
-  ) => (
-    <div class='framework__row'>
+  const OrgInputFields = (label = '', labelRequired = false, inputName = '', inputVal = '', labelCls = '') => (
+    <div className='framework__row'>
       <Label label={label} required={labelRequired} />
-      <InputBox
-        name={inputName}
-        value={inputVal}
-        onChangeHandler={onChangeHandler}
-        disabled={true}
-      />
+      <InputBox name={inputName} value={inputVal} onChangeHandler={onChangeHandler} disabled={true} />
     </div>
   );
 
@@ -328,80 +287,77 @@ const PersonalInformation = () => {
   // }
 
   const onSaveUserDetails = async () => {
-    try {
-      const form = new FormData();
-      setStatusData({ type: 'loading', message: '' });
-      form.append('first_name', inputValue.first_name);
-      form.append('last_name', inputValue.last_name);
-      form.append('email_id', inputValue.email_id);
-      form.append('country', inputValue.country);
-      form.append('phone_number', inputValue.phone_number);
-      // form.append('department', inputValue.department);
-      // form.append('designation', inputValue.designation);
-      form.append('created_at', moment().format());
-      form.append('updated_at', moment().format());
-      if (!_isEmpty(uploadImage && uploadImage.fileName) && !_isEmpty(logo)) {
-        if (typeof uploadImage.imageUrl == 'object') {
-          form.append(
-            'profile_picture',
-            _get(uploadImage, 'imageUrl', ''),
-            uploadImage.fileName
-          );
-          //form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
-        }
-      } else if (_isEmpty(logo)) {
-        form.append('profile_picture', '');
-      }
-      if(orgDetails.name){
-        form.append('organization_name', orgDetails.name);
-      }
-      const subAPIURL =
-        loginDetails.user_role == 'esg_admin'
-          ? 'esgadmin/administrators'
-          : 'users';
-      let response = await axios
-        .put(
-          `${process.env.API_BASE_URL}/${subAPIURL}/${loginDetails.user_id}${orgDetails.name ? `?organization=${orgDetails.name}`: ''}`,
-          form,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' }
+    if (!_isEmpty(inputValue.first_name && inputValue.last_name && inputValue.email_id && inputValue.country && inputValue.phone_number)) {
+      try {
+        const form = new FormData();
+        setStatusData({ type: 'loading', message: '' });
+        form.append('first_name', inputValue.first_name);
+        form.append('last_name', inputValue.last_name);
+        form.append('email_id', inputValue.email_id);
+        form.append('country', inputValue.country);
+        form.append('phone_number', inputValue.phone_number);
+        // form.append('department', inputValue.department);
+        // form.append('designation', inputValue.designation);
+        form.append('created_at', moment().format());
+        form.append('updated_at', moment().format());
+        if (!_isEmpty(uploadImage && uploadImage.fileName) && !_isEmpty(logo)) {
+          if (typeof uploadImage.imageUrl == 'object') {
+            form.append('profile_picture', _get(uploadImage, 'imageUrl', ''), uploadImage.fileName);
+            //form.append('logo', _get(uploadImage, "imageUrl", ""), uploadImage.fileName);
           }
-        )
-        .then(({ data }) => data);
-      setStatusData({
-        type: 'success',
-        message: 'Your profile details has been successfully updated'
-      });
-    } catch (e) {
-      let error = getErrorMessage(e);
-      setStatusData({ ...error });
+        } else if (_isEmpty(logo)) {
+          form.append('profile_picture', '');
+        }
+        if (orgDetails.name) {
+          form.append('organization_name', orgDetails.name);
+        }
+        const subAPIURL = loginDetails.user_role == 'esg_admin' ? 'esgadmin/administrators' : 'users';
+        let response = await axios
+          .put(`${process.env.API_BASE_URL}/${subAPIURL}/${loginDetails.user_id}${orgDetails.name ? `?organization=${orgDetails.name}` : ''}`, form, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          })
+          .then(({ data }) => data);
+        setStatusData({
+          type: 'success',
+          message: 'Your profile details has been successfully updated'
+        });
+      } catch (e) {
+        let error = getErrorMessage(e);
+        setStatusData({ ...error });
+      }
+    } else {
+      if (_isEmpty(inputValue.first_name)) {
+        setErrorMsg('Please enter Firstname');
+      } else if (_isEmpty(inputValue.last_name)) {
+        setErrorMsg('Please enter last name');
+      } else if (_isEmpty(inputValue.email_id)) {
+        setErrorMsg('Please enter email');
+      } else if (_isEmpty(inputValue.country)) {
+        setErrorMsg('Please enter country name');
+      } else if (_isEmpty(inputValue.phone_number)) {
+        setErrorMsg('Please enter phone number');
+      }
     }
   };
 
   return (
     <>
-      <div class='main__top-wrapper'>
-        <h1 class='main__title'>Personal Information</h1>
+      <div className='main__top-wrapper'>
+        <h1 className='main__title'>Personal Information</h1>
         {false && (
-          <div class='framework__row right font12 '>
-            <a class='right rightlink__color' onClick={() => setIsOpen(true)}>
+          <div className='framework__row right font12 '>
+            <a className='right rightlink__color' onClick={() => setIsOpen(true)}>
               Change password
             </a>
           </div>
         )}
       </div>
-      {!!statusData.type && (
-        <Popup
-          isShow={!!statusData.type}
-          data={statusData}
-          onCloseHandler={onCloseHandler}
-        />
-      )}
+      {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
 
-      <div class='profile-info-container'>
-        <div class='framework__col-wrapper'>
-          <div class='framework__row-wrapper profile-info-fileds'>
-            <div class='framework__row'>
+      <div className='profile-info-container'>
+        <div className='framework__col-wrapper'>
+          <div className='framework__row-wrapper profile-info-fileds'>
+            <div className='framework__row'>
               <UploadFile
                 logoSizeError={logoSizeError}
                 imgcls={'org-image-size'}
@@ -412,82 +368,46 @@ const PersonalInformation = () => {
                 required={false}
               />
             </div>
-            <div class='framework__row'></div>
+            <div className='framework__row'></div>
           </div>
-          <div class='framework__row-wrapper profile-info-fileds'>
-            <div class='framework__row'>
-              <Label
-                label={'First Name'}
-                className={`framework__title`}
-                required={true}
-              />
-              <InputBox
-                name={'first_name'}
-                value={inputValue.first_name}
-                onChangeHandler={onChangeHandler}
-              />
+          <div className='framework__row-wrapper profile-info-fileds'>
+            <div className='framework__row'>
+              <Label label={'First Name'} className={`framework__title`} required={true} />
+              <InputBox name={'first_name'} value={inputValue.first_name} onChangeHandler={onChangeHandler} maxLength={25} />
             </div>
-            <div class='framework__row'>
-              <Label
-                label={'Last Name'}
-                className={`framework__title right`}
-                required={true}
-              />
-              <InputBox
-                name={'last_name'}
-                value={inputValue.last_name}
-                onChangeHandler={onChangeHandler}
-              />
+            <div className='framework__row'>
+              <Label label={'Last Name'} className={`framework__title right`} required={true} />
+              <InputBox name={'last_name'} value={inputValue.last_name} onChangeHandler={onChangeHandler} maxLength={25} />
             </div>
           </div>
-          <div class='framework__row-wrapper profile-info-fileds'>
-            <div class='framework__row'>
-              <Label
-                label={'Email'}
-                className={`framework__title`}
-                required={true}
-              />
-              <InputBox
-                name={'email_id'}
-                value={inputValue.email_id}
-                onChangeHandler={onChangeHandler}
-                disabled={true}
-              />
+          <div className='framework__row-wrapper profile-info-fileds'>
+            <div className='framework__row'>
+              <Label label={'Email'} className={`framework__title`} required={true} />
+              <InputBox name={'email_id'} value={inputValue.email_id} onChangeHandler={onChangeHandler} disabled={true} maxLength={50} />
             </div>
-            <div class='framework__row'>
-              <Label
-                label={'Mobile'}
-                className={`framework__title right`}
-                required={true}
-              />
-              <InputBox
-                maxLength={15}
-                text='number'
-                placeholder='+44235545'
-                name={'phone_number'}
-                value={inputValue.phone_number}
-                onChangeHandler={onChangeHandler}
-              />
+            <div className='framework__row'>
+              <Label label={'Mobile'} className={`framework__title right`} required={true} />
+              <InputBox maxLength={20} text='number' placeholder='+44235545' name={'phone_number'} value={inputValue.phone_number} onChangeHandler={onChangeHandler} />
             </div>
           </div>
-          <div class='framework__row-wrapper profile-info-fileds'>
-            <div class='framework__row'>
+          <div className='framework__row-wrapper profile-info-fileds'>
+            <div className='framework__row'>
               <Label label={'Country'} required={true} />
-              <InputBox
-                name={'country'}
-                value={inputValue.country}
-                onChangeHandler={onChangeHandler}
-              />
+              <InputBox name={'country'} value={inputValue.country} onChangeHandler={onChangeHandler} maxLength={25} />
               {/* <Pills label='' data={inputValue.country} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'country')} required={true} /> */}
             </div>
           </div>
         </div>
       </div>
-
-      <button onClick={() => onSaveUserDetails()} class='main__button'>
+      <button onClick={() => onSaveUserDetails()} className='main__button'>
         SAVE
       </button>
-
+      {errorMessage !== '' && (
+        <div className='text-center text-red-600'>
+          <span className='color-red P-4'>*</span>
+          {errorMessage}
+        </div>
+      )}
       {/* {isOpen &&
             <Popup from="personal" isShow={isOpen} onCloseHandler={onCloseHandler} />} */}
     </>

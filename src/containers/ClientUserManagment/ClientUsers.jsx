@@ -56,11 +56,11 @@ const ClientUsers = () => {
 
   return (
     <>
-      <div class='main__top-wrapper'>
-        <h1 class='main__title custom-title'>Manage Users</h1>
+      <div className='main__top-wrapper'>
+        <h1 className='main__title custom-title'>Manage Users</h1>
         <a
           type='submit'
-          class='form__btn main__button'
+          className='form__btn main__button'
           onClick={() => {
             navigate(`/client/users/invite`);
           }}

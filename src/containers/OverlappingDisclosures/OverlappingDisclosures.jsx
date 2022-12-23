@@ -75,59 +75,59 @@ const OverlappingDisclosures = (props) => {
 
     {isLoading?<Animation /> :
 <>
-        <main class="">
-            <div class="main__top-wrapper">
-                <h1 class="main__title_intelligent">
+        <main className="">
+            <div className="main__top-wrapper">
+                <h1 className="main__title_intelligent">
                     <b>Intelligent Mapping</b>
                 </h1>
             </div>
             <hr />
             <br/>
-            <div class="intelligent-framework">
-                <div class="system_admin_container_intelligent intelligent_main align-center">
-                    <div class="framework__col-wrapper">
-                        <div class="intelligent_boxvalue">
+            <div className="intelligent-framework">
+                <div className="system_admin_container_intelligent intelligent_main align-center">
+                    <div className="framework__col-wrapper">
+                        <div className="intelligent_boxvalue">
                             <div>
-                                <img src={selectedFramework.from.logo} class="recommended_framework_intellgent" width="100px" height="100px" />
+                                <img src={selectedFramework.from.logo} className="recommended_framework_intellgent" width="100px" height="100px" />
                             </div>
                         </div>
                     </div>
 
-                    <div class="framework__col-wrapper">
-                        <div class="intelligent_boxvalue">
+                    <div className="framework__col-wrapper">
+                        <div className="intelligent_boxvalue">
                             <div>
-                                <img src={selectedFramework.to.logo} class="recommended_framework_intellgent"  width="100px" height="100px" />
+                                <img src={selectedFramework.to.logo} className="recommended_framework_intellgent"  width="100px" height="100px" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="intelligent_content_wrapper">
+            <div className="intelligent_content_wrapper">
                 {mappingFramework.length>0?
                 (mappingFramework || []).map((val, index) => (
                     <div>
-                        <div class="main__top-wrapper">
-                            <div class="framework__row">
-                                <h2 class="main__title_intelligent"><b>
+                        <div className="main__top-wrapper">
+                            <div className="framework__row">
+                                <h2 className="main__title_intelligent"><b>
                                     {`${getDisclosureName(val.name, true)}`}
                                 </b>
                                 </h2>
                             </div>
-                            <div class="framework__row">
-                                <h2 class="main__title_intelligent"><b>
+                            <div className="framework__row">
+                                <h2 className="main__title_intelligent"><b>
                                     {`${getDisclosureName(val.name, false)}`}
                                 </b></h2>
                             </div>
                         </div>
-                        <div class="intelligent_mapping_wrapper">
+                        <div className="intelligent_mapping_wrapper">
                         {(val.MappingsContext || []).map((mapingValues, index1) => (
-                                <div class="framework__row-wrapper main_title_bottom_mapping  main_title_top_mapping">
-                                    <div class="framework__row">
-                                        <h2 class="main__title_intelligent"> {`${getKPI(mapingValues, true)}`}</h2>
+                                <div className="framework__row-wrapper main_title_bottom_mapping  main_title_top_mapping">
+                                    <div className="framework__row">
+                                        <h2 className="main__title_intelligent"> {`${getKPI(mapingValues, true)}`}</h2>
                                     </div>
-                                    <div class="framework__row">
-                                        <h2 class="main__title_intelligent"> {`${getKPI(mapingValues, false)}`} </h2>
+                                    <div className="framework__row">
+                                        <h2 className="main__title_intelligent"> {`${getKPI(mapingValues, false)}`} </h2>
                                     </div>
                                 </div>
                             

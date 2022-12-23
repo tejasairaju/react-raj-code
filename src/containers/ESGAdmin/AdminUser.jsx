@@ -54,11 +54,11 @@ const ESGAdmin = (props) => {
 
     return (<>
 
-        <div class="main__top-wrapper">
-            <h1 class="main__title">
+        <div className="main__top-wrapper">
+            <h1 className="main__title">
                 ESG Admin User Info
             </h1>
-            <button class="main__button" onClick={() => { navigate(`/adminuser/create`) }}>
+            <button className="main__button" onClick={() => { navigate(`/adminuser/create`) }}>
                 ADD
             </button>
         </div>

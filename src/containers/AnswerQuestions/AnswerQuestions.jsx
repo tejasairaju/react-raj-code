@@ -191,13 +191,13 @@ const AnswerQuestions = () => {
                 <h1 className="create-framework__title">
                     From:
                 </h1>
-                <label for="create-framework__date-from" className="create-framework__label">
+                <label htmlFor="create-framework__date-from" className="create-framework__label">
                     <input type="date" value={start_date} className="create-framework__input" id="create-framework__date-from" required />
                 </label>
                 <h1 className="create-framework__title">
                     To:
                 </h1>
-                <label for="create-framework__date-to" className="create-framework__label">
+                <label htmlFor="create-framework__date-to" className="create-framework__label">
                     <input type="date" min={start_date} max="2100-01-01" value={end_date} className="create-framework__input" id="create-framework__date-to" required />
                 </label>
             </div>

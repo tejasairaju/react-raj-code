@@ -60,7 +60,7 @@ export const Login = ({loginHandler}) => {
                     Your Login Details
                 </h2>
                 <form action="#" method="get" className="login__form">
-                    <label for="email" className="form__label">
+                    <label htmlFor="email" className="form__label">
                         <input type="email" name="email" placeholder='Email address' onChange={onChangeHandler} id="form__email" className="form__input" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9-.]{2,61}$" required />
                         <div className='error-msg'>{error}</div>
                     </label>

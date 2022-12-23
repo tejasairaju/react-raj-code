@@ -49,9 +49,9 @@ const ViewMyTaskDisclosuresList = (props) => {
 
   return (
     <>
-      <div class='main__top-wrapper view-task-list-contianer'>
-        <h1 class={`main__title ${getColor(status)}`}>My Task - Disclosures</h1>
-        <h1 class={`main__title`}>
+      <div className='main__top-wrapper view-task-list-contianer'>
+        <h1 className={`main__title ${getColor(status)}`}>My Task - Disclosures</h1>
+        <h1 className={`main__title`}>
           Report Name: <b>{name}</b>
         </h1>
       </div>

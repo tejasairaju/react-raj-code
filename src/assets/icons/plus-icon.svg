@@ -1,3 +1,3 @@
-<svg className="list-item__plus" width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class="list-item__plus" width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M16.4761 7.41553V10.2192H0.39502V7.41553H16.4761ZM9.93408 0.567383V17.6475H6.95312V0.567383H9.93408Z" fill="#585E62" />
                                 </svg>

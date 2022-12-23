@@ -105,7 +105,7 @@ const ListFramework = (props) => {
             })}
           </div>
         ) : (
-          <div class='cards-wrapper'>
+          <div className='cards-wrapper'>
             {(bespokeFrameworkData || []).map((item, i) => {
               return (
                 <div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>

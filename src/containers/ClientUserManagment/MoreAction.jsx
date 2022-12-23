@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Requests from '../../Requests';
 import axios from 'axios';
-import DeletePopup from '../../Components/Common/Popup/DeletePopup.jsx';
+import DeletePopup from '../../Components/Common/DeletePopup/DeletePopup.jsx';
 
 const ClientUserAction = (props) => {
   const { value, index, getClientUsers = () => {}, deleteCallback } = props;
@@ -71,9 +71,9 @@ const ClientUserAction = (props) => {
         <div>
           <a onClick={() => onUpdateUser(value, 0)}>Block</a>
         </div>
-        <div>
+        {/* <div>
           <a onClick={() => setIsDelete(true)}>Delete</a>
-        </div>
+        </div> */}
       </div>
       {isDelete && <DeletePopup name={'user'} isShow={isDelete} setIsDelete={setIsDelete} deleteConfirm={deleteCallback} />}
     </div>

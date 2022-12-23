@@ -147,8 +147,8 @@ const Sector = (props) => {
 
   return (
     <>
-      <div class='main__top-wrapper'>
-        <h1 class='main__title custom-title'>{'Manage Masters -> Sector'}</h1>
+      <div className='main__top-wrapper'>
+        <h1 className='main__title custom-title'>{'Manage Masters -> Sector'}</h1>
       </div>
       {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
       <AddMoreOption
