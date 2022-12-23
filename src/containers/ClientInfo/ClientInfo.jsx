@@ -37,10 +37,10 @@ const ClientInfo = (props) => {
 
   return (
     <>
-      <div class='main__top-wrapper'>
-        <h1 class='main__title custom-title'>Client Info</h1>
+      <div className='main__top-wrapper'>
+        <h1 className='main__title custom-title'>Client Info</h1>
         <button
-          class='main__button'
+          className='main__button'
           onClick={() => {
             navigate(`/client/onboard`);
           }}

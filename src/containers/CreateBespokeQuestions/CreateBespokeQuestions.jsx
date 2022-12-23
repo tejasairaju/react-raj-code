@@ -18,13 +18,7 @@ import ViewQuestionsList from '../../Components/AddQuestions/ViewQuestionsList.j
 const { Button, Input, TextArea, Dropdown } = Fields;
 
 const CreateBespokeQuestions = (props) => {
-  const {
-    isTemplate = true,
-    title = `Welcome to Create Bespoke Questions`,
-    createQuestions = true,
-    questionList = [],
-    onUpdateQuestions = () => {}
-  } = props;
+  const { isTemplate = true, title = `Welcome to Create Bespoke Questions`, createQuestions = true, questionList = [], onUpdateQuestions = () => {} } = props;
   const location = useLocation();
   const navigate = useNavigate();
   const { id = '', disclosureId = '' } = useParams();
@@ -54,15 +48,7 @@ const CreateBespokeQuestions = (props) => {
   const [isError, setIsError] = useState(false);
   const [fieldOptions, setFieldOptions] = useState(initialFieldOptions);
 
-  const tableHeaders = [
-    'Code',
-    'Question',
-    'Data Type',
-    'Input Type',
-    'Choices',
-    'Unit',
-    null
-  ];
+  const tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
   useEffect(() => {
     setInputList([...questionList]);
   }, []);
@@ -81,12 +67,10 @@ const CreateBespokeQuestions = (props) => {
 
   const onCreateQuestions = async () => {
     let list = [...inputList];
-    const newInputList = (list || []).map(
-      ({ Dropdown, Multiselect, ...rest }) => {
-        delete rest['Radio button'];
-        return rest;
-      }
-    );
+    const newInputList = (list || []).map(({ Dropdown, Multiselect, ...rest }) => {
+      delete rest['Radio button'];
+      return rest;
+    });
     const payload = {
       children: newInputList,
       category: state.category,
@@ -97,11 +81,7 @@ const CreateBespokeQuestions = (props) => {
     if (createQuestions) {
       try {
         setStatusData({ type: 'loading', message: '' });
-        const response = await Requests.Put(
-          `/templates/${id}/disclosures/${disclosureId}`,
-          payload,
-          { organization: orgDetails.name }
-        );
+        const response = await Requests.Put(`/templates/${id}/disclosures/${disclosureId}`, payload, { organization: orgDetails.name });
         setStatusData({
           type: 'success',
           message: 'Thanks! Your questions has been successfully created'
@@ -145,26 +125,13 @@ const CreateBespokeQuestions = (props) => {
   return (
     <>
       {isOpenAddQuestion && (
-        <AddQuestions
-          isTemplate={true}
-          isShow={isOpenAddQuestion}
-          editInfo={editInfo}
-          inputList={inputList}
-          setInputList={setInputList}
-          closeModal={closeAddQuestionModal}
-        />
+        <AddQuestions isTemplate={true} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />
       )}
       <div className='main__top-wrapper'>
         <h1 className='main__title custom-title'>{title}</h1>
       </div>
       <div id='createQuestions' className='create_question__wrapper'>
-        {!!statusData.type && (
-          <Popup
-            isShow={!!statusData.type}
-            data={statusData}
-            onCloseHandler={onCloseHandler}
-          />
-        )}
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
         {/* {fieldOptions.selectedDropDownVal && <Modal isShow={!!fieldOptions.selectedDropDownVal} closeModal={closePopupModal}>
                 <div className='create-options-title'>Please enter the options with comma separated value</div>
                 <div className='get-textarea-input-container'>
@@ -239,16 +206,10 @@ const CreateBespokeQuestions = (props) => {
             </div> */}
       </div>
       <div className='create-question-main-btn'>
-        <button
-          onClick={() => navigate(-1)}
-          className='main__button m-l-1 cancel-btn'
-        >
+        <button onClick={() => navigate(-1)} className='main__button m-l-1 cancel-btn'>
           Back
         </button>
-        <button
-          onClick={() => onCreateQuestions()}
-          className='main__button m-l-1'
-        >
+        <button onClick={() => onCreateQuestions()} className='main__button m-l-1'>
           FINISH
         </button>
       </div>

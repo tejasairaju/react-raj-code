@@ -61,9 +61,7 @@ const ESGManageUser = () => {
 
   const deleteUser = async (value) => {
     try {
-      const response = await Requests.Delete(
-        `/esgadmin/administrators/${value.id}`
-      );
+      const response = await Requests.Delete(`/esgadmin/administrators/${value.id}`);
       getClientUsers();
     } catch (e) {
       setStatusData({ type: 'error', message: e.message });
@@ -72,11 +70,11 @@ const ESGManageUser = () => {
 
   return (
     <>
-      <div class='main__top-wrapper'>
-        <h1 class='main__title custom-title'>Manage Users</h1>
+      <div className='main__top-wrapper'>
+        <h1 className='main__title custom-title'>Manage Users</h1>
         <a
           type='submit'
-          class='form__btn main__button'
+          className='form__btn main__button'
           onClick={() => {
             navigate(`/esg/users/invite`);
           }}
@@ -85,7 +83,6 @@ const ESGManageUser = () => {
         </a>
       </div>
       <br />
-
       <table className='default-flex-table table-scroll client-admin-manage-user'>
         <thead>
           <tr>
@@ -101,10 +98,10 @@ const ESGManageUser = () => {
                 <tr>
                   {/* <td>{getProfilePhoto(val)}</td> */}
                   <td>
-                    <div class='row__item-img'>
-                      <div class='client__edit'>{getProfilePhoto(val)}</div>
+                    <div className='row__item-img'>
+                      <div className='client__edit'>{getProfilePhoto(val)}</div>
                       <a
-                        class='edit__avatar'
+                        className='edit__avatar'
                         onClick={() => {
                           navigate(`/esg/users/invite`, {
                             state: { userDetails: val, isEditable: true }
@@ -122,14 +119,9 @@ const ESGManageUser = () => {
                   <td>{val.designation}</td>
                   {/* <td>{val.department}</td> */}
                   <td>{val.role == 'Administrator' ? 'Admin' : val.role}</td>
-                  <td>{val.status}</td>
+                  <td>{val.status == 'Disabled' ? 'Blocked' : val.status}</td>
                   <td>
-                    <ESGManageUserAction
-                      getClientUsers={getClientUsers}
-                      value={val}
-                      index={index}
-                      deleteCallback={() => deleteUser(val)}
-                    />
+                    <ESGManageUserAction getClientUsers={getClientUsers} value={val} index={index} deleteCallback={() => deleteUser(val)} />
                     {/* <AdminAction value={val} index={index} /> */}
                     {/* <ClientUserAction getClientUsers={getClientUsers} value={val} index={index} /> */}
                     {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}

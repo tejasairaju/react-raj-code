@@ -13,116 +13,124 @@ import ViewQuestionsList from '../../../Components/AddQuestions/ViewQuestionsLis
 import { Title } from 'chart.js';
 
 const CreateQuestions = (props) => {
-    const { title = '', isTemplate=false, createQuestions = true, questionList = [], onUpdateQuestions = () => { } } = props;
-    const location = useLocation();
-    const navigate = useNavigate();
-    const state = _get(location, 'state', {});
-    const { id = '', name = '', code = "", framework = '', description='', guidance="" } = state || {};
-    const [statusData, setStatusData] = useState({});
-    const [inputList, setInputList] = useState([]);
-    const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [editInfo, setEditInfo] = useState({ isEditable: false, editRowIndex: null });
+  const { title = '', isTemplate = false, createQuestions = true, questionList = [], onUpdateQuestions = () => {} } = props;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = _get(location, 'state', {});
+  const { id = '', name = '', code = '', framework = '', description = '', guidance = '' } = state || {};
+  const [statusData, setStatusData] = useState({});
+  const [inputList, setInputList] = useState([]);
+  const [isOpenAddQuestion, setIsOpenAddQuestion] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [editInfo, setEditInfo] = useState({ isEditable: false, editRowIndex: null });
 
-    useEffect(() => {
-        setInputList([...questionList]);
-    }, []);
+  useEffect(() => {
+    setInputList([...questionList]);
+  }, []);
 
-    // handle click event of the Remove button
-    const handleRemoveClick = (index) => {
-        let list = [...inputList];
-        list[index]['active']=false;
-        // list.splice(index, 1);
-        setInputList(list);
+  // handle click event of the Remove button
+  const handleRemoveClick = (index) => {
+    let list = [...inputList];
+    list[index]['active'] = false;
+    // list.splice(index, 1);
+    setInputList(list);
+  };
+
+  const onCreateCancelQuestions = () => {
+    navigate(-1);
+  };
+
+  const onCreateQuestions = async () => {
+    let list = [...inputList];
+    const newInputList = (list || []).map(({ Dropdown, Multiselect, ...rest }) => {
+      delete rest['Radio button'];
+      return rest;
+    });
+    const payload = {
+      ...location.state,
+      parent: null,
+      children: [...newInputList]
     };
-
-    const onCreateCancelQuestions = () => {
-     navigate(-1);
+    // setStatusData({ type: 'loading', message: '' });
+    if (createQuestions && (newInputList || []).length > 0) {
+      try {
+        setStatusData({ type: 'loading', message: '' });
+        const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework}/disclosures/${id}`, payload).then(({ data }) => data);
+        setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
+        // setInputList([initialRow]);
+      } catch (e) {
+        let error = getErrorMessage(e);
+        setStatusData({ ...error });
+      }
+      setIsError(false);
+    } else if (!createQuestions && (list || [].length)) {
+      onUpdateQuestions(payload, [...list]);
+    } else {
+      setIsError(true);
     }
+  };
 
-    const onCreateQuestions = async () => {
-        let list = [...inputList];
-        const newInputList = (list|| []).map(({ Dropdown, Multiselect, ...rest }) => {
-            delete rest["Radio button"];
-            return rest;
-        });
-        const payload = {
-            ...location.state,
-            parent: null,
-            children: [...newInputList]
-        }
-        // setStatusData({ type: 'loading', message: '' });
-        if (createQuestions&&(newInputList|| []).length > 0) {
-
-            try {
-                setStatusData({ type: 'loading', message: '' });
-                const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework}/disclosures/${id}`, payload).then(({ data }) => data);
-                setStatusData({ type: 'success', message: 'Thanks! Your questions has been successfully created' });
-                // setInputList([initialRow]);
-            } catch (e) {
-                let error = getErrorMessage(e);
-                setStatusData({ ...error });
-            }
-            setIsError(false);
-        } else if (!createQuestions && (list || [].length)) {
-            onUpdateQuestions(payload, [...list]);
-        } else {
-            setIsError(true)
-        }
+  const onCloseHandler = () => {
+    if (statusData.type === 'success' && createQuestions) {
+      navigate('/manageframework');
     }
+    setStatusData({});
+  };
 
-    const onCloseHandler = () => {
-        if (statusData.type === 'success' && createQuestions) {
-            navigate('/manageframework');
-        }
-        setStatusData({});
+  const onClickAddQuestion = () => {
+    setIsOpenAddQuestion(true);
+  };
 
-    }
+  const closeAddQuestionModal = () => {
+    setIsOpenAddQuestion(false);
+  };
 
-    const onClickAddQuestion = () => {
-        setIsOpenAddQuestion(true);
-    }
+  const handleEditClick = (index) => {
+    setIsOpenAddQuestion(true);
+    setEditInfo({
+      isEditable: true,
+      editRowIndex: index
+    });
+  };
 
-    const closeAddQuestionModal = () => {
-        setIsOpenAddQuestion(false);
-    }
+  let tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+  console.log(state);
 
-    const handleEditClick = (index) => {
-        setIsOpenAddQuestion(true);
-        setEditInfo({
-            isEditable: true,
-            editRowIndex: index
-        });
-    }
+  return (
+    <>
+      {isOpenAddQuestion && (
+        <AddQuestions isTemplate={false} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />
+      )}
+      <div className='main__top-wrapper'>
+        <h1 className='main__title custom-title'>{title ? title : 'Welcome to Create Questions'}</h1>
+      </div>
+      <div id='createQuestions' className={`create_question__wrapper ${!createQuestions ? 'view-questions-list-container' : null}`}>
+        {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
 
-    let tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
-    console.log(state)
-
-    return (<>
-        {isOpenAddQuestion && <AddQuestions isTemplate={false} isShow={isOpenAddQuestion} editInfo={editInfo} inputList={inputList} setInputList={setInputList} closeModal={closeAddQuestionModal} />}
-        <div className="main__top-wrapper">
-            <h1 className="main__title custom-title">
-                {title ? title : 'Welcome to Create Questions'}
-            </h1>
-        </div>
-        <div id="createQuestions" className={`create_question__wrapper ${!createQuestions ? 'view-questions-list-container' : null}`}>
-            {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-
-            <ViewQuestionsList isTemplate={isTemplate} guidance={guidance} code={code} name={name} createQuestions={createQuestions} tableHeaders={tableHeaders} inputList={inputList} isError={isError}
-                 onClickAddQuestion={onClickAddQuestion} handleEditClick={handleEditClick} handleRemoveClick={handleRemoveClick} />
-        </div>
-        <div className='create-question-main-btn'>
-            <button onClick={() => onCreateCancelQuestions()} className="main__button m-l-1 cancel-btn">
-                Cancel
-            </button>
-            <button onClick={() => onCreateQuestions()} className="main__button m-l-1">
-                FINISH
-            </button>
-        </div>
-
-    </>)
-
-}
-
+        <ViewQuestionsList
+          isTemplate={isTemplate}
+          guidance={guidance}
+          code={code}
+          name={name}
+          createQuestions={createQuestions}
+          tableHeaders={tableHeaders}
+          inputList={inputList}
+          isError={isError}
+          onClickAddQuestion={onClickAddQuestion}
+          handleEditClick={handleEditClick}
+          handleRemoveClick={handleRemoveClick}
+        />
+      </div>
+      <div className='create-question-main-btn'>
+        <button onClick={() => onCreateCancelQuestions()} className='main__button m-l-1 cancel-btn'>
+          Cancel
+        </button>
+        <button onClick={() => onCreateQuestions()} className='main__button m-l-1'>
+          FINISH
+        </button>
+      </div>
+    </>
+  );
+};
 
 export default CreateQuestions;

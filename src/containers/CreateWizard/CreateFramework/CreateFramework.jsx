@@ -44,9 +44,7 @@ const CreateFramework = (props) => {
 
   const getframeworkDetails = async (id = '') => {
     try {
-      const frameDetails = await axios
-        .get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`)
-        .then(({ data }) => data);
+      const frameDetails = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`).then(({ data }) => data);
       !_isEmpty(frameDetails.logo) &&
         setUploadImage({
           fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`,
@@ -68,9 +66,7 @@ const CreateFramework = (props) => {
     let cloneSector = [...sector];
     let cloneSubsectors = [..._get(appWizard, 'subsectors', [])];
     let sectorNameList = cloneSector.map((sector) => sector.name);
-    cloneSubsectors = cloneSubsectors.filter(
-      (value) => sectorNameList.indexOf(_get(value, 'sector.name', '')) > -1
-    );
+    cloneSubsectors = cloneSubsectors.filter((value) => sectorNameList.indexOf(_get(value, 'sector.name', '')) > -1);
     setFilterSubSectors(cloneSubsectors);
     setSelectedSector(sectorNameList);
   };
@@ -96,12 +92,8 @@ const CreateFramework = (props) => {
         sectorList.splice(index, 1);
 
         // remove already Selected subsector while remove sector
-        let alreadySlectedSubSector = [
-          ..._get(cloneInputValue, 'subsectors', [])
-        ];
-        alreadySlectedSubSector = alreadySlectedSubSector.filter(
-          (subSector) => _lower(subSector.name) != _lower(removeItem)
-        );
+        let alreadySlectedSubSector = [..._get(cloneInputValue, 'subsectors', [])];
+        alreadySlectedSubSector = alreadySlectedSubSector.filter((subSector) => _lower(subSector.name) != _lower(removeItem));
         // if(alreadySlectedSubSector|| [].length === 0) {
         //     cloneInputValue['subsectors'] = null;
         //     console.log('>>>>>>>>>>>>>iffff');
@@ -110,9 +102,7 @@ const CreateFramework = (props) => {
         // }
       }
       let cloneSubsectors = [..._get(appWizard, 'subsectors', [])];
-      cloneSubsectors = cloneSubsectors.filter(
-        (value) => sectorList.indexOf(_get(value, 'sector.name', '')) > -1
-      );
+      cloneSubsectors = cloneSubsectors.filter((value) => sectorList.indexOf(_get(value, 'sector.name', '')) > -1);
       setFilterSubSectors(cloneSubsectors);
       setSelectedSector(sectorList);
     }
@@ -122,9 +112,10 @@ const CreateFramework = (props) => {
   const onNextHandler = async () => {
     if (
       !_isEmpty(inputValue.name) &&
-      !_isEmpty(inputValue.description)
-      // && (inputValue.countries || []).length > 0
-      //     && (inputValue.categories || []).lengthv> 0 && (inputValue.sectors || []).length > 0
+      !_isEmpty(inputValue.description) &&
+      (inputValue.countries || []).length > 0 &&
+      (inputValue.categories || []).length > 0 &&
+      (inputValue.sectors || []).length > 0
     ) {
       const form = new FormData();
 
@@ -154,26 +145,14 @@ const CreateFramework = (props) => {
         }
       }
 
-      if (
-        form.getAll('supported_countries').length > 0 &&
-        form.getAll('supported_sectors').length > 0 &&
-        form.getAll('supported_category').length > 0
-      ) {
+      if (form.getAll('supported_countries').length > 0 && form.getAll('supported_sectors').length > 0 && form.getAll('supported_category').length > 0) {
         form.append('name', inputValue.name);
         form.append('description', inputValue.description);
         if (!_isEmpty(uploadImage && uploadImage.fileName) && isEdit == false) {
-          form.append(
-            'logo',
-            _get(uploadImage, 'imageUrl', ''),
-            uploadImage.fileName
-          );
+          form.append('logo', _get(uploadImage, 'imageUrl', ''), uploadImage.fileName);
         } else if (params.isEdit && logo) {
           if (typeof uploadImage.imageUrl == 'object') {
-            form.append(
-              'logo',
-              _get(uploadImage, 'imageUrl', ''),
-              uploadImage.fileName
-            );
+            form.append('logo', _get(uploadImage, 'imageUrl', ''), uploadImage.fileName);
           }
         }
         form.append('created_at', moment().format());
@@ -183,13 +162,9 @@ const CreateFramework = (props) => {
           let response = {};
           if (isEdit) {
             response = await axios
-              .put(
-                `${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`,
-                form,
-                {
-                  headers: { 'Content-Type': 'multipart/form-data' }
-                }
-              )
+              .put(`${process.env.API_BASE_URL}/esgadmin/frameworks/${params.id}`, form, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+              })
               .then(({ data }) => data);
           } else {
             response = await axios
@@ -202,9 +177,7 @@ const CreateFramework = (props) => {
           setApiData(response);
           setStatusData({
             type: 'success',
-            message: `Thanks! Your framework has been successfully ${
-              isEdit ? 'updated' : 'created'
-            }`
+            message: `Thanks! Your framework has been successfully ${isEdit ? 'updated' : 'created'}`
           });
           setInputValue({});
           setLogo(null);
@@ -255,105 +228,75 @@ const CreateFramework = (props) => {
 
   return (
     <>
-      {!!statusData.type && (
-        <Popup
-          isShow={!!statusData.type}
-          data={statusData}
-          onCloseHandler={onCloseHandler}
-        />
-      )}
+      {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
       <div className='main__top-wrapper'>
-        <h1 className='main__title custom-title'>
-          {`Welcome to ${isEdit ? 'Update' : 'Create'} Framework Wizard`}
-        </h1>
+        <h1 className='main__title custom-title'>{`Welcome to ${isEdit ? 'Update' : 'Create'} Framework Wizard`}</h1>
       </div>
       <div id='createFramework' className='main__content-wrapper'>
         <Input
-          inputblockcls={`user_input_block ${
-            _get(validation, 'name', false) ? 'user_input_error' : null
-          }`}
+          inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`}
           error={validation['name']}
           label={'Name'}
           type='text'
           name='name'
+          maxLength={25}
           value={inputValue.name || ''}
           className='create-framework__input'
           placeholder='GRI'
           required={true}
           onChangeHandler={onChangeHandler}
         />
-        <UploadFile
-          logoSizeError={logoSizeError}
-          label='Logo'
-          imageUrl={logo}
-          onChangeFile={onChangeFile}
-          onChangeRemoveFile={onChangeRemoveFile}
-          required={false}
-        />
+        <UploadFile logoSizeError={logoSizeError} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
         <TextArea
-          inputblockcls={`user_input_block ${
-            _get(validation, 'description', false) ? 'user_input_error' : null
-          }`}
+          inputblockcls={`user_input_block ${_get(validation, 'description', false) ? 'user_input_error' : null}`}
           error={validation['description']}
           label='Description'
           name='description'
           value={inputValue.description || ''}
           className='create-framework__input create-framework__textarea'
           placeholder=''
-          required={true}
+          required={false}
           onChangeHandler={onChangeHandler}
+          maxLength={10000}
         />
-        <h1 className={'create-framework__title'}>Categories:</h1>
+
+        <h1 className={'create-framework__title'}>
+          Categories: <span className='text-red-500'>*</span>
+        </h1>
         <ReactMultiSelectDropdown
           data={_get(appWizard, 'categories', [])}
           isEditable={isEdit}
           selectedOptionVal={inputValue.categories}
-          onChangeCallback={(selectedArray, event) =>
-            onSelectMultipleSelect('categories', selectedArray, event)
-          }
+          onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('categories', selectedArray, event)}
         />
-        <h1 className={'create-framework__title'}>Sectors:</h1>
+        <h1 className={'create-framework__title'}>
+          Sectors: <span className='text-red-500'>*</span>
+        </h1>
         <ReactMultiSelectDropdown
           data={_get(appWizard, 'sectors', [])}
           isEditable={isEdit}
           selectedOptionVal={inputValue.sectors}
-          onChangeCallback={(selectedArray, event) =>
-            onSelectMultipleSelect('sectors', selectedArray, event)
-          }
+          onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('sectors', selectedArray, event)}
         />
         <h1 className={'create-framework__title'}>Sub Sectors:</h1>
         <ReactMultiSelectDropdown
-          data={
-            filterSubSectors.length
-              ? filterSubSectors
-              : [{ label: '', value: '' }]
-          }
+          data={filterSubSectors.length ? filterSubSectors : [{ label: '', value: '' }]}
           isEditable={isEdit}
           selectedOptionVal={inputValue.subsectors}
-          onChangeCallback={(selectedArray, event) =>
-            onSelectMultipleSelect('subsectors', selectedArray, event)
-          }
+          onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('subsectors', selectedArray, event)}
         />
-        <h1 className={'create-framework__title'}>Location:</h1>
-          <ReactMultiSelectDropdown
-            data={_get(appWizard, 'countries', [])}
-            isEditable={isEdit}
-            selectedOptionVal={inputValue.countries}
-            onChangeCallback={(selectedArray, event) =>
-              onSelectMultipleSelect('countries', selectedArray, event)
-            }
-          />
+        <h1 className={'create-framework__title'}>
+          Location: <span className='text-red-500'>*</span>
+        </h1>
+        <ReactMultiSelectDropdown
+          data={_get(appWizard, 'countries', [])}
+          isEditable={isEdit}
+          selectedOptionVal={inputValue.countries}
+          onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('countries', selectedArray, event)}
+        />
       </div>
-      {errorValidation && (
-        <div className='overall-error-container color-red'>
-          *Please fill all the required fields.
-        </div>
-      )}
-      <Button
-        label={isEdit ? 'UPDATE' : 'NEXT'}
-        onClickHandler={onNextHandler}
-        className='main__button'
-      />
+      {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
+      <Button label={isEdit ? 'UPDATE' : 'NEXT'} onClickHandler={onNextHandler} className='main__button' />
     </>
   );
 };

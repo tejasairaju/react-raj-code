@@ -84,9 +84,9 @@ const ESGManageUserAction = (props) => {
         <div className='lh1-5'>
           <a onClick={() => onUpdateUser(value, 0)}>Block</a>
         </div>
-        <div className='lh1-5'>
+        {/* <div className='lh1-5'>
           <a onClick={() => setIsDelete(true)}>Delete</a>
-        </div>
+        </div> */}
       </div>
       {isDelete && <DeletePopup name={'user'} isShow={isDelete} setIsDelete={setIsDelete} deleteConfirm={deleteCallback} />}
     </div>

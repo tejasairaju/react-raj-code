@@ -375,9 +375,9 @@ const MapDisclosures = () => {
 
   const renderFrameworkLogo = (type) => (
     <div className='map-disclosure-framework-scroll'>
-      <div class='frameworks__choose over-write-frameworks__choose'>
+      <div className='frameworks__choose over-write-frameworks__choose'>
         {(type === 'child' ? childFrameworksData : frameworksData || []).map((val, index) => (
-          <div class={`frameworks__choose-item ${val.isSelect ? 'active' : null} ${val.isSource ? ' hide' : null}`}>
+          <div className={`frameworks__choose-item ${val.isSelect ? 'active' : null} ${val.isSource ? ' hide' : null}`}>
             <ReactToolTip classTxt='flex justify-center' hoverText={val.name}>
               <img id={val.id} src={val.logo ? val.logo : `assets/images/avatar.jpg`} alt={val.name} onClick={() => onFrameworkSelect(val, type, index)} />
             </ReactToolTip>
@@ -413,27 +413,33 @@ const MapDisclosures = () => {
     <>
       {!!SuccessstatusData.type && <Popup isShow={!!SuccessstatusData.type} data={SuccessstatusData} onCloseHandler={onSuccessDataCloseHandler} />}
       {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-      <div class='main__top-wrapper'>
-        <h1 class='main__title custom-title'>Map Disclosure - Questions</h1>
+      <div className='main__top-wrapper'>
+        <h1 className='main__title custom-title'>Map Disclosure - Questions</h1>
       </div>
-      <div class='map__questions'>
-        <div class='map__wrapper'>
-          <h1 class='assign__title'>Choose a Framework to map from:</h1>
+      <div className='map__questions'>
+        <div className='map__wrapper'>
+          <h1 className='assign__title'>
+            Choose a Framework to map from: <span className='text-red-500'>*</span>
+          </h1>
           {renderFrameworkLogo('parent')}
-          <h1 class='map-diclosures-catagory mt-5 mb-2'>Categories:</h1>
+          <h1 className='map-diclosures-catagory mt-5 mb-2'>
+            Categories: <span className='text-red-500'>*</span>
+          </h1>
           <Pills label='' data={listCatagory_1} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'left')} />
-          <div class='map__check-item'>
-            <h1 class='assign__title'>Disclosures:</h1>
-            <div class='disclosures__wrapper'>
+          <div className='map__check-item'>
+            <h1 className='assign__title'>
+              Disclosures:<span className='color-red P-4'>*</span>
+            </h1>
+            <div className='disclosures__wrapper'>
               {(parentDisclosure || []).map((val, index) => {
                 if (_toLower(listCatagory_1_filter_key) === _toLower(val.category) || _toLower(listCatagory_1_filter_key) === 'all')
                   return (
-                    <div class='disclosures__item'>
-                      <p class='disclosures__detalis'>{val.code + ' ' + val.name}</p>
-                      <label htmlFor='organisational__checkbox' class='disclosures__label' onClick={() => radioChangeHandler('disclousure', val, 'parent')}>
-                        <input type='checkbox' class='disclosures__checkbox' id={val.id} checked={radioDPType === val.id} label={''} value={val} />
+                    <div className='disclosures__item'>
+                      <p className='disclosures__detalis'>{val.code + ' ' + val.name}</p>
+                      <label for='organisational__checkbox' className='disclosures__label' onClick={() => radioChangeHandler('disclousure', val, 'parent')}>
+                        <input type='checkbox' className='disclosures__checkbox' id={val.id} checked={radioDPType === val.id} label={''} value={val} />
                         {
-                          <div class={`fake__checkbox${radioDPType == val.id ? ' box-checked' : '-inactive'}`}>
+                          <div className={`fake__checkbox${radioDPType == val.id ? ' box-checked' : '-inactive'}`}>
                             {radioDPType === val.id ? <img src='../../assets/icons/single_tick_checkbox.svg' width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}
                           </div>
                         }
@@ -443,21 +449,23 @@ const MapDisclosures = () => {
               })}
             </div>
           </div>
-          <div class='map__check-item'>
-            <h1 class='assign__title'>Question:</h1>
-            <div class='disclosures__wrapper'>
+          <div className='map__check-item'>
+            <h1 className='assign__title'>
+              Question:<span className='color-red P-4'>*</span>
+            </h1>
+            <div className='disclosures__wrapper'>
               {(parentKPI || []).map((val, index) => (
-                <div title={`${addToolTip(val.id)}`} class={`disclosures__item ${isAlreadyMapped(val.id) ? ' disable-cursor' : ''}`}>
-                  <p class='disclosures__detalis'>
+                <div title={`${addToolTip(val.id)}`} className={`disclosures__item ${isAlreadyMapped(val.id) ? ' disable-cursor' : ''}`}>
+                  <p className='disclosures__detalis'>
                     {/* {val.code + " " + val.label + "  " + existingMapping.filter(i => {return i.source_disclosure_kpi.id === val.id || i.target_disclosure_kpi.id === val.id})} */}
                     {val.code + ' ' + val.label}
                   </p>
-                  <label htmlFor='organisational__checkbox' class='disclosures__label' onClick={() => radioChangeHandler('kpi', val, 'parent')}>
-                    <input type='checkbox' class='disclosures__checkbox' id={val.id} checked={radioKPType === val.id} label={''} value={val} disabled />
+                  <label for='organisational__checkbox' className='disclosures__label' onClick={() => radioChangeHandler('kpi', val, 'parent')}>
+                    <input type='checkbox' className='disclosures__checkbox' id={val.id} checked={radioKPType === val.id} label={''} value={val} disabled />
                     {isAlreadyMapped(val.id) ? (
-                      <div class='fake__checkbox-active'></div>
+                      <div className='fake__checkbox-active'></div>
                     ) : (
-                      <div class={`fake__checkbox${radioKPType == val.id ? ' box-checked' : '-inactive'}`}>
+                      <div className={`fake__checkbox${radioKPType == val.id ? ' box-checked' : '-inactive'}`}>
                         {radioKPType === val.id ? <img src='../../assets/icons/single_tick_checkbox.svg' width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}
                       </div>
                     )}
@@ -467,23 +475,29 @@ const MapDisclosures = () => {
             </div>
           </div>
         </div>
-        <div class='map__wrapper'>
-          <h1 class='assign__title'>Choose a Framework to map to:</h1>
+        <div className='map__wrapper'>
+          <h1 className='assign__title'>
+            Choose a Framework to map to:<span className='color-red P-4'>*</span>
+          </h1>
           {renderFrameworkLogo('child')}
-          <h1 class='map-diclosures-catagory mt-5 mb-2'>Categories:</h1>
+          <h1 className='map-diclosures-catagory mt-5 mb-2'>
+            Categories: <span className='color-red P-4'>*</span>
+          </h1>
           <Pills label='' data={listCatagory_2} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'right')} />
-          <div class='map__check-item'>
-            <h1 class='assign__title'>Disclosures:</h1>
-            <div class='disclosures__wrapper'>
+          <div className='map__check-item'>
+            <h1 className='assign__title'>
+              Disclosures: <span className='color-red P-4'>*</span>
+            </h1>
+            <div className='disclosures__wrapper'>
               {(childDisclosure || []).map((val, index) => {
                 if (_toLower(listCatagory_2_filter_key) === _toLower(val.category) || _toLower(listCatagory_2_filter_key) === 'all') {
                   return (
-                    <div class='disclosures__item'>
-                      <p class='disclosures__detalis'>{val.code + ' ' + val.name}</p>
-                      <label htmlFor='organisational__checkbox' class='disclosures__label' onClick={() => radioChangeHandler('disclousure', val, 'child')}>
-                        <input type='checkbox' class='disclosures__checkbox' id={val.id} checked={radioDCType === val.id} label={''} value={val} />
+                    <div className='disclosures__item'>
+                      <p className='disclosures__detalis'>{val.code + ' ' + val.name}</p>
+                      <label for='organisational__checkbox' className='disclosures__label' onClick={() => radioChangeHandler('disclousure', val, 'child')}>
+                        <input type='checkbox' className='disclosures__checkbox' id={val.id} checked={radioDCType === val.id} label={''} value={val} />
                         {
-                          <div class={`fake__checkbox${radioDCType == val.id ? ' box-checked' : '-inactive'}`}>
+                          <div className={`fake__checkbox${radioDCType == val.id ? ' box-checked' : '-inactive'}`}>
                             {radioDCType === val.id ? <img src='../../assets/icons/single_tick_checkbox.svg' width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}
                           </div>
                         }
@@ -494,18 +508,20 @@ const MapDisclosures = () => {
               })}
             </div>
           </div>
-          <div class='map__check-item'>
-            <h1 class='assign__title'>Question:</h1>
-            <div class='disclosures__wrapper'>
+          <div className='map__check-item'>
+            <h1 className='assign__title'>
+              Question: <span className='color-red P-4'>*</span>
+            </h1>
+            <div className='disclosures__wrapper'>
               {(childKPI || []).map((val, index) => (
-                <div title={`${addToolTip(val.id)}`} class={`disclosures__item ${isAlreadyMapped(val.id) ? ' disable-cursor' : ''}`}>
-                  <p class='disclosures__detalis'>{val.code + ' ' + val.label}</p>
-                  <label htmlFor='organisational__checkbox' class='disclosures__label' onClick={() => radioChangeHandler('kpi', val, 'child')}>
-                    <input type='checkbox' class='disclosures__checkbox' id={val.id} checked={radioKCType === val.id} label={''} value={val} />
+                <div title={`${addToolTip(val.id)}`} className={`disclosures__item ${isAlreadyMapped(val.id) ? ' disable-cursor' : ''}`}>
+                  <p className='disclosures__detalis'>{val.code + ' ' + val.label}</p>
+                  <label for='organisational__checkbox' className='disclosures__label' onClick={() => radioChangeHandler('kpi', val, 'child')}>
+                    <input type='checkbox' className='disclosures__checkbox' id={val.id} checked={radioKCType === val.id} label={''} value={val} />
                     {isAlreadyMapped(val.id) ? (
-                      <div class='fake__checkbox-active'></div>
+                      <div className='fake__checkbox-active'></div>
                     ) : (
-                      <div class={`fake__checkbox${radioKCType == val.id ? ' box-checked' : '-inactive'}`}>
+                      <div className={`fake__checkbox${radioKCType == val.id ? ' box-checked' : '-inactive'}`}>
                         {radioKCType === val.id ? <img src='../../assets/icons/single_tick_checkbox.svg' width={'30px'} height={'30px'} style={{ margin: 'auto' }} /> : null}
                       </div>
                     )}
@@ -516,7 +532,7 @@ const MapDisclosures = () => {
           </div>
         </div>
       </div>
-      <div class='buttons__panel'>
+      <div className='buttons__panel'>
         <Button label='CANCEL' onClickHandler={onCanceltHandler} className='buttons__panel-button' />
 
         {/* {errorMapDisclosureValidation && <div className='overall-error-container color-red'>Please fill all the fields.</div>} */}

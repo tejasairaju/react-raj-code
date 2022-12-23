@@ -48,9 +48,9 @@ const MoreAction = (props) => {
             View
           </a>
         </div>
-        <div>
+        {/* <div>
           <a onClick={() => {}}>Delete</a>
-        </div>
+        </div> */}
       </div>
       {isDelete && <DeletePopup name={'client'} isShow={isDelete} setIsDelete={setIsDelete} deleteConfirm={deleteCallback} />}
     </div>

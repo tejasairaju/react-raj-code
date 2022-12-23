@@ -53,7 +53,7 @@ const Header = ({ userRole = '' }) => {
   return (
     <header className='header'>
       <form action='#' className='header__search'>
-        <button
+        {/* <button
           className='search__button'
           onClick={() => {
             navigate(`/manageframework`);
@@ -83,7 +83,7 @@ const Header = ({ userRole = '' }) => {
               </clipPath>
             </defs>
           </svg>
-        </button>
+        </button> */}
         <input type='search' className='search__input' required hidden='true' />
       </form>
       <div className='header__options'>

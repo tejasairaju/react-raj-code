@@ -39,28 +39,28 @@ const UserListView = (props) => {
   };
 
   return (
-    <div class='user__wrapper user-wrapper-scroll'>
-      <div class='left__arrow'></div>
+    <div className='user__wrapper user-wrapper-scroll'>
+      <div className='left__arrow'></div>
       {(userList || []).map((user, i) => {
         return (
           !(user.status == "Disabled") && (
             <div
               key={i}
               onClick={() => onClickHandler(i, user)}
-              class={`user__container ${user.isSelected ? 'active' : null}`}
+              className={`user__container ${user.isSelected ? 'active' : null}`}
             >
               {/* <img src='../../assets/images/user-avatar.svg' width={'30px'} height={'30px'} alt="avatar" /> */}
               <span className='user-details-picture'>
                 {getProfilePhoto(user)}
               </span>
               <div>
-                <p class='user-name'>
+                <p className='user-name'>
                   <span>
                     <b>Name:</b>
                   </span>
                   {user.first_name}&nbsp;{user.last_name}
                 </p>
-                <p class='job-title'>
+                <p className='job-title'>
                   <span>
                     <b>Role:</b>
                   </span>
@@ -71,7 +71,7 @@ const UserListView = (props) => {
           )
         );
       })}
-      <div class='right__arrow'></div>
+      <div className='right__arrow'></div>
     </div>
   );
 };

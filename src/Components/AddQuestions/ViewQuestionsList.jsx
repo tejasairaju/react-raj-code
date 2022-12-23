@@ -59,7 +59,7 @@ const ViewQuestionsList = ({
             Disclosure :{<img onClick={() => setIsShowGuidance(true)} src='../../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
           </div>
           <input type='text' className='create-framework__input' value={name} required disabled></input>
-          <div class='add-question-btn'>
+          <div className='add-question-btn'>
             {createQuestions ? (
               <button onClick={() => onClickAddQuestion()} className='main__button m-l-1'>
                 Add Question
@@ -78,83 +78,91 @@ const ViewQuestionsList = ({
             </tr>
           </thead>
           <tbody>
-            {(inputList || [])
-              .filter((i) => {
-                return i.active === true || i.active === undefined;
-              })
-              .map((x, i) => (
-                <tr>
-                  {
+            {inputList && inputList.length > 0 ? (
+              (inputList || [])
+                .filter((i) => {
+                  return i.active === true || i.active === undefined;
+                })
+                .map((x, i) => (
+                  <tr>
+                    {
+                      <td>
+                        <Input
+                          isEditable={true}
+                          label=''
+                          type='text'
+                          name='code'
+                          value={x.code}
+                          className='create-framework__input question-ref-code'
+                          placeholder=''
+                          required={true}
+                          onChangeHandler={(e) => handleInputChange(e, i)}
+                        />
+                      </td>
+                    }
                     <td>
-                      <Input
+                      <TextArea
                         isEditable={true}
                         label=''
-                        type='text'
-                        name='code'
-                        value={x.code}
-                        className='create-framework__input question-ref-code'
+                        name='label'
+                        value={x.label}
+                        className='create-framework__input question-title create-framework__textarea'
                         placeholder=''
                         required={true}
                         onChangeHandler={(e) => handleInputChange(e, i)}
                       />
                     </td>
-                  }
-                  <td>
-                    <TextArea
-                      isEditable={true}
-                      label=''
-                      name='label'
-                      value={x.label}
-                      className='create-framework__input question-title create-framework__textarea'
-                      placeholder=''
-                      required={true}
-                      onChangeHandler={(e) => handleInputChange(e, i)}
-                    />
-                  </td>
-                  <td>
-                    <Dropdown
-                      isEditable={true}
-                      className_1={'questions__select select1'}
-                      className_2={'questions__select-item'}
-                      options={dataType}
-                      name='type'
-                      value={x.type}
-                      onChangeHandler={(e) => handleInputChange(e, i)}
-                    />
-                  </td>
-                  <td>
-                    <Dropdown
-                      isEditable={true}
-                      className_1={'questions__select select1'}
-                      className_2={'questions__select-item'}
-                      options={inputType}
-                      name='field_type'
-                      value={x.field_type}
-                      onChangeHandler={(e) => handleInputChange(e, i)}
-                    />
-                  </td>
-                  <td>
-                    <div className='preview-choices'>{listChoices(i)}</div>
-                  </td>
-                  <td>
-                    <Dropdown
-                      isEditable={true}
-                      className_1={'questions__select select1'}
-                      className_2={'questions__select-item'}
-                      options={unitType}
-                      name='field_unit_values'
-                      value={x.field_unit_values}
-                      onChangeHandler={(e) => handleInputChange(e, i)}
-                    />
-                  </td>
-                  <td>
-                    <div className='flex'>
-                      {inputList.length > 0 && <Button label='Edit' className='add-btn' onClickHandler={() => handleEditClick(i)} />}
-                      {inputList.length > 0 && <Button label='Remove' className='remove-btn' onClickHandler={() => handleRemoveClick(i)} />}
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    <td>
+                      <Dropdown
+                        isEditable={true}
+                        className_1={'questions__select select1'}
+                        className_2={'questions__select-item'}
+                        options={dataType}
+                        name='type'
+                        value={x.type}
+                        onChangeHandler={(e) => handleInputChange(e, i)}
+                      />
+                    </td>
+                    <td>
+                      <Dropdown
+                        isEditable={true}
+                        className_1={'questions__select select1'}
+                        className_2={'questions__select-item'}
+                        options={inputType}
+                        name='field_type'
+                        value={x.field_type}
+                        onChangeHandler={(e) => handleInputChange(e, i)}
+                      />
+                    </td>
+                    <td>
+                      <div className='preview-choices'>{listChoices(i)}</div>
+                    </td>
+                    <td>
+                      <Dropdown
+                        isEditable={true}
+                        className_1={'questions__select select1'}
+                        className_2={'questions__select-item'}
+                        options={unitType}
+                        name='field_unit_values'
+                        value={x.field_unit_values}
+                        onChangeHandler={(e) => handleInputChange(e, i)}
+                      />
+                    </td>
+                    <td>
+                      <div className='flex'>
+                        {inputList.length > 0 && <Button label='Edit' className='add-btn' onClickHandler={() => handleEditClick(i)} />}
+                        {inputList.length > 0 && <Button label='Remove' className='remove-btn' onClickHandler={() => handleRemoveClick(i)} />}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <tr>
+                <td colSpan={7}>
+                  <div className='flex justify-center w-full'>No questions round</div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         {isError && (inputList || [].length > 0) && <div className='overall-error-container color-red question-disclosure-error'>*Please add atleast one question.</div>}

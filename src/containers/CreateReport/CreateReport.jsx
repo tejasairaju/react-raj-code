@@ -149,7 +149,7 @@ const CreateReport = () => {
                             <img src="./assets/icons/celendar.svg" alt="" />
                         </label>
                     </div>
-                    <div class='date-label-container'>
+                    <div className='date-label-container'>
                         <h1 className="create-framework__title">
                             To:
                         </h1>

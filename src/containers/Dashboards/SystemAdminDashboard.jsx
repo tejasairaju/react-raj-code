@@ -94,9 +94,9 @@ const SystemAdminDashboard = (props) => {
   return (
     <>
       {isDbReady && (
-        <div style={{ margin: 'auto' }} class='container'>
-          <div id='main' class='grid grid-cols-3 gap-6 justify-evenly'>
-            <div class='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
+        <div style={{ margin: 'auto' }} className='container'>
+          <div id='main' className='grid grid-cols-3 gap-6 justify-evenly'>
+            <div className='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
               <br />
 
               <a
@@ -105,20 +105,20 @@ const SystemAdminDashboard = (props) => {
                 }}
               >
                 <h1
-                  class='mb-2 text-7xl font-bold tracking-tight 
+                  className='mb-2 text-7xl font-bold tracking-tight 
         text-gray-900 dark:text-white text-center box-color-green'
                 >
                   <span className='box-color-green'>{frameWorkData.count}</span>
                 </h1>
               </a>
-              <p class='mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-indigo-900'>
+              <p className='mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-indigo-900'>
                 <span className='box-color-green'>Total Framework</span>
               </p>
               <a
                 onClick={() => {
                   navigate(`/manageframework`);
                 }}
-                class='inline-flex items-center py-2 px-3 text-sm font-medium
+                className='inline-flex items-center py-2 px-3 text-sm font-medium
      text-center text-white rounded-lg hover:bg-blue-800 
      focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600
      dark:hover:bg-blue-700 dark:focus:ring-blue-800 view-arrow'
@@ -126,7 +126,7 @@ const SystemAdminDashboard = (props) => {
                 View
                 <svg
                   aria-hidden='true'
-                  class='ml-2 -mr-1 w-4 h-4'
+                  className='ml-2 -mr-1 w-4 h-4'
                   fill='currentColor'
                   viewBox='0 0 20 20'
                   xmlns='http://www.w3.org/2000/svg'
@@ -140,7 +140,7 @@ const SystemAdminDashboard = (props) => {
               </a>
             </div>
 
-            <div class='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
+            <div className='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
               <br />
 
               <a
@@ -149,7 +149,7 @@ const SystemAdminDashboard = (props) => {
                 }}
               >
                 <h1
-                  class='mb-2 text-7xl font-bold tracking-tight 
+                  className='mb-2 text-7xl font-bold tracking-tight 
         text-gray-900 dark:text-white text-center '
                 >
                   <span className='box-color-blue'>
@@ -157,7 +157,7 @@ const SystemAdminDashboard = (props) => {
                   </span>
                 </h1>
               </a>
-              <p class='color-green mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-emerald-700 box-color-blue'>
+              <p className='color-green mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-emerald-700 box-color-blue'>
                 <span className='box-color-blue'>Total Client</span>
               </p>
 
@@ -165,12 +165,12 @@ const SystemAdminDashboard = (props) => {
                 onClick={() => {
                   navigate(`/manageclient`);
                 }}
-                class='inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 view-arrow'
+                className='inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 view-arrow'
               >
                 View
                 <svg
                   aria-hidden='true'
-                  class='ml-2 -mr-1 w-4 h-4'
+                  className='ml-2 -mr-1 w-4 h-4'
                   fill='currentColor'
                   viewBox='0 0 20 20'
                   xmlns='http://www.w3.org/2000/svg'
@@ -184,7 +184,7 @@ const SystemAdminDashboard = (props) => {
               </a>
             </div>
 
-            <div class='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
+            <div className='p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700'>
               <br />
 
               <a
@@ -193,13 +193,13 @@ const SystemAdminDashboard = (props) => {
                 }}
               >
                 <h1
-                  class='mb-2 text-7xl font-bold tracking-tight 
+                  className='mb-2 text-7xl font-bold tracking-tight 
     text-gray-900 dark:text-white text-center box-color-red'
                 >
                   <span className='box-color-red'>5</span>
                 </h1>
               </a>
-              <p class='mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-rose-900 box-color-red'>
+              <p className='mb-3 font-normal text-gray-700 dark:text-gray-400 text-center text-rose-900 box-color-red'>
                 <span className='box-color-red'>Onboarding Pending </span>
               </p>
 
@@ -207,12 +207,12 @@ const SystemAdminDashboard = (props) => {
                 onClick={() => {
                   navigate(`/manageclient`);
                 }}
-                class='inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 view-arrow'
+                className='inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800 view-arrow'
               >
                 View
                 <svg
                   aria-hidden='true'
-                  class='ml-2 -mr-1 w-4 h-4'
+                  className='ml-2 -mr-1 w-4 h-4'
                   fill='currentColor'
                   viewBox='0 0 20 20'
                   xmlns='http://www.w3.org/2000/svg'

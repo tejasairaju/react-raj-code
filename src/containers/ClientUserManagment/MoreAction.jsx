@@ -71,9 +71,9 @@ const ClientUserAction = (props) => {
         <div>
           <a onClick={() => onUpdateUser(value, 0)}>Block</a>
         </div>
-        <div>
+        {/* <div>
           <a onClick={() => setIsDelete(true)}>Delete</a>
-        </div>
+        </div> */}
       </div>
       {isDelete && <DeletePopup name={'user'} isShow={isDelete} setIsDelete={setIsDelete} deleteConfirm={deleteCallback} />}
     </div>

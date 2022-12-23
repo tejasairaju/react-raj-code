@@ -65,31 +65,41 @@ const SystemSettings = (props) => {
 
     getSystemSettings();
   }, []);
+
   const onSaveHandler = async () => {
-    try {
-      setStatusData({ type: 'loading', message: '' });
-      const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/systemsettings/${inputValue.id}`, { ...inputValue }).then(({ data }) => data);
-      const constractInputVal1 = {
-        ...inputValue,
-        ...response,
-        date_format: response.date_format,
-        suspend_days: response.suspend_days,
-        alert_days: response.alert_days,
-        vat_percentage: response.vat_percentage,
-        id: response.id
-      };
-      setInputValue({ ...constractInputVal1 });
-      setStatusData({ type: 'success', message: 'Thanks! System Settings has been successfully created/updated' });
-    } catch (e) {
-      let error = getErrorMessage(e);
-      setStatusData({ type: 'error', message: 'Please provide valid inputs' });
+    if (!_isEmpty(inputValue) && !_isEmpty(inputValue.suspend_days && inputValue.alert_days && inputValue.vat_percentage)) {
+      try {
+        setStatusData({ type: 'loading', message: '' });
+        const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/systemsettings/${inputValue.id}`, { ...inputValue }).then(({ data }) => data);
+        const constractInputVal1 = {
+          ...inputValue,
+          ...response,
+          date_format: response.date_format,
+          suspend_days: response.suspend_days,
+          alert_days: response.alert_days,
+          vat_percentage: response.vat_percentage,
+          id: response.id
+        };
+        setInputValue({ ...constractInputVal1 });
+        setStatusData({ type: 'success', message: 'Thanks! System Settings has been successfully created/updated' });
+      } catch (e) {
+        let error = getErrorMessage(e);
+        setStatusData({ type: 'error', message: 'Please provide valid inputs' });
+      }
+    } else {
+      setStatusData({ type: 'error', message: 'Please fill all fields' });
+    }
+  };
+
+  const maxLengthCheck = (object) => {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(0, object.target.maxLength);
     }
   };
 
   return (
     <>
       {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-
       <div className='main__top-wrapper'>
         <h1 className='main__title custom-title'>System Settings</h1>
       </div>
@@ -107,8 +117,19 @@ const SystemSettings = (props) => {
           <div className='GenerateReport_row'>
             <h1 className='Generate_h1_label textwrap'>
               <b>Suspend account after X days if not renewed</b>
+              <span className='color-red p-4'>*</span>
             </h1>
-            <input type='number' className='framework__input' min='0' name='suspend_days' required defaultValue={inputValue.suspend_days} onChange={onChangeHandler} />
+            <input
+              type='number'
+              onInput={maxLengthCheck}
+              maxLength={3}
+              className='framework__input'
+              min='0'
+              name='suspend_days'
+              required
+              defaultValue={inputValue.suspend_days}
+              onChange={onChangeHandler}
+            />
             <span className='Generate_h1_label_span'>days</span>
           </div>
         </div>
@@ -127,8 +148,20 @@ const SystemSettings = (props) => {
           <div className='GenerateReport_row'>
             <h1 className='Generate_h1_label'>
               <b>VAT%</b>
+              <span className='color-red P-4'>*</span>
             </h1>
-            <input type='number' className='framework__input' min='0' name='vat_percentage' required defaultValue={inputValue.vat_percentage} onChange={onChangeHandler} />
+            <input
+              type='number'
+              maxLength={6}
+              onInput={maxLengthCheck}
+              step={0.01}
+              className='framework__input'
+              min='0'
+              name='vat_percentage'
+              required
+              defaultValue={inputValue.vat_percentage}
+              onChange={(e) => onChangeHandler(e)}
+            />
             <span className='Generate_h1_label_span'></span>
           </div>
         </div>

@@ -148,27 +148,27 @@ const AssignDisclosures = () => {
         {/* <ListFramework onClickFrameworkHandler={onClickFrameworkHandler} /> */}
         <CategoryFilter filterList={filterList} filterKey={catagoryType} radioChangeHandler={radioChangeHandler} />
       </div>
-      <div class=''>
+      <div className=''>
         <b>Disclosures:</b>
       </div>
-      <div class='disclosures__wrapper list-disclosures-container'>
+      <div className='disclosures__wrapper list-disclosures-container'>
         {_get(apiData, 'listData', []).map((disclosure, disclosureIndex) => {
           if (_toLower(disclosure.category) === _toLower(catagoryType) || _toLower(catagoryType) === 'all') {
             return (
-              <div key={disclosureIndex} class='disclosures__item'>
-                <p class='disclosures__title'>{disclosure.category}</p>
-                <p class='disclosures__detalis'>
+              <div key={disclosureIndex} className='disclosures__item'>
+                <p className='disclosures__title'>{disclosure.category}</p>
+                <p className='disclosures__detalis'>
                   {disclosure.code} {disclosure.name}
                 </p>
-                <label htmlFor='organisational__checkbox' class='disclosures__label' onClick={(e) => onClickSelectHandler(e, disclosureIndex)}>
+                <label htmlFor='organisational__checkbox' className='disclosures__label' onClick={(e) => onClickSelectHandler(e, disclosureIndex)}>
                   <input
                     type='checkbox'
-                    class='disclosures__checkbox'
+                    className='disclosures__checkbox'
                     id={disclosureIndex}
                     checked={isAssignedDisclosure(disclosure)}
                     disabled={!_isEmpty(_get(disclosure, 'assigned_to.id', ''))}
                   />
-                  <div class={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>
+                  <div className={`fake__checkbox ${disclosure.isSelected ? 'box-checked' : null}`}>
                     {!isAssignedDisclosure(disclosure) ? (
                       <>
                         {disclosure.isSelected === true ? (
@@ -224,11 +224,11 @@ const AssignDisclosures = () => {
             </div>
             <div className="right__arrow"></div>
         </div> */}
-      <div class='buttons__panel'>
-        <button onClick={() => navigate(-1)} class='buttons__panel-button'>
+      <div className='buttons__panel'>
+        <button onClick={() => navigate(-1)} className='buttons__panel-button'>
           BACK
         </button>
-        <button onClick={() => onClickAssignDisclosure()} class='main__button'>
+        <button onClick={() => onClickAssignDisclosure()} className='main__button'>
           ASSIGN
         </button>
       </div>

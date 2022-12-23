@@ -41,9 +41,9 @@ const ClientAdminDashboard = () => {
             navigate(`/task/reports`)
         }
     }
-    } class={`welcome__task__box2 ${getColor(status)}`}>
+    } className={`welcome__task__box2 ${getColor(status)}`}>
         <div className="welcome__task__numbers">
-            <h1 class={`welcome__task__box_content ${status === 'Reports' ? 'cursor-pointer': null}`}>{count || 0}</h1>
+            <h1 className={`welcome__task__box_content ${status === 'Reports' ? 'cursor-pointer': null}`}>{count || 0}</h1>
         </div>
         <div>
             <h4 className="welcome__task__bottom_content">{status}</h4>
