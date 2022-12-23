@@ -19,7 +19,7 @@ const SystemSettings = (props) => {
   const navigate = useNavigate();
 
   const inputFields = { date_format: '', suspend_days: '', alert_days: '', vat_percentage: '', id: '' };
-  const [inputValue, setInputValue] = useState(inputFields);
+  const [inputValue, setInputValue] = useState({ ...inputFields });
   const [validation, setValidation] = useState(inputFields);
   const [clientData, setClientData] = useState({});
   const [statusData, setStatusData] = useState({});
@@ -67,7 +67,7 @@ const SystemSettings = (props) => {
   }, []);
 
   const onSaveHandler = async () => {
-    if (!_isEmpty(inputValue) && !_isEmpty(inputValue.suspend_days && inputValue.alert_days && inputValue.vat_percentage)) {
+    if (inputValue && inputValue.suspend_days != '' && inputValue.alert_days != '' && inputValue.vat_percentage != '') {
       try {
         setStatusData({ type: 'loading', message: '' });
         const response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/systemsettings/${inputValue.id}`, { ...inputValue }).then(({ data }) => data);
@@ -91,11 +91,11 @@ const SystemSettings = (props) => {
     }
   };
 
-  const maxLengthCheck = (object) => {
-    if (object.target.value.length > object.target.maxLength) {
-      object.target.value = object.target.value.slice(0, object.target.maxLength);
-    }
-  };
+  // const maxLengthCheck = (object) => {
+  //   if (object.target.value.length > object.target.maxLength) {
+  //     object.target.value = object.target.value.slice(0, object.target.maxLength);
+  //   }
+  // };
 
   return (
     <>
@@ -121,8 +121,8 @@ const SystemSettings = (props) => {
             </h1>
             <input
               type='number'
-              onInput={maxLengthCheck}
-              maxLength={3}
+              // onInput={maxLengthCheck}
+              maxLength={2}
               className='framework__input'
               min='0'
               name='suspend_days'
@@ -138,6 +138,7 @@ const SystemSettings = (props) => {
           <div className='GenerateReport_row'>
             <h1 className='Generate_h1_label textwrap'>
               <b>Alert notification to be send to the client before</b>
+              <span className='color-red p-4'>*</span>
             </h1>
             <input type='number' className='framework__input' min='0' name='alert_days' required defaultValue={inputValue.alert_days} onChange={onChangeHandler} />
             <span className='Generate_h1_label_span'>days</span>
@@ -152,9 +153,8 @@ const SystemSettings = (props) => {
             </h1>
             <input
               type='number'
-              maxLength={6}
-              onInput={maxLengthCheck}
-              step={0.01}
+              maxLength={2}
+              // onInput={maxLengthCheck}
               className='framework__input'
               min='0'
               name='vat_percentage'
