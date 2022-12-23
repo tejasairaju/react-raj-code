@@ -347,7 +347,7 @@ const OrganisationInfo = () => {
     }
 
     const OrgInputFields = (label = '', labelRequired = false, inputName = '', inputVal = '', labelCls = '') => (
-        <div class="framework__row">
+        <div className="framework__row">
             <Label label={label} required={labelRequired} />
             <InputBox name={inputName} value={inputVal} onChangeHandler={onChangeHandler} disabled={true} />
         </div>
@@ -355,66 +355,66 @@ const OrganisationInfo = () => {
 
 
     const renderOrganisationmainContainer = () => {
-        return (<><div class="client-main__content-wrapper content-wrapper scrollable">
+        return (<><div className="client-main__content-wrapper content-wrapper scrollable">
 
-            <div class="framework__row-wrapper bot1">
+            <div className="framework__row-wrapper bot1">
 
                 <UploadFile logoSizeError={logoSizeError} imgcls={'org-image-size'} label='Logo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={true} />
-                <div class="framework__row"></div>
-                <div class="framework__row"></div>
+                <div className="framework__row"></div>
+                <div className="framework__row"></div>
             </div>
-            <div class="framework__row-wrapper bot1">
+            <div className="framework__row-wrapper bot1">
                 {OrgInputFields('Company', true, 'name', inputValue && inputValue.name)}
-                <div class="framework__row">
+                <div className="framework__row">
                     <Label label={'Location'} className={`framework__title right`} required={true} />
                     <InputBox name={'location'} value={inputValue && inputValue.location} onChangeHandler={onChangeHandler} />
                 </div>
             </div>
-            <div class="framework__row-wrapper bot1">
-                <div class="framework__row">
-                    <div class="framework__col-wrapper">
-                        <div class="framework__row bot1">
+            <div className="framework__row-wrapper bot1">
+                <div className="framework__row">
+                    <div className="framework__col-wrapper">
+                        <div className="framework__row bot1">
                             <Label label={'Headquarters'} required={true} />
                             <InputBox name={'headquarters'} value={inputValue && inputValue.headquarters} onChangeHandler={onChangeHandler} />
                         </div>
 
-                        <div class="framework__row">
+                        <div className="framework__row">
                             <Label label={'Employee'} required={true} />
                             <Dropdown className_1={'framework__input'} className_2={''} options={empCount} name='employees_count' value={inputValue && inputValue.employees_count || ''} onChangeHandler={(e) => onChangeHandler(e)} />
                         </div>
                     </div>
                 </div>
 
-                <div class="framework__row">
+                <div className="framework__row">
                     <Label label={'Address'} className={"framework__title right address_title"} required={true} />
                     <TextAreaBox label='' name='address' value={inputValue && inputValue.address} className="framework__input" placeholder="" required={true} onChangeHandler={(e) => onChangeHandler(e)} />
                 </div>
             </div>
-            <div class="framework__row-wrapper bot1">
-                <div class="framework__row">
-                    <h1 class="framework__title"><b>Sector</b></h1>
+            <div className="framework__row-wrapper bot1">
+                <div className="framework__row">
+                    <h1 className="framework__title"><b>Sector</b></h1>
                     <ReactMultiSelectDropdown data={_get(appWizard, 'sectors', [])} isEditable={isEditable} selectedOptionVal={inputValue && inputValue.sectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("sectors", selectedArray, event)} />
                 </div>
-                <div class="framework__row">
-                    <h1 class="framework__title right"><b>SubSector</b></h1>
+                <div className="framework__row">
+                    <h1 className="framework__title right"><b>SubSector</b></h1>
                     <ReactMultiSelectDropdown data={filterSubSectors.length ? filterSubSectors : [{ label: '', value: '' }]} isEditable={isEditable} selectedOptionVal={inputValue && inputValue.subsectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("subsectors", selectedArray, event)} />
 
                 </div>
             </div>
-            <div class="framework__row-wrapper bot1">
-                <div class="framework__row">
+            <div className="framework__row-wrapper bot1">
+                <div className="framework__row">
                     <Label label={'Email'} required={true} />
                     <InputBox name={'email'} value={inputValue && inputValue.email} onChangeHandler={onChangeHandler} />
                 </div>
 
-                <div class="framework__row">
+                <div className="framework__row">
                     <Label className="framework__title right" label={'Mobile'} required={true} />
                     <InputBox maxLength={15} text="number" name={'mobile'} value={inputValue && inputValue.mobile} onChangeHandler={onChangeHandler} />
                 </div>
             </div>
 
-            <div class="framework__row-wrapper bot40">
-                <div class="framework__row">
+            <div className="framework__row-wrapper bot40">
+                <div className="framework__row">
                     <Label label={'Zip/PostalCode'} className="framework__title" required={true} />
                     <InputBox text="number" maxLength={6} name={'zipcode'} value={inputValue && inputValue.zipcode} onChangeHandler={onChangeHandler} />
 
@@ -422,7 +422,7 @@ const OrganisationInfo = () => {
                     <Pills label='' data={inputValue.operating_countries} onSelectMultipleOption={(i) => onSelectMultipleOption(i, 'operating_countries')} required={true} /> */}
                 </div>
 
-                {/* <div class="framework__row">
+                {/* <div className="framework__row">
                   
 
                 </div> */}
@@ -431,12 +431,12 @@ const OrganisationInfo = () => {
             {error ? <div className='common-error-msg'>* All mandatory filed is required.</div> : null}
         </div>
             <div className='flex save-orgi-btn' >
-                <button onClick={() => onSaveHandler()} class="main__button">SAVE</button>
+                <button onClick={() => onSaveHandler()} className="main__button">SAVE</button>
             </div></>);
     }
 
-    const renderTitle = () => (<div class="main__top-wrapper">
-        <h1 class="main__title custom-title">
+    const renderTitle = () => (<div className="main__top-wrapper">
+        <h1 className="main__title custom-title">
             Organisational Information
         </h1>
     </div>);

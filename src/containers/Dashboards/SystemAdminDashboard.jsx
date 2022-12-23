@@ -228,74 +228,74 @@ const SystemAdminDashboard = (props) => {
           </div>
           <br />
           <br />
-          {/* <div id="main1" class="grid grid-cols-2 gap-6 justify-evenly">
+          {/* <div id="main1" className="grid grid-cols-2 gap-6 justify-evenly">
 
-                    <div class="shadow-lg rounded-lg overflow-hidden">
-                        <div class="py-3 px-5 bg-gray-50 text-center">Subscription</div>
-                        <canvas class="p-10" id="chartBar"></canvas>
+                    <div className="shadow-lg rounded-lg overflow-hidden">
+                        <div className="py-3 px-5 bg-gray-50 text-center">Subscription</div>
+                        <canvas className="p-10" id="chartBar"></canvas>
                     </div>
 
-                    <div class="shadow-lg rounded-lg overflow-hidden">
-                        <div class="py-3 px-5 bg-gray-50 text-center">Sales</div>
-                        <canvas class="p-10" id="chartLine"></canvas>
+                    <div className="shadow-lg rounded-lg overflow-hidden">
+                        <div className="py-3 px-5 bg-gray-50 text-center">Sales</div>
+                        <canvas className="p-10" id="chartLine"></canvas>
                     </div>
 
                 </div> */}
         </div>
       )}
 
-      {/* <div class="main__content-wrapper">
+      {/* <div className="main__content-wrapper">
 
-<div class="framework__row-wrapper">
+<div className="framework__row-wrapper">
 
-    <div class="framework__row ">
-        <div class="framework__col-wrapper blue box">
-            <div class="number">
+    <div className="framework__row ">
+        <div className="framework__col-wrapper blue box">
+            <div className="number">
                 88
             </div>
-            <div class="text">
+            <div className="text">
                 Clients
             </div>
         </div>
     </div>
 
-    <div class="framework__row ">
-        <div class="framework__col-wrapper green box">
-            <div class="number">
+    <div className="framework__row ">
+        <div className="framework__col-wrapper green box">
+            <div className="number">
                 11
             </div>
-            <div class="text">
+            <div className="text">
                 Frameworks
             </div>
         </div>
     </div>
 
-    <div class="framework__row">
-        <div class="framework__col-wrapper brown box">
-            <div class="number">
+    <div className="framework__row">
+        <div className="framework__col-wrapper brown box">
+            <div className="number">
                 33
             </div>
-            <div class="text">
+            <div className="text">
                 Subscription Expired
             </div>
         </div>
     </div>
 
-    <div class="framework__row">
-        <div class="framework__col-wrapper brown box">
-            <div class="number">
+    <div className="framework__row">
+        <div className="framework__col-wrapper brown box">
+            <div className="number">
                 14
             </div>
-            <div class="text">
+            <div className="text">
                 Onboarding Pending
             </div>
         </div>
     </div>
 </div>
  
-<div class="shadow-lg rounded-lg overflow-hidden">
-  <div class="py-3 px-5 bg-gray-50">Bar chart</div>
-  <canvas class="p-10" id="chartBar"></canvas>
+<div className="shadow-lg rounded-lg overflow-hidden">
+  <div className="py-3 px-5 bg-gray-50">Bar chart</div>
+  <canvas className="p-10" id="chartBar"></canvas>
 </div>
 
 </div> */}

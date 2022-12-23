@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DeletePopup from '../../Components/Common/Popup/DeletePopup.jsx';
+import DeletePopup from '../../Components/Common/DeletePopup/DeletePopup.jsx';
 import './MoreAction.css';
 
 const MoreAction = (props) => {

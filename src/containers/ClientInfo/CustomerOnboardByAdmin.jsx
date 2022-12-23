@@ -211,13 +211,13 @@ const CustomerOnboardByAdmin = (props) => {
                     readOnly={isView}
                     onChangeHandler={onChangeHandler} /> */}
 
-                <h1 class="create-framework__title">
+                <h1 className="create-framework__title">
                     No of users
                 </h1>
 
-                <div class="create-framework__row-wrapper dates">
+                <div className="create-framework__row-wrapper dates">
 
-                    <input type="number" min="1" class="create-framework__input"
+                    <input type="number" min="1" className="create-framework__input"
                         error={validation['employees_count']}
                         name='employees_count'
                         value={inputValue.employees_count}
@@ -226,11 +226,11 @@ const CustomerOnboardByAdmin = (props) => {
                         readOnly={isView}
                         onChange={onChangeHandler} />
 
-                    <h1 class="create-framework__title">
+                    <h1 className="create-framework__title">
                         License from
                     </h1>
-                    <label for="create-framework__date-from" class="create-framework__label">
-                        <input type="date" class="create-framework__input" name='from' value={inputValue.from}
+                    <label htmlFor="create-framework__date-from" className="create-framework__label">
+                        <input type="date" className="create-framework__input" name='from' value={inputValue.from}
                             min="2000-01-01" max="2100-01-01"
                             id="create-framework__date-from" required=""
                             onChange={onChangeHandler}
@@ -238,11 +238,11 @@ const CustomerOnboardByAdmin = (props) => {
                         />
 
                     </label>
-                    <h1 class="create-framework__title">
+                    <h1 className="create-framework__title">
                         License to
                     </h1>
-                    <label for="create-framework__date-to" class="create-framework__label">
-                        <input type="date" class="create-framework__input" name='to' value={inputValue.to}
+                    <label htmlFor="create-framework__date-to" className="create-framework__label">
+                        <input type="date" className="create-framework__input" name='to' value={inputValue.to}
                             min={inputValue.from} max="2100-01-01"
                             id="create-framework__date-to" required=""
                             onChange={onChangeHandler}
@@ -252,55 +252,55 @@ const CustomerOnboardByAdmin = (props) => {
                     </label>
                 </div>
 
-                <h1 class="create-framework__title">
+                <h1 className="create-framework__title">
                     Package
                 </h1>
-                <form class="create-framework__row-wrapper radios">
-                    <label for="bronze" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Bronze')} class="create-framework__input" id="bronze" readOnly={isView} />
-                        {/* <div class="fake__radio">
-                            <div class="fake__radio-active"></div>
+                <form className="create-framework__row-wrapper radios">
+                    <label htmlFor="bronze" className="create-framework__label">
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Bronze')} className="create-framework__input" id="bronze" readOnly={isView} />
+                        {/* <div className="fake__radio">
+                            <div className="fake__radio-active"></div>
                         </div> */}
-                        <h1 class="create-framework__title">
+                        <h1 className="create-framework__title">
                             Bronze
                         </h1>
                     </label>
-                    <label for="silver" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Silver')} class="create-framework__input" id="silver" readOnly={isView} />
-                        {/* <div class="fake__radio">
-                            <div class="fake__radio-active"></div>
+                    <label htmlFor="silver" className="create-framework__label">
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Silver')} className="create-framework__input" id="silver" readOnly={isView} />
+                        {/* <div className="fake__radio">
+                            <div className="fake__radio-active"></div>
                         </div> */}
-                        <h1 class="create-framework__title">
+                        <h1 className="create-framework__title">
                             Silver
                         </h1>
                     </label>
-                    <label for="gold" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Gold')} class="create-framework__input" id="gold" readOnly={isView} />
-                        {/* <div class="fake__radio">
-                            <div class="fake__radio-active"></div>
+                    <label htmlFor="gold" className="create-framework__label">
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Gold')} className="create-framework__input" id="gold" readOnly={isView} />
+                        {/* <div className="fake__radio">
+                            <div className="fake__radio-active"></div>
                         </div> */}
-                        <h1 class="create-framework__title">
+                        <h1 className="create-framework__title">
                             Gold
                         </h1>
                     </label>
-                    <label for="custom" class="create-framework__label">
-                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Custom')} class="create-framework__input" id="custom" readOnly={isView} />
-                        {/* <div class="fake__radio">
-                            <div class="fake__radio-active"></div>
+                    <label htmlFor="custom" className="create-framework__label">
+                        <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Custom')} className="create-framework__input" id="custom" readOnly={isView} />
+                        {/* <div className="fake__radio">
+                            <div className="fake__radio-active"></div>
                         </div> */}
-                        <h1 class="create-framework__title">
+                        <h1 className="create-framework__title">
                             Custom
                         </h1>
                     </label>
                 </form>
             </div>
 
-            <div class="buttons__panel">
-                <button class="buttons__panel-button" onClick={() => { navigate(-1) }}>
+            <div className="buttons__panel">
+                <button className="buttons__panel-button" onClick={() => { navigate(-1) }}>
                     CANCEL
                 </button>
                 {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
-                {!isView && <button class="main__button" onClick={() => onSaveCustomer()}>
+                {!isView && <button className="main__button" onClick={() => onSaveCustomer()}>
                     SAVE
                 </button>}
             </div>

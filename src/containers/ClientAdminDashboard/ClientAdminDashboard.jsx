@@ -42,39 +42,39 @@ const ClientAdminDashboard = () => {
         }
     }
     } class={`welcome__task__box2 ${getColor(status)}`}>
-        <div class="welcome__task__numbers">
+        <div className="welcome__task__numbers">
             <h1 class={`welcome__task__box_content ${status === 'Reports' ? 'cursor-pointer': null}`}>{count || 0}</h1>
         </div>
         <div>
-            <h4 class="welcome__task__bottom_content">{status}</h4>
+            <h4 className="welcome__task__bottom_content">{status}</h4>
         </div>
     </div>);
 
     return (<>
-        <div class="main__top-wrapper">
-            <div class="leftheading">
-                <h1 class="main__title custom-title">
+        <div className="main__top-wrapper">
+            <div className="leftheading">
+                <h1 className="main__title custom-title">
                     <b>Admin Dashboard</b>
                 </h1>
             </div>
 
-            {(loginDetails.user_role === 'client_admin') &&<div class="welcome__task__right__heading">
-                <h1 class="welcome__task__heading">
+            {(loginDetails.user_role === 'client_admin') &&<div className="welcome__task__right__heading">
+                <h1 className="welcome__task__heading">
                     <a className="rightlink__color cursor-pointer" onClick={() => navigate('/')}><u>ESG KPIs</u></a>
                 </h1>
-                <span class="welcome__task__top_line">|</span>
-                <h1 class="welcome__task__heading">
+                <span className="welcome__task__top_line">|</span>
+                <h1 className="welcome__task__heading">
                 
                     <b>Admin Dashboard</b>
                 </h1>
-                <span class="welcome__task__top_line">|</span>
-                <h1 class="welcome__task__heading">
+                <span className="welcome__task__top_line">|</span>
+                <h1 className="welcome__task__heading">
                 <a className="rightlink__color cursor-pointer" onClick={() => navigate('/task')}><u>My Tasks</u></a>
                     
                 </h1>
             </div>}
         </div>
-        <div class="welcome__task__container2">
+        <div className="welcome__task__container2">
             {console.log(myReportCount)}
         {renderCard('Frameworks', myReportCount.reports)}
         {renderCard('Total Task', (myReportCount.completed+myReportCount.pending))}

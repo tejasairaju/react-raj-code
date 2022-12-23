@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Requests from '../../Requests';
 import axios from 'axios';
-import DeletePopup from '../../Components/Common/Popup/DeletePopup.jsx';
+import DeletePopup from '../../Components/Common/DeletePopup/DeletePopup.jsx';
 
 const ClientUserAction = (props) => {
   const { value, index, getClientUsers = () => {}, deleteCallback } = props;

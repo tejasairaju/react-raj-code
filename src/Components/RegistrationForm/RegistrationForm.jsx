@@ -143,41 +143,41 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
 
     const renderForm = () => (<form action="#" method="get" className="acc-info__form">
         <div className="acc-info__form-item">
-            <label for="form__name" className="acc-info__form-label">
+            <label htmlFor="form__name" className="acc-info__form-label">
                 <div><span className="color-red">*</span>First Name &nbsp; {validation.first_name && <span className='error-msg'>({validation.first_name})</span>}</div>
                 <input type="text" value={inputValues.first_name} name="first_name" id="firstName" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
-            <label for="form__last-name" className="acc-info__form-label">
+            <label htmlFor="form__last-name" className="acc-info__form-label">
                 <div><span className="color-red">*</span>Last Name &nbsp; {validation.last_name && <span className='error-msg'>({validation.last_name})</span>}</div>
                 <input type="text" value={inputValues.last_name} name="last_name" id="lastName" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
         </div>
         <div className="acc-info__form-item">
-            <label for="form__email" className="acc-info__form-label">
+            <label htmlFor="form__email" className="acc-info__form-label">
                 <div><span className="color-red">*</span>Company email &nbsp; {validation.email_id && <span className='error-msg'>({validation.email_id})</span>}</div>
                 <input type="text" value={inputValues.email_id} name="email_id" id="form__email" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
-            <label for="form__phone_number" className="acc-info__form-label">
+            <label htmlFor="form__phone_number" className="acc-info__form-label">
                 <div><span className="color-red">*</span>Mobile number &nbsp; {validation.phone_number && <span className='error-msg'>({validation.phone_number})</span>}</div>
                 <input type="text" pattern="\+\d+" ondrop="false" minLength={8} maxLength={15} value={inputValues.phone_number} name="phone_number" id="form__phone_number" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
         </div>
         <div className="acc-info__form-item">
-            <label for="form__company-name" className="acc-info__form-label">
+            <label htmlFor="form__company-name" className="acc-info__form-label">
                 <div><span className="color-red">*</span>Company Name&nbsp;{validation.organization_name && <span className='error-msg'>({validation.organization_name})</span>}</div>
                 <input type="text" maxLength={50} value={inputValues.organization_name} name="organization_name" id="form__company-name" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
-            <label for="form__company-location" className="acc-info__form-label">
+            <label htmlFor="form__company-location" className="acc-info__form-label">
                 Company Location
                 <input type="text" value={inputValues.companyLocation} name="companyLocation" id="form__company-location" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
         </div>
         <div className="acc-info__form-item">
-            <label for="form__password" className="acc-info__form-label">
+            <label htmlFor="form__password" className="acc-info__form-label">
                 <div><span className="color-red">*</span>Password &nbsp; {validation.password && <span className='error-msg'>({validation.password})</span>}</div>
                 <input type="password" value={inputValues.password} name="password" id="form__password" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
-            <label for="form__confirm-password" className="acc-info__form-label">
+            <label htmlFor="form__confirm-password" className="acc-info__form-label">
                 <div><span className="color-red">*</span>Confirm password &nbsp; {validation.confirmPassword && <span className='error-msg'>({validation.confirmPassword})</span>}</div>
                 <input type="password" value={inputValues.confirmPassword} name="confirmPassword" id="form__confirm-password" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
             </label>
@@ -186,33 +186,33 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
     </form>);
 
 
-    const packageDetails = () => (<><h1 class="create-framework__title package-label">
+    const packageDetails = () => (<><h1 className="create-framework__title package-label">
         Package
     </h1>
-        <form class="create-framework__row-wrapper radios">
-            <label for="bronze" class="create-framework__label">
-                <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Bronze')} class="create-framework__input" id="bronze" />
+        <form className="create-framework__row-wrapper radios">
+            <label htmlFor="bronze" className="create-framework__label">
+                <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Bronze')} className="create-framework__input" id="bronze" />
 
-                <h1 class="create-framework__title">
+                <h1 className="create-framework__title">
                     Bronze
                 </h1>
             </label>
-            <label for="silver" class="create-framework__label">
-                <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Silver')} class="create-framework__input" id="silver" />
+            <label htmlFor="silver" className="create-framework__label">
+                <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Silver')} className="create-framework__input" id="silver" />
 
-                <h1 class="create-framework__title">
+                <h1 className="create-framework__title">
                     Silver
                 </h1>
             </label>
-            <label for="gold" class="create-framework__label">
+            <label htmlFor="gold" className="create-framework__label">
 
-                <h1 class="create-framework__title">
+                <h1 className="create-framework__title">
                     Gold
                 </h1>
             </label>
-            <label for="custom" class="create-framework__label">
-                <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Custom')} class="create-framework__input" id="custom" />
-                <h1 class="create-framework__title">
+            <label htmlFor="custom" className="create-framework__label">
+                <input type="radio" name="radio__package" onClick={() => onChangeRadioHandler('Custom')} className="create-framework__input" id="custom" />
+                <h1 className="create-framework__title">
                     Custom
                 </h1>
             </label>
@@ -235,41 +235,41 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
                     </div>
                     {/* <form action="#" method="get" className="acc-info__form">
                     <div className="acc-info__form-item">
-                        <label for="form__name" className="acc-info__form-label">
+                        <label htmlFor="form__name" className="acc-info__form-label">
                             <div><span className="color-red">*</span>First Name &nbsp; {validation.first_name && <span className='error-msg'>({validation.first_name})</span>}</div>
                             <input type="text" value={inputValues.first_name} name="first_name" id="firstName" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
-                        <label for="form__last-name" className="acc-info__form-label">
+                        <label htmlFor="form__last-name" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Last Name &nbsp; {validation.last_name && <span className='error-msg'>({validation.last_name})</span>}</div>
                             <input type="text" value={inputValues.last_name} name="last_name" id="lastName" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
                     </div>
                     <div className="acc-info__form-item">
-                        <label for="form__email" className="acc-info__form-label">
+                        <label htmlFor="form__email" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Company email &nbsp; {validation.email_id && <span className='error-msg'>({validation.email_id})</span>}</div>
                             <input type="text" value={inputValues.email_id} name="email_id" id="form__email" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
-                        <label for="form__phone_number" className="acc-info__form-label">
+                        <label htmlFor="form__phone_number" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Mobile number &nbsp; {validation.phone_number && <span className='error-msg'>({validation.phone_number})</span>}</div>
                             <input type="text" pattern="\+\d+" ondrop="false" minLength={8} maxLength={15} value={inputValues.phone_number} name="phone_number" id="form__phone_number" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
                     </div>
                     <div className="acc-info__form-item">
-                        <label for="form__company-name" className="acc-info__form-label">
+                        <label htmlFor="form__company-name" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Company Name&nbsp;{validation.organization_name && <span className='error-msg'>({validation.organization_name})</span>}</div>
                             <input type="text" maxLength={50} value={inputValues.organization_name} name="organization_name" id="form__company-name" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
-                        <label for="form__company-location" className="acc-info__form-label">
+                        <label htmlFor="form__company-location" className="acc-info__form-label">
                             Company Location
                             <input type="text" value={inputValues.companyLocation} name="companyLocation" id="form__company-location" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
                     </div>
                     <div className="acc-info__form-item">
-                        <label for="form__password" className="acc-info__form-label">
+                        <label htmlFor="form__password" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Password &nbsp; {validation.password && <span className='error-msg'>({validation.password})</span>}</div>
                             <input type="password" value={inputValues.password} name="password" id="form__password" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
-                        <label for="form__confirm-password" className="acc-info__form-label">
+                        <label htmlFor="form__confirm-password" className="acc-info__form-label">
                             <div><span className="color-red">*</span>Confirm password &nbsp; {validation.confirmPassword && <span className='error-msg'>({validation.confirmPassword})</span>}</div>
                             <input type="password" value={inputValues.confirmPassword} name="confirmPassword" id="form__confirm-password" onChange={(e) => handleChange(e)} className="acc-info__form-input" required />
                         </label>
@@ -292,11 +292,11 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
                     <br></br>
                     {renderForm()}
 
-                    <div class="buttons__panel margin-top-1em">
-                        <button class="buttons__panel-button" onClick={() => { navigate(-1) }}>
+                    <div className="buttons__panel margin-top-1em">
+                        <button className="buttons__panel-button" onClick={() => { navigate(-1) }}>
                             CANCEL
                         </button>
-                        <button class="main__button" onClick={() => checkOnSubmit()}>
+                        <button className="main__button" onClick={() => checkOnSubmit()}>
                         SAVE
                         </button>
                     </div>

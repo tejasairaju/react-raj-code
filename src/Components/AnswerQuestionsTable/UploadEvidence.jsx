@@ -104,7 +104,7 @@ const UploadEvidence = ({ setStatusData = () => {}, disclosureIndex = '', getDis
         setLogo(null);
     }
     return (<>
-        <div class="framework__row-wrapper bot1 answer_question-file_upload">
+        <div className="framework__row-wrapper bot1 answer_question-file_upload">
             <div> <DocumentUpload
                 imgcls={'org-image-size'}
                 fileUploadHandler={() => onSaveUploadFile()}

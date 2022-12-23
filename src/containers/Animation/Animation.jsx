@@ -6,16 +6,16 @@ import './Animation.css';
 const Animation = () => {
 
   return (<>
-    <div class="div_margin_auto">
-      <div class="circles-container">
+    <div className="div_margin_auto">
+      <div className="circles-container">
         <div></div>
         <div></div>
         <div></div>
         <div></div>
 
-        <div class="circle-blue"></div>
-        <div class="circle-purple"></div>
-        <div class="circle-pink"></div>
+        <div className="circle-blue"></div>
+        <div className="circle-purple"></div>
+        <div className="circle-pink"></div>
       </div>
       Loading...</div>
   </>)

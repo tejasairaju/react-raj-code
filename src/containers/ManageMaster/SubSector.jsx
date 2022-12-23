@@ -159,29 +159,29 @@ const SubSector = (props) => {
         updateMoreOption={updateMoreOption}
         sectorName={sector.name}
       />
-      {/* <div class="main__top-wrapper">
-            <div class="user_input_text flex flex-column">
-                <h1 class="main__title">
+      {/* <div className="main__top-wrapper">
+            <div className="user_input_text flex flex-column">
+                <h1 className="main__title">
                     {'Sector'} :
                 </h1>
-                <input type="text" name='sector' class="country__text__box"
+                <input type="text" name='sector' className="country__text__box"
                     placeholder={'Enter the sector'}
                     value={sector.name}
                     readOnly={true}
                     onChange={addMoreoptions}
                 />
             </div>
-            <div class="user_input_text flex flex-column">
-                <h1 class="main__title white-space">
+            <div className="user_input_text flex flex-column">
+                <h1 className="main__title white-space">
                     {'SubSector'} :
                 </h1>
-                <input type="text" name='subsector' class="country__text__box"
+                <input type="text" name='subsector' className="country__text__box"
                     placeholder={'Enter the subsector'}
                     value={doEdit.name}
                     onChange={addMoreoptions}
                 />
             </div>
-            <button class="main__button" onClick={() => updateMoreOption(inputValue)}>
+            <button className="main__button" onClick={() => updateMoreOption(inputValue)}>
                 ADD
             </button>
         </div> */}

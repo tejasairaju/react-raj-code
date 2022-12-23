@@ -56,11 +56,11 @@ const ReAssignDisclosures = (props) => {
             <div className='reassign-disclosure-block'>
                 <div className='reassign-popup-close'><img onClick={() => setIsOpenReAssign(false)} src="../../../../assets/icons/close.svg" width='30px' height='30px' /></div>
                 <div className='reassign-disclosure-body'>
-                    <h5 class="detalis__information-title">
+                    <h5 className="detalis__information-title">
                         If you want to reassign, select the user from the list below:
                     </h5>
-                    <div class="modal__text-wrapper">
-                        <div class="modal__content-wrapper">
+                    <div className="modal__text-wrapper">
+                        <div className="modal__content-wrapper">
                         <table className="default-flex-table">
                     <thead>
                         <tr>
@@ -72,7 +72,7 @@ const ReAssignDisclosures = (props) => {
                             return (<tr>
                                 <td>{user.first_name} {user.last_name}</td>
                                 <td>{user.role}</td>
-                                <td><a onClick={() => onClickReAssignHandler(user)} class="detalis__reassign row__item-info action" id="">
+                                <td><a onClick={() => onClickReAssignHandler(user)} className="detalis__reassign row__item-info action" id="">
                                             Reassign
                                         </a></td>
                                

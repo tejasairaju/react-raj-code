@@ -3,16 +3,16 @@ import React from "react";
 
 
 const Home = (props) => {
-    return (<><aside class="aside-framework">
-    <div class="aside-framework__logo-container">
+    return (<><aside className="aside-framework">
+    <div className="aside-framework__logo-container">
         <a href="#">
-            <img src="../../assets/icons/esg_logo.png" alt="logo" class="aside-framework__logo"/>
+            <img src="../../assets/icons/esg_logo.png" alt="logo" className="aside-framework__logo"/>
         </a>
     </div>
-    <nav class="aside-framework__nav">
-        <ul class="nav__list">
-            <li class="nav__list-item active">
-                <div class="list-item__wrapper">
+    <nav className="aside-framework__nav">
+        <ul className="nav__list">
+            <li className="nav__list-item active">
+                <div className="list-item__wrapper">
                     <a href="#">
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clipPath="url(#clip0_7_6071)">
@@ -28,31 +28,31 @@ const Home = (props) => {
                     </a>
                 </div>
             </li>
-            <li class="nav__list-item">
-                <div class="list-item__wrapper">
+            <li className="nav__list-item">
+                <div className="list-item__wrapper">
                     <a href="#">
                         <svg width="30" height="30" viewBox="0 0 38 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18.5422 0.374141C18.3093 0.372645 18.0782 0.400731 17.8626 0.456753C17.6469 0.512774 17.451 0.595606 17.2864 0.700391L0.513008 11.3657C0.35037 11.4691 0.221354 11.5918 0.13333 11.7269C0.0453061 11.862 0 12.0068 0 12.153C0 12.2993 0.0453061 12.444 0.13333 12.5791C0.221354 12.7142 0.35037 12.837 0.513008 12.9403L17.286 23.6065C17.4486 23.71 17.6416 23.792 17.854 23.848C18.0664 23.904 18.2941 23.9328 18.5241 23.9328C18.754 23.9328 18.9817 23.904 19.1942 23.848C19.4066 23.792 19.5996 23.71 19.7622 23.6065L36.5348 12.9408C36.6975 12.8374 36.8265 12.7146 36.9145 12.5796C37.0025 12.4445 37.0478 12.2997 37.0478 12.1535C37.0478 12.0072 37.0025 11.8624 36.9145 11.7274C36.8265 11.5923 36.6975 11.4695 36.5348 11.3662L19.7622 0.700391C19.4383 0.494312 19.0004 0.377181 18.5422 0.374141ZM18.5241 3.06141L32.8224 12.1535L18.5241 21.2447L4.22651 12.1526L18.5241 3.06141ZM1.7522 16.1809L0.513378 16.9682C0.35074 17.0716 0.221724 17.1943 0.1337 17.3294C0.0456765 17.4645 0.000370461 17.6093 0.000370461 17.7555C0.000370461 17.9017 0.0456765 18.0465 0.1337 18.1816C0.221724 18.3167 0.35074 18.4394 0.513378 18.5428L17.286 29.2086C17.4486 29.312 17.6416 29.3941 17.854 29.45C18.0664 29.506 18.2941 29.5348 18.5241 29.5348C18.754 29.5348 18.9817 29.506 19.1942 29.45C19.4066 29.3941 19.5996 29.312 19.7622 29.2086L36.5348 18.5428C36.6974 18.4394 36.8264 18.3166 36.9143 18.1815C37.0023 18.0464 37.0475 17.9016 37.0475 17.7554C37.0474 17.6092 37.002 17.4644 36.9139 17.3293C36.8258 17.1943 36.6968 17.0716 36.5341 16.9682L35.296 16.1809L32.8202 17.7546L32.8217 17.7555L18.5241 26.8476L4.22577 17.7555L4.22725 17.7546L1.7522 16.1809ZM1.7522 21.783L0.513378 22.5707C0.35074 22.6741 0.221724 22.7968 0.1337 22.9319C0.0456765 23.067 0.000370461 23.2118 0.000370461 23.358C0.000370461 23.5042 0.0456765 23.649 0.1337 23.7841C0.221724 23.9192 0.35074 24.0419 0.513378 24.1453L17.286 34.8106C17.4486 34.9141 17.6416 34.9961 17.854 35.0521C18.0664 35.108 18.2941 35.1369 18.5241 35.1369C18.754 35.1369 18.9817 35.108 19.1942 35.0521C19.4066 34.9961 19.5996 34.9141 19.7622 34.8106L36.5348 24.1448C36.6974 24.0414 36.8264 23.9187 36.9143 23.7836C37.0023 23.6485 37.0475 23.5037 37.0475 23.3575C37.0474 23.2112 37.002 23.0664 36.9139 22.9314C36.8258 22.7963 36.6968 22.6736 36.5341 22.5703L35.296 21.783L32.8202 23.3567L32.8217 23.3575L18.5241 32.4496L4.22577 23.3575L4.22725 23.3567L1.7522 21.783Z" fill="#585E62"/>
                         </svg>    
                         Framework
-                        <svg class="list-item__plus" width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="list-item__plus" width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M16.4761 7.41553V10.2192H0.39502V7.41553H16.4761ZM9.93408 0.567383V17.6475H6.95312V0.567383H9.93408Z" fill="#585E62"/>
                         </svg>
-                        <svg class="list-item__minus" width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="list-item__minus" width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.896 0V2.44922H0.120117V0H14.896Z" fill="#2088BD"/>
                         </svg>
                     </a>
                 </div>
-                <ul class="sublist">
-                    <li class="sublist-item">
-                        <div class="list-item__wrapper">
+                <ul className="sublist">
+                    <li className="sublist-item">
+                        <div className="list-item__wrapper">
                             <a href="#">
                                 Create Framework
                             </a>
                         </div>
                     </li>
-                    <li class="sublist-item">
-                        <div class="list-item__wrapper">
+                    <li className="sublist-item">
+                        <div className="list-item__wrapper">
                             <a href="#">
                                 Manage Framework
                             </a>
@@ -60,8 +60,8 @@ const Home = (props) => {
                     </li>
                 </ul>
             </li>
-            <li class="nav__list-item">
-                <div class="list-item__wrapper">
+            <li className="nav__list-item">
+                <div className="list-item__wrapper">
                     <a href="#">
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 17.6923C13.2505 17.6923 11.5401 17.1735 10.0854 16.2015C8.63063 15.2294 7.49679 13.8478 6.82725 12.2314C6.1577 10.615 5.98252 8.83634 6.32385 7.12035C6.66518 5.40437 7.5077 3.82814 8.74486 2.59099C9.98201 1.35383 11.5582 0.511308 13.2742 0.169985C14.9902 -0.171353 16.7689 0.00383116 18.3853 0.673385C20.0017 1.34292 21.3833 2.47675 22.3554 3.93149C23.3274 5.38625 23.8462 7.09655 23.8462 8.84615C23.8422 11.1911 22.9088 13.4388 21.2506 15.0968C19.5926 16.7549 17.3449 17.6883 15 17.6923ZM15 2.30769C13.7068 2.30769 12.4426 2.69117 11.3675 3.40963C10.2922 4.12808 9.45416 5.14925 8.95927 6.344C8.46439 7.53874 8.33492 8.85342 8.58721 10.1218C8.83949 11.3901 9.46222 12.5551 10.3766 13.4695C11.2911 14.384 12.456 15.0068 13.7245 15.2589C14.9928 15.5112 16.3074 15.3818 17.5022 14.8869C18.6969 14.392 19.7182 13.554 20.4365 12.4788C21.1549 11.4035 21.5385 10.1393 21.5385 8.84615C21.5345 7.11329 20.8442 5.45257 19.6189 4.22726C18.3936 3.00194 16.7329 2.31175 15 2.30769Z" fill="#585E62"/>
@@ -71,8 +71,8 @@ const Home = (props) => {
                     </a>
                 </div>
             </li>
-            <li class="nav__list-item">
-                <div class="list-item__wrapper">
+            <li className="nav__list-item">
+                <div className="list-item__wrapper">
                     <a href="#">
                         <svg width="30" height="30" viewBox="0 0 33 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M27.6547 12.489C27.2206 13.0713 26.7238 13.587 26.179 14.0213C28.4867 15.4934 30.0204 18.0761 30.0204 21.0104C30.0204 21.9629 28.6229 22.6196 27.79 22.9263C27.1404 23.1655 26.3767 23.3614 25.5419 23.5093C25.5689 23.8619 25.5828 24.2183 25.5828 24.5778C25.5828 24.8889 25.5557 25.2515 25.4768 25.6462C26.5987 25.4718 27.6288 25.2183 28.5139 24.8924C31.4908 23.7964 32.1156 22.1764 32.1156 21.0104C32.1155 17.4853 30.3488 14.3657 27.6547 12.489Z" fill="#585E62"/>
@@ -84,8 +84,8 @@ const Home = (props) => {
                     </a>
                 </div>
             </li>
-            <li class="nav__list-item">
-                <div class="list-item__wrapper">
+            <li className="nav__list-item">
+                <div className="list-item__wrapper">
                     <a href="#">
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clipPath="url(#clip0_120_1540)">
@@ -99,24 +99,24 @@ const Home = (props) => {
                             </defs>
                         </svg>
                         System settings
-                        <svg class="list-item__plus" width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="list-item__plus" width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M16.4761 7.41553V10.2192H0.39502V7.41553H16.4761ZM9.93408 0.567383V17.6475H6.95312V0.567383H9.93408Z" fill="#585E62"/>
                         </svg>
-                        <svg class="list-item__minus" width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="list-item__minus" width="15" height="3" viewBox="0 0 15 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.896 0V2.44922H0.120117V0H14.896Z" fill="#2088BD"/>
                         </svg>
                     </a>
                 </div>
-                <ul class="sublist">
-                    <li class="sublist-item">
-                        <div class="list-item__wrapper">
+                <ul className="sublist">
+                    <li className="sublist-item">
+                        <div className="list-item__wrapper">
                             <a href="#">
                                 Lorem, ipsum.
                             </a>
                         </div>
                     </li>
-                    <li class="sublist-item">
-                        <div class="list-item__wrapper">
+                    <li className="sublist-item">
+                        <div className="list-item__wrapper">
                             <a href="#">
                                 Lorem.
                             </a>
@@ -124,8 +124,8 @@ const Home = (props) => {
                     </li>
                 </ul>
             </li>
-            <li class="nav__list-item">
-                <div class="list-item__wrapper">
+            <li className="nav__list-item">
+                <div className="list-item__wrapper">
                     <a href="#">
                         <svg width="30" height="30" viewBox="0 0 27 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M25.584 0H1.416C0.6355 0 0 0.736391 0 1.6408V33.122C0 34.0264 0.6355 34.7628 1.416 34.7628H25.584C26.3645 34.7628 27 34.0264 27 33.122V1.6408C27 0.736391 26.3645 0 25.584 0ZM1.416 1.15876H25.584C25.8135 1.15876 26 1.37487 26 1.6408V16.802H1V1.6408C1 1.37487 1.1865 1.15876 1.416 1.15876ZM25.584 33.604H1.416C1.1865 33.604 1 33.3879 1 33.122V17.9608H26V33.122C26 33.3879 25.8135 33.604 25.584 33.604Z" fill="#585E62"/>
@@ -136,8 +136,8 @@ const Home = (props) => {
                     </a>
                 </div>
             </li>
-            <li class="nav__list-item">
-                <div class="list-item__wrapper">
+            <li className="nav__list-item">
+                <div className="list-item__wrapper">
                     <a href="#">
                         <svg width="30" height="30" viewBox="0 0 36 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M31.25 25.9206C30.9238 25.8533 30.6031 26.0637 30.5358 26.3908L30.0415 28.7906H5.11297L2.62185 18.3737C2.54423 18.0489 2.21787 17.8484 1.89316 17.9263C1.56839 18.0039 1.36794 18.3302 1.4457 18.6549L4.04769 29.5359C4.11274 29.808 4.35598 30 4.63577 30H30.5343C30.8212 30 31.0687 29.7984 31.1266 29.5173L31.7203 26.6349C31.7877 26.3077 31.5772 25.988 31.25 25.9206Z" fill="#585E62"/>
@@ -151,8 +151,8 @@ const Home = (props) => {
         </ul>
     </nav>
 </aside>
-<main class="main">
-    <header class="header">
+<main className="main">
+    <header className="header">
         
     </header>
 </main></>);

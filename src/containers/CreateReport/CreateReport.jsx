@@ -119,32 +119,32 @@ const CreateReport = () => {
                 <b>Framework</b>
             </h2>
         </div>
-        <div class="Generate_Report GenerateReport-framework__overflow">
-            <div class="GenerateReport-framework__row">
+        <div className="Generate_Report GenerateReport-framework__overflow">
+            <div className="GenerateReport-framework__row">
                 <h2>Choose a Framework</h2>
             </div>
 
-            <div class="framework__col-wrapper">
+            <div className="framework__col-wrapper">
 
-                {/* <div class="GenerateReport-framework__row"> */}
+                {/* <div className="GenerateReport-framework__row"> */}
                 <ListFramework clsName="report-list-framework" isCustomeFramework={isCustomeFramework} setIsCustomeFramework={setIsCustomeFramework} label={null} onClickFrameworkHandler={onClickFrameworkHandler} onChangeToggle={onChangeToggle} />
                 {/* </div> */}
 
-                <div class="Generate_Report GenerateReport1-framework__row">
+                <div className="Generate_Report GenerateReport1-framework__row">
                     <h1>Assign Report Name and Period</h1>
                 </div>
 
-                <div class="GenerateReport-framework__row Generate_report_head">
-                    <h2 class="Generate_h1_label1">Report Name:</h2>
+                <div className="GenerateReport-framework__row Generate_report_head">
+                    <h2 className="Generate_h1_label1">Report Name:</h2>
                     <InputBox className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} />
-                    {/* <input type="text" class="GenerateReport-framework__input" required /> */}
+                    {/* <input type="text" className="GenerateReport-framework__input" required /> */}
                 </div>
                 {/* <div className="create-framework__row-wrapper dates">
                     <div>
                         <h1 className="create-framework__title">
                             From:
                         </h1>
-                        <label for="create-framework__date-from" className="create-framework__label">
+                        <label htmlFor="create-framework__date-from" className="create-framework__label">
                             <input type="date" className="GenerateReport-framework__input" id="create-framework__date-from" required />
                             <img src="./assets/icons/celendar.svg" alt="" />
                         </label>
@@ -153,45 +153,45 @@ const CreateReport = () => {
                         <h1 className="create-framework__title">
                             To:
                         </h1>
-                        <label for="create-framework__date-to" className="create-framework__label">
+                        <label htmlFor="create-framework__date-to" className="create-framework__label">
                             <input type="date" className=" GenerateReport-framework__input" id="create-framework__date-to" required />
                             <img src="./assets/icons/celendar.svg" alt="" />
                         </label>
                     </div>
                 </div> */}
 
-                <div class="Generate_report_head">
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">From :</h1>
-                            <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
-                            <input type="date" name={'start_date'} min="2000-01-01" max="2100-01-01" value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                <div className="Generate_report_head">
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">From :</h1>
+                            <label htmlFor="create-framework__date-from" className="create-framework__label report-cal-input-box">
+                            <input type="date" name={'start_date'} min="2000-01-01" max="2100-01-01" value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} className="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
                     </div>
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">To :</h1>
-                            <label for="create-framework__date-from" className="create-framework__label report-cal-input-box">
-                            <input type="date" name={'end_date'} min="2000-01-01" max="2100-01-01" value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} class="GenerateReport-framework__input" required />
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">To :</h1>
+                            <label htmlFor="create-framework__date-from" className="create-framework__label report-cal-input-box">
+                            <input type="date" name={'end_date'} min="2000-01-01" max="2100-01-01" value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} className="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
                         </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="Generate_report_head color-red">
+                <div className="Generate_report_head color-red">
                     {!_isEmpty(error)&&<>* {error}</>}
                 </div>
 
-                <div class="Generate_report_button_row create-report-btn">
+                <div className="Generate_report_button_row create-report-btn">
 
-                    {/* <button class="Generate_button btn_generate">
+                    {/* <button className="Generate_button btn_generate">
                         DownloadReport
                     </button> */}
-                    <div class="Generate_frame"></div>
-                    <button onClick={() => onClickCreateReportHandler()} class="Generate_button">
+                    <div className="Generate_frame"></div>
+                    <button onClick={() => onClickCreateReportHandler()} className="Generate_button">
                         Create
                     </button>
                 </div>

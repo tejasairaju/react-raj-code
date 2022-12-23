@@ -76,18 +76,10 @@ const UploadFile = (props) => (
     </h1>
     <form className='add__logo-form upload-cover'>
       <div className='add__logo-logo'>{props.imageUrl ? <img src={props.imageUrl} alt='' className={props.imgcls} /> : null}</div>
-      <label for='add__logo' className='add__logo-label'>
+      <label htmlFor='add__logo' className='add__logo-label'>
         <span>Upload</span>
       </label>
       <input type='file' onChange={props.onChangeFile} name='logo' className='add__logo-input' id='add__logo' accept='.jpg, .jpeg, .png' />
-      {props.imageUrl && (
-        <>
-          <span>|</span>
-          <label className='remove__logo-label'>
-            <span onClick={props.onChangeRemoveFile}>Remove</span>
-          </label>
-        </>
-      )}
       {props.logoSizeError && (
         <label className='logo-size-error'>
           <span>* File size should not exceed 1mb.</span>
@@ -105,7 +97,7 @@ const DocumentUpload = (props) => (
     </h1>
     <form className='add__logo-form document-upload-container'>
       <div className='add__logo-logo'>{props.imageUrl ? <img src={props.imageUrl} alt='' className={props.imgcls} /> : null}</div>
-      <label for='add__logo' className='add__logo-label'>
+      <label htmlFor='add__logo' className='add__logo-label'>
         <span>Choose File</span>
       </label>
       <input type='file' onChange={props.onChangeFile} name='logo' className='add__logo-input' id='add__logo' accept='.jpg, .jpeg, .png' />

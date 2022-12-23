@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './MoreAction.css';
 import axios from 'axios';
 import Requests from '../../Requests';
-import DeletePopup from '../Common/Popup/DeletePopup.jsx';
+import DeletePopup from '../Common/DeletePopup/DeletePopup.jsx';
 
 const MoreAction = (props) => {
   const {

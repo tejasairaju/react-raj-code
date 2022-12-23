@@ -143,7 +143,7 @@ const AssignDisclosures = () => {
           <b>Assign Disclosures</b>
         </h1>
       </div>
-      {/* <div class="framework-toggle-container"><button className="framework-btn-toogle toggle-active">Framework</button><button className="framework-btn-toogle">Besopke Framework</button></div> */}
+      {/* <div className="framework-toggle-container"><button className="framework-btn-toogle toggle-active">Framework</button><button className="framework-btn-toogle">Besopke Framework</button></div> */}
       <div className='ans-main__assign-item'>
         {/* <ListFramework onClickFrameworkHandler={onClickFrameworkHandler} /> */}
         <CategoryFilter filterList={filterList} filterKey={catagoryType} radioChangeHandler={radioChangeHandler} />
@@ -160,7 +160,7 @@ const AssignDisclosures = () => {
                 <p class='disclosures__detalis'>
                   {disclosure.code} {disclosure.name}
                 </p>
-                <label for='organisational__checkbox' class='disclosures__label' onClick={(e) => onClickSelectHandler(e, disclosureIndex)}>
+                <label htmlFor='organisational__checkbox' class='disclosures__label' onClick={(e) => onClickSelectHandler(e, disclosureIndex)}>
                   <input
                     type='checkbox'
                     class='disclosures__checkbox'
@@ -184,45 +184,45 @@ const AssignDisclosures = () => {
         })}
       </div>
       <UserListView onClickUserSelect={onClickUserSelect} />
-      {/* <div class="user__wrapper">
-            <div class="left__arrow"></div>
-            <div class="user__container active">
+      {/* <div className="user__wrapper">
+            <div className="left__arrow"></div>
+            <div className="user__container active">
                 <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p class="user-name">
+                <p className="user-name">
                     John Smith
                 </p>
-                <p class="job-title">
+                <p className="job-title">
                     Admin Manager
                 </p>
             </div>
-            <div class="user__container">
+            <div className="user__container">
                 <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p class="user-name">
+                <p className="user-name">
                     John Smith
                 </p>
-                <p class="job-title">
+                <p className="job-title">
                     Admin Manager
                 </p>
             </div>
-            <div class="user__container">
+            <div className="user__container">
                 <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p class="user-name">
+                <p className="user-name">
                     John Smith
                 </p>
-                <p class="job-title">
+                <p className="job-title">
                     Admin Manager
                 </p>
             </div>
-            <div class="user__container">
+            <div className="user__container">
                 <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p class="user-name">
+                <p className="user-name">
                     John Smith
                 </p>
-                <p class="job-title">
+                <p className="job-title">
                     Admin Manager
                 </p>
             </div>
-            <div class="right__arrow"></div>
+            <div className="right__arrow"></div>
         </div> */}
       <div class='buttons__panel'>
         <button onClick={() => navigate(-1)} class='buttons__panel-button'>

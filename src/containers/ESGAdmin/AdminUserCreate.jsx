@@ -111,11 +111,11 @@ const ESGAdminUserOnboard = (props) => {
                 onChangeHandler={onChangeHandler} />
         </div>
 
-        <div class="buttons__panel">
-                <button class="buttons__panel-button" onClick={() => { navigate(`/adminuser`) }}>
+        <div className="buttons__panel">
+                <button className="buttons__panel-button" onClick={() => { navigate(`/adminuser`) }}>
                     CANCEL
                 </button>
-                <button class="main__button" onClick={() => onSaveCustomer()}>
+                <button className="main__button" onClick={() => onSaveCustomer()}>
                     SAVE
                 </button>
             </div>

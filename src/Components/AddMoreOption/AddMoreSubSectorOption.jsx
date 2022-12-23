@@ -24,34 +24,34 @@ const AddMoreSubSectorOption = (props) => {
     }, [status])
     return (
 
-        <div class="main__top-wrapper">
-            <div class="user_input_text flex flex-column">
-                <h1 class="main__title">
+        <div className="main__top-wrapper">
+            <div className="user_input_text flex flex-column">
+                <h1 className="main__title">
                     {'Sector'} :
                 </h1>
-                <input type="text" name='sector' class="country__text__box"
+                <input type="text" name='sector' className="country__text__box"
                     placeholder={'Enter the sector'}
                     value={sectorName}
                     readOnly={true}
                     onChange={addMoreoptions}
                 />
             </div>
-            <div class="user_input_text flex flex-column">
-                <h1 class="main__title white-space">
+            <div className="user_input_text flex flex-column">
+                <h1 className="main__title white-space">
                     {'SubSector'} :
                 </h1>
-                <input type="text" name={_toLower(label)} class="country__text__box"
+                <input type="text" name={_toLower(label)} className="country__text__box"
                     placeholder={placeholder}
                     value={inputValue}
                     onChange={addMoreoptions}
                 />
             </div>
 
-            <div class="user_input_text flex flex-column">
-                <button class="buttons__panel-button" onClick={() => { navigate(-1) }}>
+            <div className="user_input_text flex flex-column">
+                <button className="buttons__panel-button" onClick={() => { navigate(-1) }}>
                     BACK
                 </button>
-                <button class="main__button" onClick={() => updateMoreOption(inputValue)}>
+                <button className="main__button" onClick={() => updateMoreOption(inputValue)}>
                 {isEdit ? "EDIT" : "ADD"}
             </button>
 

@@ -127,30 +127,30 @@ const AddClientUser = () => {
     }
 
     return (<>
-        <div class="main__top-wrapper">
+        <div className="main__top-wrapper">
             {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
             {state ?
-                <h1 class="main__title custom-title">
+                <h1 className="main__title custom-title">
                     Update User
                 </h1> :
-                <h1 class="main__title custom-title">
+                <h1 className="main__title custom-title">
                     On-board User
                 </h1>
             }
         </div>
 
-        <div class="cli-add-main__content-wrapper content-wrapper">
-            <div class="framework__col-wrapper">
-                {/* <div class="Generate_report_head align-center">
+        <div className="cli-add-main__content-wrapper content-wrapper">
+            <div className="framework__col-wrapper">
+                {/* <div className="Generate_report_head align-center">
                     <UploadFile logoSizeError={logoSizeError} onChangeFile={onChangeFile} imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
-                    <div class="framework__row"></div>
-                    <div class="framework__row"></div>
+                    <div className="framework__row"></div>
+                    <div className="framework__row"></div>
                 </div> */}
 
-                <div class="Generate_report_head">
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">First Name</h1>
+                <div className="Generate_report_head">
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">First Name</h1>
                             <input
                                 value={inputValue.first_name}
                                 error={validation['first_name']} type="text"
@@ -160,9 +160,9 @@ const AddClientUser = () => {
                                 onChange={onChangeHandler} />
                         </div>
                     </div>
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">Last Name</h1>
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">Last Name</h1>
                             <input
                                 value={inputValue.last_name}
                                 error={validation['last_name']} type="text"
@@ -173,10 +173,10 @@ const AddClientUser = () => {
                         </div>
                     </div>
                 </div>
-                <div class="Generate_report_head">
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">Email</h1>
+                <div className="Generate_report_head">
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">Email</h1>
                             <input
                                 value={inputValue.email_id}
                                 error={validation['email_id']} type="text"
@@ -186,9 +186,9 @@ const AddClientUser = () => {
                                 onChange={onChangeHandler} />
                         </div>
                     </div>
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">Phone</h1>
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">Phone</h1>
                             <input
                                 minLength={8}
                                 maxLength={15}
@@ -201,10 +201,10 @@ const AddClientUser = () => {
                         </div>
                     </div>
                 </div>
-                <div class="Generate_report_head">
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">Country</h1>
+                <div className="Generate_report_head">
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">Country</h1>
                             <input
                                 value={inputValue.country}
                                 error={validation['country']} type="text"
@@ -214,9 +214,9 @@ const AddClientUser = () => {
                                 onChange={onChangeHandler} />
                         </div>
                     </div>
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">Location</h1>
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">Location</h1>
                             <input
                                 value={inputValue.location}
                                 error={validation['location']} type="text"
@@ -227,10 +227,10 @@ const AddClientUser = () => {
                         </div>
                     </div>
                 </div>
-                <div class="Generate_report_head">
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">Designation</h1>
+                <div className="Generate_report_head">
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">Designation</h1>
                             <input
                                 value={inputValue.designation}
                                 error={validation['designation']} type="text"
@@ -240,9 +240,9 @@ const AddClientUser = () => {
                                 onChange={onChangeHandler} />
                         </div>
                     </div>
-                    <div class="GenerateReport-framework__row">
-                        <div class="GenerateReport_row">
-                            <h1 class="Generate_h1_label">Department</h1>
+                    <div className="GenerateReport-framework__row">
+                        <div className="GenerateReport_row">
+                            <h1 className="Generate_h1_label">Department</h1>
                             <input
                                 value={inputValue.department}
                                 error={validation['department']} type="text"
@@ -259,17 +259,17 @@ const AddClientUser = () => {
 
 
 
-        <div class="buttons__panel">
-            <button class="buttons__panel-button" onClick={() => { navigate(`/client/users`) }}>
+        <div className="buttons__panel">
+            <button className="buttons__panel-button" onClick={() => { navigate(`/client/users`) }}>
                 CANCEL
             </button>
             {state ?
-                <button class="main__button" onClick={() => onSaveUser()}>
+                <button className="main__button" onClick={() => onSaveUser()}>
                     Update
                 </button>
 
                 :
-                <button class="main__button" onClick={() => onSaveUser()}>
+                <button className="main__button" onClick={() => onSaveUser()}>
                     Invite
                 </button>
             }

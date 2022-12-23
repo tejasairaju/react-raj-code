@@ -198,10 +198,10 @@ const CreateDisclosures = (props) => {
         </table></>
         {/* {console.log(inputValue)} */}
         <div className="main__content-wrapper">
-            <h1 class="create-framework__title">
+            <h1 className="create-framework__title">
                 Ref No
             </h1>
-            <div class="create-framework__row-wrapper create__disclosure_ref ref__no">
+            <div className="create-framework__row-wrapper create__disclosure_ref ref__no">
                 <input type="text" name='code' value={inputValue.code || ''} onChange={onChangeHandler} min="" step="" className="create-framework__input" />
                 <div className='create__disclosure_container'>
                     <h1 className="create-framework__title">Disclosures<span className="color-red P-4">*</span></h1>
