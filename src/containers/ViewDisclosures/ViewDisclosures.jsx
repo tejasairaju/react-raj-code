@@ -11,6 +11,7 @@ import MoreAction from '../../Components/MoreAction/MoreAction.jsx';
 import { listDisclosures } from '../../../__mocks__/listDisclosures.js';
 import Requests from '../../Requests';
 import _isEmpty from 'lodash/isEmpty';
+import { useSelector } from 'react-redux';
 
 const { RadioButton } = Fields;
 
@@ -18,6 +19,7 @@ const { Get } = Request;
 
 const ViewDisclosures = () => {
   const navigate = useNavigate();
+  const { categories = [] } = useSelector((state) => state.appWizard);
   const [apiData, setApiData] = useState(null);
   const [listData, setListData] = useState(null);
   const [isOpen, setIsopen] = useState(false);
@@ -78,7 +80,8 @@ const ViewDisclosures = () => {
   });
 
   const headers = ['Name', 'Description', 'Action'];
-  const radioButton = ['All', 'Environmental', 'Social', 'Goverance', 'General'];
+  const radioButton = categories.map((x) => x.name); // ['All', 'Environmental', 'Social', 'Goverance', 'General'];
+  radioButton.unshift('All');
 
   const deleteDisclosureHandler = async ({ id = '' }) => {
     try {
@@ -117,7 +120,6 @@ const ViewDisclosures = () => {
           <b>Catagories:</b>
         </div>
         <div className='row-catagory-display'>
-          {' '}
           {radioButton.map((radioVal, i) => (
             <RadioButton changed={radioChangeHandler} id={i} isSelected={catagoryType === radioVal} label={radioVal} value={radioVal} />
           ))}
