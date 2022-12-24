@@ -58,6 +58,7 @@ const AddClientUser = () => {
           inputValue.designation
       )
     ) {
+      setErrorMsg('');
       try {
         const form = new FormData();
         setStatusData({ type: 'loading', message: '' });

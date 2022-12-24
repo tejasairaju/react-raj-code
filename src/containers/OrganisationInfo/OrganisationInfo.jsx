@@ -200,7 +200,7 @@ const OrganisationInfo = () => {
     const onSaveHandler = async () => {
         if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.email) && !_isEmpty(uploadImage.fileName) && !_isEmpty(logo)
             && (inputValue.sectors || []).length && inputValue.employees_count && inputValue.headquarters && inputValue.mobile
-            && inputValue.address) {
+            && inputValue.address && inputValue.location && inputValue.zipcode) {
             const form = new FormData();
             form.append('name', inputValue.name);
             form.append('headquarters', inputValue.headquarters)
@@ -210,7 +210,7 @@ const OrganisationInfo = () => {
             form.append('address', inputValue.address);
             form.append('status', 'Active');
             form.append('employees_count', inputValue.employees_count);
-            form.append('is_payment_done',inputValue.is_payment_done)
+            form.append('is_payment_done', inputValue.is_payment_done)
             form.append('location', inputValue.location);
 
 
@@ -392,7 +392,7 @@ const OrganisationInfo = () => {
             </div>
             <div className="framework__row-wrapper bot1">
                 <div className="framework__row">
-                    <h1 className="framework__title"><b>Sector</b></h1>
+                    <h1 className="framework__title"><b>Sector<span className='ml-1 text-red-500'>*</span></b></h1>
                     <ReactMultiSelectDropdown data={_get(appWizard, 'sectors', [])} isEditable={isEditable} selectedOptionVal={inputValue && inputValue.sectors} onChangeCallback={(selectedArray, event) => onSelectMultipleSelect("sectors", selectedArray, event)} />
                 </div>
                 <div className="framework__row">
@@ -428,8 +428,8 @@ const OrganisationInfo = () => {
                 </div> */}
 
             </div>
-            {error ? <div className='common-error-msg'>* All mandatory filed is required.</div> : null}
         </div>
+            {error ? <div className='common-error-msg mt-3'>* All mandatory filed is required.</div> : null}
             <div className='flex save-orgi-btn' >
                 <button onClick={() => onSaveHandler()} className="main__button">SAVE</button>
             </div></>);

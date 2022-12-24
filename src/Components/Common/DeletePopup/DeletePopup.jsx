@@ -34,10 +34,10 @@ const DeletePopup = (props) => {
                     <div>{`Are you sure? Do you want to delete this ${name}?`}</div>
                     <div className='flex mt-2 align-middle py-3 justify-end'>
                       <a
-                        className='mt-2 self-center'
+                        className="buttons__panel-button"
                         onClick={() => setIsDelete(false)}
                       >
-                        Cancel
+                        CANCEL
                       </a>
                       <button
                         onClick={() => {

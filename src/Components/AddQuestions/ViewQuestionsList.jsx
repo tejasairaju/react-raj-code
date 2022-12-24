@@ -159,7 +159,7 @@ const ViewQuestionsList = ({
             ) : (
               <tr>
                 <td colSpan={7}>
-                  <div className='flex justify-center w-full'>No questions round</div>
+                  <div className='flex justify-center w-full'>No records found</div>
                 </td>
               </tr>
             )}

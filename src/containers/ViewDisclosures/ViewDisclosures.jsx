@@ -81,7 +81,6 @@ const ViewDisclosures = () => {
 
   const headers = ['Name', 'Description', 'Action'];
   const radioButton = categories.map((x) => x.name); // ['All', 'Environmental', 'Social', 'Goverance', 'General'];
-  radioButton.unshift('All');
 
   const deleteDisclosureHandler = async ({ id = '' }) => {
     try {

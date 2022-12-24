@@ -261,7 +261,7 @@ const CreateFramework = (props) => {
         />
 
         <h1 className={'create-framework__title'}>
-          Categories: <span className='text-red-500'>*</span>
+          Categories<span className='text-red-500 ml-1'>*</span>
         </h1>
         <ReactMultiSelectDropdown
           data={_get(appWizard, 'categories', [])}
@@ -270,7 +270,7 @@ const CreateFramework = (props) => {
           onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('categories', selectedArray, event)}
         />
         <h1 className={'create-framework__title'}>
-          Sectors: <span className='text-red-500'>*</span>
+          Sectors <span className='text-red-500 ml-1'>*</span>
         </h1>
         <ReactMultiSelectDropdown
           data={_get(appWizard, 'sectors', [])}
@@ -278,7 +278,7 @@ const CreateFramework = (props) => {
           selectedOptionVal={inputValue.sectors}
           onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('sectors', selectedArray, event)}
         />
-        <h1 className={'create-framework__title'}>Sub Sectors:</h1>
+        <h1 className={'create-framework__title'}>Sub Sectors</h1>
         <ReactMultiSelectDropdown
           data={filterSubSectors.length ? filterSubSectors : [{ label: '', value: '' }]}
           isEditable={isEdit}
@@ -286,7 +286,7 @@ const CreateFramework = (props) => {
           onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('subsectors', selectedArray, event)}
         />
         <h1 className={'create-framework__title'}>
-          Location: <span className='text-red-500'>*</span>
+          Location <span className='text-red-500 ml-1'>*</span>
         </h1>
         <ReactMultiSelectDropdown
           data={_get(appWizard, 'countries', [])}

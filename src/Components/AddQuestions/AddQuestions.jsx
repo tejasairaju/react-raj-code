@@ -147,14 +147,26 @@ const AddQuestions = ({ isTemplate = false, isShow = false, editInfo = { isEdita
                 </div> */}
                   <div className='create_questions__wrapper'>
                     <h5 style={{ marginTop: '-80px', marginLeft: '60px' }} className={`create_questions__title`}>
-                      Code
+                      Code<span className='text-red-500 '>*</span>
                     </h5>
-                    <h5 className='create_questions__title'>Question</h5>
-                    <h5 className='create_questions__title'>Guidance Notes</h5>
-                    <h5 className='create_questions__title'>Data Type</h5>
-                    <h5 className='create_questions__title'>Input Type</h5>
-                    <h5 className='create_questions__title'>Choices</h5>
-                    <h5 className='create_questions__title'>Choose Unit</h5>
+                    <h5 className='create_questions__title'>
+                      Question <span className='text-red-500 ml-1'>*</span>
+                    </h5>
+                    <h5 className='create_questions__title'>
+                      Guidance Notes <span className='text-red-500 ml-1'>*</span>
+                    </h5>
+                    <h5 className='create_questions__title'>
+                      Data Type <span className='text-red-500 ml-1'>*</span>
+                    </h5>
+                    <h5 className='create_questions__title'>
+                      Input Type <span className='text-red-500 ml-1'>*</span>
+                    </h5>
+                    <h5 className='create_questions__title'>
+                      Choices <span className='text-red-500 ml-1'>*</span>
+                    </h5>
+                    <h5 className='create_questions__title'>
+                      Choose Unit<span className='text-red-500 ml-1'>*</span>
+                    </h5>
 
                     <input
                       type='text'

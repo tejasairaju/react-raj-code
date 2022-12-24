@@ -121,7 +121,7 @@ const CreateReport = () => {
         </div>
         <div className="Generate_Report GenerateReport-framework__overflow">
             <div className="GenerateReport-framework__row">
-                <h2>Choose a Framework</h2>
+                <h2>Choose a Framework <span className='text-red-500 ml-1'>*</span></h2>
             </div>
 
             <div className="framework__col-wrapper">
@@ -135,8 +135,8 @@ const CreateReport = () => {
                 </div>
 
                 <div className="GenerateReport-framework__row Generate_report_head">
-                    <h2 className="Generate_h1_label1">Report Name:</h2>
-                    <InputBox className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} />
+                    <h2 className="Generate_h1_label1">Report Name<span className='text-red-500 ml-1'>*</span></h2>
+                    <InputBox maxLength={50} className="GenerateReport-framework__input" name='name' value={inputValue.name} onChangeHandler={(e) => onChangeHandler(e)} />
                     {/* <input type="text" className="GenerateReport-framework__input" required /> */}
                 </div>
                 {/* <div className="create-framework__row-wrapper dates">
@@ -163,7 +163,7 @@ const CreateReport = () => {
                 <div className="Generate_report_head">
                     <div className="GenerateReport-framework__row">
                         <div className="GenerateReport_row">
-                            <h1 className="Generate_h1_label">From :</h1>
+                            <h1 className="Generate_h1_label">From<span className='text-red-500 ml-1'>*</span></h1>
                             <label htmlFor="create-framework__date-from" className="create-framework__label report-cal-input-box">
                             <input type="date" name={'start_date'} min="2000-01-01" max="2100-01-01" value={inputValue.start_date} onChange={(e) => onChangeHandler(e)} className="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
@@ -172,7 +172,7 @@ const CreateReport = () => {
                     </div>
                     <div className="GenerateReport-framework__row">
                         <div className="GenerateReport_row">
-                            <h1 className="Generate_h1_label">To :</h1>
+                            <h1 className="Generate_h1_label">To<span className='text-red-500 ml-1'>*</span></h1>
                             <label htmlFor="create-framework__date-from" className="create-framework__label report-cal-input-box">
                             <input type="date" name={'end_date'} min={inputValue.start_date} max="2100-01-01" value={inputValue.end_date} onChange={(e) => onChangeHandler(e)} className="GenerateReport-framework__input" required />
                             <img src="../../assets/icons/celendar.svg" alt="" className="report-calender-icon" />
@@ -202,5 +202,4 @@ const CreateReport = () => {
     </>)
 }
 
-export default CreateReport
-    ;
+export default CreateReport;

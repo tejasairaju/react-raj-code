@@ -159,7 +159,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
       <div className='acc-info__form-item'>
         <label htmlFor='form__name' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>First Name &nbsp; {validation.first_name && <span className='error-msg'>({validation.first_name})</span>}
+            First Name<span className='color-red ml-1'>*</span> &nbsp; {validation.first_name && <span className='error-msg'>({validation.first_name})</span>}
           </div>
           <input
             type='text'
@@ -174,7 +174,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
         </label>
         <label htmlFor='form__last-name' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>Last Name &nbsp; {validation.last_name && <span className='error-msg'>({validation.last_name})</span>}
+            Last Name<span className='color-red ml-1'>*</span> &nbsp; {validation.last_name && <span className='error-msg'>({validation.last_name})</span>}
           </div>
           <input
             type='text'
@@ -191,7 +191,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
       <div className='acc-info__form-item'>
         <label htmlFor='form__email' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>Company email &nbsp; {validation.email_id && <span className='error-msg'>({validation.email_id})</span>}
+            Company email<span className='color-red ml-1'>*</span> &nbsp; {validation.email_id && <span className='error-msg'>({validation.email_id})</span>}
           </div>
           <input
             type='text'
@@ -206,7 +206,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
         </label>
         <label htmlFor='form__phone_number' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>Mobile number &nbsp; {validation.phone_number && <span className='error-msg'>({validation.phone_number})</span>}
+            Mobile number<span className='color-red ml-1'>*</span> &nbsp; {validation.phone_number && <span className='error-msg'>({validation.phone_number})</span>}
           </div>
           <input
             type='text'
@@ -225,7 +225,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
       <div className='acc-info__form-item'>
         <label htmlFor='form__company-name' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>Company Name&nbsp;{validation.organization_name && <span className='error-msg'>({validation.organization_name})</span>}
+            Company Name<span className='color-red ml-1'>*</span>&nbsp;{validation.organization_name && <span className='error-msg'>({validation.organization_name})</span>}
           </div>
           <input
             type='text'
@@ -240,7 +240,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
         </label>
         <label htmlFor='form__company-location' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>Company Location&nbsp;{validation.companyLocation && <span className='error-msg'>({validation.companyLocation})</span>}
+            Company Location<span className='color-red ml-1'>*</span>&nbsp;{validation.companyLocation && <span className='error-msg'>({validation.companyLocation})</span>}
           </div>
           <input
             type='text'
@@ -257,7 +257,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
       <div className='acc-info__form-item'>
         <label htmlFor='form__password' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>Password &nbsp; {validation.password && <span className='error-msg'>({validation.password})</span>}
+            Password<span className='color-red ml-1'>*</span> &nbsp; {validation.password && <span className='error-msg'>({validation.password})</span>}
           </div>
           <input
             type='password'
@@ -272,7 +272,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
         </label>
         <label htmlFor='form__confirm-password' className='acc-info__form-label'>
           <div>
-            <span className='color-red'>*</span>Confirm password &nbsp; {validation.confirmPassword && <span className='error-msg'>({validation.confirmPassword})</span>}
+            Confirm password<span className='color-red ml-1'>*</span> &nbsp; {validation.confirmPassword && <span className='error-msg'>({validation.confirmPassword})</span>}
           </div>
           <input
             type='password'
@@ -381,7 +381,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
             {isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Edit Client</h1>}
             {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard</h1>}
           </div>
-          <br></br>
+          <br />
           {renderForm()}
           <div className='buttons__panel margin-top-1em'>
             <button

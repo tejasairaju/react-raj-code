@@ -18,6 +18,7 @@ import { getErrorMessage } from '../../utils/utils';
 const { Input, TextArea, Pills, UploadFile, Button, InputBox, Label, Dropdown, TextAreaBox } = Fields;
 
 const PersonalInformation = () => {
+  const passwordInput = { oldPassword: '', newPassword: '', confirmPassword: '' };
   const [isOpen, setIsOpen] = useState(false);
   const { appWizard = {} } = useSelector((state) => state.appWizard);
   const { orgDetails = {}, loginDetails = {} } = useSelector((state) => state.signup);
@@ -26,6 +27,7 @@ const PersonalInformation = () => {
   const { search } = _get(window, 'location', '?');
   const params = queryString.parse(search);
   const [inputValue, setInputValue] = useState({ name: orgDetails.name });
+
   const [errorValidation, setErrorValidation] = useState(false);
   const [logo, setLogo] = useState(null);
   const [uploadImage, setUploadImage] = useState(null);
@@ -34,6 +36,8 @@ const PersonalInformation = () => {
   const [currentFrame, setCurrentFrame] = useState('');
   const [logoSizeError, setLogoSizeError] = useState(false);
   const [errorMessage, setErrorMsg] = useState('');
+  const [passwordValue, setPasswordValue] = useState({ ...passwordInput });
+  const [validation, setValidation] = useState({ ...passwordInput });
   // const onCloseHandler = () => {
   //     setIsOpen(false)
   // }
@@ -45,6 +49,47 @@ const PersonalInformation = () => {
     }
     // setInputValue({...inputValue, sectors: appWizard.sectors, operating_countries: appWizard.countries });
   }, []);
+
+  const checkValidation = () => {
+    const errors = JSON.parse(JSON.stringify(validation));
+
+    const uppercaseRegExp = /(?=.*?[A-Z])/;
+    const lowercaseRegExp = /(?=.*?[a-z])/;
+    const digitsRegExp = /(?=.*?[0-9])/;
+    const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+    const minLengthRegExp = /.{8,}/;
+    const password = passwordValue.newPassword;
+    const uppercasePassword = uppercaseRegExp.test(password);
+    const lowercasePassword = lowercaseRegExp.test(password);
+    const digitsPassword = digitsRegExp.test(password);
+    const specialCharPassword = specialCharRegExp.test(password);
+    const minLengthPassword = minLengthRegExp.test(password);
+
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (!uppercasePassword) {
+      errors.password = 'At least one Uppercase';
+    } else if (!lowercasePassword) {
+      errors.password = 'At least one Lowercase';
+    } else if (!digitsPassword) {
+      errors.password = 'At least one digit';
+    } else if (!specialCharPassword) {
+      errors.password = 'At least one Special Characters';
+    } else if (!minLengthPassword) {
+      errors.password = 'At least minumum 8 characters';
+    } else {
+      errors.password = '';
+    }
+    if (!passwordValue.confirmPassword) {
+      errors.confirmPassword = 'Password confirmation is required';
+    } else if (passwordValue.confirmPassword !== passwordValue.newPassword) {
+      errors.confirmPassword = 'Password does not match confirmation password';
+    } else {
+      errors.confirmPassword = '';
+    }
+
+    setValidation(errors);
+  };
 
   const getUserAdminInfo = async () => {
     try {
@@ -225,6 +270,11 @@ const PersonalInformation = () => {
     setInputValue({ ...inputValue, [name]: value });
   };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setPasswordValue({ ...passwordValue, [name]: value });
+  };
+
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
@@ -340,17 +390,137 @@ const PersonalInformation = () => {
     }
   };
 
+  const Base64 = {
+    _keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+    encode: function (e) {
+      var t = '';
+      var n, r, i, s, o, u, a;
+      var f = 0;
+      e = Base64._utf8_encode(e);
+      while (f < e.length) {
+        n = e.charCodeAt(f++);
+        r = e.charCodeAt(f++);
+        i = e.charCodeAt(f++);
+        s = n >> 2;
+        o = ((n & 3) << 4) | (r >> 4);
+        u = ((r & 15) << 2) | (i >> 6);
+        a = i & 63;
+        if (isNaN(r)) {
+          u = a = 64;
+        } else if (isNaN(i)) {
+          a = 64;
+        }
+        t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a);
+      }
+      return t;
+    },
+    decode: function (e) {
+      var t = '';
+      var n, r, i;
+      var s, o, u, a;
+      var f = 0;
+      e = e.replace(/[^A-Za-z0-9\+\/\=]/g, '');
+      while (f < e.length) {
+        s = this._keyStr.indexOf(e.charAt(f++));
+        o = this._keyStr.indexOf(e.charAt(f++));
+        u = this._keyStr.indexOf(e.charAt(f++));
+        a = this._keyStr.indexOf(e.charAt(f++));
+        n = (s << 2) | (o >> 4);
+        r = ((o & 15) << 4) | (u >> 2);
+        i = ((u & 3) << 6) | a;
+        t = t + String.fromCharCode(n);
+        if (u != 64) {
+          t = t + String.fromCharCode(r);
+        }
+        if (a != 64) {
+          t = t + String.fromCharCode(i);
+        }
+      }
+      t = Base64._utf8_decode(t);
+      return t;
+    },
+    _utf8_encode: function (e) {
+      e = e.replace(/\r\n/g, '\n');
+      var t = '';
+      for (var n = 0; n < e.length; n++) {
+        var r = e.charCodeAt(n);
+        if (r < 128) {
+          t += String.fromCharCode(r);
+        } else if (r > 127 && r < 2048) {
+          t += String.fromCharCode((r >> 6) | 192);
+          t += String.fromCharCode((r & 63) | 128);
+        } else {
+          t += String.fromCharCode((r >> 12) | 224);
+          t += String.fromCharCode(((r >> 6) & 63) | 128);
+          t += String.fromCharCode((r & 63) | 128);
+        }
+      }
+      return t;
+    },
+    _utf8_decode: function (e) {
+      var t = '';
+      var n = 0;
+      var r = (c1 = c2 = 0);
+      while (n < e.length) {
+        r = e.charCodeAt(n);
+        if (r < 128) {
+          t += String.fromCharCode(r);
+          n++;
+        } else if (r > 191 && r < 224) {
+          c2 = e.charCodeAt(n + 1);
+          t += String.fromCharCode(((r & 31) << 6) | (c2 & 63));
+          n += 2;
+        } else {
+          c2 = e.charCodeAt(n + 1);
+          c3 = e.charCodeAt(n + 2);
+          t += String.fromCharCode(((r & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+          n += 3;
+        }
+      }
+      return t;
+    }
+  };
+
+  const savePassword = async () => {
+    if (passwordValue.oldPassword !== '' && passwordValue.newPassword !== '' && passwordValue.newPassword === passwordValue.confirmPassword) {
+      const payload = {
+        user_name: inputValue.email_id,
+        old_password: Base64.encode(passwordValue.oldPassword),
+        new_password: Base64.encode(passwordValue.confirmPassword)
+      };
+      try {
+        let rrr = await axios
+          .put(`${process.env.API_BASE_URL}/users/${loginDetails.user_id}/password`, payload)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((e) => console.log(e));
+        setStatusData({
+          type: 'success',
+          message: 'Your profile password has been successfully updated'
+        });
+        setIsOpen(false);
+      } catch (e) {
+        setStatusData({
+          type: 'error',
+          message: 'Something went wrong! Please try again later!'
+        });
+        setIsOpen(false);
+      }
+    } else {
+      checkValidation();
+    }
+  };
+
   return (
     <>
       <div className='main__top-wrapper'>
         <h1 className='main__title'>Personal Information</h1>
-        {false && (
-          <div className='framework__row right font12 '>
-            <a className='right rightlink__color' onClick={() => setIsOpen(true)}>
-              Change password
-            </a>
-          </div>
-        )}
+        <div className='framework__row right font12 '>
+          <a className='right rightlink__color' onClick={() => setIsOpen(true)}>
+            Change password
+          </a>
+        </div>
       </div>
       {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
 
@@ -408,8 +578,84 @@ const PersonalInformation = () => {
           {errorMessage}
         </div>
       )}
-      {/* {isOpen &&
-            <Popup from="personal" isShow={isOpen} onCloseHandler={onCloseHandler} />} */}
+      {isOpen && (
+        <>
+          <div className='popup-container'>
+            <div className='popup_inner top-24'>
+              <div className='popup-block'>
+                <div className='popup-header'>
+                  <img onClick={() => setIsOpen(false)} src='../../../../assets/icons/close.svg' width='30px' height='30px' />
+                </div>
+                <div className='popup-body'>
+                  <div className='flex flex-col w-full'>
+                    <div className='acc-info__form-item flex flex-col'>
+                      <label htmlFor='form__old_password' className='acc-info__form-label w-full'>
+                        <div>
+                          <span className='color-red'>*</span>Old Password &nbsp;
+                        </div>
+                        <input
+                          type='password'
+                          value={passwordValue.oldPassword}
+                          name='oldPassword'
+                          id='form__old_password'
+                          maxLength={15}
+                          onChange={(e) => handleChange(e)}
+                          className='acc-info__form-input m-1'
+                          required
+                        />
+                      </label>
+                      <label htmlFor='form__new_password' className='acc-info__form-label w-full'>
+                        <div>
+                          <span className='color-red'>*</span>New Password &nbsp; {validation.newPassword && <span className='error-msg'>({validation.newPassword})</span>}
+                        </div>
+                        <input
+                          type='password'
+                          value={passwordValue.password}
+                          name='newPassword'
+                          id='form__new_password'
+                          maxLength={15}
+                          onChange={(e) => handleChange(e)}
+                          className='acc-info__form-input m-1'
+                          required
+                        />
+                      </label>
+                      <label htmlFor='form__confirm-password' className='acc-info__form-label w-full'>
+                        <div>
+                          <span className='color-red'>*</span>Confirm password &nbsp;{' '}
+                          {validation.confirmPassword && <span className='error-msg'>({validation.confirmPassword})</span>}
+                        </div>
+                        <input
+                          type='password'
+                          value={passwordValue.confirmPassword}
+                          name='confirmPassword'
+                          id='form__confirm-password'
+                          maxLength={15}
+                          onChange={(e) => handleChange(e)}
+                          className='acc-info__form-input m-1'
+                          required
+                        />
+                      </label>
+                    </div>
+                    <div className='flex mt-2 align-middle py-3 justify-end'>
+                      <a className="buttons__panel-button" onClick={() => setIsOpen(false)}>
+                        CANCEL
+                      </a>
+                      <button
+                        onClick={() => {
+                          savePassword();
+                        }}
+                        className='main__button'
+                      >
+                        SAVE
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

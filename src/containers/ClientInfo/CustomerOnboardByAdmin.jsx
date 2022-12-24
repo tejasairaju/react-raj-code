@@ -247,7 +247,9 @@ const CustomerOnboardByAdmin = (props) => {
             readOnly={isView}
             onChange={onChangeHandler}
           />
-          <h1 className='create-framework__title'>License from</h1>
+          <h1 className='create-framework__title'>
+            License from<span className='color-red p-4 ml-2'>*</span>
+          </h1>
           <label htmlFor='create-framework__date-from' className='create-framework__label'>
             <input
               type='date'

@@ -123,7 +123,7 @@ const CreateQuestions = (props) => {
       </div>
       <div className='create-question-main-btn'>
         <button onClick={() => onCreateCancelQuestions()} className='main__button m-l-1 cancel-btn'>
-          Cancel
+          CANCEL
         </button>
         <button onClick={() => onCreateQuestions()} className='main__button m-l-1'>
           FINISH
