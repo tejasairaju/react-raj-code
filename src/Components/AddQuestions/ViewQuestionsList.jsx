@@ -51,8 +51,10 @@ const ViewQuestionsList = ({
         <div className='create-framework__row-wrapper'>
           {
             <>
-              <div className='fz-14 fw-700'>Ref No</div>
-              <input type='text' min='' step='' className='refno_create_question' value={code} required disabled></input>
+              <div className='fz-14 fw-700'>
+                Ref No <span className='text-red-500 ml-1'>*</span>
+              </div>
+              <input type='text' maxLength={15} min='' step='' className='refno_create_question' value={code} required disabled></input>
             </>
           }
           <div className='fz-14 fw-700 disclosure'>

@@ -70,6 +70,7 @@ const AddClientUser = () => {
         form.append('phone_number', inputValue.phone_number);
         form.append('department', inputValue.department);
         form.append('designation', inputValue.designation);
+        // form.append('role', inputValue.role);
         form.append('created_at', moment().format());
         form.append('updated_at', moment().format());
         if (!_isEmpty(uploadImage && uploadImage.fileName)) {
@@ -305,6 +306,19 @@ const AddClientUser = () => {
               </div>
             </div>
           </div>
+          {/* <div className='Generate_report_head'>
+            <div className='GenerateReport-framework__row'>
+              <div className='GenerateReport_row'>
+                <Label label={'Select Role'} className={'Generate_h1_label'} required={true} />
+                <select name='role' id='form__role' value={inputValue.role} onChange={(e) => onChangeHandler(e)} className='acc-info__form-input m-0' required>
+                  <option value=''>Select</option>
+                  <option value='Administrator'>Administrator</option>
+                  <option value='Reporter'>Reporter</option>
+                </select>
+              </div>
+            </div>
+            <div className='GenerateReport-framework__row'></div>
+          </div> */}
         </div>
       </div>
 

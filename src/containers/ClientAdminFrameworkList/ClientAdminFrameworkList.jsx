@@ -86,7 +86,7 @@ const ClientAdminFrameworkList = (props) => {
               >
                 <div className='m-p-6'>
                   <ReactToolTip hoverText={item.name}>
-                    <img className='client-framework-logo' src={item.logo} alt={item.name} />{' '}
+                    <img className='client-framework-logo' src={item.logo ? item.logo : '../../assets/images/no-images.jpg'} alt={item.name} />
                   </ReactToolTip>
                 </div>
                 <div className='m-p-6'>{item.name}</div>

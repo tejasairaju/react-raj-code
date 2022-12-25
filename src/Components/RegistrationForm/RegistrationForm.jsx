@@ -19,6 +19,9 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
   const statusData = useSelector((state) => state.statusResponse);
 
   const inputFields = { first_name: '', last_name: '', phone_number: '', organization_name: '', companyLocation: '', email_id: '', password: '', confirmPassword: '' };
+  if(isClientOnBoard){
+    inputFields.role = '';
+  }
   const [inputValues, setInputValue] = useState(inputFields);
   const [validation, setValidation] = useState(inputFields);
 
@@ -286,6 +289,30 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
           />
         </label>
       </div>
+      {isClientOnBoard && (
+        <div className='acc-info__form-item'>
+          <label htmlFor='form__role' className='acc-info__form-label'>
+            <div>
+              Select Role<span className='color-red ml-1'>*</span>&nbsp;{validation.organization_name && <span className='error-msg'>({validation.organization_name})</span>}
+            </div>
+            <select name='role' id='form__role' onChange={(e) => handleChange(e)} className='acc-info__form-input' required>
+              <option value=''>Select</option>
+              <option value='Administrator'>Administrator</option>
+              <option value='Reporter'>Reporter</option>
+            </select>
+          </label>
+          <label htmlFor='form__company-name' className='acc-info__form-label invisible'>
+            <div>
+              
+            </div>
+            <select>
+              <option value=''>Select</option>
+              <option value='Administrator'>Administrator</option>
+              <option value='Reporter'>Reporter</option>
+            </select>
+          </label>
+        </div>
+      )}
     </form>
   );
 
@@ -379,7 +406,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
         <>
           <div className='main__top-wrapper'>
             {isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Edit Client</h1>}
-            {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard</h1>}
+            {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard222</h1>}
           </div>
           <br />
           {renderForm()}

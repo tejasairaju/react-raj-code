@@ -517,7 +517,7 @@ const PersonalInformation = () => {
       <div className='main__top-wrapper'>
         <h1 className='main__title'>Personal Information</h1>
         <div className='framework__row right font12 '>
-          <a className='right rightlink__color' onClick={() => setIsOpen(true)}>
+          <a className='right rightlink__color cursor-pointer' onClick={() => setIsOpen(true)}>
             Change password
           </a>
         </div>

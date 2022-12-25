@@ -163,7 +163,7 @@ const CustomerOnboardByAdmin = (props) => {
       {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
       <div className='main__top-wrapper'>
         {isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Edit Client</h1>}
-        {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard</h1>}
+        {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard1</h1>}
       </div>
 
       <div className='main__content-wrapper'>
