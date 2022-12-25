@@ -98,7 +98,7 @@ const ListFramework = (props) => {
               return (
                 <div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>
                   <ReactToolTip hoverText={item.name}>
-                    {!_isEmpty(item.logo) ? <img className={clsName} src={item.logo} alt='GRI' /> : <>{getProfileImage(item.name, '', 'profile-image-icon_image')}</>}
+                    {!_isEmpty(item.logo) ? <img className={clsName} src={item.logo} alt={item.name} /> : <>{getProfileImage(item.name, '', 'profile-image-icon_image')}</>}
                   </ReactToolTip>
                 </div>
               );
@@ -110,7 +110,7 @@ const ListFramework = (props) => {
               return (
                 <div onClick={() => onClickLogoHandler(item.id, i)} className={`frameworks__choose-item ${isSelectedFramework(item.isSelected)}`}>
                   <ReactToolTip hoverText={item.name}>
-                    {!_isEmpty(item.logo) ? <img className={clsName} src={item.logo} alt='GRI' /> : <>{getProfileImage(item.name, '', 'profile-image-icon_image')}</>}
+                    {!_isEmpty(item.logo) ? <img className={clsName} src={item.logo} alt={item.name} /> : <>{getProfileImage(item.name, '', 'profile-image-icon_image')}</>}
                   </ReactToolTip>
                 </div>
               );
