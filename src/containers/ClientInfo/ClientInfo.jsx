@@ -33,7 +33,7 @@ const ClientInfo = (props) => {
     getFramework();
   }, []);
 
-  const headers = ['Logo', 'Organisation', 'Location / HeadQuarters', 'Admin Email', 'Package', 'Users Limit', 'License From', 'Status', 'Action'];
+  const headers = ['Logo', 'Organisation', 'Location / Head Quarters', 'Admin Email', 'Package', 'Users Limit', 'License From', 'Status', 'Action'];
 
   return (
     <>
@@ -50,50 +50,54 @@ const ClientInfo = (props) => {
       </div>
       <br />
       <div className='client-info-list-container'>
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {clientData && clientData.results && clientData.results.length > 0 ? (
-              clientData.results.map((val, index) => {
-                return (
-                  <tr>
-                    {/* <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td> */}
-                    <td>{getLogo(val)}</td>
-                    <td>
-                      <div className='word-text-break'>{val.name}</div>
-                    </td>
-                    <td>
-                      {!_isEmpty(val.location) && !_isEmpty(val.headquarters) ? val.location + '/' + val.headquarters : !_isEmpty(val.location) ? val.location : val.headquarters}{' '}
-                    </td>
-                    <td>
-                      <div className='word-text-break'>{val.email}</div>
-                    </td>
-                    <td>{val.subscription.name}</td>
-                    <td>{val.subscription.max_users}</td>
-                    <td>{val.subscription.start_date}</td>
-                    <td>{val.status}</td>
-                    <td>
-                      <MoreAction value={val} index={index} deleteCallback={() => {}} />
-                      {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        {clientData && clientData.results && clientData.results.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
               <tr>
-                <td colSpan={9}>
-                  <div className='flex justify-center w-full'>No records</div>
-                </td>
+                {headers.map((header) => (
+                  <th>{header}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {clientData && clientData.results && clientData.results.length > 0 ? (
+                clientData.results.map((val, index) => {
+                  return (
+                    <tr>
+                      {/* <td><img src={val.logo} alt="logo" width='28px' height='28px' /></td> */}
+                      <td>{getLogo(val)}</td>
+                      <td>
+                        <div className='word-text-break'>{val.name}</div>
+                      </td>
+                      <td>
+                        {!_isEmpty(val.location) && !_isEmpty(val.headquarters) ? val.location + '/' + val.headquarters : !_isEmpty(val.location) ? val.location : val.headquarters}{' '}
+                      </td>
+                      <td>
+                        <div className='word-text-break'>{val.email}</div>
+                      </td>
+                      <td>{val.subscription.name}</td>
+                      <td>{val.subscription.max_users}</td>
+                      <td>{val.subscription.start_date}</td>
+                      <td>{val.status}</td>
+                      <td>
+                        <MoreAction value={val} index={index} deleteCallback={() => {}} />
+                        {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={9}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
     </>
   );

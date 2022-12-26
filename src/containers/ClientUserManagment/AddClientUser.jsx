@@ -31,7 +31,6 @@ const AddClientUser = () => {
   const validation = {};
 
   const onChangeHandler = (e) => {
-    console.log(e.target);
     const { name, value = '' } = e.target;
     setInputValue({ ...inputValue, [name]: value });
   };
@@ -70,7 +69,7 @@ const AddClientUser = () => {
         form.append('phone_number', inputValue.phone_number);
         form.append('department', inputValue.department);
         form.append('designation', inputValue.designation);
-        // form.append('role', inputValue.role);
+        form.append('role', inputValue.role);
         form.append('created_at', moment().format());
         form.append('updated_at', moment().format());
         if (!_isEmpty(uploadImage && uploadImage.fileName)) {
@@ -158,17 +157,10 @@ const AddClientUser = () => {
     <>
       <div className='main__top-wrapper'>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        {state ? <h1 className='main__title custom-title'>Update User</h1> : <h1 className='main__title custom-title'>On-board User</h1>}
+        {state ? <h1 className='main__title custom-title'>Update User</h1> : <h1 className='main__title custom-title'>Add User</h1>}
       </div>
-
-      <div className='cli-add-main__content-wrapper content-wrapper'>
+      <div className='cli-add-main__content-wrapper content-wrapper m-0 my-4'>
         <div className='framework__col-wrapper'>
-          {/* <div className="Generate_report_head align-center">
-                    <UploadFile logoSizeError={logoSizeError} onChangeFile={onChangeFile} imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
-                    <div className="framework__row"></div>
-                    <div className="framework__row"></div>
-                </div> */}
-
           <div className='Generate_report_head'>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
@@ -306,7 +298,7 @@ const AddClientUser = () => {
               </div>
             </div>
           </div>
-          {/* <div className='Generate_report_head'>
+          <div className='Generate_report_head'>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
                 <Label label={'Select Role'} className={'Generate_h1_label'} required={true} />
@@ -318,7 +310,7 @@ const AddClientUser = () => {
               </div>
             </div>
             <div className='GenerateReport-framework__row'></div>
-          </div> */}
+          </div>
         </div>
       </div>
 

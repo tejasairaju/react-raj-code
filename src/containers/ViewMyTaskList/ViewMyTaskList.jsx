@@ -49,42 +49,46 @@ const ViewMyTaskList = (props) => {
       </div>
       <br />
       <div className='scrollable'>
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {reportList && reportList.length > 0 ? (
-              (reportList || []).map((report, index) => {
-                // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
-                return (
-                  <tr key={index}>
-                    <td>{report.name}</td>
-                    <td>{getDataFormat(report.start_date)}</td>
-                    <td>{getDataFormat(report.end_date)}</td>
-                    <td>{report.status == 'Custom' ? 'Bespoke' : report.status}</td>
-                    <td>
-                      <a onClick={() => redirectToViewDisclosures(report)} className={`answer-redirect-link cursor-pointer`}>
-                        View Disclosures
-                      </a>
-                    </td>
-                  </tr>
-                );
-                // }
-              })
-            ) : (
+        {reportList && reportList.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
               <tr>
-                <td colSpan={5}>
-                  <div className='flex justify-center w-full'>No records</div>
-                </td>
+                {headers.map((header) => (
+                  <th>{header}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {reportList && reportList.length > 0 ? (
+                (reportList || []).map((report, index) => {
+                  // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
+                  return (
+                    <tr key={index}>
+                      <td>{report.name}</td>
+                      <td>{getDataFormat(report.start_date)}</td>
+                      <td>{getDataFormat(report.end_date)}</td>
+                      <td>{report.status == 'Custom' ? 'Bespoke' : report.status}</td>
+                      <td>
+                        <a onClick={() => redirectToViewDisclosures(report)} className={`answer-redirect-link cursor-pointer`}>
+                          View Disclosures
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                  // }
+                })
+              ) : (
+                <tr>
+                  <td colSpan={5}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
     </>
   );

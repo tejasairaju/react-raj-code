@@ -4,7 +4,7 @@ import CountryAction from '../../containers/ManageMaster/CountryAction.jsx';
 
 const MoreOptionTable = (props) => {
   const { headers = null, tableData = null, isCountry = false, isCategory = false, onEdit = () => {}, onActive = () => {}, onBlock = () => {} } = props;
-  return (
+  return tableData && tableData.length > 0 ? (
     <table className='default-flex-table'>
       <thead>
         <tr>
@@ -18,7 +18,7 @@ const MoreOptionTable = (props) => {
           return (
             <tr>
               <td>{val.name}</td>
-              <td>{val.is_active ? 'Active' : 'Disabled'}</td>
+              <td>{val.is_active ? 'Active' : 'Blocked'}</td>
               <td>
                 <CountryAction
                   name={isCategory ? 'category' : 'country'}
@@ -35,6 +35,8 @@ const MoreOptionTable = (props) => {
         })}
       </tbody>
     </table>
+  ) : (
+    <div className='flex justify-center w-full'>No records found</div>
   );
 };
 

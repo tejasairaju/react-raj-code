@@ -197,8 +197,6 @@ const MapDisclosures = () => {
           .then(({ data }) => data);
         setStatusData({ type: '', message: '' });
         setSuccessstatusData({ type: 'success', message: 'Thanks! Successfully Mapped' });
-
-        console.log('>>>>>>>>>>>>', response);
         getMappingDisclosures(Object.keys(sourceFrameworkId).length > 0 ? sourceFrameworkId : val, Object.keys(destinationFrameworkId).length > 0 ? destinationFrameworkId : val);
       } catch (e) {
         let error = getErrorMessage(e);
@@ -217,8 +215,6 @@ const MapDisclosures = () => {
       setStatusData({ type: 'loading', message: '' });
       const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework_id}/disclosures`).then(({ data }) => data);
       setStatusData({ type: '', message: '' });
-
-      console.log('>>>>>>>>>>>>', response.results);
       if (type === 'parent') {
         setParentDisclosureData(response.results);
         // setSourceFrameworkId(framework_id)
@@ -259,7 +255,6 @@ const MapDisclosures = () => {
       setStatusData({ type: 'loading', message: '' });
       const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${framework_id}/disclosures/${disclousure_id}`).then(({ data }) => data);
       setStatusData({ type: '', message: '' });
-      console.log('>>>>>>>>>>>>', response.children);
       if (type === 'parent') {
         setParentKPI(response.children);
       } else {
@@ -294,7 +289,6 @@ const MapDisclosures = () => {
   };
 
   const onFrameworkSelect = async (val = '', type = '', index) => {
-    console.log(val, type);
     if (type === 'parent') {
       let cloneFrameworksData = [...frameworksData];
       cloneFrameworksData = (cloneFrameworksData || []).map((item, i) => {
@@ -419,16 +413,16 @@ const MapDisclosures = () => {
       <div className='map__questions'>
         <div className='map__wrapper'>
           <h1 className='assign__title'>
-            Choose a Framework to map from: <span className='color-red P-4 ml-1'>*</span>
+            Choose a Framework to map from <span className='color-red P-4 ml-1'>*</span>
           </h1>
           {renderFrameworkLogo('parent')}
           <h1 className='map-diclosures-catagory mt-10 mb-2'>
-            Categories:<span className='color-red P-4 ml-1'>*</span>
+            Categories<span className='color-red P-4 ml-1'>*</span>
           </h1>
           <Pills label='' data={listCatagory_1} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'left')} />
           <div className='map__check-item'>
             <h1 className='assign__title'>
-              Disclosures:<span className='color-red P-4 ml-1'>*</span>
+              Disclosures<span className='color-red P-4 ml-1'>*</span>
             </h1>
             <div className='disclosures__wrapper'>
               {(parentDisclosure || []).map((val, index) => {
@@ -451,7 +445,7 @@ const MapDisclosures = () => {
           </div>
           <div className='map__check-item'>
             <h1 className='assign__title'>
-              Question:<span className='color-red P-4'>*</span>
+              Question<span className='color-red P-4'>*</span>
             </h1>
             <div className='disclosures__wrapper'>
               {(parentKPI || []).map((val, index) => (
@@ -477,16 +471,16 @@ const MapDisclosures = () => {
         </div>
         <div className='map__wrapper'>
           <h1 className='assign__title'>
-            Choose a Framework to map to:<span className='color-red P-4'>*</span>
+            Choose a Framework to map to <span className='color-red P-4'>*</span>
           </h1>
           {renderFrameworkLogo('child')}
           <h1 className='map-diclosures-catagory mt-10 mb-2'>
-            Categories:<span className='color-red P-4 ml-1'>*</span>
+            Categories<span className='color-red P-4 ml-1'>*</span>
           </h1>
           <Pills label='' data={listCatagory_2} onSelectMultipleOption={(i) => onSelectSingleOption(i, 'right')} />
           <div className='map__check-item'>
             <h1 className='assign__title'>
-              Disclosures: <span className='color-red P-4'>*</span>
+              Disclosures <span className='color-red P-4'>*</span>
             </h1>
             <div className='disclosures__wrapper'>
               {(childDisclosure || []).map((val, index) => {
@@ -510,7 +504,7 @@ const MapDisclosures = () => {
           </div>
           <div className='map__check-item'>
             <h1 className='assign__title'>
-              Question: <span className='color-red P-4'>*</span>
+              Question <span className='color-red P-4'>*</span>
             </h1>
             <div className='disclosures__wrapper'>
               {(childKPI || []).map((val, index) => (

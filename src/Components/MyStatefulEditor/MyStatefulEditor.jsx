@@ -8,7 +8,6 @@ export default class MyStatefulEditor extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.markup);
     this.setState({ value:  RichTextEditor.createValueFromString(this.props.markup, "html") });
   }
 

@@ -32,7 +32,11 @@ const CustomerOnboardByAdmin = (props) => {
   useEffect(() => {
     if (isEditable || isView) {
       setInputValue({
-        ...clientDetails
+        ...clientDetails,
+        radio__package: clientDetails.subscription.name,
+        from: clientDetails.subscription.start_date,
+        to: clientDetails.subscription.end_date,
+        employees_count: clientDetails.subscription.max_users
         // headquarters: clientDetails.headquarters,
         // firstname: clientDetails.name,
         // employees_count: clientDetails.employees_count
@@ -44,7 +48,8 @@ const CustomerOnboardByAdmin = (props) => {
   }, []);
   const validation = {};
   const onChangeFile = (event) => {
-    if (setErrorValidation) setErrorValidation(false);
+    setUploadImage({});
+    if (errorValidation) setErrorValidation(false);
     const imageUrl = event.target.files[0];
     const fileName = event.target.files[0].name;
     const fileSize = event.target.files[0].size / 1024 / 1024;
@@ -60,7 +65,7 @@ const CustomerOnboardByAdmin = (props) => {
   };
 
   const onChangeHandler = (e) => {
-    if (setErrorValidation) setErrorValidation(false);
+    if (errorValidation) setErrorValidation(false);
     console.log(e.target);
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
@@ -72,6 +77,7 @@ const CustomerOnboardByAdmin = (props) => {
   };
 
   const onSaveCustomer = async () => {
+    console.log(inputValue);
     if (!_isEmpty(inputValue.name && inputValue.location && inputValue.headquarters)) {
       const form = new FormData();
       form.append('name', inputValue.name);
@@ -80,21 +86,26 @@ const CustomerOnboardByAdmin = (props) => {
       // form.append('zip_code', inputValue.zipcode);
       // form.append('email', inputValue.email);
       // form.append('address', inputValue.address);
-      form.append('status', 'Active');
+      // form.append('status', 'Active');
       form.append('employees_count', inputValue.employees_count);
       form.append('location', inputValue.location);
       form.append('package', inputValue.radio__package);
+      form.append('subscription.name', inputValue.radio__package);
+      form.append('subscription.start_date', inputValue.from);
+      form.append('subscription.end_date', inputValue.to);
+      form.append('subscription.max_users', inputValue.employees_count);
       form.append('is_payment_done', true);
 
       if (!_isEmpty(uploadImage && uploadImage.fileName)) {
         if (typeof uploadImage.imageUrl == 'object') {
           form.append('logo', _get(uploadImage, 'imageUrl', ''), uploadImage.fileName);
-        } else {
-          let blob = new Blob([logo], {
-            type: 'application/pdf'
-          });
-          form.append('logo', blob, uploadImage.fileName);
         }
+        // else {
+        //   let blob = new Blob([logo], {
+        //     type: 'application/pdf'
+        //   });
+        //   form.append('logo', blob, uploadImage.fileName);
+        // }
         if (!_isEmpty(inputValue.from && inputValue.to)) {
           form.append('created_at', moment().format());
           form.append('updated_at', moment().format());
@@ -107,10 +118,8 @@ const CustomerOnboardByAdmin = (props) => {
               .then(({ data }) => data);
             setApiData(response);
             setStatusData({ type: 'success', message: 'Client information has been updated successfully' });
-            setInputValue({});
-            setLogo(null);
           } catch (e) {
-            let error = getErrorMessage(e);
+            const error = getErrorMessage(e);
             setStatusData({ ...error });
           }
         } else {
@@ -141,6 +150,8 @@ const CustomerOnboardByAdmin = (props) => {
       // }
       // setError(false);
     } else {
+      console.log(inputValue);
+      console.log('errorValidation', errorValidation);
       setErrorValidation(true);
     }
   };
@@ -165,7 +176,6 @@ const CustomerOnboardByAdmin = (props) => {
         {isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Edit Client</h1>}
         {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard1</h1>}
       </div>
-
       <div className='main__content-wrapper'>
         <UploadFile
           isView={isView}
@@ -248,7 +258,7 @@ const CustomerOnboardByAdmin = (props) => {
             onChange={onChangeHandler}
           />
           <h1 className='create-framework__title'>
-            License from<span className='color-red p-4 ml-2'>*</span>
+            License from<span className='color-red p-4 ml-1'>*</span>
           </h1>
           <label htmlFor='create-framework__date-from' className='create-framework__label'>
             <input
@@ -265,7 +275,7 @@ const CustomerOnboardByAdmin = (props) => {
             />
           </label>
           <h1 className='create-framework__title'>
-            License to <span className='color-red p-4'>*</span>
+            License to<span className='color-red p-4'>*</span>
           </h1>
           <label htmlFor='create-framework__date-to' className='create-framework__label'>
             <input
@@ -286,36 +296,55 @@ const CustomerOnboardByAdmin = (props) => {
         <h1 className='create-framework__title'>Package</h1>
         <form className='create-framework__row-wrapper radios'>
           <label htmlFor='bronze' className='create-framework__label'>
-            <input type='radio' name='radio__package' onClick={() => onChangeRadioHandler('Bronze')} className='create-framework__input' id='bronze' disabled={isView} />
-            {/* <div className="fake__radio">
-                            <div className="fake__radio-active"></div>
-                        </div> */}
+            <input
+              type='radio'
+              name='radio__package'
+              checked={inputValue.radio__package == 'Bronze'}
+              onClick={() => onChangeRadioHandler('Bronze')}
+              className='create-framework__input'
+              id='bronze'
+              disabled={isView}
+            />
             <h1 className='create-framework__title'>Bronze</h1>
           </label>
           <label htmlFor='silver' className='create-framework__label'>
-            <input type='radio' name='radio__package' onClick={() => onChangeRadioHandler('Silver')} className='create-framework__input' id='silver' disabled={isView} />
-            {/* <div className="fake__radio">
-                            <div className="fake__radio-active"></div>
-                        </div> */}
+            <input
+              type='radio'
+              name='radio__package'
+              checked={inputValue.radio__package == 'Silver'}
+              onClick={() => onChangeRadioHandler('Silver')}
+              className='create-framework__input'
+              id='silver'
+              disabled={isView}
+            />
             <h1 className='create-framework__title'>Silver</h1>
           </label>
           <label htmlFor='gold' className='create-framework__label'>
-            <input type='radio' name='radio__package' onClick={() => onChangeRadioHandler('Gold')} className='create-framework__input' id='gold' disabled={isView} />
-            {/* <div className="fake__radio">
-                            <div className="fake__radio-active"></div>
-                        </div> */}
+            <input
+              type='radio'
+              name='radio__package'
+              checked={inputValue.radio__package == 'Gold'}
+              onClick={() => onChangeRadioHandler('Gold')}
+              className='create-framework__input'
+              id='gold'
+              disabled={isView}
+            />
             <h1 className='create-framework__title'>Gold</h1>
           </label>
           <label htmlFor='custom' className='create-framework__label'>
-            <input type='radio' name='radio__package' onClick={() => onChangeRadioHandler('Custom')} className='create-framework__input' id='custom' disabled={isView} />
-            {/* <div className="fake__radio">
-                            <div className="fake__radio-active"></div>
-                        </div> */}
+            <input
+              type='radio'
+              name='radio__package'
+              checked={inputValue.radio__package == 'Custom'}
+              onClick={() => onChangeRadioHandler('Custom')}
+              className='create-framework__input'
+              id='custom'
+              disabled={isView}
+            />
             <h1 className='create-framework__title'>Custom</h1>
           </label>
         </form>
       </div>
-
       <div className='buttons__panel'>
         <button
           className='buttons__panel-button'
@@ -325,7 +354,7 @@ const CustomerOnboardByAdmin = (props) => {
         >
           CANCEL
         </button>
-        {errorValidation && <div className='overall-error-container color-red'>*Please fill all the required fields.</div>}
+        {errorValidation && <div className='overall-error-container color-red'>* Please fill all the required fields.</div>}
         {!isView && (
           <button className='main__button' onClick={() => onSaveCustomer()}>
             SAVE

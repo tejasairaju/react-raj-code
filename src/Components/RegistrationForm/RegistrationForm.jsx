@@ -139,7 +139,6 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
       inputValues.companyLocation !== ''
     ) {
       const payload = { ...inputValues };
-      console.log(payload, 'payload');
       dispatch(actions.signUp(payload));
       setInputValue(inputFields);
       setValidation(inputFields);

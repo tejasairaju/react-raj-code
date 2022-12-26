@@ -126,38 +126,42 @@ const ViewDisclosures = () => {
       </div>
       <div id='viewFramework' className='view-framework-container view-disclosure-container'>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {listData && listData.length > 0 ? (
-              (listData || []).map((val, index) => {
-                return (
-                  <tr>
-                    <td>{<span>{val.name}</span>}</td>
-                    <td>
-                      {val.code} &nbsp;&nbsp;{val.description}
-                    </td>
-                    <td>
-                      <MoreAction viewDisclosures={true} state={getState(val)} index={index} deleteCallback={() => deleteDisclosureHandler(val)} />
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        {listData && listData.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
               <tr>
-                <td colSpan={3}>
-                  <div className='flex justify-center w-full'>No records</div>
-                </td>
+                {headers.map((header) => (
+                  <th>{header}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {listData && listData.length > 0 ? (
+                (listData || []).map((val, index) => {
+                  return (
+                    <tr>
+                      <td>{<span>{val.name}</span>}</td>
+                      <td>
+                        {val.code} &nbsp;&nbsp;{val.description}
+                      </td>
+                      <td>
+                        <MoreAction viewDisclosures={true} state={getState(val)} index={index} deleteCallback={() => deleteDisclosureHandler(val)} />
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={3}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
     </>
   );

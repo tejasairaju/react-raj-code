@@ -67,7 +67,6 @@ const SystemAdminDashboard = (props) => {
           .get(`${process.env.API_BASE_URL}/esgadmin/frameworks`)
           .then(({ data }) => data);
         setStatusData({ type: '', message: '' });
-        console.log(response);
         setFrameWorkData(response);
       } catch (e) {
         setStatusData({ type: 'error', message: e.message });

@@ -22,7 +22,6 @@ const OverlappingDisclosures = (props) => {
     const [isLoading, setisLoading] = useState(true);
 
     useEffect(() => {
-        console.log(selectedFramework) 
         getMappingFramework(selectedFramework.from.name,selectedFramework.to.name);
     }, []);
 

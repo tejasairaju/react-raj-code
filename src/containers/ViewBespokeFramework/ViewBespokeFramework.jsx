@@ -58,38 +58,42 @@ const ViewBespokeFramework = () => {
       </div>
       <div id='viewFramework' className='view-framework-container'>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {apiData && apiData.results && apiData.results.length > 0 ? (
-              (apiData.results || []).map((val, index) => {
-                return (
-                  <tr>
-                    <td>{val.name}</td>
-                    <td>{getDataFormat(val.created_at)}</td>
-                    <td>{val.template_type == 'Custom' ? 'Bespoke' : val.template_type}</td>
-                    {/* <td>{val.status}</td> */}
-                    <td>
-                      <MoreAction viewBespokeFramework={true} value={val} index={index} state={{ ...val }} deleteCallback={() => deleteFrameworkHandler(val)} />
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        {apiData && apiData.results && apiData.results.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
               <tr>
-                <td colSpan={3}>
-                  <div className='flex justify-center w-full'>No records</div>
-                </td>
+                {headers.map((header) => (
+                  <th>{header}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {apiData && apiData.results && apiData.results.length > 0 ? (
+                (apiData.results || []).map((val, index) => {
+                  return (
+                    <tr>
+                      <td>{val.name}</td>
+                      <td>{getDataFormat(val.created_at)}</td>
+                      <td>{val.template_type == 'Custom' ? 'Bespoke' : val.template_type}</td>
+                      {/* <td>{val.status}</td> */}
+                      <td>
+                        <MoreAction viewBespokeFramework={true} value={val} index={index} state={{ ...val }} deleteCallback={() => deleteFrameworkHandler(val)} />
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={3}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
     </>
   );

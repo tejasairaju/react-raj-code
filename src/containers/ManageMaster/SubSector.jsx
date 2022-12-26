@@ -77,7 +77,6 @@ const SubSector = (props) => {
               name: option
             };
             response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/subsectors/${doEdit.id}`, { ...payload }).then(({ data }) => data);
-            setDoEdit({});
           } else {
             response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/subsectors`, { ...payload }).then(({ data }) => data);
           }
@@ -121,7 +120,6 @@ const SubSector = (props) => {
   };
 
   const onBlock = async (val) => {
-    console.log('>>>>>>>>>>>>>>subsector', val);
     try {
       const payload = {
         sector: _get(val, 'sector.id', null),
@@ -193,46 +191,50 @@ const SubSector = (props) => {
       )}
       <br />
       <div id='viewCategory' className='view-diclosuer-container'>
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {(headers || []).map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {subSectorList && subSectorList.results && subSectorList.results.length > 0 ? (
-              (subSectorList.results || []).map((val, index) => {
-                return (
-                  <tr>
-                    <td>{val.sector.name}</td>
-                    <td>{val.name}</td>
-                    <td>{val.is_active ? 'Active' : 'Disabled'}</td>
-                    <td>
-                      <CountryAction
-                        name='subsector'
-                        onEdit={() => onEdit(val)}
-                        onActive={() => onActive(val)}
-                        onBlock={() => onBlock(val)}
-                        value={val}
-                        index={index}
-                        deleteCallback={null}
-                      />
-                      {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
+        {subSectorList && subSectorList.results && subSectorList.results.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
               <tr>
-                <td colSpan={4}>
-                  <div className='flex justify-center w-full'>No records</div>
-                </td>
+                {(headers || []).map((header) => (
+                  <th>{header}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {subSectorList && subSectorList.results && subSectorList.results.length > 0 ? (
+                (subSectorList.results || []).map((val, index) => {
+                  return (
+                    <tr>
+                      <td>{val.sector.name}</td>
+                      <td>{val.name}</td>
+                      <td>{val.is_active ? 'Active' : 'Blocked'}</td>
+                      <td>
+                        <CountryAction
+                          name='subsector'
+                          onEdit={() => onEdit(val)}
+                          onActive={() => onActive(val)}
+                          onBlock={() => onBlock(val)}
+                          value={val}
+                          index={index}
+                          deleteCallback={null}
+                        />
+                        {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={4}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
       <br />
     </>

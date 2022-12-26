@@ -82,7 +82,6 @@ const ClientAdminDashboard = () => {
         )}
       </div>
       <div className='welcome__task__container2'>
-        {console.log(myReportCount)}
         {renderCard('Frameworks', myReportCount.reports)}
         {renderCard('Total Task', myReportCount.completed + myReportCount.pending)}
         {renderCard('Completed', myReportCount.completed)}

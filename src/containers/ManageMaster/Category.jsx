@@ -58,7 +58,6 @@ const Category = (props) => {
             if(onlyString(option) && !check_already_exists(option)){
                 try {
                     setStatusData({ type: 'loading', message: "" });
-                    console.log();
                     let response = {};
                     if (!_isEmpty(doEdit)) {
                         response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories/${doEdit.id}`, { name: option }).then(({ data }) => data);

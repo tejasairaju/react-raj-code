@@ -37,7 +37,6 @@ const ViewReport = (props) => {
       setStatusData({ type: '', message: '' });
       const sortResult = response && response.results;
       setReportList(sortResult);
-      console.log(reportList);
       // return response.disclosures || [];
       // return listDisclosures.results || [];
     } catch (e) {
@@ -75,40 +74,44 @@ const ViewReport = (props) => {
       </div>
       <br />
       <div className='scrollable'>
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {reportList && reportList.length > 0 ? (
-              (reportList || []).map((report, index) => {
-                // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
-                return (
-                  <tr key={index}>
-                    <td>{report.name}</td>
-                    <td>{getDataFormat(report.start_date)}</td>
-                    <td>{getDataFormat(report.end_date)}</td>
-                    <td>{report.status == 'Custom' ? 'Bespoke' : report.status}</td>
-                    <td>
-                      <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} deleteCallback={() => deleteReportHandler(report)} name={'report'} />
-                    </td>
-                  </tr>
-                );
-                // }
-              })
-            ) : (
+        {reportList && reportList.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
               <tr>
-                <td colSpan={5}>
-                  <div className='flex justify-center w-full'>No records</div>
-                </td>
+                {headers.map((header) => (
+                  <th>{header}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {reportList && reportList.length > 0 ? (
+                (reportList || []).map((report, index) => {
+                  // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
+                  return (
+                    <tr key={index}>
+                      <td>{report.name}</td>
+                      <td>{getDataFormat(report.start_date)}</td>
+                      <td>{getDataFormat(report.end_date)}</td>
+                      <td>{report.status == 'Custom' ? 'Bespoke' : report.status}</td>
+                      <td>
+                        <MoreAction viewReport={true} value={report} isAssignDisClosure={isAssignDisClosure} deleteCallback={() => deleteReportHandler(report)} name={'report'} />
+                      </td>
+                    </tr>
+                  );
+                  // }
+                })
+              ) : (
+                <tr>
+                  <td colSpan={5}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
     </>
   );

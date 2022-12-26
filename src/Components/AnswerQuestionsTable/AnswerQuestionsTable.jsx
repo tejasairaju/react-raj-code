@@ -121,7 +121,7 @@ const AnswerQuestionsTable = (props) => {
                     </>
                     }
                     <p className="detalis__information-title">
-                        Answer :
+                        Answer
                     </p>
                     {getAnswerInputField(questionItem, questionIndex)}
                     {!_isEmpty(questionItem.field_unit_values) && <>

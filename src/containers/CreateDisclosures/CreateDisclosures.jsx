@@ -40,7 +40,6 @@ const CreateDisclosures = (props) => {
   const getDisclosures = async () => {
     try {
       const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/frameworks/${id}/disclosures/${disclosureId}`).then(({ data }) => data); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
-      console.log(response);
       let myguidance = '';
       if (!_isEmpty(response.metaData)) {
         myguidance = response.metaData[0].value;
@@ -57,6 +56,7 @@ const CreateDisclosures = (props) => {
       item[key] = value;
       return item;
     });
+
   const getUserAdminInfo = async () => {
     try {
       const response = await axios.get(`${process.env.API_BASE_URL}/esgadmin/master/disclosure-categories`).then(({ data }) => data);
@@ -98,8 +98,6 @@ const CreateDisclosures = (props) => {
   };
 
   const onNextHandler = async () => {
-    console.log(inputValue);
-
     let getSelectedCategory = (inputValue.categories || []).find((value) => value.isSelect === true);
     if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && !_isEmpty(inputValue.guidance && getSelectedCategory)) {
       const data = {
@@ -111,7 +109,6 @@ const CreateDisclosures = (props) => {
         description: inputValue.description,
         metaData: [{ key: 'Guidance', value: inputValue.guidance }]
       };
-      console.log(data);
       try {
         setStatusData({ type: 'loading', message: '' });
         let response = {};
@@ -169,8 +166,6 @@ const CreateDisclosures = (props) => {
   };
 
   const onCloseHandler = () => {
-    console.log(inputValue);
-
     if (statusData.type === 'success' && !isEditable) {
       navigate('/createquestions', {
         state: {
@@ -201,14 +196,13 @@ const CreateDisclosures = (props) => {
         <h1 className='main__title custom-title'>{`Welcome to Create Disclosures Wizard`}</h1>
       </div>
       <>
-        {' '}
         <table className='default-flex-table create-disc-framework-details'>
           <tr>
             <td>
               {frameworkDetails && (
                 <img
                   src={frameworkDetails.logo || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjWtyOgOolwSFP4ICk81ehw87GzUkAywrbjcZoB9ReOA&s'}
-                  alt='GRI'
+                  alt={frameworkDetails.name}
                   width={'28px'}
                   height={'28px'}
                 />
@@ -219,7 +213,6 @@ const CreateDisclosures = (props) => {
           </tr>
         </table>
       </>
-      {/* {console.log(inputValue)} */}
       <div className='main__content-wrapper'>
         <h1 className='create-framework__title'>Ref No</h1>
         <div className='create-framework__row-wrapper create__disclosure_ref ref__no'>

@@ -57,40 +57,44 @@ const ViewMyTaskDisclosuresList = (props) => {
       </div>
       <br />
       <div className='scrollable'>
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {disclosureData && disclosureData.length > 0 ? (
-              (disclosureData || []).map((item, index) => {
-                // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
-                return (
-                  <tr key={index}>
-                    <td>{item.disclosure.name}</td>
-                    <td>{item.status}</td>
-                    <td>
-                      <a onClick={() => redirectToAnswerQuestion(item)} className={`answer-redirect-link`}>
-                        Answer
-                      </a>
-                    </td>
-                  </tr>
-                );
-                // }
-              })
-            ) : (
+        {disclosureData && disclosureData.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
               <tr>
-                <td colSpan={3}>
-                  <div className='flex justify-center w-full'>No records</div>
-                </td>
+                {headers.map((header) => (
+                  <th>{header}</th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {disclosureData && disclosureData.length > 0 ? (
+                (disclosureData || []).map((item, index) => {
+                  // if(_toLower(task.status) === _toLower(status) || _toLower(status) === 'disclosures') {
+                  return (
+                    <tr key={index}>
+                      <td>{item.disclosure.name}</td>
+                      <td>{item.status}</td>
+                      <td>
+                        <a onClick={() => redirectToAnswerQuestion(item)} className={`answer-redirect-link`}>
+                          Answer
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                  // }
+                })
+              ) : (
+                <tr>
+                  <td colSpan={3}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
       <div className='create-question-main-btn'>
         <button onClick={() => navigate(-1)} className='main__button m-l-1 cancel-btn'>

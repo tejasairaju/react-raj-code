@@ -21,7 +21,6 @@ function Checkout() {
         data.clientSecret,
         { payment_method: { card: cardElement } }
       );
-      console.log(confirmPayment);
       const { paymentIntent } = confirmPayment;
       if (paymentIntent.status === "succeeded") alert(`Payment successful!`);
       else alert(`Payment failed!`);

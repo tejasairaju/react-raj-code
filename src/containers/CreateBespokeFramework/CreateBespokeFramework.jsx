@@ -46,7 +46,6 @@ const CreateBespokeFramework = (props) => {
   const getframeworkDetails = async (id = '') => {
     try {
       const frameDetails = await axios.get(`${process.env.API_BASE_URL}/templates/${params.id}?organization=${orgDetails.name}`).then(({ data }) => data);
-      console.log('>>>>>>>>>>>>>>', frameDetails);
       !_isEmpty(frameDetails.logo) && setUploadImage({ fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`, imageUrl: frameDetails.logo });
       updateSubSectorList(frameDetails.supported_sectors);
       setInputValue({
@@ -178,8 +177,6 @@ const CreateBespokeFramework = (props) => {
 
           setApiData(response);
           setStatusData({ type: 'success', message: `Thanks! Your framework has been successfully ${isEdit ? 'updated' : 'created'}` });
-          setInputValue({});
-          setLogo(null);
         } catch (e) {
           let error = getErrorMessage(e);
           setStatusData({ ...error });

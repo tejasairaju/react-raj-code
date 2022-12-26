@@ -56,7 +56,6 @@ const Sector = (props) => {
           let response = {};
           if (!_isEmpty(doEdit)) {
             response = await axios.put(`${process.env.API_BASE_URL}/esgadmin/master/sectors/${doEdit.id}`, { name: option }).then(({ data }) => data);
-            setDoEdit({});
           } else {
             response = await axios.post(`${process.env.API_BASE_URL}/esgadmin/master/sectors`, { name: option }).then(({ data }) => data);
           }
@@ -107,7 +106,7 @@ const Sector = (props) => {
   };
 
   const MoreOptionTable = (tableData = null) => {
-    return (
+    return tableData && tableData.length > 0 ? (
       <table className='default-flex-table'>
         <thead>
           <tr>
@@ -121,7 +120,7 @@ const Sector = (props) => {
             return (
               <tr>
                 <td>{val.name}</td>
-                <td>{val.is_active ? 'Active' : 'Disabled'}</td>
+                <td>{val.is_active ? 'Active' : 'Blocked'}</td>
                 <td>
                   <CountryAction
                     isSector={true}
@@ -142,6 +141,8 @@ const Sector = (props) => {
           })}
         </tbody>
       </table>
+    ) : (
+      <div className='flex justify-center w-full'>No records found</div>
     );
   };
 

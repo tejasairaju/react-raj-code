@@ -91,7 +91,6 @@ const AnswerQuestions = () => {
         let cloneApiData = { ...apiData };
         if ((((Object.keys(cloneApiData.groupListData || [])).indexOf(indexKey + '')) > -1)) {
             delete cloneApiData.groupListData[indexKey + ''];
-            console.log(cloneApiData.groupListData);
             setApiData({ ...cloneApiData, listData: [...Object.values(cloneApiData['groupListData'] || []).flat()] });
         } else {
             const data = await getDisclosures(frameworkId);

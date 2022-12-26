@@ -139,7 +139,6 @@ const PersonalInformation = () => {
     try {
       const userDetails = await Requests.Get(`/esgadmin/administrators/${loginDetails.user_id}`);
       setLogo(userDetails.profile_picture);
-      console.log(userDetails);
       !_isEmpty(userDetails.profile_picture) &&
         setUploadImage({
           fileName: `avatar${Math.floor(Math.random() * 90 + 10)}.png`,
@@ -637,7 +636,7 @@ const PersonalInformation = () => {
                       </label>
                     </div>
                     <div className='flex mt-2 align-middle py-3 justify-end'>
-                      <a className="buttons__panel-button" onClick={() => setIsOpen(false)}>
+                      <a className='buttons__panel-button' onClick={() => setIsOpen(false)}>
                         CANCEL
                       </a>
                       <button

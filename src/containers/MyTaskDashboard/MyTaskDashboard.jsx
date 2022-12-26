@@ -74,11 +74,15 @@ const MyTaskDashboard = () => {
           </div>
         )}
       </div>
-      <div className='welcome__task__container2 pb-5'>
-        {renderCard('Frameworks', mytask.reportCount)}
+      <div className='welcome__task__container2 items-center h-screen'>
+        {/* {renderCard('Frameworks', mytask.reportCount)}
         {renderCard('Disclosures', mytask.disclosures)}
         {renderCard('Completed', mytask.completed)}
+        {renderCard('Pending', mytask.pending)} */}
+        {renderCard('Disclosures', mytask.disclosures)}
         {renderCard('Pending', mytask.pending)}
+        {renderCard('Completed', mytask.completed)}
+        {renderCard('Reports', mytask.reportCount)}
       </div>
     </>
   );

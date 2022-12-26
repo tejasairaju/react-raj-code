@@ -31,7 +31,6 @@ const AddESGManageUser = () => {
   const validation = {};
 
   const onChangeHandler = (e) => {
-    console.log(e.target);
     const { name, value = '' } = e.target;
     setInputValue({ ...inputValue, [name]: value });
   };
@@ -50,7 +49,6 @@ const AddESGManageUser = () => {
   };
 
   const onSaveUser = async () => {
-    console.log(inputValue);
     if (
       !_isEmpty(inputValue) &&
       inputValue.first_name &&
@@ -150,7 +148,7 @@ const AddESGManageUser = () => {
         )}
       </div>
 
-      <div className='cli-add-main__content-wrapper content-wrapper'>
+      <div className='cli-add-main__content-wrapper content-wrapper m-0 my-4'>
         <div className='framework__col-wrapper'>
           {/* <div className="Generate_report_head align-center">
                     <UploadFile logoSizeError={logoSizeError} imgcls={'org-image-size'} label='Photo' imageUrl={logo} onChangeFile={onChangeFile} onChangeRemoveFile={onChangeRemoveFile} required={false} />
@@ -303,6 +301,19 @@ const AddESGManageUser = () => {
               </div>
             </div>
           </div>
+          {/* <div className='Generate_report_head'>
+            <div className='GenerateReport-framework__row'>
+              <div className='GenerateReport_row'>
+                <h1 className='Generate_h1_label'>Select Role {!isView && <span className='color-red'>*</span>}</h1>
+                <select name='role' id='form__role' value={inputValue.role} onChange={(e) => onChangeHandler(e)} className='acc-info__form-input m-0' required>
+                  <option value=''>Select</option>
+                  <option value='Administrator'>Administrator</option>
+                  <option value='Reporter'>Reporter</option>
+                </select>
+              </div>
+            </div>
+            <div className='GenerateReport-framework__row'></div>
+          </div> */}
         </div>
       </div>
 

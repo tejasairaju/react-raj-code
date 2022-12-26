@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux';
 const AssignDisclosures = () => {
   const { reportId = '' } = useParams();
   const { orgDetails = {} } = useSelector((state) => state.signup);
+  const categories = useSelector(state => _get(state, 'appWizard.categories', []));
   const navigate = useNavigate();
   const [apiData, setApiData] = useState({ listData: [] });
   const [isOpen, setIsopen] = useState(false);
@@ -79,7 +80,6 @@ const AssignDisclosures = () => {
   };
 
   const onClickUserSelect = (user) => {
-    console.log(user);
     setSelectedUser({ ...user });
   };
 
@@ -149,7 +149,7 @@ const AssignDisclosures = () => {
         <CategoryFilter filterList={filterList} filterKey={catagoryType} radioChangeHandler={radioChangeHandler} />
       </div>
       <div className=''>
-        <b>Disclosures:</b>
+        <b>Disclosures</b>
       </div>
       <div className='disclosures__wrapper list-disclosures-container'>
         {_get(apiData, 'listData', []).map((disclosure, disclosureIndex) => {
@@ -184,46 +184,6 @@ const AssignDisclosures = () => {
         })}
       </div>
       <UserListView onClickUserSelect={onClickUserSelect} />
-      {/* <div className="user__wrapper">
-            <div className="left__arrow"></div>
-            <div className="user__container active">
-                <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p className="user-name">
-                    John Smith
-                </p>
-                <p className="job-title">
-                    Admin Manager
-                </p>
-            </div>
-            <div className="user__container">
-                <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p className="user-name">
-                    John Smith
-                </p>
-                <p className="job-title">
-                    Admin Manager
-                </p>
-            </div>
-            <div className="user__container">
-                <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p className="user-name">
-                    John Smith
-                </p>
-                <p className="job-title">
-                    Admin Manager
-                </p>
-            </div>
-            <div className="user__container">
-                <img src="./assets/images/avatar_row1.jpg" alt="avatar" />
-                <p className="user-name">
-                    John Smith
-                </p>
-                <p className="job-title">
-                    Admin Manager
-                </p>
-            </div>
-            <div className="right__arrow"></div>
-        </div> */}
       <div className='buttons__panel'>
         <button onClick={() => navigate(-1)} className='buttons__panel-button'>
           BACK

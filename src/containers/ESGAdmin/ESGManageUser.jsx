@@ -100,7 +100,7 @@ const ESGManageUser = () => {
                   <td>
                     <div className='row__item-img'>
                       <div className='client__edit'>{getProfilePhoto(val)}</div>
-                      <a
+                      {/* <a
                         className='edit__avatar'
                         onClick={() => {
                           navigate(`/esg/users/invite`, {
@@ -109,7 +109,7 @@ const ESGManageUser = () => {
                         }}
                       >
                         EDIT
-                      </a>
+                      </a> */}
                     </div>
                   </td>
                   <td>{val.first_name}</td>

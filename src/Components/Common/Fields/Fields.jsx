@@ -194,7 +194,7 @@ const Label = (props) => {
   return (
     <h1 className={className}>
       {label}
-      {required && <span className={`color-red ${requireCls}`}>*</span>}
+      {required && <span className={`color-red ${requireCls} ml-1`}>*</span>}
     </h1>
   );
 };

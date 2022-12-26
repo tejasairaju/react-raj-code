@@ -22,7 +22,6 @@ const ESGManageUserAction = (props) => {
   const onCloseHandler = () => {};
 
   const onUpdateUser = async (inputValue, active_status) => {
-    console.log(inputValue, active_status);
     let user_status = 'Active';
     //Active, Invited, Disabled
     if (active_status == 1) {

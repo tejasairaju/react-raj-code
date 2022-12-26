@@ -94,7 +94,6 @@ const CreateQuestions = (props) => {
   };
 
   let tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
-  console.log(state);
 
   return (
     <>

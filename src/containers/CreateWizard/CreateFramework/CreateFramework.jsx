@@ -96,7 +96,6 @@ const CreateFramework = (props) => {
         alreadySlectedSubSector = alreadySlectedSubSector.filter((subSector) => _lower(subSector.name) != _lower(removeItem));
         // if(alreadySlectedSubSector|| [].length === 0) {
         //     cloneInputValue['subsectors'] = null;
-        //     console.log('>>>>>>>>>>>>>iffff');
         // } else {
         cloneInputValue['subsectors'] = alreadySlectedSubSector;
         // }

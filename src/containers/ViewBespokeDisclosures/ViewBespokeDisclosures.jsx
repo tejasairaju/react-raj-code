@@ -62,17 +62,18 @@ const ViewBespokeDisclosures = () => {
       </div>
       <div id='viewFramework' className='view-framework-container'>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        <table className='default-flex-table'>
-          <thead>
-            <tr>
-              {headers.map((header) => (
-                <th>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {apiData && apiData.results && apiData.results.length > 0
-              ? apiData.results.map((val, index) => {
+        {apiData && apiData.results && apiData.results.length > 0 ? (
+          <table className='default-flex-table'>
+            <thead>
+              <tr>
+                {headers.map((header) => (
+                  <th>{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {apiData && apiData.results && apiData.results.length > 0 ? (
+                apiData.results.map((val, index) => {
                   return (
                     <tr>
                       <td>{val.name}</td>
@@ -92,9 +93,18 @@ const ViewBespokeDisclosures = () => {
                     </tr>
                   );
                 })
-              : <tr><td colSpan={5}><div className='flex justify-center w-full'>No records</div></td></tr>}
-          </tbody>
-        </table>
+              ) : (
+                <tr>
+                  <td colSpan={5}>
+                    <div className='flex justify-center w-full'>No records found</div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center w-full'>No records found</div>
+        )}
       </div>
       <div className='create-question-main-btn'>
         <button onClick={() => navigate(-1)} className='main__button m-l-1 cancel-btn'>
