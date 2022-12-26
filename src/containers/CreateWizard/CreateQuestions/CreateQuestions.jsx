@@ -93,7 +93,7 @@ const CreateQuestions = (props) => {
     });
   };
 
-  let tableHeaders = ['Code', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
+  const tableHeaders = ['Question No', 'Question', 'Data Type', 'Input Type', 'Choices', 'Unit', null];
 
   return (
     <>

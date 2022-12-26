@@ -40,7 +40,7 @@ const ViewQuestionsList = ({
       <div>
         {isShowGuidance && (
           <Modal isShow={!!isShowGuidance} isDisclosureDec={true} closeModal={() => setIsShowGuidance(false)}>
-            <div className='create-options-title'>Guidance:</div>
+            <div className='create-options-title'>Guidance</div>
             <div className='get-textarea-input-container'>
               <div className='create-framework__textarea disclosure-description-screen'>
                 {_isEmpty(guidance) ? <p dangerouslySetInnerHTML={{ __html: description }}></p> : <p dangerouslySetInnerHTML={{ __html: guidance }}></p>}

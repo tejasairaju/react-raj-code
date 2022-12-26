@@ -142,7 +142,7 @@ const AnswerQuestionsTable = (props) => {
 
     return <li className="detalis__item">
         {isShowDescription && <Modal isShow={!!isShowDescription} isDisclosureDec={true} closeModal={closePopupModal}>
-            <div className='create-options-title'>Guidance:</div>
+            <div className='create-options-title'>Guidance</div>
             <div className='get-textarea-input-container'>
                 <div className="create-framework__textarea disclosure-description-screen">{(_isEmpty(_get(itemDetails, 'metaData[0].value', ''))) ? <p dangerouslySetInnerHTML={{ __html:itemDetails.description}}></p> : <p dangerouslySetInnerHTML={{ __html: _get(itemDetails, 'metaData[0].value', '') }}></p>}</div>
             </div>
