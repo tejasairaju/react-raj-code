@@ -511,8 +511,7 @@
   }
 
   .buttons__panel-button,
-  .main__button,
-  .buttons__panel-button {
+  .main__button {
     padding: 8px 30px;
     font-size: 16px;
   }
@@ -618,8 +617,7 @@
   }
 
   .buttons__panel-button,
-  .main__button,
-  .buttons__panel-button {
+  .main__button {
     padding: 6px 25px;
     font-size: 12px;
   }

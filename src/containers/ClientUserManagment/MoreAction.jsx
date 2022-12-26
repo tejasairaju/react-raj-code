@@ -44,7 +44,7 @@ const ClientUserAction = (props) => {
   return (
     <div className='more-action-contianer' onClick={() => setIsopen(false)}>
       <div
-        tabindex={index}
+        tabIndex={index}
         className={`frametoggler`}
         onClick={(e) => {
           setIsopen(!isOpen);

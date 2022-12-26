@@ -265,7 +265,7 @@ const CreateBespokeFramework = (props) => {
           onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('categories', selectedArray, event)}
         />
         <h1 className={'create-framework__title'}>
-          Sectors:<span className='ml-1 text-red-500'>*</span>
+          Sectors<span className='ml-1 text-red-500'>*</span>
         </h1>
         <ReactMultiSelectDropdown
           data={_get(appWizard, 'sectors', [])}
@@ -273,7 +273,7 @@ const CreateBespokeFramework = (props) => {
           selectedOptionVal={inputValue.sectors}
           onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('sectors', selectedArray, event)}
         />
-        <h1 className={'create-framework__title'}>Sub Sectors:</h1>
+        <h1 className={'create-framework__title'}>Sub Sectors</h1>
         <ReactMultiSelectDropdown
           data={filterSubSectors.length ? filterSubSectors : [{ label: '', value: '' }]}
           isEditable={isEdit}
@@ -281,7 +281,7 @@ const CreateBespokeFramework = (props) => {
           onChangeCallback={(selectedArray, event) => onSelectMultipleSelect('subsectors', selectedArray, event)}
         />
         <h1 className={'create-framework__title'}>
-          Location:<span className='ml-1 text-red-500'>*</span>
+          Location<span className='ml-1 text-red-500'>*</span>
         </h1>
         <ReactMultiSelectDropdown
           data={_get(appWizard, 'countries', [])}

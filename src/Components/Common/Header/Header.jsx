@@ -114,7 +114,7 @@ const Header = ({ userRole = '' }) => {
           onClick={() => {
             navigate(`/personalinfo`);
           }}
-          className='header__name-avatar'
+          className='header__name-avatar cursor-pointer'
         >
           <div className='avatar__info'>
             <span className='header__name'>{_get(user, 'nickname')}</span>

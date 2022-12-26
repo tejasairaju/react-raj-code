@@ -405,7 +405,7 @@ const RegistrationForm = ({ isClientOnBoard = false }) => {
         <>
           <div className='main__top-wrapper'>
             {isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Edit Client</h1>}
-            {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard222</h1>}
+            {!isEditable && <h1 className='main__title custom-title'>Manage Clients {'->'} Onboard</h1>}
           </div>
           <br />
           {renderForm()}

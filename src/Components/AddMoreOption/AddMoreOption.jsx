@@ -21,7 +21,7 @@ const AddMoreOption = (props) => {
   return (
     <div className='main__top-wrapper'>
       <div className='user_input_text flex flex-column'>
-        <h1 className='main__title'>{label} :</h1>
+        <h1 className='main__title'>{label}</h1>
         <input type='text' name={_toLower(label)} className='country__text__box' placeholder={placeholder} value={inputValue} onChange={addMoreoptions} />
       </div>
       <button className='main__button' onClick={() => updateMoreOption(inputValue)}>

@@ -78,7 +78,7 @@ const MoreAction = (props) => {
   return (
     <div onClick={() => setIsopen(false)} className='more-action-contianer'>
       <div
-        tabindex={index}
+        tabIndex={index}
         className={`frametoggler`}
         onClick={(e) => {
           setIsopen(!isOpen);

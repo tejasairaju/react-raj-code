@@ -200,7 +200,7 @@ const OrganisationInfo = () => {
     if (
       !_isEmpty(inputValue.name) &&
       !_isEmpty(inputValue.email) &&
-      !_isEmpty(uploadImage.fileName) &&
+      !_isEmpty(uploadImage && uploadImage.fileName) &&
       !_isEmpty(logo) &&
       (inputValue.sectors || []).length &&
       inputValue.employees_count &&
@@ -325,6 +325,7 @@ const OrganisationInfo = () => {
       setFieldOptions({ selectedDropDownVal: value, setFieldIndex: index });
     }
   };
+
   const onChangeFile = (event) => {
     const imageUrl = event.target.files[0];
     const fileName = event.target.files[0].name;
@@ -381,7 +382,7 @@ const OrganisationInfo = () => {
           <div className='framework__row-wrapper bot1'>
             {OrgInputFields('Company', true, 'name', inputValue && inputValue.name)}
             <div className='framework__row'>
-              <Label label={'Location'} className={`framework__title right`} required={true} />
+              <Label label={'Location'} className={`framework__title`} required={true} />
               <InputBox name={'location'} value={inputValue && inputValue.location} onChangeHandler={onChangeHandler} />
             </div>
           </div>
@@ -406,7 +407,7 @@ const OrganisationInfo = () => {
               </div>
             </div>
             <div className='framework__row'>
-              <Label label={'Address'} className={'framework__title right address_title'} required={true} />
+              <Label label={'Address'} className={'framework__title address_title'} required={true} />
               <TextAreaBox
                 label=''
                 name='address'
@@ -433,7 +434,7 @@ const OrganisationInfo = () => {
               />
             </div>
             <div className='framework__row'>
-              <h1 className='framework__title right'>
+              <h1 className='framework__title'>
                 <b>SubSector</b>
               </h1>
               <ReactMultiSelectDropdown
@@ -450,7 +451,7 @@ const OrganisationInfo = () => {
               <InputBox name={'email'} value={inputValue && inputValue.email} onChangeHandler={onChangeHandler} />
             </div>
             <div className='framework__row'>
-              <Label className='framework__title right' label={'Mobile'} required={true} />
+              <Label className='framework__title' label={'Mobile'} required={true} />
               <InputBox maxLength={15} text='number' name={'mobile'} value={inputValue && inputValue.mobile} onChangeHandler={onChangeHandler} />
             </div>
           </div>

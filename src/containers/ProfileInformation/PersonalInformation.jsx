@@ -545,7 +545,7 @@ const PersonalInformation = () => {
               <InputBox name={'first_name'} value={inputValue.first_name} onChangeHandler={onChangeHandler} maxLength={25} />
             </div>
             <div className='framework__row'>
-              <Label label={'Last Name'} className={`framework__title right`} required={true} />
+              <Label label={'Last Name'} className={`framework__title`} required={true} />
               <InputBox name={'last_name'} value={inputValue.last_name} onChangeHandler={onChangeHandler} maxLength={25} />
             </div>
           </div>
@@ -555,7 +555,7 @@ const PersonalInformation = () => {
               <InputBox name={'email_id'} value={inputValue.email_id} onChangeHandler={onChangeHandler} disabled={true} maxLength={50} />
             </div>
             <div className='framework__row'>
-              <Label label={'Mobile'} className={`framework__title right`} required={true} />
+              <Label label={'Mobile'} className={`framework__title`} required={true} />
               <InputBox maxLength={20} text='number' placeholder='+44235545' name={'phone_number'} value={inputValue.phone_number} onChangeHandler={onChangeHandler} />
             </div>
           </div>

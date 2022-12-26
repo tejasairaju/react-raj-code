@@ -12,7 +12,7 @@ const AdminAction = (props) => {
         
     }
     return (<div onClick={() => setIsopen(false)}>
-        <div tabindex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
+        <div tabIndex={index} className={`frametoggler`} onClick={(e) => {setIsopen(!isOpen); e.stopPropagation();} }><img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /></div>
         <div className={`framedropdown framedropdown-${isOpen ? "active": "inactive"}`}>
             <div className="lh1-5" onClick={() => { }}><a>View</a></div>
             <div className="lh1-5"><a onClick={() => {navigate(`/adminuser/create`, {state: {adminUserDetails: value, isEditable: true}})}}>Edit</a></div>

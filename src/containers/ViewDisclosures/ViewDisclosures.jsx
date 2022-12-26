@@ -116,7 +116,7 @@ const ViewDisclosures = () => {
       </table>
       <div className='diclosuer-catagory-container'>
         <div>
-          <b>Catagories:</b>
+          <b>Catagories</b>
         </div>
         <div className='row-catagory-display'>
           {radioButton.map((radioVal, i) => (

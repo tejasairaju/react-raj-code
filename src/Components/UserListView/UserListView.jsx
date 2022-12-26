@@ -56,13 +56,13 @@ const UserListView = (props) => {
               <div>
                 <p className='user-name'>
                   <span>
-                    <b>Name:</b>
+                    <b>Name</b>
                   </span>
                   {user.first_name}&nbsp;{user.last_name}
                 </p>
                 <p className='job-title'>
                   <span>
-                    <b>Role:</b>
+                    <b>Role</b>
                   </span>
                   {user.role}
                 </p>
