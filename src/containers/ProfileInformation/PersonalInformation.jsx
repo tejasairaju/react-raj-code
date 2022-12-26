@@ -590,7 +590,7 @@ const PersonalInformation = () => {
                     <div className='acc-info__form-item flex flex-col'>
                       <label htmlFor='form__old_password' className='acc-info__form-label w-full'>
                         <div>
-                          <span className='color-red'>*</span>Old Password &nbsp;
+                          Old Password &nbsp;<span className='color-red'>*</span>
                         </div>
                         <input
                           type='password'
@@ -605,7 +605,7 @@ const PersonalInformation = () => {
                       </label>
                       <label htmlFor='form__new_password' className='acc-info__form-label w-full'>
                         <div>
-                          <span className='color-red'>*</span>New Password &nbsp; {validation.newPassword && <span className='error-msg'>({validation.newPassword})</span>}
+                          New Password &nbsp;<span className='color-red'>*</span> {validation.newPassword && <span className='error-msg'>({validation.newPassword})</span>}
                         </div>
                         <input
                           type='password'
@@ -620,7 +620,7 @@ const PersonalInformation = () => {
                       </label>
                       <label htmlFor='form__confirm-password' className='acc-info__form-label w-full'>
                         <div>
-                          <span className='color-red'>*</span>Confirm password &nbsp;{' '}
+                          Confirm password &nbsp;<span className='color-red'>*</span>
                           {validation.confirmPassword && <span className='error-msg'>({validation.confirmPassword})</span>}
                         </div>
                         <input

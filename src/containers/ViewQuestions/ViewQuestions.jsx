@@ -95,7 +95,7 @@ const ViewQuestions = () => {
       </table>
       <div id='viewQuestions' className='view-questions-container'>
         {!!statusData.type && <Popup isShow={!!statusData.type} data={statusData} onCloseHandler={onCloseHandler} />}
-        {(inputList || []).length > 0 && <CreateQuestions createQuestions={false} questionList={inputList} onUpdateQuestions={onUpdateQuestions} />}
+        <CreateQuestions createQuestions={false} questionList={inputList} onUpdateQuestions={onUpdateQuestions} />
       </div>
     </>
   );

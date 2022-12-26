@@ -159,7 +159,7 @@ const AddESGManageUser = () => {
           <div className='Generate_report_head'>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>First Name {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>First Name {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   value={inputValue.first_name}
                   error={validation['first_name']}
@@ -176,7 +176,7 @@ const AddESGManageUser = () => {
             </div>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>Last Name {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>Last Name {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   value={inputValue.last_name}
                   error={validation['last_name']}
@@ -195,7 +195,7 @@ const AddESGManageUser = () => {
           <div className='Generate_report_head'>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>Email {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>Email {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   value={inputValue.email_id}
                   error={validation['email_id']}
@@ -212,7 +212,7 @@ const AddESGManageUser = () => {
             </div>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>Phone {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>Phone {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   minLength={8}
                   maxLength={20}
@@ -232,7 +232,7 @@ const AddESGManageUser = () => {
           <div className='Generate_report_head'>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>Country {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>Country {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   value={inputValue.country}
                   error={validation['country']}
@@ -249,7 +249,7 @@ const AddESGManageUser = () => {
             </div>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>Location {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>Location {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   value={inputValue.location}
                   error={validation['location']}
@@ -268,7 +268,7 @@ const AddESGManageUser = () => {
           <div className='Generate_report_head'>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>Designation {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>Designation {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   value={inputValue.designation}
                   error={validation['designation']}
@@ -285,7 +285,7 @@ const AddESGManageUser = () => {
             </div>
             <div className='GenerateReport-framework__row'>
               <div className='GenerateReport_row'>
-                <h1 className='Generate_h1_label'>Department {!isView && <span className='color-red'>*</span>}</h1>
+                <h1 className='Generate_h1_label'>Department {!isView && <span className='color-red ml-1'>*</span>}</h1>
                 <input
                   value={inputValue.department}
                   error={validation['department']}

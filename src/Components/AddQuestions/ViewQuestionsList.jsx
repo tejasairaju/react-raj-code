@@ -58,7 +58,7 @@ const ViewQuestionsList = ({
             </>
           }
           <div className='fz-14 fw-700 disclosure'>
-            Disclosure{<img onClick={() => setIsShowGuidance(true)} src='../../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
+            Disclosure{<img className='ml-1' onClick={() => setIsShowGuidance(true)} src='../../../../assets/images/questions.svg' alt='?' width='15px' height='15px' />}
           </div>
           <input type='text' className='create-framework__input' value={name} required disabled></input>
           <div className='add-question-btn'>
