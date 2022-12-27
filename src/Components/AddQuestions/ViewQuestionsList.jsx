@@ -54,7 +54,7 @@ const ViewQuestionsList = ({
               <div className='fz-14 fw-700'>
                 Ref No <span className='text-red-500 ml-1'>*</span>
               </div>
-              <input type='text' maxLength={15} min='' step='' className='refno_create_question' value={code} required disabled></input>
+              <input type='text' maxLength={20} min='' step='' className='refno_create_question' value={code} required disabled></input>
             </>
           }
           <div className='fz-14 fw-700 disclosure'>

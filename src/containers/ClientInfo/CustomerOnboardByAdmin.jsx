@@ -86,7 +86,7 @@ const CustomerOnboardByAdmin = (props) => {
       // form.append('zip_code', inputValue.zipcode);
       // form.append('email', inputValue.email);
       // form.append('address', inputValue.address);
-      // form.append('status', 'Active');
+      form.append('status', 'Active');
       form.append('employees_count', inputValue.employees_count);
       form.append('location', inputValue.location);
       form.append('package', inputValue.radio__package);

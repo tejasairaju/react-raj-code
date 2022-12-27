@@ -69,39 +69,42 @@ const ClientUsers = () => {
         </a>
       </div>
       <br />
-
-      <table className='default-flex-table table-scroll client-admin-manage-user'>
-        <thead>
-          <tr>
-            {headers.map((header) => (
-              <th>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {(clientData.results || []).map((val, index) => {
-            if (_toLower(val.role) !== 'admin') {
-              return (
-                <tr>
-                  <td>{getProfilePhoto(val)}</td>
-                  <td>{val.first_name}</td>
-                  <td>{val.location}</td>
-                  <td>{val.email_id}</td>
-                  <td>{val.phone_number}</td>
-                  <td>{val.designation}</td>
-                  {/* <td>{val.department}</td> */}
-                  <td>{val.role}</td>
-                  <td>{val.status}</td>
-                  <td>
-                    <ClientUserAction getClientUsers={getClientUsers} value={val} index={index} deleteCallback={() => deleteUser(val)} />
-                    {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
-                  </td>
-                </tr>
-              );
-            }
-          })}
-        </tbody>
-      </table>
+      {clientData && clientData.results && clientData.results.length > 1 ? (
+        <table className='default-flex-table table-scroll client-admin-manage-user'>
+          <thead>
+            <tr>
+              {headers.map((header) => (
+                <th>{header}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {(clientData.results || []).map((val, index) => {
+              if (_toLower(val.role) !== 'admin') {
+                return (
+                  <tr key={'cu-' + index}>
+                    <td>{getProfilePhoto(val)}</td>
+                    <td>{val.first_name}</td>
+                    <td>{val.location}</td>
+                    <td>{val.email_id}</td>
+                    <td>{val.phone_number}</td>
+                    <td>{val.designation}</td>
+                    {/* <td>{val.department}</td> */}
+                    <td>{val.role}</td>
+                    <td>{val.status}</td>
+                    <td>
+                      <ClientUserAction getClientUsers={getClientUsers} value={val} index={index} deleteCallback={() => deleteUser(val)} />
+                      {/* <img src='assets/icons/more-icon.svg' alt='more' width='28px' height='28px' /> */}
+                    </td>
+                  </tr>
+                );
+              }
+            })}
+          </tbody>
+        </table>
+      ) : (
+        <div className='flex justify-center w-full'>No records found</div>
+      )}
     </>
   );
 };

@@ -255,7 +255,7 @@ input.framework__input.cc_width {
   height: 40px;
 }
 .create-framework__row-wrapper .create-framework__input {
-  width: 42%;
+  width: 15%;
 }
 .radios {
   justify-content: flex-start;

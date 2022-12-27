@@ -47,6 +47,7 @@ const CreateBespokeDisclosures = (props) => {
   const getDisclosures = async () => {
     try {
       const response = await Requests.Get(`/templates/${id}/disclosures/${disclosureId}`, { organization: orgDetails.name }); // https://13.40.76.135/backend/esgadmin/frameworks/782e56e1-f265-4206-9c79-751691de11e2/disclosures/c7b056d8-4ccc-44bd-9971-5e46387a6c68
+      console.log(response, 'response');
       setInputValue({ ...response, categories: [{ name: response.category, isSelect: true }] });
     } catch (error) {}
   };
@@ -106,7 +107,7 @@ const CreateBespokeDisclosures = (props) => {
   };
 
   const onNextHandler = async () => {
-    let getSelectedCategory = (inputValue.categories || []).find((value) => value.isSelect === true);
+    const getSelectedCategory = (inputValue.categories || []).find((value) => value.isSelect === true);
     if (!_isEmpty(inputValue.name) && !_isEmpty(inputValue.description) && getSelectedCategory) {
       const data = {
         disclosures: [
@@ -247,7 +248,6 @@ const CreateBespokeDisclosures = (props) => {
             {isEditable && inputValue.description && <MyStatefulEditor markup={inputValue.description} onChange={onChangeGuidance} />}
             {!isEditable && <MyStatefulEditor markup={''} onChange={onChangeGuidance} />}
           </div>
-          {/* <Input inputblockcls={`user_input_block ${_get(validation, 'name', false) ? 'user_input_error' : null}`} error={validation['name']} label='' type="text" name='name' value={inputValue.name || ''} className="create-framework__input create-disclosure-input" placeholder="" required={true} onChangeHandler={onChangeHandler} /> */}
         </div>
       </div>
       <Button label={isEditable ? 'UPDATE' : 'NEXT'} onClickHandler={onNextHandler} className='main__button' />
